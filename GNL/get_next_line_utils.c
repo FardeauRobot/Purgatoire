@@ -27,6 +27,7 @@ int	ft_space_found(char *s)
 	}
 	return (0);
 }
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;	

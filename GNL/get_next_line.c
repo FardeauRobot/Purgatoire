@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:24:16 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/21 16:26:12 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/21 17:14:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,14 @@ char	*ft_find_line(char **arr, int fd)
 
 char	*ft_create_res(char *s)
 {
+	char	*tmp;
+	int		max;
+	int		i;
+
+	max = ft_strchr((const char *)s, '\n');
+	tmp = 
+	while ()
+	return (tmp);
 }
 
 char	*get_next_line(int fd)
@@ -187,7 +195,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, check, 0))
 		return (NULL);
-
+	// Trouve
 	res = ft_find_line(&arr_s[fd], fd);
 	res = ft_create_res(res);
 	arr_s[fd] = ft_cleanup(res);
