@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:38:44 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 13:58:06 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/21 15:37:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ char	*ft_strchr(const char *s, int c)
 }
 
 // #include <bsd/string.h>
+// #include <stdio.h>
 
 // int main ()
 // {
 // 	char *test = "teste";
-// 	int c = 0;
+// 	int c = 1024;
 // 	char *res = strchr(test, c);
 // 	char *res2 = ft_strchr(test, c);
 // 	printf("%s\n", res);

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 16:40:39 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/13 13:27:39 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/21 11:43:10 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	if (!*needle)
 		return ((char *)haystack);
 	i = 0;
-	n_len = ft_strlen(needle);
+	n_len = ft_strlen((char *)needle);
 	while (haystack[i] && i < len)
 	{
 		j = 0;

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 16:31:44 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 14:01:06 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/21 11:43:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	s_len = ft_strlen(s);
+	s_len = ft_strlen((char *)s);
 	if ((size_t)start >= s_len)
 	{
 		tmp = malloc(1);

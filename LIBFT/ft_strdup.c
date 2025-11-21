@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 14:38:46 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 13:58:36 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/20 15:12:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 	int		i;
 
 	i = 0;
-	size = ft_strlen(s1);
+	size = ft_strlen((char *)s1);
 	str = malloc(sizeof(char) * size + 1);
 	if (!str)
 		return (NULL);

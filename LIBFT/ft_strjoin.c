@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:19:42 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 13:59:07 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/20 15:12:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;	
 	int		i;
