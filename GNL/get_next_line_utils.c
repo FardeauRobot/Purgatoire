@@ -53,22 +53,22 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int	ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	int				i;
 	unsigned char	uc;
 
 	if (!s || !s[0])
-		return (-1);
+		return (NULL);
 	i = 0;
 	uc = (unsigned char)c;
 	while (s[i])
 	{
 		if (s[i] == uc)
-			return (i);
+			return ((char *)s + i);
 		i++;
 	}
-	return (-1);
+	return (NULL);
 }
 
 char	*ft_mini_substr(char *s, int max)

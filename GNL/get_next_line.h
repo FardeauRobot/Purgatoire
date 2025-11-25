@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:41:58 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/20 19:57:56 by fardeau          ###   ########.fr       */
+/*   Updated: 2025/11/21 18:00:25 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@
 // A GARDER
 #include <stdlib.h>
 #include <unistd.h>
+#include "libft.h"
 // PROTOTYPES FONCTIONS
 // UTILS
 void	ft_bzero(void *s, size_t n);
 size_t	ft_strlen(char *str);
-int	ft_strchr(const char *s, int c);
+char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_mini_substr(char *s, int max);
 
