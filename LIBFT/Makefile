@@ -60,32 +60,44 @@ SRCS =	ft_atoi.c \
 OBJS = $(SRCS:.c=.o)
 
 
-all : banner $(NAME)
+all : bannerbuild $(NAME) 
 
 $(NAME) : $(OBJS)
 	@printf "$(CYAN)$(BOLD)Archiving: $(NAME)$(RESET)\n"
 	@ar rcs $(NAME) $(OBJS)
 	@printf "$(GREEN)Build finished: $(NAME) created.\n$(RESET)"
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "     $(BOLD)LIBFT - CMD DONE (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 %.o : %.c
-	@printf "$(YELLOW)Compiling: %s -> %s$(RESET)\n" "$<" "$@"
+#	@printf "$(YELLOW)Compiling: %s -> %s$(RESET)\n" "$<" "$@"
 	@$(CC) -c $< -o $@
 
-banner:
-	@printf "\n$(BLUE)=====================================\n"
+bannerbuild:
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
 	@printf "     $(BOLD)LIBFT - Building (all targets)$(RESET)\n"
-	@printf "=====================================$(RESET)\n\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 clean : 
 	@printf "$(BLUE)Cleaning object files...$(RESET)\n"
 	@rm -f $(OBJS)
 	@printf "$(GREEN)Objects removed: $(words $(OBJS))$(RESET)\n"
 
-fclean : clean
+
+fclean : bannerdelete clean 
 	@printf "$(BLUE)Removing archive $(NAME)...$(RESET)\n"
 	@rm -f $(NAME)
 	@rm -f lib/$(NAME) include/libft.h || true
 	@printf "$(GREEN)Archive removed: $(NAME)$(RESET)\n"
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "     $(BOLD)LIBFT - CMD DONE (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
+
+bannerdelete:
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "     $(BOLD)LIBFT - DELETING (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 re : fclean all
 	@printf "$(CYAN)Rebuild complete: $(NAME)$(RESET)\n"
