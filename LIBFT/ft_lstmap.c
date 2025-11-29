@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 15:02:11 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 02:22:44 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:25:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@
 */
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-    t_list	*head;
-    t_list	*tmp;
+	t_list	*head;
+	t_list	*tmp;
 
-    if (!lst || !f)
-        return (NULL);
-    head = NULL;
-    while (lst)
-    {
-        tmp = ft_lstnew(f(lst->content));
-        if (!tmp)
-        {
-            ft_lstclear(&head, del);
-            return (NULL);
-        }
-        if (!head)
-            head = tmp;
-        else
-            ft_lstadd_back(&head, tmp);
-        lst = lst->next;
-    }
-    return (head);
+	if (!lst || !f)
+		return (NULL);
+	head = NULL;
+	while (lst)
+	{
+		tmp = ft_lstnew(f(lst->content));
+		if (!tmp)
+		{
+			ft_lstclear(&head, del);
+			return (NULL);
+		}
+		if (!head)
+			head = tmp;
+		else
+			ft_lstadd_back(&head, tmp);
+		lst = lst->next;
+	}
+	return (head);
 }

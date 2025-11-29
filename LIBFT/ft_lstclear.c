@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 15:11:33 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 02:15:27 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:25:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-    t_list	*tmp;
+	t_list	*tmp;
 
-    if (!lst || !del)
-        return ;
-    while (*lst)
-    {
-        tmp = (*lst)->next;
-        ft_lstdelone(*lst, del);
-        *lst = tmp;
-    }
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		tmp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = tmp;
+	}
 }

@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 13:41:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:25:43 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/29 18:30:19 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/29 18:35:25 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap_utils.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+int	ft_full_free(char **arr, s_node **stack)
 {
-	if (!lst || !del)
-		return ;
-	(*del)(lst->content);
-	free(lst);
+	ft_free_array(arr);
+	ft_lstclear(stack);
+	return (-1);
 }

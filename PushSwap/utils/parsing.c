@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:21:06 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:36:42 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
 
-int ft_init_str(s_node **stack, char *str)
+int	ft_init_str(s_node **stack, char *str)
 {
 	char	**arr;
 	t_node	*new;
@@ -25,13 +25,12 @@ int ft_init_str(s_node **stack, char *str)
 	i = 0;
 	while (arr[i])
 	{
-		new = ft_lstnew(ft_atoi(arr[i]));
+		nb = ft_atol(arr[i]);
+		if (ft_overint(nb))
+			return (ft_full_free(arr, stack));
+		new = ft_lstnew((int)nb);
 		if (!new)
-		{
-			ft_free_array(arr);
-			ft_lstclear(stack, free);
-			return (-1);
-		}
+			return (ft_full_free(arr, stack));
 		ft_lstadd_back(stack, new);
 		i++;
 	}

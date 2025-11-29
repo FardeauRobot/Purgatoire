@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:21:03 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 02:15:27 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:25:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ft_lstsize(t_list *lst)
 {
-    int	count;
+	int	count;
 
-    count = 0;
-    while (lst)
-    {
-        lst = lst->next;
-        count++;
-    }
-    return (count);
+	count = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		count++;
+	}
+	return (count);
 }

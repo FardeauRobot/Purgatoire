@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:15:59 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:24:13 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 /* Standard headers needed for prototypes */
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
 // GET_NEXT_LINE
 # ifndef BUFFER_SIZE
@@ -38,6 +39,8 @@ int		ft_isspace(int c);
 /////////// STRINGS  /////////////////////////////////////////////
 
 int		ft_atoi(const char *nptr);
+long	ft_atol(const char *nptr);
+int		ft_overint(long n);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);

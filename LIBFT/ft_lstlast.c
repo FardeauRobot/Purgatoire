@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:21:32 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 02:15:27 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:25:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-    if (!lst)
-        return (NULL);
-    while (lst->next)
-        lst = lst->next;
-    return (lst);
+	if (!lst)
+		return (NULL);
+	while (lst->next)
+		lst = lst->next;
+	return (lst);
 }
