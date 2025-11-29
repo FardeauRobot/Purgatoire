@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:10:03 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:21:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,26 @@ int ft_init_str(s_node **stack, char *str)
 {
 	char	**arr;
 	t_node	*new;
+	long	nb;
+	int		i;
 
 	arr = ft_split((const *)str, ' ');
+	if (!arr)
+		return (-1);
+	i = 0;
 	while (arr[i])
 	{
-		node = ft_lstnew(ft_atoi(arr[i]));
-		if (!node)
+		new = ft_lstnew(ft_atoi(arr[i]));
+		if (!new)
 		{
+			ft_free_array(arr);
 			ft_lstclear(stack, free);
 			return (-1);
 		}
 		ft_lstadd_back(stack, new);
 		i++;
 	}
+	ft_free_array(arr);
 	return (0);
 }
 

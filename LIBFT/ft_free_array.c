@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_free_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:18:10 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/29 18:13:47 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/29 18:15:09 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include "libft.h"
+void	ft_free_array(char **arr)
+{
+	int	i;
 
-////////// SUB .H //////// 
-# include "utils/push_swap_utils.h"
-# include "srcs/push_swap_srcs.h"
-
-////////// STRUCTURES //////// 
-typedef struct s_node {
-	int					value;
-	struct s_node		*next;
-	struct s_node		*previous;
-}	t_node;
-
-////////// PARSING.C //////// 
-
-#endif 
+	i = 0;
+	while (arr[i])
+	{
+		free (arr[i]);
+		i++;
+	}
+	free (arr);
+}

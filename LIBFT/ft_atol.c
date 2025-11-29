@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:18:10 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/29 00:00:00 by                   #+#    #+#             */
+/*   Updated: 2025/11/29 18:20:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#include "libft.h"
 
-# include "libft.h"
+long	ft_atol(const char *nptr)
+{
+	long	nb;
+	int		sign;
+	int		i;
 
-////////// SUB .H //////// 
-# include "utils/push_swap_utils.h"
-# include "srcs/push_swap_srcs.h"
-
-////////// STRUCTURES //////// 
-typedef struct s_node {
-	int					value;
-	struct s_node		*next;
-	struct s_node		*previous;
-}	t_node;
-
-////////// PARSING.C //////// 
-
-#endif 
+	sign = 1;
+	nb = 0;
+	i = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		nb = nb * 10 + nptr[i] - '0';
+		i++;
+	}
+	return (nb * sign);
+}

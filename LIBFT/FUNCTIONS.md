@@ -40,6 +40,7 @@ This document provides comprehensive details for each function in the `libft` li
 
 ### Conversion Utilities
 - [`ft_atoi`](#ft_atoi) - Convert string to integer
+- [`ft_atol`](#ft_atol) - Convert string to long integer
 - [`ft_itoa`](#ft_itoa) - Convert integer to string
 
 ### File Descriptor Output
@@ -478,6 +479,19 @@ int ft_atoi(const char *nptr);
 **Returns:** The converted integer value.
 
 **Description:** Parses the initial portion of `nptr` as a signed decimal integer. Skips leading whitespace, handles an optional `+` or `-` sign, and converts digits until a non-digit character is encountered.
+
+---
+
+### `ft_atol`
+```c
+long ft_atol(const char *nptr);
+```
+**Parameters:**
+- `nptr` - String to parse
+
+**Returns:** The converted long integer value.
+
+**Description:** Parses the initial portion of `nptr` as a signed decimal long integer. Skips leading whitespace, handles an optional `+` or `-` sign, and converts digits until a non-digit character is encountered. Similar to `ft_atoi` but returns a `long` for larger number ranges.
 
 ---
 

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 17:30:49 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:20:26 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_isspace(int c);
 /////////// STRINGS  /////////////////////////////////////////////
 
 int		ft_atoi(const char *nptr);
+long	ft_atol(const char *nptr);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
@@ -56,6 +57,10 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+/////////// DOUBLE ARRAY /////////////////////////////////////////////
+
+void	ft_free_array(char **arr);
 
 /////////// MEMORY /////////////////////////////////////////////
 

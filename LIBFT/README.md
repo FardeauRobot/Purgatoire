@@ -57,6 +57,7 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
 | ft_atoi          | int (const char *)                                 | Parses as signed decimal integer.                            |
+| ft_atol          | long (const char *)                                | Parses as signed decimal long integer.                       |
 | ft_itoa          | char * (int)                                       | Converts int to decimal string.                              |
 ```
 
