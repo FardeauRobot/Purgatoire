@@ -95,6 +95,12 @@ make bonus  # build bonus linked-list helpers as well
 make clean  # remove *.o files
 make fclean # delete *.o files and libft.a
 make re     # fclean + make
+
+make        # build mandatory helpers into libft.a
+make bonus  # build bonus linked-list helpers as well
+make clean  # remove *.o files
+make fclean # delete *.o files and libft.a
+make re     # fclean + make
 ```
 
 > 💡 Link `libft.a` alongside your sources and include `libft.h` so the compiler resolves the helper declarations:

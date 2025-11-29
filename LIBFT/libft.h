@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 01:15:21 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 02:09:01 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 /* Standard headers needed for prototypes */
 # include <unistd.h>
 # include <stdlib.h>
+
+// GET_NEXT_LINE
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 /////////// CHAR TESTS  /////////////////////////////////////////////
 
@@ -37,7 +42,7 @@ size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -78,5 +83,13 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
+
+/////////// GET_NEXT_LINE /////////////////////////////////////////////
+
+char	*get_next_line(int fd);
+size_t	ft_gnl_strlen(const char *str);
+char	*ft_gnl_strjoin(const char *s1, const char *s2);
+int		ft_gnl_strchr(const char *s, int c);
+char	*ft_gnl_substr(const char *s, int max);
 
 #endif
