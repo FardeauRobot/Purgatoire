@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:24:13 by tibras           ###   ########.fr       */
+/*   Updated: 2025/11/29 18:40:33 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdarg.h>
+
+# define BASE_10 "0123456789"
+# define BASE_UPPER "0123456789ABCDEF"
+# define BASE_LOWER "0123456789abcdef"
 
 // GET_NEXT_LINE
 # ifndef BUFFER_SIZE
@@ -99,5 +104,9 @@ size_t	ft_gnl_strlen(const char *str);
 char	*ft_gnl_strjoin(const char *s1, const char *s2);
 int		ft_gnl_strchr(const char *s, int c);
 char	*ft_gnl_substr(const char *s, int max);
+
+/////////// PRINTF /////////////////////////////////////////////
+
+int		ft_printf(const char *s, ...);
 
 #endif
