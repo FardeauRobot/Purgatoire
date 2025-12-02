@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:36:42 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/02 13:48:53 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ int	ft_init_str(s_node **stack, char *str)
 		i++;
 	}
 	ft_free_array(arr);
+	ft_lstiter();
 	return (0);
 }
 
 int ft_parsing(s_node **stack, int argc, char **argv)
 {
 	if (argc == 2)
-		 return (ft_init_str(stack, argv[1]));
+		return (ft_init_str(stack, argv[1]));
 	else if (argc > 2)
 		return (ft_init_each(stack, argc, argv));
 	else
