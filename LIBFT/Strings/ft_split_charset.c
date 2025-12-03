@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_charset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 14:41:58 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 13:58:20 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 18:11:03 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 #include <stdio.h>
 
 static	void	free_tab(char **arr, size_t index)
@@ -26,20 +26,19 @@ static	void	free_tab(char **arr, size_t index)
 	free(arr);
 }
 
-static size_t	ft_count_word(char const *s, char sep)
+static size_t	ft_count_word(char const *s, char *charset)
 {
 	size_t	count;
 	size_t	i;
 
-	if (!s)
+	if (!s || !*s)
 		return (0);
-	else if (!sep && s[0])
-		return (1);
 	i = 0;
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] != sep && (i == 0 || s[i - 1] == sep))
+		if (!ft_ischarset(s[i], charset)
+			&& (i == 0 || ft_ischarset(s[i - 1], charset)))
 			count++;
 		i++;
 	}
@@ -66,7 +65,7 @@ static char	*ft_cust_strdup(const char *s, size_t start, size_t end)
 	return (tmp);
 }
 
-static char	**ft_exec(char **arr, const char *s, char sep, size_t w_count)
+static char	**ft_exec(char **arr, const char *s, char *charset, size_t w_count)
 {
 	size_t	index;
 	size_t	start;
@@ -77,10 +76,10 @@ static char	**ft_exec(char **arr, const char *s, char sep, size_t w_count)
 	index = 0;
 	while (index < w_count)
 	{
-		while (s[i] && s[i] == sep)
+		while (s[i] && ft_ischarset(s[i], charset))
 			i++;
 		start = i;
-		while (s[i] && s[i] != sep)
+		while (s[i] && !ft_ischarset(s[i], charset))
 			i++;
 		arr[index] = ft_cust_strdup(s, start, i);
 		if (!arr[index])
@@ -94,37 +93,37 @@ static char	**ft_exec(char **arr, const char *s, char sep, size_t w_count)
 	return (arr);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_charset(char const *s, char *charset)
 {
 	char	**tab_arr;
 	size_t	word_count;
 
 	if (!s)
 		return (NULL);
-	word_count = ft_count_word(s, c);
+	word_count = ft_count_word(s, charset);
 	tab_arr = malloc(sizeof(char *) * (word_count + 1));
 	if (!tab_arr)
 		return (NULL);
-	tab_arr = ft_exec(tab_arr, s, c, word_count);
+	tab_arr = ft_exec(tab_arr, s, charset, word_count);
 	if (!tab_arr)
 		return (NULL);
 	return (tab_arr);
 }
 
-// int main ()
-// {
-// 	char const *test = "--1-2--3---4----5-----42";
-// 	char sep = '-';
-// 	char **test_arr;
-// 	int i = 0;
+int main ()
+{
+	char const *test = "-++-1----2--3---4----5-----42";
+	// char sep = '-';
+	char *charset = "+-";
+	char **test_arr;
+	int i = 0;
 
-// 	test_arr = ft_split(test, sep);
-// 	while (i < 7)
-// 	{
-// 		printf("ARR[%d] = %s\n", i, test_arr[i]);
-// 		free(test_arr[i]);
-// 		i++;
-// 	}
-// 	free(test_arr);
-// 	ft_split(test, sep);
-// }
+	test_arr = ft_split_charset(test, charset);
+	while (i < 7)
+	{
+		printf("ARR[%d] = %s\n", i, test_arr[i]);
+		free(test_arr[i]);
+		i++;
+	}
+	free(test_arr);
+}

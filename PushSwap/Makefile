@@ -6,21 +6,28 @@ FILES = $(SRCS) $(UTILS) #$(INCLUDES)
 
 SRCS_DIR = srcs
 
-SRCS = 
+SRCS_FILES = main.c \
 
-UTILS = 
+SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
-INCLUDES = 
+UTILS_DIR = utils
+
+UTILS_FILES = 	parsing.c \
+				parsing_utils.c \
+
+UTILS = $(addprefix $(UTILS_DIR)/, $(UTILS_FILES))
+
+INCLUDES =  -I. -Iincludes
 
 OBJS = $(FILES:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(FILES)
-	$(CC) $(FILES) $(INCLUDES) $(NAME)
+$(NAME) : $(OBJS)
+	$(CC) $(OBJS) -o $(NAME)
 
 %.o : %.c
-	$(CC) -c $< -o $@
+	$(CC) $(INCLUDES) -c $< -o $@
 
 clean : 
 	rm -rf $(OBJS)

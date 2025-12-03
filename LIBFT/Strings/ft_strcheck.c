@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_strcheck.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 14:59:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 16:22:36 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 16:12:45 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/03 16:14:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isascii(int c)
+int	ft_strcheck(const char *s, int (*check)(int))
 {
-	return (c >= 0 && c <= 127);
+	int	i;
+
+	if (!s || !check)
+		return (0);
+	i = 0;
+	while (s[i])
+	{
+		if (!check(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

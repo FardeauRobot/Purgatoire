@@ -2,11 +2,23 @@
 
 A compact C utility library aligned with the 42 curriculum. `libft` exposes safe, familiar helpers from <ctype.h>, <string.h>, and <stdlib.h>. All routines live in `libft.h` and compile into the static `libft.a` archive so you can reuse them across projects without dragging in an entire system header set.
 
+## Project Structure
+
+The source files are organized into the following subdirectories:
+
+- **Char/**: Character checks and case conversion (`ft_isalnum`, `ft_toupper`, etc.)
+- **Conversion/**: String/Integer conversions (`ft_atoi`, `ft_itoa`, etc.)
+- **GNL/**: Get Next Line (`get_next_line`)
+- **List/**: Linked list manipulation (`ft_lstnew`, `ft_lstadd_back`, etc.)
+- **Memory/**: Memory manipulation (`ft_memset`, `ft_calloc`, etc.)
+- **Output/**: Printing and file descriptor output (`ft_putstr_fd`, `ft_printf`, etc.)
+- **Strings/**: String manipulation (`ft_strlen`, `ft_split`, etc.)
+
 Each code block below uses a fixed-width layout so every line has the same number of characters, making the reference easy to scan in raw form.
 
 ## Function reference
 
-### Character classification & case conversion
+### Character classification & case conversion (Char/)
 ```text
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
@@ -19,7 +31,7 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_toupper       | int (int)                                          | Upcases ASCII letters.                                       |
 ```
 
-### String utilities
+### String utilities (Strings/)
 ```text
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
@@ -39,7 +51,7 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_striteri      | void (char *, void (*f)(unsigned int, char *))     | Calls f in-place on each char.                               |
 ```
 
-### Memory management
+### Memory management (Memory/)
 ```text
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
@@ -50,18 +62,20 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_memchr        | void * (const void *, int, size_t)                 | Searches first n bytes for c.                                |
 | ft_memcmp        | int (const void *, const void *, size_t)           | Compares first n bytes.                                      |
 | ft_calloc        | void * (size_t, size_t)                            | Allocates & zeroes count * size bytes.                       |
+| ft_free_array    | void (char **)                                     | Frees a NULL-terminated array of strings.                    |
 ```
 
-### Conversion utilities
+### Conversion utilities (Conversion/)
 ```text
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
 | ft_atoi          | int (const char *)                                 | Parses as signed decimal integer.                            |
 | ft_atol          | long (const char *)                                | Parses as signed decimal long integer.                       |
 | ft_itoa          | char * (int)                                       | Converts int to decimal string.                              |
+| ft_overint       | int (const char *)                                 | Checks for integer overflow.                                 |
 ```
 
-### File descriptor output helpers
+### File descriptor output helpers (Output/)
 ```text
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
@@ -69,9 +83,10 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_putstr_fd     | void (char *, int)                                 | Writes string to fd.                                         |
 | ft_putendl_fd    | void (char *, int)                                 | Writes string + newline to fd.                               |
 | ft_putnbr_fd     | void (int, int)                                    | Writes decimal digits to fd.                                 |
+| ft_printf        | int (const char *, ...)                            | Formatted output conversion.                                 |
 ```
 
-### Linked list helpers (bonus)
+### Linked list helpers (List/)
 ```text
 | Function         | Signature                                          | Description                                                  |
 | ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
@@ -84,6 +99,14 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_lstclear      | void (t_list **, void (*del)(void *))              | Clears entire list, NULLs pointer.                           |
 | ft_lstiter       | void (t_list *, void (*f)(void *))                 | Runs f on each node content.                                 |
 | ft_lstmap        | t_list * (t_list *, void *(*f)(void *), void (*del)(void *)) | Maps f, builds new list.                                     |
+| ft_lstprint_nbr  | void (t_list *)                                    | Prints list content as integers.                             |
+```
+
+### Get Next Line (GNL/)
+```text
+| Function         | Signature                                          | Description                                                  |
+| ---------------- | -------------------------------------------------- | ------------------------------------------------------------ |
+| get_next_line    | char * (int)                                       | Reads a line from a file descriptor.                         |
 ```
 
 ## Building & usage
@@ -91,14 +114,7 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 Use the provided Makefile with `cc -Wall -Wextra -Werror`:
 
 ```sh
-make        # build mandatory helpers into libft.a
-make bonus  # build bonus linked-list helpers as well
-make clean  # remove *.o files
-make fclean # delete *.o files and libft.a
-make re     # fclean + make
-
-make        # build mandatory helpers into libft.a
-make bonus  # build bonus linked-list helpers as well
+make        # build all helpers into libft.a
 make clean  # remove *.o files
 make fclean # delete *.o files and libft.a
 make re     # fclean + make

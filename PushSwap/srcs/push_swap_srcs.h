@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   push_swap_srcs.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 14:59:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 16:22:36 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 12:39:39 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/03 12:40:18 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PUSH_SWAP_SRCS_H
+# define PUSH_SWAP_SRCS_H
 
-int	ft_isascii(int c)
-{
-	return (c >= 0 && c <= 127);
-}
+#include "../push_swap.h"
+
+#endif
+

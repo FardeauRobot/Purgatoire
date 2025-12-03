@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/02 17:00:08 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 13:01:45 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	struct s_list	*previous;
 }	t_list;
 
 t_list	*ft_lstnew(void *content);

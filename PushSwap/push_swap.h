@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/02 17:35:58 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 18:16:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,19 @@
 # include "utils/push_swap_utils.h"
 # include "srcs/push_swap_srcs.h"
 
+# define SPACE = " \t\n\r\f\v"
+
 ////////// STRUCTURES //////// 
-typedef struct s_list {
+typedef struct s_node {
 	int					value;
 	int					cost;
 	int					index;
-	struct s_list		*next;
-	struct s_list		*previous;
-}	t_list;
+}	t_node;
 
 ////////// PARSING.C //////// 
-int	ft_init_str(s_list **stack, char *str),
-int ft_parsing(s_list **stack, int argc, char **argv);
+int	ft_init_str(t_list **stack, char *str);
+
+int ft_parsing(t_list **stack, int argc, char **argv);
+
 
 #endif 

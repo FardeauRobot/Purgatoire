@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 14:59:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 16:22:36 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 15:45:25 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/03 15:55:13 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap_utils.h"
 
-int	ft_isascii(int c)
+// FREE TOUS LES ELEMENTS D'UN NOEUD
+static void	ft_node_del(void *content)
 {
-	return (c >= 0 && c <= 127);
+	t_node	*node;
+
+	node = content;	
+	if(!node)
+		return;
+	free(node->str);
+	free(node);
 }

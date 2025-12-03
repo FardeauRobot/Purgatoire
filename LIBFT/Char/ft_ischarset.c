@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_ischarset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 14:59:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 16:22:36 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/03 18:05:34 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-int	ft_isascii(int c)
+int	ft_ischarset(int c, char *charset)
 {
-	return (c >= 0 && c <= 127);
+	int	i;
+
+	i = 0;
+	while (charset[i])
+	{
+		if (c == charset[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

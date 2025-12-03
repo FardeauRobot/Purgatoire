@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:15:10 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:25:43 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 13:03:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_list	*ft_lstnew(void *content)
 		return (NULL);
 	element->content = content;
 	element->next = NULL;
+	element->previous = NULL;
 	return (element);
 }

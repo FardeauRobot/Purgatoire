@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/02 17:00:08 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 18:04:55 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@
 /////////// CHAR TESTS  /////////////////////////////////////////////
 
 int		ft_isalnum(int c);
+int		ft_ischarset(int c, char *charset);
 int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
-char	*ft_itoa(int n);
 int		ft_isspace(int c);
+char	*ft_itoa(int n);
 
 /////////// STRINGS  /////////////////////////////////////////////
 
@@ -49,8 +50,10 @@ int		ft_overint(long n);
 char	*ft_strdup(const char *s1);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
+int	ft_strcheck(const char *s, int (*check)(int));
 char	*ft_strrchr(const char *s, int c);
-char	**ft_split(char const *s, char c);
+char	**ft_split_charset(char const *s, char *charset);
+char	**ft_split_sep(char const *s, char sep);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
@@ -85,6 +88,7 @@ typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
+	struct s_list	*previous;
 }	t_list;
 
 t_list	*ft_lstnew(void *content);

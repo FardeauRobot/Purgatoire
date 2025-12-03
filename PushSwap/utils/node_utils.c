@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   node_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 14:59:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 16:22:36 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 15:50:06 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/03 15:50:40 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap_utils.h"
 
-int	ft_isascii(int c)
+// CREER UN NOUVEAU NOEUD
+static t_node	*ft_node_init(int nb)
 {
-	return (c >= 0 && c <= 127);
+	t_node	*new;	
+
+	new = malloc(sizeof(t_node));
+	if (!new)
+		return (NULL);
+	new->value = nb;
+	return (new);
 }
+

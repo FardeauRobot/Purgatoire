@@ -31,6 +31,7 @@ SRCS_CHAR = \
 		Char/ft_isalnum.c \
 		Char/ft_isalpha.c \
 		Char/ft_isascii.c \
+		Char/ft_ischarset.c \
 		Char/ft_isdigit.c \
 		Char/ft_isprint.c \
 		Char/ft_isspace.c \
@@ -47,7 +48,9 @@ SRCS_OUTPUT = \
 
 SRCS_STRINGS = \
 		Strings/ft_split.c \
+		Strings/ft_split.c \
 		Strings/ft_strchr.c \
+		Strings/ft_strcheck.c \
 		Strings/ft_strdup.c \
 		Strings/ft_striteri.c \
 		Strings/ft_strjoin.c \
