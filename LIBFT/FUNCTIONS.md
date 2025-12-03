@@ -4,7 +4,7 @@ This document provides comprehensive details for each function in the `libft` li
 
 ## Table of Contents
 
-### Character Classification & Case Conversion
+### Character Classification & Case Conversion (Char/)
 - [`ft_isalnum`](#ft_isalnum) - Tests for alphanumeric character
 - [`ft_isalpha`](#ft_isalpha) - Tests for alphabetic character
 - [`ft_isascii`](#ft_isascii) - Tests for ASCII character
@@ -13,7 +13,7 @@ This document provides comprehensive details for each function in the `libft` li
 - [`ft_tolower`](#ft_tolower) - Converts to lowercase
 - [`ft_toupper`](#ft_toupper) - Converts to uppercase
 
-### String Utilities
+### String Utilities (Strings/)
 - [`ft_strlen`](#ft_strlen) - Calculate string length
 - [`ft_strdup`](#ft_strdup) - Duplicate a string
 - [`ft_strchr`](#ft_strchr) - Locate first occurrence of character
@@ -29,7 +29,7 @@ This document provides comprehensive details for each function in the `libft` li
 - [`ft_strmapi`](#ft_strmapi) - Apply function to each character
 - [`ft_striteri`](#ft_striteri) - Apply function to each character with index
 
-### Memory Management
+### Memory Management (Memory/)
 - [`ft_memset`](#ft_memset) - Fill memory with constant byte
 - [`ft_bzero`](#ft_bzero) - Zero a byte string
 - [`ft_memcpy`](#ft_memcpy) - Copy memory area
@@ -38,18 +38,18 @@ This document provides comprehensive details for each function in the `libft` li
 - [`ft_memcmp`](#ft_memcmp) - Compare memory areas
 - [`ft_calloc`](#ft_calloc) - Allocate and zero memory
 
-### Conversion Utilities
+### Conversion Utilities (Conversion/)
 - [`ft_atoi`](#ft_atoi) - Convert string to integer
 - [`ft_atol`](#ft_atol) - Convert string to long integer
 - [`ft_itoa`](#ft_itoa) - Convert integer to string
 
-### File Descriptor Output
+### File Descriptor Output (Output/)
 - [`ft_putchar_fd`](#ft_putchar_fd) - Output character to file descriptor
 - [`ft_putstr_fd`](#ft_putstr_fd) - Output string to file descriptor
 - [`ft_putendl_fd`](#ft_putendl_fd) - Output string with newline to file descriptor
 - [`ft_putnbr_fd`](#ft_putnbr_fd) - Output integer to file descriptor
 
-### Linked List Helpers (Bonus)
+### Linked List Helpers (List/)
 - [`ft_lstnew`](#ft_lstnew) - Create new list node
 - [`ft_lstsize`](#ft_lstsize) - Count list nodes
 - [`ft_lstlast`](#ft_lstlast) - Get last list node
@@ -62,7 +62,7 @@ This document provides comprehensive details for each function in the `libft` li
 
 ---
 
-## Character Classification & Case Conversion
+## Character Classification & Case Conversion (Char/)
 
 ### `ft_isalnum`
 ```c
@@ -155,7 +155,7 @@ int ft_toupper(int c);
 
 ---
 
-## String Utilities
+## String Utilities (Strings/)
 
 ### `ft_strlen`
 ```c
@@ -359,7 +359,7 @@ void ft_striteri(char *s, void (*f)(unsigned int, char *));
 
 ---
 
-## Memory Management
+## Memory Management (Memory/)
 
 ### `ft_memset`
 ```c
@@ -467,7 +467,7 @@ void *ft_calloc(size_t count, size_t size);
 
 ---
 
-## Conversion Utilities
+## Conversion Utilities (Conversion/)
 
 ### `ft_atoi`
 ```c
@@ -508,7 +508,7 @@ char *ft_itoa(int n);
 
 ---
 
-## File Descriptor Output Helpers
+## File Descriptor Output Helpers (Output/)
 
 ### `ft_putchar_fd`
 ```c
@@ -566,7 +566,7 @@ void ft_putnbr_fd(int n, int fd);
 
 ---
 
-## Linked List Helpers (Bonus)
+## Linked List Helpers (List/)
 
 ### List Structure
 ```c
