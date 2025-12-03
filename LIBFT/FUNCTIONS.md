@@ -37,17 +37,20 @@ This document provides comprehensive details for each function in the `libft` li
 - [`ft_memchr`](#ft_memchr) - Scan memory for character
 - [`ft_memcmp`](#ft_memcmp) - Compare memory areas
 - [`ft_calloc`](#ft_calloc) - Allocate and zero memory
+- [`ft_free_array`](#ft_free_array) - Free array of strings
 
 ### Conversion Utilities (Conversion/)
 - [`ft_atoi`](#ft_atoi) - Convert string to integer
 - [`ft_atol`](#ft_atol) - Convert string to long integer
 - [`ft_itoa`](#ft_itoa) - Convert integer to string
+- [`ft_overint`](#ft_overint) - Check for integer overflow
 
 ### File Descriptor Output (Output/)
 - [`ft_putchar_fd`](#ft_putchar_fd) - Output character to file descriptor
 - [`ft_putstr_fd`](#ft_putstr_fd) - Output string to file descriptor
 - [`ft_putendl_fd`](#ft_putendl_fd) - Output string with newline to file descriptor
 - [`ft_putnbr_fd`](#ft_putnbr_fd) - Output integer to file descriptor
+- [`ft_printf`](#ft_printf) - Formatted output conversion
 
 ### Linked List Helpers (List/)
 - [`ft_lstnew`](#ft_lstnew) - Create new list node
@@ -59,6 +62,7 @@ This document provides comprehensive details for each function in the `libft` li
 - [`ft_lstclear`](#ft_lstclear) - Delete and free entire list
 - [`ft_lstiter`](#ft_lstiter) - Apply function to each node
 - [`ft_lstmap`](#ft_lstmap) - Apply function and create new list
+- [`ft_lstprint_nbr`](#ft_lstprint_nbr) - Print list content as integers
 
 ---
 
@@ -467,6 +471,19 @@ void *ft_calloc(size_t count, size_t size);
 
 ---
 
+### `ft_free_array`
+```c
+void ft_free_array(char **arr);
+```
+**Parameters:**
+- `arr` - NULL-terminated array of strings to free
+
+**Returns:** Nothing.
+
+**Description:** Frees each string in the array and then the array pointer itself.
+
+---
+
 ## Conversion Utilities (Conversion/)
 
 ### `ft_atoi`
@@ -505,6 +522,19 @@ char *ft_itoa(int n);
 **Returns:** A newly allocated string representing `n`, or `NULL` on allocation failure.
 
 **Description:** Allocates and returns a string representing the integer `n`. Handles negative numbers correctly, including `INT_MIN`.
+
+---
+
+### `ft_overint`
+```c
+int ft_overint(long n);
+```
+**Parameters:**
+- `n` - Long integer to check
+
+**Returns:** `1` if `n` is outside the range of `int` (`INT_MIN` to `INT_MAX`), `0` otherwise.
+
+**Description:** Checks if a long integer value overflows or underflows the standard `int` range.
 
 ---
 
@@ -563,6 +593,20 @@ void ft_putnbr_fd(int n, int fd);
 **Returns:** Nothing.
 
 **Description:** Writes the integer `n` as decimal digits to the specified file descriptor. Handles negative numbers correctly.
+
+---
+
+### `ft_printf`
+```c
+int ft_printf(const char *s, ...);
+```
+**Parameters:**
+- `s` - Format string
+- `...` - Variable arguments
+
+**Returns:** The number of characters printed.
+
+**Description:** A simplified implementation of the standard `printf` function. Supports various format specifiers.
 
 ---
 
@@ -700,6 +744,19 @@ t_list *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 **Returns:** A pointer to the new list, or `NULL` on allocation failure.
 
 **Description:** Creates a new list by applying function `f` to each node's content in `lst`. If any allocation fails, uses `del` to free all allocated nodes and returns `NULL`.
+
+---
+
+### `ft_lstprint_nbr`
+```c
+void ft_lstprint_nbr(t_list *lst);
+```
+**Parameters:**
+- `lst` - Head of the list to print
+
+**Returns:** Nothing.
+
+**Description:** Iterates through the list and prints the content of each node as an integer followed by a newline. Assumes `lst->content` holds an integer value.
 
 ---
 

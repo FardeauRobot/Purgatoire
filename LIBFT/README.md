@@ -99,6 +99,7 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_lstclear      | void (t_list **, void (*del)(void *))              | Clears entire list, NULLs pointer.                           |
 | ft_lstiter       | void (t_list *, void (*f)(void *))                 | Runs f on each node content.                                 |
 | ft_lstmap        | t_list * (t_list *, void *(*f)(void *), void (*del)(void *)) | Maps f, builds new list.                                     |
+| ft_lstprint_nbr  | void (t_list *)                                    | Prints list content as integers.                             |
 ```
 
 ### Get Next Line (GNL/)
