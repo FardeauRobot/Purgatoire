@@ -6,16 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 18:53:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:42:04 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 11:39:39 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int			ft_cputstr(char *str);
-static int			ft_lllen(unsigned long long nb, int l_base);
-static char			*ft_fillll(unsigned long long nb, char *base, int l_base, int r_len);
-static char			*ft_cust_lltoa(unsigned long long nb, int l_base, int mod);
 
 static int	ft_cputstr(char *str)
 {

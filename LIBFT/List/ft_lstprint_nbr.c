@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 16:50:15 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/02 17:00:11 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/03 11:39:01 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_lstprint_nbr(t_list *lst)
 {
 	while (lst)
 	{
-		ft_printf("%d\n",  lst->content);
-		lst=lst->next;
+		ft_printf("%d\n", lst->content);
+		lst = lst->next;
 	}
 }

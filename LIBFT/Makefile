@@ -1,6 +1,6 @@
 NAME = libft.a
 
-CC = cc -Wall -Wextra -Werror 
+CC = cc -Wall -Wextra -Werror -I. 
 
 # Terminal colors for a nicer build output
 RESET = \033[0m
@@ -11,59 +11,73 @@ BLUE = \033[0;34m
 CYAN = \033[0;36m
 BOLD = \033[1m
 
-SRCS =	ft_atoi.c \
-		ft_atol.c \
-		ft_bzero.c \
-		ft_calloc.c \
-		ft_isalnum.c \
-		ft_isalpha.c \
-		ft_isascii.c \
-		ft_isdigit.c \
-		ft_isprint.c \
-		ft_isspace.c \
-		ft_itoa.c \
-		ft_memchr.c \
-		ft_memcmp.c \
-		ft_memcpy.c \
-		ft_memmove.c \
-		ft_memset.c \
-		ft_putchar_fd.c \
-		ft_putendl_fd.c \
-		ft_putnbr_fd.c \
-		ft_putstr_fd.c \
-		ft_free_array.c \
-		ft_split.c \
-		ft_strchr.c \
-		ft_strdup.c \
-		ft_striteri.c \
-		ft_strjoin.c \
-		ft_strlcat.c \
-		ft_strlcpy.c \
-		ft_strlen.c \
-		ft_strmapi.c \
-		ft_strncmp.c \
-		ft_strnstr.c \
-		ft_strrchr.c \
-		ft_strtrim.c \
-		ft_substr.c \
-		ft_tolower.c \
-		ft_toupper.c \
-		ft_free_array.c \
-		ft_overint.c \
-		ft_lstadd_back.c \
-		ft_lstadd_front.c \
-		ft_lstclear.c \
-		ft_lstdelone.c \
-		ft_lstiter.c \
-		ft_lstlast.c \
-		ft_lstprint_nbr.c \
-		ft_lstmap.c \
-		ft_lstnew.c \
-		ft_lstsize.c \
-		get_next_line.c \
-		get_next_line_utils.c \
-		ft_printf.c \
-		ft_printf_nbr.c \
+SRCS_CONVERSION = \
+		Conversion/ft_atoi.c \
+		Conversion/ft_atol.c \
+		Conversion/ft_itoa.c \
+		Conversion/ft_overint.c
+
+SRCS_MEMORY = \
+		Memory/ft_bzero.c \
+		Memory/ft_calloc.c \
+		Memory/ft_memchr.c \
+		Memory/ft_memcmp.c \
+		Memory/ft_memcpy.c \
+		Memory/ft_memmove.c \
+		Memory/ft_memset.c \
+		Memory/ft_free_array.c
+
+SRCS_CHAR = \
+		Char/ft_isalnum.c \
+		Char/ft_isalpha.c \
+		Char/ft_isascii.c \
+		Char/ft_isdigit.c \
+		Char/ft_isprint.c \
+		Char/ft_isspace.c \
+		Char/ft_tolower.c \
+		Char/ft_toupper.c
+
+SRCS_OUTPUT = \
+		Output/ft_putchar_fd.c \
+		Output/ft_putendl_fd.c \
+		Output/ft_putnbr_fd.c \
+		Output/ft_putstr_fd.c \
+		Output/ft_printf.c \
+		Output/ft_printf_nbr.c
+
+SRCS_STRINGS = \
+		Strings/ft_split.c \
+		Strings/ft_strchr.c \
+		Strings/ft_strdup.c \
+		Strings/ft_striteri.c \
+		Strings/ft_strjoin.c \
+		Strings/ft_strlcat.c \
+		Strings/ft_strlcpy.c \
+		Strings/ft_strlen.c \
+		Strings/ft_strmapi.c \
+		Strings/ft_strncmp.c \
+		Strings/ft_strnstr.c \
+		Strings/ft_strrchr.c \
+		Strings/ft_strtrim.c \
+		Strings/ft_substr.c
+
+SRCS_LIST = \
+		List/ft_lstadd_back.c \
+		List/ft_lstadd_front.c \
+		List/ft_lstclear.c \
+		List/ft_lstdelone.c \
+		List/ft_lstiter.c \
+		List/ft_lstlast.c \
+		List/ft_lstprint_nbr.c \
+		List/ft_lstmap.c \
+		List/ft_lstnew.c \
+		List/ft_lstsize.c
+
+SRCS_GNL = \
+		GNL/get_next_line.c \
+		GNL/get_next_line_utils.c
+
+SRCS = $(SRCS_CONVERSION) $(SRCS_MEMORY) $(SRCS_CHAR) $(SRCS_OUTPUT) $(SRCS_STRINGS) $(SRCS_LIST) $(SRCS_GNL)
 
 OBJS = $(SRCS:.c=.o)
 
