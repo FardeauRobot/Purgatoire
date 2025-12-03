@@ -6,16 +6,16 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/02 15:25:22 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/02 17:33:55 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
 
-int	ft_init_str(s_node **stack, char *str)
+int	ft_init_str(s_list **stack, char *str)
 {
 	char	**arr;
-	t_node	*new;
+	t_list	*new;
 	long	nb;
 	int		i;
 
@@ -35,11 +35,11 @@ int	ft_init_str(s_node **stack, char *str)
 		i++;
 	}
 	ft_free_array(arr);
-	ft_lstiter( *stack, printf);
+	ft_lstprint_nbr(*stack);
 	return (0);
 }
 
-int ft_parsing(s_node **stack, int argc, char **argv)
+int ft_parsing(s_list **stack, int argc, char **argv)
 {
 	if (argc == 2)
 		return (ft_init_str(stack, argv[1]));

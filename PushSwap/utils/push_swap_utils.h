@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 17:25:49 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:02:17 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/02 17:02:38 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 #include "../push_swap.h"
 
 ////////// PARSING.C //////// 
-int ft_parsing(s_node **stack, int argc, char **argv);
+int ft_parsing(s_list **stack, int argc, char **argv);
 
 #endif

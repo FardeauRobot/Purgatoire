@@ -4,6 +4,8 @@ CC = cc -Wall -Wextra -Werror
 
 FILES = $(SRCS) $(UTILS) #$(INCLUDES)
 
+SRCS_DIR = srcs
+
 SRCS = 
 
 UTILS = 

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:18:10 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/02 17:35:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@
 # include "srcs/push_swap_srcs.h"
 
 ////////// STRUCTURES //////// 
-typedef struct s_node {
+typedef struct s_list {
 	int					value;
-	struct s_node		*next;
-	struct s_node		*previous;
-}	t_node;
+	int					cost;
+	int					index;
+	struct s_list		*next;
+	struct s_list		*previous;
+}	t_list;
 
 ////////// PARSING.C //////// 
+int	ft_init_str(s_list **stack, char *str),
+int ft_parsing(s_list **stack, int argc, char **argv);
 
 #endif 
