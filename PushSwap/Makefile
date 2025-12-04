@@ -10,7 +10,9 @@ LIBFT_DIR = $(INCLUDES_DIR)/libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SRCS_FILES = main.c \
+SRCS_FILES =	main.c \
+				rotate.c \
+				reverse_rotate.c \
 
 UTILS_FILES = 	parsing.c \
 				parsing_utils.c \
@@ -28,10 +30,13 @@ INCLUDES    += -I. -I$(INCLUDES_DIR) -I$(LIBFT_DIR)
 all : $(LIBFT) $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBFT) -o $(NAME)
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "     $(BOLD)PUSHSWAP - CMD DONE (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 %.o : %.c
-	$(CC) $(INCLUDES) -c $< -o $@
+	@$(CC) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
 	make -C $(LIBFT_DIR)
@@ -42,6 +47,9 @@ clean :
 fclean : clean
 	rm -rf $(NAME)
 	make -C $(LIBFT_DIR) fclean
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "     $(BOLD)PUSHSWAP - DELETING (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 re: fclean all
 

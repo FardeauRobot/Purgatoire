@@ -1,33 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   diverse.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 18:41:26 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/04 17:29:13 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/04 17:30:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_utils.h"
 
-int main (int argc, char **argv)
+void	ft_lstprint_both(t_list *la, t_list *lb)
 {
-	t_list  *stack_a;
-	t_list  *stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	(void)*stack_b;
-	if (ft_parsing(&stack_a, argc, argv))
-	{
-		ft_printf("C FAUX\n");
-		return (1);
-	}
-	ft_printf("CA PASSE LE PARSE\n");
-	ft_lstprint_nbr(stack_a);
-	ft_lstclear(&stack_a, free);
-	// ft_lstclear(&stack_b, free);
-	return (0);
+	ft_printf("STACK A");
+	ft_lstprint_nbr(la);
+	ft_printf("STACK B");
+	ft_lstprint_nbr(lb);
 }

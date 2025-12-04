@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstprint_nbr.c                                  :+:      :+:    :+:   */
+/*   ft_is_only.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 16:50:15 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 11:39:01 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/04 17:33:20 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/04 18:03:08 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstprint_nbr(t_list *lst)
+int	ft_is_only(const char *s, int (*is)(int))
 {
-	while (lst)
+	int				i;
+	size_t			count;
+	unsigned char	uc;
+
+	if (!s || !is)
+		return (0);
+	i = 0;
+	count = 0;
+	while (s[i])
 	{
-		ft_printf("%d\n", lst->content);
-		lst = lst->next;
+		uc = (unsigned char)s[i];
+		if (is(uc))
+			count++;
+		i++;
 	}
+	if (count == ft_strlen(s))
+		return (1);
+	return (0);
 }

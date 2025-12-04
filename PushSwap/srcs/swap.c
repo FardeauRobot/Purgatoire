@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   swap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 18:41:26 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/04 17:24:16 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/04 17:25:16 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include  "push_swap_srcs.h"
 
-int main (int argc, char **argv)
+int	ft_swap(t_list **lst)
 {
-	t_list  *stack_a;
-	t_list  *stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	(void)*stack_b;
-	if (ft_parsing(&stack_a, argc, argv))
-	{
-		ft_printf("C FAUX\n");
+	if (!lst || !*lst || !(*lst)->next)
 		return (1);
-	}
-	ft_printf("CA PASSE LE PARSE\n");
-	ft_lstprint_nbr(stack_a);
-	ft_lstclear(&stack_a, free);
-	// ft_lstclear(&stack_b, free);
 	return (0);
 }

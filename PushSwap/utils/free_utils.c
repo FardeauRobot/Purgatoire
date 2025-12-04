@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:45:25 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:13:50 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 14:38:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int	ft_full_free(char **arr, t_list **stack, void (*del)(void *))
 {
-	ft_lstclear(stack, del);
-	ft_free_array(arr);
+	if (arr)
+		ft_free_array(arr);
+	if (stack && *stack)
+		ft_lstclear(stack, del);
 	return (1);
 }
 
@@ -24,9 +26,10 @@ void	ft_node_del(void *content)
 {
 	t_node	*node;
 
-	node = content;	
+	node = (t_node *) content;	
 	if(!node)
 		return;
-	free(node->str);
+	if (node->str)
+		free(node->str);
 	free(node);
 }

@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_is_apply.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 18:41:26 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/04 17:33:20 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/04 17:57:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+int	ft_is_only(const char *s, int (*is)(int))
 {
-	t_list  *stack_a;
-	t_list  *stack_b;
+	int				i;
+	unsigned char	uc;
 
-	stack_a = NULL;
-	stack_b = NULL;
-	(void)*stack_b;
-	if (ft_parsing(&stack_a, argc, argv))
+	if (!s || !is)
+		return (0);
+	i = 0;
+	while (s[i])
 	{
-		ft_printf("C FAUX\n");
-		return (1);
+		uc = (unsigned char)s[i];
+		if (is(uc))
+			return (1);
+		i++;
 	}
-	ft_printf("CA PASSE LE PARSE\n");
-	ft_lstprint_nbr(stack_a);
-	ft_lstclear(&stack_a, free);
-	// ft_lstclear(&stack_b, free);
 	return (0);
 }

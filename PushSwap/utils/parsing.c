@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 13:04:03 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 18:40:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_init_str(t_list **stack, char *str)
 	while (arr[i])
 	{
 		nb = ft_atol(arr[i]);
-		if (ft_overint(nb))
+		if (ft_overint(nb) || !ft_is_only((const char *)arr[i], ft_isdigit))
 			return (ft_full_free(arr, stack, ft_node_del));
 		n_new = ft_node_init(nb);
 		if (!n_new)
@@ -37,16 +37,19 @@ int	ft_init_str(t_list **stack, char *str)
 		i++;
 	}
 	ft_free_array(arr);
-	ft_lstprint_nbr(*stack);
 	return (0);
 }
 
 int ft_parsing(t_list **stack, int argc, char **argv)
 {
-	if (argc == 2)
-		return (ft_init_str(stack, argv[1]));
-	// else if (argc > 2)
-	// 	return (ft_init_each(stack, argc, argv));
-	else
-		return (1);
+	int	i;
+
+	i = 1;
+	while (argv[i] && i < argc)
+	{
+		if (ft_init_str(stack, argv[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }

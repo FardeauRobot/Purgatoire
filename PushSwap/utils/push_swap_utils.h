@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 17:25:49 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:48:46 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 14:35:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 # include "../push_swap.h"
 
-////////// PARSING_UTILS.C //////// 
-t_node	*ft_node_init(int nb);
-
-////////// PARSING_UTILS.C //////// 
+////////// NODE_UTILS.C //////// 
+void	ft_lstprint_nbr(t_list *lst);
+t_node	*ft_node_init(long nb);
 
 ////////// FREE_UTILS.C //////// 
 int		ft_full_free(char **arr, t_list **stack, void (*del)(void *));

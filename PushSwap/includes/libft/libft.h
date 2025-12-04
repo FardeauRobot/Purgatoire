@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 18:04:55 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 17:59:10 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isspace(int c);
 char	*ft_itoa(int n);
+int		ft_is_only(const char *s, int (*is)(int));
 
 /////////// STRINGS  /////////////////////////////////////////////
 
@@ -100,7 +101,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
-void	ft_lstprint_nbr(t_list *lst);
 
 /////////// GET_NEXT_LINE /////////////////////////////////////////////
 

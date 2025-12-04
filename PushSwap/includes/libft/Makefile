@@ -36,7 +36,8 @@ SRCS_CHAR = \
 		Char/ft_isprint.c \
 		Char/ft_isspace.c \
 		Char/ft_tolower.c \
-		Char/ft_toupper.c
+		Char/ft_toupper.c \
+		Char/ft_is_only.c 
 
 SRCS_OUTPUT = \
 		Output/ft_putchar_fd.c \
@@ -71,7 +72,6 @@ SRCS_LIST = \
 		List/ft_lstdelone.c \
 		List/ft_lstiter.c \
 		List/ft_lstlast.c \
-		List/ft_lstprint_nbr.c \
 		List/ft_lstmap.c \
 		List/ft_lstnew.c \
 		List/ft_lstsize.c
