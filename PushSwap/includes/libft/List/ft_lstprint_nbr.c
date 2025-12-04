@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstprint_nbr.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/02 16:50:15 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/03 11:39:01 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+void	ft_lstprint_nbr(t_list *lst)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
-
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	while (lst)
+	{
+		ft_printf("%d\n", lst->content);
+		lst = lst->next;
+	}
 }

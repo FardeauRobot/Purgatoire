@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/29 00:00:00 by                   #+#    #+#             */
+/*   Updated: 2025/11/29 18:20:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+long	ft_atol(const char *nptr)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
+	long	nb;
+	int		sign;
+	int		i;
 
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	sign = 1;
+	nb = 0;
+	i = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		nb = nb * 10 + nptr[i] - '0';
+		i++;
+	}
+	return (nb * sign);
 }

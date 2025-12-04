@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/10 17:11:19 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/18 13:40:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+void	*ft_calloc(size_t count, size_t size)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
+	void	*tmp;
+	size_t	range;
+	size_t	i;
 
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	if (size != 0 && count > (size_t) - 1 / size)
+		return (NULL);
+	i = 0;
+	range = size * count;
+	tmp = malloc(range);
+	if (!tmp)
+		return (NULL);
+	ft_bzero(tmp, range);
+	return (tmp);
 }

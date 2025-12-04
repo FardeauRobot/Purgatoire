@@ -6,14 +6,14 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:50:06 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 15:50:40 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 12:18:16 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
 
 // CREER UN NOUVEAU NOEUD
-static t_node	*ft_node_init(int nb)
+t_node	*ft_node_init(int nb)
 {
 	t_node	*new;	
 

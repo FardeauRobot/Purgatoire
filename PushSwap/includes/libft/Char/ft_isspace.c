@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/29 17:28:39 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/29 18:27:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+int	ft_isspace(int c)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
-
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	return (c == ' ' || (c >= 9 && c <= 13));
 }

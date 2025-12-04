@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/09 16:10:12 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/27 19:51:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+size_t	ft_strlen(const char *s)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
+	size_t	i;
 
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
+
+// int main ()
+// {
+// 	char *test = "";
+// 	size_t	len;
+
+// 	len = ft_strlen(test);
+// 	printf("Len = %zu\n", len);
+// }

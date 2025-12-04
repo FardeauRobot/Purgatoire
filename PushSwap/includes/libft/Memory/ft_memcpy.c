@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/18 13:53:55 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/18 13:54:40 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
+	size_t			i;
+	unsigned char	*tmpd;
+	unsigned char	*tmps;
 
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	tmpd = (unsigned char *)dest;
+	tmps = (unsigned char *)src;
+	if (!src && !dest)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		tmpd[i] = tmps[i];
+		i++;
+	}
+	return (dest);
 }

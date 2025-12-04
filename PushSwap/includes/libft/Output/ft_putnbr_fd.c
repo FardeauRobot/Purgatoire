@@ -1,25 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 12:45:08 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/10 18:46:57 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/18 13:56:17 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-int main (int argc, char **argv)
+void	ft_putnbr_fd(int n, int fd)
 {
-    t_list  *stack_a;
-    t_list  *stack_b;
+	long	nb;
 
-    stack_b = NULL;
-    (void)*stack_b;
-    if (ft_parsing(&stack_a, argc, argv))
-        return (1);
-    return (0);
+	nb = n;
+	if (n < 0)
+	{
+		nb *= -1;
+		ft_putchar_fd('-', fd);
+	}
+	if (nb > 9)
+		ft_putnbr_fd(nb / 10, fd);
+	ft_putchar_fd(nb % 10 + '0', fd);
 }
+
+// #include <limits.h>
+// int main ()
+// {
+// 	int nb = INT_MIN;
+
+// 	ft_putnbr_fd(nb, 1);
+// }

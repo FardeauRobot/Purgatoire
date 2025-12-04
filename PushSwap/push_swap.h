@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 18:16:50 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 13:58:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
-
 ////////// SUB .H //////// 
-# include "utils/push_swap_utils.h"
-# include "srcs/push_swap_srcs.h"
 
-# define SPACE = " \t\n\r\f\v"
+# define SPACE " \t\n\r\f\v"
 
 ////////// STRUCTURES //////// 
 typedef struct s_node {
 	int					value;
-	int					cost;
+	char				*str;
 	int					index;
 }	t_node;
+
+# include "utils/push_swap_utils.h"
+# include "srcs/push_swap_srcs.h"
 
 ////////// PARSING.C //////// 
 int	ft_init_str(t_list **stack, char *str);
