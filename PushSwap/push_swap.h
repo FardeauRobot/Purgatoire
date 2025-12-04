@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 19:12:13 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 19:28:19 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 
 # include "libft.h"
 
+// GLOBA
 # define SPACE " \t\n\r\f\v"
-# define ERRORPARS "Erreur parsing"
-# define ERRORARGS "Erreur nbr arguments"
 
 ////////// STRUCTURES //////// 
 typedef struct s_node {
@@ -27,6 +26,7 @@ typedef struct s_node {
 }	t_node;
 
 # include "utils/push_swap_utils.h"
+# include "utils/errors.h"
 # include "srcs/push_swap_srcs.h"
 
 ////////// PARSING.C //////// 
