@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 17:25:49 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 14:35:37 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 18:53:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ void	ft_node_del(void *content);
 
 ////////// PARSING.C //////// 
 int		ft_parsing(t_list **stack, int argc, char **argv);
+
+////////// ERRORS.C //////// 
+int		ft_err_print(int error);
 
 #endif

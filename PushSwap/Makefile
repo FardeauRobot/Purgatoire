@@ -11,10 +11,12 @@ LIBFT_DIR = $(INCLUDES_DIR)/libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS_FILES =	main.c \
+				sorting.c \
 				rotate.c \
 				reverse_rotate.c \
 
 UTILS_FILES = 	parsing.c \
+				errors.c \
 				parsing_utils.c \
 				free_utils.c \
 				node_utils.c 

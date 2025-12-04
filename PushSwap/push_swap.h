@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 13:58:47 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 19:12:13 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
-////////// SUB .H //////// 
 
 # define SPACE " \t\n\r\f\v"
+# define ERRORPARS "Erreur parsing"
+# define ERRORARGS "Erreur nbr arguments"
 
 ////////// STRUCTURES //////// 
 typedef struct s_node {

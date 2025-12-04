@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 18:41:26 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/04 19:20:46 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@ int main (int argc, char **argv)
 {
 	t_list  *stack_a;
 	t_list  *stack_b;
+	int		error;
 
+	if (argc < 2)
+		return (ft_err_print(-1));
 	stack_a = NULL;
 	stack_b = NULL;
 	(void)*stack_b;
-	if (ft_parsing(&stack_a, argc, argv))
-	{
-		ft_printf("C FAUX\n");
-		return (1);
-	}
-	ft_printf("CA PASSE LE PARSE\n");
-	ft_lstprint_nbr(stack_a);
+	error = ft_parsing(&stack_a, argc, argv);
+	if (error)
+		return (ft_err_print(error));
+	error = ft_sorting(&stack_a, &stack_b);
+	if (error)
+		return (ft_err_print(error));
 	ft_lstclear(&stack_a, free);
 	// ft_lstclear(&stack_b, free);
 	return (0);
