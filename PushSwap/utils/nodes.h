@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstprint_nbr.c                                  :+:      :+:    :+:   */
+/*   nodes.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 16:50:15 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 11:39:01 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/05 20:26:48 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/05 20:27:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef NODES_H
+# define NODES_H
 
-void	ft_lstprint_nbr(t_list *lst)
-{
-	while (lst)
-	{
-		ft_printf("%d\n", lst->content);
-		lst = lst->next;
-	}
-}
+////////// STRUCTURES //////// 
+typedef struct s_node {
+	int					value;
+	char				*str;
+	int					index;
+}	t_node;
+
+#endif

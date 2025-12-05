@@ -25,8 +25,11 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_isalnum       | int (int)                                          | Truthy for ASCII letters or digits.                          |
 | ft_isalpha       | int (int)                                          | Truthy for ASCII letters only.                               |
 | ft_isascii       | int (int)                                          | Limits checks to the 7-bit ASCII range.                      |
+| ft_ischarset     | int (int, char *)                                   | Truthy when the character appears inside `charset`.          |
 | ft_isdigit       | int (int)                                          | Truthy for ASCII digits '0'..'9'.                            |
 | ft_isprint       | int (int)                                          | Truthy for printable chars (space incl).                     |
+| ft_isspace       | int (int)                                          | Detects ASCII whitespace (space or control 9..13).           |
+| ft_is_only       | int (const char *, int (*)(int))                   | Returns 1 only if every char in `s` satisfies the predicate. |
 | ft_tolower       | int (int)                                          | Downcases ASCII letters.                                     |
 | ft_toupper       | int (int)                                          | Upcases ASCII letters.                                       |
 ```
@@ -38,6 +41,7 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_strlen        | size_t (const char *)                              | Returns string length (excl. NUL).                           |
 | ft_strdup        | char * (const char *)                              | Allocates and copies the string.                             |
 | ft_strchr        | char * (const char *, int)                         | Finds the first occurrence of c.                             |
+| ft_strcheck      | int (const char *, int (*)(int))                   | Verifies every character passes `check`.                     |
 | ft_strrchr       | char * (const char *, int)                         | Finds the last occurrence of c.                              |
 | ft_strncmp       | int (const char *, const char *, size_t)           | Compares up to n bytes.                                      |
 | ft_strnstr       | char * (const char *, const char *, size_t)        | Searches needle within len bytes.                            |
@@ -46,7 +50,8 @@ Each code block below uses a fixed-width layout so every line has the same numbe
 | ft_substr        | char * (char const *, unsigned int, size_t)        | Allocates a substring.                                       |
 | ft_strjoin       | char * (char const *, char const *)                | Concatenates two strings.                                    |
 | ft_strtrim       | char * (char const *, char const *)                | Trims set chars from both ends.                              |
-| ft_split         | char ** (char const *, char)                       | Splits s on delimiter c.                                     |
+| ft_split_charset | char ** (char const *, char *)                     | Splits `s` using any char from `charset` as delimiters.      |
+| ft_split_sep     | char ** (char const *, char)                       | Splits `s` on a single delimiter char, skipping repeats.     |
 | ft_strmapi       | char * (char const *, char (*f)(unsigned int, char)) | Maps f over each char with index.                            |
 | ft_striteri      | void (char *, void (*f)(unsigned int, char *))     | Calls f in-place on each char.                               |
 ```

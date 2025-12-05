@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:13:47 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:15:09 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/05 21:05:25 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_array(char **arr)
+int	ft_free_array(char **arr)
 {
 	int	i;
 
@@ -23,4 +23,5 @@ void	ft_free_array(char **arr)
 		i++;
 	}
 	free (arr);
+	return (1);
 }

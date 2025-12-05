@@ -6,16 +6,16 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 19:20:46 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/05 19:07:56 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_list  *stack_a;
-	t_list  *stack_b;
+	t_list	*stack_a;
+	t_list	*stack_b;
 	int		error;
 
 	if (argc < 2)

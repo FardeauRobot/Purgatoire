@@ -34,23 +34,23 @@ all : $(LIBFT) $(NAME)
 $(NAME) : $(LIBFT) $(OBJS)
 	@$(CC) $(OBJS) $(LIBFT) -o $(NAME)
 	@printf "\n$(CYAN)=====================================\n$(RESET)"
-	@printf "     $(BOLD)PUSHSWAP - CMD DONE (all targets)$(RESET)\n"
+	@printf "  $(BOLD)PUSHSWAP - CMD DONE (all targets)$(RESET)\n"
 	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 %.o : %.c
 	@$(CC) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 clean : 
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
 
 fclean : clean
-	rm -rf $(NAME)
-	make -C $(LIBFT_DIR) fclean
+	@rm -rf $(NAME)
+	@make -C $(LIBFT_DIR) fclean
 	@printf "\n$(CYAN)=====================================\n$(RESET)"
-	@printf "     $(BOLD)PUSHSWAP - DELETING (all targets)$(RESET)\n"
+	@printf "  $(BOLD)PUSHSWAP - DELETING (all targets)$(RESET)\n"
 	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 re: fclean all
