@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/05 20:28:00 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/10 12:16:42 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include "utils/nodes.h"
-# include "utils/errors.h"
 # include "srcs/push_swap_srcs.h"
 # include "utils/push_swap_utils.h"
 

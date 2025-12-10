@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 17:25:49 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 18:53:06 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/09 16:55:18 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,8 @@ int		ft_parsing(t_list **stack, int argc, char **argv);
 
 ////////// ERRORS.C //////// 
 int		ft_err_print(int error);
+
+////////// PARSING_UTILS.C //////// 
+int	ft_is_number(char *nbr);
 
 #endif
