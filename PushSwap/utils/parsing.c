@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/09 16:54:37 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/10 18:31:44 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,47 @@ int	ft_init_str(t_list **stack, char *str)
 	return (0);
 }
 
-int ft_parsing(t_list **stack, int argc, char **argv)
+int	ft_no_double(t_list *stack)
+{
+	t_list 	*l_current;
+	t_node	*n_compared;
+	t_node	*n_current;
+
+
+	while (stack->next)
+	{
+		l_current = stack->next;
+		n_compared = stack->content;
+		while (l_current)
+		{
+			n_current = l_current->content;
+			if (n_current->value == n_compared->value)
+				return (1);
+			l_current = l_current->next;
+		}
+		stack = stack->next;
+	}
+	return (0);
+}
+
+int	ft_is_sorted(t_list *lst)
+{
+	int		max;
+	t_node	*current;
+
+	max = INT_MIN;
+	while (lst)
+	{
+		current = lst->content;
+		if (max > current->value)
+			return (1);
+		max = current->value;
+		lst = lst->next;
+	}
+	return (0);
+}
+
+int	ft_parsing(t_list **stack, int argc, char **argv)
 {
 	int	i;
 
