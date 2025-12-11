@@ -6,11 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:35:24 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:57:57 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap_utils.h"
+#include "push_swap_srcs.h"
 
 int	ft_init_str(t_list **stack, char *str)
 {

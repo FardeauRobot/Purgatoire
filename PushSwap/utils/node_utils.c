@@ -6,26 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:50:06 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 13:56:58 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:48:26 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
-
-void	ft_lstprint_nbr(t_list *lst)
-{
-	t_node	*tmp;
-
-	if (!lst)
-		return ;
-	while (lst)
-	{
-		tmp = (t_node *)lst->content;
-		if (tmp)
-			ft_printf("%d\n", tmp->value);
-		lst = lst->next;
-	}
-}
 
 // TROUVE LE NOEUD AVEC VALUE MIN
 t_node	*ft_lstmin(t_list *lst)

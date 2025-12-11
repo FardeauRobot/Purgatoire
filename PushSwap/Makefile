@@ -14,13 +14,14 @@ SRCS_FILES =	main.c \
 				sorting.c \
 				rotate.c \
 				reverse_rotate.c \
+				parsing.c \
 
-UTILS_FILES = 	parsing.c \
-				parsing_utils.c \
+UTILS_FILES = 	parsing_utils.c \
 				free_utils.c \
 				node_utils.c \
 				sorting_utils.c \
-				diverse.c 
+				diverse.c \
+				error_utils.c \
 
 UTILS = $(addprefix $(UTILS_DIR)/, $(UTILS_FILES))
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))

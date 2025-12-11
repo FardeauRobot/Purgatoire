@@ -6,11 +6,20 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 18:30:19 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/10 18:16:52 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:51:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
+
+int	ft_free_parse(char **arr, t_list **stack)
+{
+	if (arr)
+		ft_free_array(arr);
+	if (*stack)
+		ft_lstclear(stack, free);
+	return (1);
+}
 
 int	ft_is_number(char *nbr)
 {	

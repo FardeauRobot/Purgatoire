@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nodes.h                                            :+:      :+:    :+:   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 20:26:48 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:53:36 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/11 14:44:59 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/11 14:45:25 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NODES_H
-# define NODES_H
+#include "push_swap_utils.h"
 
-////////// STRUCTURES //////// 
-typedef struct s_node {
-	int					value;
-	int					index;
-	int					to_top;
-	int					above;
-	struct s_node		*target;
-}	t_node;
-//----------------------------//
-
-#endif
+int	ft_error(t_list **s_a, t_list **s_b)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_clear_all(s_a, s_b);
+	return (1);
+}

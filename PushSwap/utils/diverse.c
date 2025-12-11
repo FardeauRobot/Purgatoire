@@ -6,32 +6,25 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 17:29:13 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:30:58 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:46:45 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
 
-int	ft_print_error(void)
+void	ft_lstprint_nbr(t_list *lst)
 {
-	ft_putstr_fd("Error\n", 2);
-	return (1);
-}
+	t_node	*tmp;
 
-int	ft_free_parse(char **arr, t_list **stack)
-{
-	if (arr)
-		ft_free_array(arr);
-	if (*stack)
-		ft_lstclear(stack, free);
-	return (1);
-}
-
-int	ft_error(t_list **s_a, t_list **s_b)
-{
-	ft_print_error();
-	ft_clear_all(s_a, s_b);
-	return (1);
+	if (!lst)
+		return ;
+	while (lst)
+	{
+		tmp = (t_node *)lst->content;
+		if (tmp)
+			ft_printf("%d\n", tmp->value);
+		lst = lst->next;
+	}
 }
 
 void	ft_lstprint_both(t_list *la, t_list *lb)
