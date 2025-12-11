@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:50:06 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:48:26 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 18:33:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ t_node	*ft_node_init(long nb)
 	if (!new)
 		return (NULL);
 	new->value = (int)nb;
-	new->index = 0;
 	new->to_top = 0;
 	new->above = 0;
 	new->target = NULL;

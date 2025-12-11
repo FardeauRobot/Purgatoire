@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   ft_lstget_index.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 18:30:19 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 15:03:06 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/11 17:01:42 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/11 17:30:51 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap_utils.h"
+#include "libft.h"
 
-int	ft_is_number(char *nbr)
-{	
-	int	i;
+t_list	*ft_lstat_index(t_list *lst, int index)
+{
+	t_list *current;
 
-	i = 0;
-	if (nbr[0] == '-')
+	current = lst;
+	while (current)
 	{
-		if (!nbr[1] || !ft_isdigit(nbr[1]))
-			return (0);
-		i++;
+		if (current->index == index)
+			return (current);
+		if (current->index > index)
+			return (NULL);
+		current = current->next;
 	}
-	while (nbr[i])
-	{
-		if (!ft_isdigit(nbr[i]))
-			return (0);
-		i++;
-	}
-	return (1);
+	return (NULL);
 }

@@ -13,7 +13,9 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRCS_FILES =	main.c \
 				sorting.c \
 				rotate.c \
+				push.c \
 				reverse_rotate.c \
+				init.c \
 				parsing.c \
 
 UTILS_FILES = 	parsing_utils.c \

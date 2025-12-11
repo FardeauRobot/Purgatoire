@@ -6,20 +6,24 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 11:59:32 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 13:14:17 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 18:36:29 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "push_swap_moves.h"
 
 void	ft_push(t_list **stack_src, t_list **stack_dest)
 {
 	t_list	*tmp;
+	t_node	*node;
 
 	if (!*stack_src)
 		return ;
 	tmp = *stack_src;
-	*stack_src = stack_src->next;
+	*stack_src = (*stack_src)->next;
 	tmp->next = *stack_dest;
-	tmp->content->target = NULL;
+	node = tmp->content;
+	node->target = NULL;
 	*stack_dest = tmp;
 }
 

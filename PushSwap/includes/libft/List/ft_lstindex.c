@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 11:49:25 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 11:51:49 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 12:20:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	ft_lstindex(t_list **lst)
 {
-	int	i;
+	int		i;
+	t_list	*current;
 
 	i = 0;
-	while (*lst)
+	current = *lst;
+	while (current)
 	{
-		(*lst)->index = i;
+		current->index = i;
 		i++;
-		*lst = (*lst)->next;
+		current = current->next;
 	}
 }

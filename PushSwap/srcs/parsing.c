@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:57:57 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 15:02:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	ft_init_str(t_list **stack, char *str)
 	{
 		nb = ft_atol(arr[i]);
 		if (ft_overint(nb) || !ft_is_number(arr[i]))
-			exit(ft_free_parse(arr, stack));
+			exit(ft_error_parse(arr, stack));
 		n_new = ft_node_init((int)nb);
 		if (!n_new)
-			exit(ft_free_parse(arr, stack));
+			exit(ft_error_parse(arr, stack));
 		l_new = ft_lstnew(n_new);
 		ft_lstadd_back(stack, l_new);
 		i++;

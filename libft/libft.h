@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 11:54:04 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 17:33:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstindex(t_list **lst);
+t_list	*ft_lstat_index(t_list *lst, int index);
 
 /////////// GET_NEXT_LINE /////////////////////////////////////////////
 

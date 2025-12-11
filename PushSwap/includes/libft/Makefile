@@ -75,7 +75,8 @@ SRCS_LIST = \
 		List/ft_lstmap.c \
 		List/ft_lstnew.c \
 		List/ft_lstsize.c \
-		List/ft_lstindex.c
+		List/ft_lstindex.c \
+		List/ft_lstat_index.c \
 
 SRCS_GNL = \
 		GNL/get_next_line.c \

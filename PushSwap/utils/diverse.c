@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 17:29:13 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:46:45 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 19:00:54 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	ft_lstprint_nbr(t_list *lst)
 
 void	ft_lstprint_both(t_list *la, t_list *lb)
 {
-	ft_printf("STACK A");
+	ft_printf("STACK A : \n\n");
 	ft_lstprint_nbr(la);
-	ft_printf("STACK B");
+	ft_printf("STACK B : \n\n");
 	ft_lstprint_nbr(lb);
 }
