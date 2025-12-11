@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   sorting_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 18:13:47 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:15:09 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/11 11:43:22 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/11 11:55:16 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap_utils.h"
 
-void	ft_free_array(char **arr)
-{
-	int	i;
+/*
+	Comment on la trouve :
 
-	i = 0;
-	while (arr[i])
+	On parcourt la list lst
 	{
-		free (arr[i]);
-		i++;
+		on prend lst 
+			on compte combien de nombres sont plus grands
+			si (nb_current > nb_stocked)	
+				current = stocked;
+
 	}
-	free (arr);
-}
+	return (sub)
+*/
+
+// int	*ft_find_subsequence(t_list *lst)
+// {
+// 	int *sub;
+
+// 	sub = malloc (sizeof(int) * count);
+// }

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# AddLibft.sh - build libft.a from ~/Desktop/Purgatoire/LIBFT and copy artifacts to current directory
+# AddLibft.sh - build libft.a from ~/Desktop/Purgatoire/LIBFT and copy entire folder to includes directory
 # Usage: AddLibft [make-target]
 # By default runs `make -C LIBFT_DIR all`. Pass an optional make target (e.g., re) to override.
 
 set -euo pipefail
 
-LIBFT_DIR="$HOME/Desktop/Purgatoire/LIBFT"
+LIBFT_DIR="$HOME/Desktop/Purgatoire/libft"
 LIBFT_LIB_NAME="libft.a"
 DEFAULT_TARGET="all"
 MAKE_TARGET="${1:-$DEFAULT_TARGET}"
-DEST_DIR="$(pwd)"
+DEST_DIR="$(pwd)/includes"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -39,56 +39,25 @@ if [ ! -f "$LIBFT_LIB_PATH" ]; then
   exit 1
 fi
 
-# Locate libft header
-find_header(){
-  if [ -n "${LIBFT_HEADER:-}" ] && [ -f "$LIBFT_HEADER" ]; then
-    echo "$LIBFT_HEADER"
-    return
-  fi
-  find "$LIBFT_DIR" -maxdepth 2 -type f -name "libft.h" | head -n 1
+# Create includes directory if it doesn't exist
+if [ ! -d "$DEST_DIR" ]; then
+  info "Creating includes directory at $DEST_DIR"
+  mkdir -p "$DEST_DIR"
+fi
+
+# Copy only .c, .h, .md and Makefile files from libft folder
+info "Copying .c, .h, .md and Makefile files to $DEST_DIR"
+find "$LIBFT_DIR" -type f \( -name "*.c" -o -name "*.h" -o -name "*.md" -o -name "[Mm]akefile" \) -exec cp --parents {} "$DEST_DIR/" \; 2>/dev/null || {
+  # Fallback for systems without --parents
+  cd "$LIBFT_DIR"
+  find . -type f \( -name "*.c" -o -name "*.h" -o -name "*.md" -o -name "[Mm]akefile" \) | while read -r file; do
+    mkdir -p "$DEST_DIR/$(dirname "$file")"
+    cp "$file" "$DEST_DIR/$file"
+  done
+  cd - > /dev/null
 }
 
-HEADER_PATH=$(find_header)
-if [ -z "$HEADER_PATH" ]; then
-  warn "libft.h not found within $LIBFT_DIR (max depth 2). Only copying $LIBFT_LIB_NAME."
-else
-  info "Found header: $HEADER_PATH"
-fi
-
-# Locate README
-README_PATH=""
-for readme_name in README.md README README.txt readme.md; do
-  if [ -f "$LIBFT_DIR/$readme_name" ]; then
-    README_PATH="$LIBFT_DIR/$readme_name"
-    info "Found README: $README_PATH"
-    break
-  fi
-done
-if [ -z "$README_PATH" ]; then
-  warn "README not found in $LIBFT_DIR"
-fi
-
-# Copy artifacts to destination
-info "Copying artifacts to $DEST_DIR"
-cp "$LIBFT_LIB_PATH" "$DEST_DIR/"
-if [ -n "$HEADER_PATH" ]; then
-  cp "$HEADER_PATH" "$DEST_DIR/"
-fi
-if [ -n "$README_PATH" ]; then
-  cp "$README_PATH" "$DEST_DIR/"
-fi
-
-# Clean up object files in LIBFT directory
-info "Cleaning object files from $LIBFT_DIR"
-find "$LIBFT_DIR" -type f -name "*.o" -delete 2>/dev/null || true
-
-info "Artifacts in destination:"
-ls -l "$DEST_DIR/$LIBFT_LIB_NAME" 2>/dev/null || true
-if [ -n "$HEADER_PATH" ]; then
-  ls -l "$DEST_DIR/$(basename "$HEADER_PATH")" 2>/dev/null || true
-fi
-if [ -n "$README_PATH" ]; then
-  ls -l "$DEST_DIR/$(basename "$README_PATH")" 2>/dev/null || true
-fi
+info "Contents copied to includes directory:"
+ls -la "$DEST_DIR" 2>/dev/null || true
 
 info "AddLibft completed successfully."

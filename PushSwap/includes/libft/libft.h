@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/05 21:05:41 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 11:54:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_putnbr_fd(int n, int fd);
 
 /////////// DOUBLE ARRAY /////////////////////////////////////////////
 
-int	ft_free_array(char **arr);
+void	ft_free_array(char **arr);
 
 /////////// MEMORY /////////////////////////////////////////////
 
@@ -88,6 +88,7 @@ void	*ft_calloc(size_t count, size_t size);
 typedef struct s_list
 {
 	void			*content;
+	int				index;
 	struct s_list	*next;
 	struct s_list	*previous;
 }	t_list;
@@ -101,6 +102,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstindex(t_list **lst);
 
 /////////// GET_NEXT_LINE /////////////////////////////////////////////
 

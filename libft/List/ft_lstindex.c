@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_array.c                                    :+:      :+:    :+:   */
+/*   ft_lstindex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 18:13:47 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:15:09 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/11 11:49:25 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/11 12:20:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_array(char **arr)
+void	ft_lstindex(t_list **lst)
 {
-	int	i;
+	int		i;
+	t_list	*current;
 
 	i = 0;
-	while (arr[i])
+	current = *lst;
+	while (current)
 	{
-		free (arr[i]);
+		current->index = i;
 		i++;
+		current = current->next;
 	}
-	free (arr);
 }

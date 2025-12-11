@@ -6,19 +6,18 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:45:25 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 14:38:20 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:37:17 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
 
-int	ft_full_free(char **arr, t_list **stack, void (*del)(void *))
+void	ft_clear_all(t_list **s_a, t_list **s_b)
 {
-	if (arr)
-		ft_free_array(arr);
-	if (stack && *stack)
-		ft_lstclear(stack, del);
-	return (1);
+	if (s_a)
+		ft_lstclear(s_a, free);
+	if (s_b)
+		ft_lstclear(s_b, free);
 }
 
 // FREE TOUS LES ELEMENTS D'UN NOEUD
@@ -29,7 +28,5 @@ void	ft_node_del(void *content)
 	node = (t_node *) content;	
 	if(!node)
 		return;
-	if (node->str)
-		free(node->str);
 	free(node);
 }

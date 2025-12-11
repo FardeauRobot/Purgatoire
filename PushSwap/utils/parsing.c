@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/10 18:31:44 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 14:35:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	ft_init_str(t_list **stack, char *str)
 	{
 		nb = ft_atol(arr[i]);
 		if (ft_overint(nb) || !ft_is_number(arr[i]))
-			return (ft_full_free(arr, stack, ft_node_del));
+			exit(ft_free_parse(arr, stack));
 		n_new = ft_node_init((int)nb);
 		if (!n_new)
-			return (ft_full_free(arr, stack, ft_node_del));
+			exit(ft_free_parse(arr, stack));
 		l_new = ft_lstnew(n_new);
 		ft_lstadd_back(stack, l_new);
 		i++;
@@ -73,11 +73,11 @@ int	ft_is_sorted(t_list *lst)
 	{
 		current = lst->content;
 		if (max > current->value)
-			return (1);
+			return (0);
 		max = current->value;
 		lst = lst->next;
 	}
-	return (0);
+	return (1);
 }
 
 int	ft_parsing(t_list **stack, int argc, char **argv)

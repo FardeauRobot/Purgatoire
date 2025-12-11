@@ -19,6 +19,7 @@ UTILS_FILES = 	parsing.c \
 				parsing_utils.c \
 				free_utils.c \
 				node_utils.c \
+				sorting_utils.c \
 				diverse.c 
 
 UTILS = $(addprefix $(UTILS_DIR)/, $(UTILS_FILES))

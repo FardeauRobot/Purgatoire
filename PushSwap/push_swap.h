@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:21:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/10 12:16:42 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/11 13:34:25 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,5 @@
 
 ////////// MACRO //////// 
 # define SPACE " \t\n\r\f\v"
-
-////////// PARSING.C //////// 
-int	ft_init_str(t_list **stack, char *str);
-
-int	ft_parsing(t_list **stack, int argc, char **argv);
 
 #endif 
