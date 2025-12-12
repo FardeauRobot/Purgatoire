@@ -214,5 +214,4 @@ void	ft_init(t_list **stack_a, t_list **stack_b)
 	lis = ft_save_lis(stack_a, &lis_len);
 	ft_dispatch(stack_a, stack_b, lis, lis_len);
 	free(lis);
-	ft_lstprint_both(*stack_a, *stack_b);
 }
