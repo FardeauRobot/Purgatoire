@@ -15,7 +15,8 @@ SRCS_CONVERSION = \
 		Conversion/ft_atoi.c \
 		Conversion/ft_atol.c \
 		Conversion/ft_itoa.c \
-		Conversion/ft_overint.c
+		Conversion/ft_overint.c \
+		Conversion/ft_get_max.c 
 
 SRCS_MEMORY = \
 		Memory/ft_bzero.c \
@@ -25,7 +26,8 @@ SRCS_MEMORY = \
 		Memory/ft_memcpy.c \
 		Memory/ft_memmove.c \
 		Memory/ft_memset.c \
-		Memory/ft_free_array.c
+		Memory/ft_free_array.c \
+		Memory/ft_free_int_arr.c
 
 SRCS_CHAR = \
 		Char/ft_isalnum.c \
@@ -45,7 +47,8 @@ SRCS_OUTPUT = \
 		Output/ft_putnbr_fd.c \
 		Output/ft_putstr_fd.c \
 		Output/ft_printf.c \
-		Output/ft_printf_nbr.c
+		Output/ft_printf_nbr.c \
+		Output/ft_print_int_arr.c \
 
 SRCS_STRINGS = \
 		Strings/ft_split_sep.c \

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 17:33:35 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/12 16:24:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+void	ft_print_int_arr(int *nb, int size);
 
+int	ft_get_max(int *arr, int arr_len);
 /////////// DOUBLE ARRAY /////////////////////////////////////////////
 
 void	ft_free_array(char **arr);
@@ -82,6 +84,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	*ft_calloc(size_t count, size_t size);
+void	ft_free_int_arr(int **arr, int max);
 
 /////////// LINKED LISTS /////////////////////////////////////////////
 

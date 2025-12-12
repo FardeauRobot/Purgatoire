@@ -1,36 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_print_int_arr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/12 18:07:19 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/12 16:10:16 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/12 16:11:40 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv)
+void	ft_print_int_arr(int *nb, int size)
 {
-	t_list	*stack_a;
-	t_list	*stack_b;
-	int		error;
+	int i;
 
-	error = 0;
-	if (argc < 2)
-		return (1);
-	stack_a = NULL;
-	stack_b = NULL;
-	ft_parsing(&stack_a, argc, argv);
-	if (ft_no_double(stack_a))
-		exit(ft_error_parse(NULL, &stack_a));
-	if (ft_is_sorted(stack_a, stack_b))
+	i = 0;
+	while (i < size)
 	{
-		ft_lstclear(&stack_a, free);
-		return (0);
+		ft_printf("arr[%d] = %d\n", i, nb[i]);
+		i++;
 	}
-	ft_sorting(&stack_a, &stack_b);
-	return (0);
 }

@@ -6,89 +6,213 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 19:44:42 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/12 17:55:46 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_srcs.h"
 
-// CHECK SI n_index appartient au tableau LIS
-static int	ft_belongs(t_list *current, int *lis_arr, int lis_len)
+/*
+	Pour initialiser il nous faut :
+
+	Connaitre la lis;
+	Envoyer tous les nombres qui ne sont pas dans la LIS dans la stack_b
+
+
+	Pour connaitre la LIS :
+	On crée un tableau qui récupere les valeurs de la liste;
+	On crée un tableau de structures t_lis : 
+		index,
+		size,
+		valeurs[];
+	On fait passer une fonction find_lis a partir de chaque element (i, arr_stack, t_lis[i]);
+	{
+		on prend l'index;
+		on prend la taille de la lis;
+		on prend les valeurs de la lis
+	}
+*/
+
+int		*ft_stack_to_arr(t_list *stack, int size)
 {
-	int		index;
+	int		*arr;
+	t_node	*node;
 	int		i;
 
-	if (!current)
-		return (0);
-	index = current->index;
+	arr = malloc(sizeof(int) * size);
+	if (!arr)
+		return (NULL);
+	i = 0;
+	while (stack)
+	{
+		node = stack->content;
+		arr[i] = node->value;
+		i++;
+		stack = stack->next;
+	}
+	return (arr);
+}
+
+int	*ft_lis_init(int len, int mod)
+{
+	int 	*lis;
+	int 	i;
+
+	lis = malloc(sizeof(int) * len);
+	if (!lis)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		if (mod)
+			lis[i] = -1;
+		else
+			lis[i] = 1;
+		i++;
+	}
+	return (lis);
+}
+
+void	ft_compute_lis(int *lis, int *parent, int *arr, int s_len)
+{
+	int i;
+	int j;
+
+	i = 1;
+	while (i < s_len)
+	{
+		j = 0;	
+		while (j < i)
+		{
+			if (arr[j] < arr[i] && lis[j] + 1 > lis[i])
+			{
+				lis[i] = lis[j] + 1;
+				parent[i] = j;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_max_lis(int lis[], int len, int *max_len, int *max_index)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (lis[i] > *max_len)
+		{
+			*max_len = lis[i];
+			*max_index = i;
+		}
+		i++;
+	}
+}
+
+int *ft_make_lis(int *s_arr, int *parent, int max_len, int max_index)
+{
+	int i;
+	int j;
+	int *res;
+
+	res = malloc(sizeof(int) * max_len);
+	if (!res)
+		return (NULL);
+	i = max_len - 1;
+	j = max_index;
+	while (j > -1)
+	{
+		res[i] = s_arr[j];
+		i--;
+		j = parent[j];
+	}
+	return (res);
+}
+
+void	ft_free_lis(int *lis, int *par, int *s_arr)
+{
+	if (lis)
+		free(lis);
+	if (par)
+		free(par);
+	if (s_arr)
+		free(s_arr);
+}
+int	*ft_save_lis(t_list **stack_a, int *lis_len)
+{
+	int	s_len;
+	int	max_index;
+	int	*s_arr;
+	int	*lis;
+	int	*parent;
+	int *result;
+
+
+	max_index = 0;
+	s_len = ft_lstsize(*stack_a);
+	s_arr = ft_stack_to_arr(*stack_a, s_len); // Nous donne le tableau
+	lis = ft_lis_init(s_len, 0); // Nous renvoie la structure pour calcul de lis
+	parent = ft_lis_init(s_len, 1);
+	if (!s_arr || !lis || !parent)
+	{
+		ft_free_lis(lis, parent, s_arr);
+		exit(ft_error_stacks(stack_a, NULL));
+	}
+	ft_compute_lis(lis, parent, s_arr, s_len);
+	ft_max_lis(lis, s_len, lis_len, &max_index);
+	result = ft_make_lis(s_arr, parent, *lis_len, max_index);
+	// if (!result)
+		// PROTECT
+	ft_free_lis(lis, parent, s_arr);
+	return (result);
+}
+
+int	ft_is_in_lis(int *lis, int lis_len, int value)
+{
+	int i;
+
 	i = 0;
 	while (i < lis_len)
 	{
-		if (lis_arr[i] == index)
+		if (value == lis[i])
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-static void	ft_dispatch(int *lis_arr, int lis_len, t_list **stack_a, t_list **stack_b)
+void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 {
-	int		a_len;
-	int		i;
+	t_node	*n_current;
+	int s_len;
+	int i;
 
-	a_len = ft_lstsize(*stack_a);
 	i = 0;
-	while (i < a_len)
+	s_len = ft_lstsize(*stack_a);
+	while (i < s_len - lis_len)
 	{
-		if (ft_belongs(*stack_a, lis_arr, lis_len))
+		n_current = (*stack_a)->content;
+		if (ft_is_in_lis(lis, lis_len, n_current->value))
 			ft_ra(stack_a, 1);
 		else
+		{
+			i++;
 			ft_pb(stack_a, stack_b, 1);
-		i++;
+		}
 	}
 }
-
-static int	*ft_extract_values(t_list *stack, int len)
-{
-	int		*values;
-	int		i;
-	t_node	*node;
-
-	values = malloc(sizeof(int) * len);
-	if (!values)
-		return (NULL);
-	i = 0;
-	while (stack && i < len)
-	{
-		node = stack->content;
-		values[i] = node->value;
-		stack = stack->next;
-		i++;
-	}
-	return (values);
-}
-
-static void	ft_compute_lis(int *values, int *dp, int *prev, int len)
-{
-}
-
-static int	ft_find_lis_end(int *dp, int len)
-{
-}
-
-static int	*ft_find_lis(t_list **stack, int *lis_len)
-{
-}
-
 void	ft_init(t_list **stack_a, t_list **stack_b)
 {
-	int		*lis_arr;
-	int		lis_len;
+	int	stack_len;
+	int	*lis;
+	int lis_len;
 
-	ft_lstindex(stack_a);
-	lis_arr = ft_find_lis(stack_a, &lis_len);
-	if (!lis_arr)
-		exit(ft_error_stacks(stack_a, stack_b));
-	ft_dispatch(lis_arr, lis_len, stack_a, stack_b);
-	free(lis_arr);
+	lis_len = 0;
+	stack_len = ft_lstsize(*stack_a);
+	lis = ft_save_lis(stack_a, &lis_len);
+	ft_dispatch(stack_a, stack_b, lis, lis_len);
+	free(lis);
+	ft_lstprint_both(*stack_a, *stack_b);
 }

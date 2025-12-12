@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 15:02:24 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/12 18:04:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_no_double(t_list *stack)
 	return (0);
 }
 
-int	ft_is_sorted(t_list *lst)
+int	ft_is_sorted(t_list *lst, t_list *lst_b)
 {
 	int		max;
 	t_node	*current;
@@ -77,7 +77,9 @@ int	ft_is_sorted(t_list *lst)
 		max = current->value;
 		lst = lst->next;
 	}
-	return (1);
+	if (!lst_b)
+		return (1);
+	return (0);
 }
 
 int	ft_parsing(t_list **stack, int argc, char **argv)
