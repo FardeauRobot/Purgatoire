@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 20:26:48 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/12 18:00:57 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/13 14:26:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 typedef struct s_node {
 	int					value;
 	int					to_top;
-	int					above;
-	struct s_node		*target;
+	int					cost;
+	t_list		*target;
 }	t_node;
 //----------------------------//
 
