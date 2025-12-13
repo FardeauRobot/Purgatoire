@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/12 18:04:15 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/13 18:51:05 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,40 @@ int	ft_no_double(t_list *stack)
 	return (0);
 }
 
-int	ft_is_sorted(t_list *lst, t_list *lst_b)
+t_list	*ft_lstmin(t_list *stack)
+{
+	t_node	*node;
+	t_node	*min_node;
+	t_list	*min;
+
+	min = stack;
+	while (stack)
+	{
+		node = ft_get_content(stack);
+		min_node = ft_get_content(min);
+		if (!min->content || node->value < min_node->value)
+			min = stack;
+		stack = stack->next;
+	}
+	return (min);
+}
+int	ft_is_sorted(t_list **lst, t_list **lst_b)
 {
 	int		max;
-	t_node	*current;
+	t_list	*l_current;
+	t_node	*n_current;
 
+	l_current = *lst;
 	max = INT_MIN;
-	while (lst)
+	while (l_current)
 	{
-		current = lst->content;
-		if (max > current->value)
+		n_current = ft_get_content(l_current);
+		if (max > n_current->value)
 			return (0);
-		max = current->value;
-		lst = lst->next;
+		max = n_current->value;
+		l_current = l_current->next;
 	}
-	if (!lst_b)
+	if (!*lst_b)
 		return (1);
 	return (0);
 }

@@ -12,11 +12,12 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 SRCS_FILES =	main.c \
 				sorting.c \
+				init.c \
+				parsing.c \
+				moves.c \
 				rotate.c \
 				push.c \
 				reverse_rotate.c \
-				init.c \
-				parsing.c \
 
 UTILS_FILES = 	parsing_utils.c \
 				free_utils.c \
@@ -45,7 +46,7 @@ $(NAME) : $(LIBFT) $(OBJS)
 	@$(CC) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
+	@make -C  $(LIBFT_DIR)
 
 clean : 
 	@rm -rf $(OBJS)

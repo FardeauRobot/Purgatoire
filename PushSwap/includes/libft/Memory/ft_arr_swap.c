@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nodes.h                                            :+:      :+:    :+:   */
+/*   ft_swap_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 20:26:48 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 18:09:51 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/13 17:16:49 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/13 17:23:09 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef NODES_H
-# define NODES_H
+#include "libft.h"
 
-////////// STRUCTURES //////// 
-typedef struct s_node {
-	int					value;
-	int					to_top;
-	int					above;
-	int					cost;
-	t_list				*target;
-}	t_node;
-//----------------------------//
-
-#endif
+void	ft_arr_swap(int *arr, int len)
+{
+	int i;
+	
+	i = 0;
+	while (i < len / 2)	
+	{
+		ft_int_swap(&arr[i], &arr[len - i]);
+		i++;
+	}
+}

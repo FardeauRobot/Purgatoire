@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/12 17:55:46 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/13 18:24:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,16 +191,18 @@ void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 
 	i = 0;
 	s_len = ft_lstsize(*stack_a);
-	while (i < s_len - lis_len)
+	ft_printf("LIS = \n");
+	ft_print_int_arr(lis, lis_len);
+	while (i < s_len)
 	{
 		n_current = (*stack_a)->content;
 		if (ft_is_in_lis(lis, lis_len, n_current->value))
-			ft_ra(stack_a, 1);
-		else
 		{
 			i++;
-			ft_pb(stack_a, stack_b, 1);
+			ft_ra(stack_a, 1);
 		}
+		else
+			ft_pb(stack_a, stack_b, 1);
 	}
 }
 void	ft_init(t_list **stack_a, t_list **stack_b)

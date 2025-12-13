@@ -16,7 +16,9 @@ SRCS_CONVERSION = \
 		Conversion/ft_atol.c \
 		Conversion/ft_itoa.c \
 		Conversion/ft_overint.c \
-		Conversion/ft_get_max.c 
+		Conversion/ft_get_max.c \
+		Conversion/ft_int_swap.c \
+		Conversion/ft_int_cmp.c \
 
 SRCS_MEMORY = \
 		Memory/ft_bzero.c \
@@ -27,7 +29,8 @@ SRCS_MEMORY = \
 		Memory/ft_memmove.c \
 		Memory/ft_memset.c \
 		Memory/ft_free_array.c \
-		Memory/ft_free_int_arr.c
+		Memory/ft_free_int_arr.c \
+		Memory/ft_arr_swap.c \
 
 SRCS_CHAR = \
 		Char/ft_isalnum.c \
@@ -129,7 +132,8 @@ bannerdelete:
 	@printf "     $(BOLD)LIBFT - DELETING (all targets)$(RESET)\n"
 	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
-re : fclean all
+re : fclean 
+	make all
 	@printf "$(CYAN)Rebuild complete: $(NAME)$(RESET)\n"
 
 .PHONY : clean fclean all re

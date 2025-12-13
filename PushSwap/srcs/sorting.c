@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 18:47:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 14:29:32 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/13 18:40:49 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_find_cheapest(t_list *stack)
 	{
 		n_cheapest = l_cheapest->content;
 		n_current = stack->content;
-		if (n_cheapest->value > n_current->value)
+		if (n_cheapest->cost > n_current->cost)
 			l_cheapest = stack;
 		stack = stack->next;
 	}
@@ -44,9 +44,15 @@ void	ft_get_cost(t_list **stack)
 		n_current = l_current->content;
 		index = l_current->index;
 		if (l_current->index > l_len / 2)
-			n_current->to_top = index;
-		else
+		{
+			n_current->above = 0;
 			n_current->to_top = l_len - index;
+		}
+		else
+		{
+			n_current->above = 1;
+			n_current->to_top = index;
+		}
 		l_current = l_current->next;
 	}
 }
@@ -61,9 +67,10 @@ void	ft_compute_cost(t_list **stack_b)
 	l_current = *stack_b;
 	while (l_current)
 	{
-		n_current = l_current->content;
-		l_target = n_current->target;
-		n_target = l_target->content;
+		n_current = ft_get_node(l_current);
+		l_target = ft_get_target(n_current);
+		n_target = ft_get_content(l_target);
+		n_current->cost = n_current->to_top;
 		n_current->cost += n_target->cost;
 		l_current = l_current->next;
 	}
@@ -99,27 +106,29 @@ t_node	*ft_find_smallest(t_list *stack_a)
 void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 {
 	t_list	*b_current;
-	t_node	*b_node;
 	t_list	*a_current;
+	t_list	*l_target;
 	t_node	*a_node;
+	t_node	*b_node;
 	t_node	*n_target;
 
 	b_current = *stack_b;
 	while (b_current)
 	{
-		b_node = b_current->content;
+		b_node = ft_get_content(b_current);
+		l_target = *stack_a;
 		n_target = ft_find_smallest(*stack_a);
 		a_current = *stack_a;
 		while (a_current)
 		{
-			a_node = a_current->content;
+			a_node = ft_get_content(b_current);
 			if (a_node->value > b_node->value && a_node->value < n_target->value)
-					b_node->target = a_current;
+				l_target = a_current;
 			a_current = a_current->next;
 		}
+		b_node->target = l_target;
 		b_current = b_current->next;
 	}
-
 }
 
 int	ft_sorting(t_list **stack_a, t_list **stack_b)
@@ -128,14 +137,27 @@ int	ft_sorting(t_list **stack_a, t_list **stack_b)
 
 	l_to_move = NULL;
 	ft_init(stack_a, stack_b); // INITIALISE LA STACK B
-	// while (*stack_b)
+	while (!ft_is_sorted(stack_a, stack_b))
+	{
+		ft_lstindex(stack_a);
+		ft_lstindex(stack_b);
+		ft_affect_target(stack_a, stack_b);
+		ft_affect_cost(stack_a, stack_b);
+		l_to_move = ft_find_cheapest(*stack_b); // A FAIRE
+		ft_move(l_to_move, stack_a, stack_b);
+	}
+	// t_list *l_current = *stack_b;
+	// t_node	*n_current;
+	// t_list	*l_target;
+	// t_node	*n_target;
+	// while (l_current)
 	// {
-	ft_affect_target(stack_a, stack_b);
-	ft_affect_cost(stack_a, stack_b);
-	l_to_move = ft_find_cheapest(*stack_b); // A FAIRE
-		// ft_move(stack_a, stack_b);
+	// 	n_current = ft_get_content(l_current);
+	// 	l_target = ft_get_target(n_current);
+	// 	n_target = ft_get_content(l_target);
+	// 	ft_printf("INDEX : %d || VALUE = %d || TARGET = %p || TARGET VALUE = %d\n", l_current->index, n_current->value, n_current->target, n_target->value);
+	// 	l_current = l_current->next;
 	// }
-	ft_lstprint_both(*stack_a, *stack_b);
 	ft_clear_all(stack_a, stack_b);
 	return (0);
 }
