@@ -16,9 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_list	*stack_a;
 	t_list	*stack_b;
-	int		error;
 
-	error = 0;
 	if (argc < 2)
 		return (1);
 	stack_a = NULL;

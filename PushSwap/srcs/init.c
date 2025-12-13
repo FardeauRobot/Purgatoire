@@ -207,12 +207,10 @@ void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 }
 void	ft_init(t_list **stack_a, t_list **stack_b)
 {
-	int	stack_len;
 	int	*lis;
 	int lis_len;
 
 	lis_len = 0;
-	stack_len = ft_lstsize(*stack_a);
 	lis = ft_save_lis(stack_a, &lis_len);
 	ft_dispatch(stack_a, stack_b, lis, lis_len);
 	free(lis);
