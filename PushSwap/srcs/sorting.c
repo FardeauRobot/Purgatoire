@@ -123,15 +123,37 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 	while (b_current)
 	{
 		b_node = ft_get_content(b_current);
-		l_target = *stack_a;
-		n_target = ft_find_smallest(*stack_a);
+		l_target = NULL;
+		n_target = NULL;
 		a_current = *stack_a;
 		while (a_current)
 		{
 			a_node = ft_get_content(a_current);
-			if (a_node->value > b_node->value && a_node->value < n_target->value)
-				l_target = a_current;
+			if (a_node->value > b_node->value)
+			{
+				if (!n_target || a_node->value < n_target->value)
+				{
+					l_target = a_current;
+					n_target = a_node;
+				}
+			}
 			a_current = a_current->next;
+		}
+		if (!l_target)
+		{
+			a_current = *stack_a;
+			l_target = a_current;
+			n_target = ft_get_content(a_current);
+			while (a_current)
+			{
+				a_node = ft_get_content(a_current);
+				if (a_node->value < n_target->value)
+				{
+					l_target = a_current;
+					n_target = a_node;
+				}
+				a_current = a_current->next;
+			}
 		}
 		b_node->target = l_target;
 		b_current = b_current->next;
@@ -141,6 +163,8 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 int	ft_sorting(t_list **stack_a, t_list **stack_b)
 {
 	t_list	*l_to_move;
+	t_list	*l_min;
+	t_node	*n_min;
 
 	l_to_move = NULL;
 	ft_init(stack_a, stack_b); // INITIALISE LA STACK B
@@ -153,18 +177,21 @@ int	ft_sorting(t_list **stack_a, t_list **stack_b)
 		l_to_move = ft_find_cheapest(*stack_b); // A FAIRE
 		ft_move(l_to_move, stack_a, stack_b);
 	}
-	// t_list *l_current = *stack_b;
-	// t_node	*n_current;
-	// t_list	*l_target;
-	// t_node	*n_target;
-	// while (l_current)
-	// {
-	// 	n_current = ft_get_content(l_current);
-	// 	l_target = ft_get_target(n_current);
-	// 	n_target = ft_get_content(l_target);
-	// 	ft_printf("INDEX : %d || VALUE = %d || TARGET = %p || TARGET VALUE = %d\n", l_current->index, n_current->value, n_current->target, n_target->value);
-	// 	l_current = l_current->next;
-	// }
+	ft_lstindex(stack_a);
+	l_min = *stack_a;
+	n_min = ft_node_min(*stack_a);
+	while (ft_get_content(l_min) != n_min)
+		l_min = l_min->next;
+	if (l_min->index <= ft_lstsize(*stack_a) / 2)
+	{
+		while (*stack_a != l_min)
+			ft_ra(stack_a, 1);
+	}
+	else
+	{
+		while (*stack_a != l_min)
+			ft_rra(stack_a, 1);
+	}
 	ft_clear_all(stack_a, stack_b);
 	return (0);
 }

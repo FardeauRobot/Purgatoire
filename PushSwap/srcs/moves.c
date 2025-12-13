@@ -95,9 +95,4 @@ void	ft_move(t_list *to_place, t_list **stack_a, t_list **stack_b)
 			ft_rb(stack_b, 1);
 	}
 	ft_pa(stack_b, stack_a, 1);
-	ft_lstprint_both(*stack_a, *stack_b);
 }
-
-// t_list	*to_place;
-// t_node	*to_place_content = ft_get_content(to_place);
-// t_list	*target = ft_get_target(to_place_content);
