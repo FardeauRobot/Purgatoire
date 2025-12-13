@@ -72,10 +72,8 @@ void	ft_compute_cost(t_list **stack_b)
 		n_target = ft_get_content(l_target);
 		if (n_current->above == n_target->above)
 		{
-			if (n_current->to_top > n_target->to_top)
-				n_current->cost = n_current->to_top;
-			else
-				n_current->cost = n_target->to_top;
+			n_current->cost = (n_current->to_top > n_target->to_top)
+				? n_current->to_top : n_target->to_top;
 		}
 		else
 			n_current->cost = n_current->to_top + n_target->to_top;
@@ -129,13 +127,11 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 		while (a_current)
 		{
 			a_node = ft_get_content(a_current);
-			if (a_node->value > b_node->value)
+			if (a_node->value > b_node->value
+				&& (!n_target || a_node->value < n_target->value))
 			{
-				if (!n_target || a_node->value < n_target->value)
-				{
-					l_target = a_current;
-					n_target = a_node;
-				}
+				l_target = a_current;
+				n_target = a_node;
 			}
 			a_current = a_current->next;
 		}
