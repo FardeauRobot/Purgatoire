@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 18:47:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 18:40:49 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/15 18:51:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,50 +84,87 @@ void	ft_affect_cost(t_list **stack_a, t_list **stack_b)
 }
 
 //  cherche la target dans la stack_a pour t_node
-t_node	*ft_find_smallest(t_list *stack_a)
+t_list	*ft_find_smallest(t_list *stack_a)
 {
-	t_node *small;
+	t_node	*n_small;
 	t_node *node;
-	t_list *current;
+	t_list *l_small;
 
-	small = stack_a->content;
-	current = stack_a->next;
-	while (current)
+	l_small = stack_a;
+	n_small = ft_get_content(stack_a);
+	while (stack_a)
 	{
-		node = current->content;
-		if (node->value < small->value)
-			small = current->content;
-		current = current->next;
+		node = ft_get_content(stack_a);
+		if (node->value < n_small->value)
+		{
+			l_small = stack_a;
+			n_small = ft_get_content(l_small);
+		}
+		stack_a = stack_a->next;
 	}
-	return (small);
+	return (l_small);
 }
 
 // Affecte a l'ensemble de la stack_b le noeud target
 void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 {
-	t_list	*b_current;
-	t_list	*a_current;
-	t_list	*l_target;
-	t_node	*a_node;
-	t_node	*b_node;
+	t_node	*n_a;
+	t_node	*n_b;
 	t_node	*n_target;
+	t_list	*l_a;
+	t_list	*l_b;
+	t_list	*l_target;
 
-	b_current = *stack_b;
-	while (b_current)
+	l_b = *stack_b;
+	while (l_b)
 	{
-		b_node = ft_get_content(b_current);
-		l_target = *stack_a;
-		n_target = ft_find_smallest(*stack_a);
-		a_current = *stack_a;
-		while (a_current)
+		l_target = ft_find_smallest(*stack_a);
+		n_target = ft_get_content(l_target);
+		n_b = ft_get_content(l_b);
+		l_a = *stack_a;
+		while (l_a)
 		{
-			a_node = ft_get_content(b_current);
-			if (a_node->value > b_node->value && a_node->value < n_target->value)
-				l_target = a_current;
-			a_current = a_current->next;
+			n_a = ft_get_content(l_a);
+
+			if (n_a->value > n_b->value&&(n_b->value > n_target->value || n_a->value < n_target->value))
+			{
+				l_target = l_a;
+				n_target = ft_get_content(l_target);
+			}
+			l_a = l_a->next;
 		}
-		b_node->target = l_target;
-		b_current = b_current->next;
+		if (n_target->value < n_b->value)
+			l_target = ft_find_smallest(*stack_a);
+		n_b->target = l_target;
+		l_b = l_b->next;	
+	}
+	t_list *l_current = *stack_b;
+	while (l_current)
+	{
+		t_node *n_current  = ft_get_content(l_current);
+		l_target = ft_get_target(n_current);
+		n_target = ft_get_content(l_target);
+		// ft_printf("CURRENT = %d || TARGET = %p || VALUE = %d\n", n_current->value, n_current->target, n_target->value);
+		l_current = l_current->next;	
+	}
+}
+
+void	ft_check_above(t_list	**stack)
+{
+	t_list	*l_current;
+	t_node	*n_current;
+	int		l_len;
+
+	l_current = *stack;
+	l_len = ft_lstsize(*stack);
+	while(l_current)
+	{
+		n_current = ft_get_content(l_current);
+		if (l_current->index > l_len / 2)
+			n_current->above = 1;	
+		else
+			n_current->above = 0;	
+		l_current = l_current->next;
 	}
 }
 
@@ -137,27 +174,22 @@ int	ft_sorting(t_list **stack_a, t_list **stack_b)
 
 	l_to_move = NULL;
 	ft_init(stack_a, stack_b); // INITIALISE LA STACK B
-	while (!ft_is_sorted(stack_a, stack_b))
+	while (*stack_b)
 	{
 		ft_lstindex(stack_a);
 		ft_lstindex(stack_b);
 		ft_affect_target(stack_a, stack_b);
+		ft_check_above(stack_a);
+		ft_check_above(stack_b);
 		ft_affect_cost(stack_a, stack_b);
 		l_to_move = ft_find_cheapest(*stack_b); // A FAIRE
 		ft_move(l_to_move, stack_a, stack_b);
+		// ft_lstprint_both(*stack_a, *stack_b);
 	}
-	// t_list *l_current = *stack_b;
-	// t_node	*n_current;
-	// t_list	*l_target;
-	// t_node	*n_target;
-	// while (l_current)
-	// {
-	// 	n_current = ft_get_content(l_current);
-	// 	l_target = ft_get_target(n_current);
-	// 	n_target = ft_get_content(l_target);
-	// 	ft_printf("INDEX : %d || VALUE = %d || TARGET = %p || TARGET VALUE = %d\n", l_current->index, n_current->value, n_current->target, n_target->value);
-	// 	l_current = l_current->next;
-	// }
+	t_node *min = ft_node_min(*stack_a);
+	while ((*stack_a)->content != min)
+		ft_ra(stack_a, 1);
+	ft_lstprint_both(*stack_a, *stack_b);
 	ft_clear_all(stack_a, stack_b);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 18:40:30 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/15 18:09:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ int	main(int argc, char **argv)
 	ft_parsing(&stack_a, argc, argv);
 	if (ft_no_double(stack_a))
 		exit(ft_error_parse(NULL, &stack_a));
-	if (ft_is_sorted(&stack_a, &stack_b))
+	if (ft_is_sorted(&stack_a))
 	{
 		ft_lstclear(&stack_a, free);
 		return (0);
 	}
 	ft_sorting(&stack_a, &stack_b);
-	ft_lstprint_both(stack_a, stack_b);
+	// ft_lstprint_both(stack_a, stack_b);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 17:25:49 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 18:47:44 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/15 18:00:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	ft_clear_all(t_list **s_a, t_list **s_b);
 
 ////////// NODE_UTILS.C //////// 
 t_node	*ft_node_min(t_list *lst);
-t_node	*ft_lstmax(t_list *lst);
 t_node	*ft_node_init(long nb);
+t_list	*ft_lstmax(t_list *stack);
 //----------------------------//
 
 ////////// PARSING_UTILS.C //////// 

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 16:30:33 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 12:13:57 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/15 13:42:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void ft_rotate(t_list **lst)
 	last = ft_lstlast(*lst);
 	last->next = first;
 	first->next = NULL;
+	ft_lstindex(lst);
 }
 
 void ft_ra(t_list **lst, int check)

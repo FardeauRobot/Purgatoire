@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:39:39 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 18:40:03 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/15 13:48:26 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ////////// PARSING.C //////// 
 int		ft_init_str(t_list **stack, char *str);
 int		ft_no_double(t_list *stack);
-int	ft_is_sorted(t_list **lst, t_list **lst_b);
+int	ft_is_sorted(t_list **lst);
 int		ft_parsing(t_list **stack, int argc, char **argv);
 //----------------------------//
 
@@ -27,8 +27,10 @@ void	ft_move(t_list *to_place, t_list **stack_a, t_list **stack_b);
 int	ft_sorting(t_list **la, t_list **lb);
 //----------------------------//
 
+t_list	*ft_find_smallest(t_list *stack_a);
 ////////// INIT.C //////// 
 void	ft_init(t_list **stack_a, t_list **stack_b);
 //----------------------------//
+
 
 #endif
