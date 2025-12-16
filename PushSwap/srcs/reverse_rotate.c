@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 17:14:48 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 18:50:45 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/16 13:52:51 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	ft_reverse_rotate(t_list **lst)
 	ft_lstindex(lst);
 	// ft_printf("INDEX = %d\n", (*lst)->index);
 	// ft_lstindex(lst);
-	t_node *n_first = ft_get_content(first);
-	ft_printf("INDEX = %d, VALUE = %d\n", first->index, n_first->value);
+	// t_node *n_first = ft_get_content(first);
+	// ft_printf("INDEX = %d, VALUE = %d\n", first->index, n_first->value);
 }
 
 void	ft_rra(t_list **lst, int check)

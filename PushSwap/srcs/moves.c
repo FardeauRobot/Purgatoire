@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 17:30:14 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 18:34:17 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/16 13:55:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ void	ft_move(t_list *to_place, t_list **stack_a, t_list **stack_b)
 		while (to_place->index != 0)
 			ft_rb(stack_b, 1);
 		while (l_target->index != 0)
-		{
 			ft_rra(stack_a, 1);
-			// ft_printf("INDEX = %d\n", l_target->index);
-		}
 	}
 	else if (!n_to_place->above && n_target->above)
 	{
