@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 18:47:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 13:16:34 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/18 13:55:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_compute_cost(t_list **stack_b)
 void	ft_affect_cost(t_list **stack_a, t_list **stack_b)
 {
 	ft_get_cost(stack_a);
-	ft_get_cost(stack_b);	
+	ft_get_cost(stack_b);
 	ft_compute_cost(stack_b);
 }
 
@@ -87,8 +87,8 @@ void	ft_affect_cost(t_list **stack_a, t_list **stack_b)
 t_list	*ft_find_smallest(t_list *stack_a)
 {
 	t_node	*n_small;
-	t_node *node;
-	t_list *l_small;
+	t_node	*node;
+	t_list	*l_small;
 
 	l_small = stack_a;
 	n_small = ft_get_content(stack_a);
@@ -103,6 +103,58 @@ t_list	*ft_find_smallest(t_list *stack_a)
 		stack_a = stack_a->next;
 	}
 	return (l_small);
+}
+
+// returns the index where val should be inserted so that stack_b stays descending
+int	find_insert_pos_desc(t_list *b, int val)
+{
+	int		pos;
+	int		len;
+	t_list	*max_node;
+	t_list	*cur;
+	int		cur_val;
+	int		next_val;
+
+	len = ft_lstsize(b);
+	if (len < 2)
+		return (0);
+	max_node = ft_lstmax(b); // top of wrap: max followed by min
+	cur = max_node;
+	pos = cur->index; // indices assumed set by ft_lstindex
+	while (1)
+	{
+		cur_val = ft_get_content(cur)->value;
+		next_val = ft_get_content(cur->next ? cur->next : b)->value;
+		// insert between cur and next if val fits descending, including wrap
+		if ((val <= cur_val && val >= next_val) ||                      
+			// normal window
+			(cur_val < next_val && (val >= cur_val || val <= next_val)))
+				// wrap window
+			return (pos + 1 == len ? 0 : pos + 1);
+		cur = cur->next ? cur->next : b;
+		pos = cur->index;
+		if (cur == max_node)
+			break ;
+	}
+	return (0);
+}
+
+void	push_with_insert(t_list **a, t_list **b)
+{
+	int	val;
+	int	len_b;
+	int	pos;
+
+	val = ft_get_content(*a)->value;
+	len_b = ft_lstsize(*b);
+	pos = find_insert_pos_desc(*b, val);
+	if (pos <= len_b / 2)
+		while (pos--)
+			ft_rb(b, 1);
+	else
+		while (pos++ < len_b)
+			ft_rrb(b, 1);
+	ft_pb(a, b, 1);
 }
 
 // Affecte a l'ensemble de la stack_b le noeud target
@@ -127,7 +179,7 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 		while (l_a)
 		{
 			n_a = ft_get_content(l_a);
-			if (n_a -> value > n_b->value)
+			if (n_a->value > n_b->value)
 			{
 				if (!l_target || n_a->value < n_target->value)
 				{
@@ -140,7 +192,7 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 		if (!l_target)
 			l_target = ft_find_smallest(*stack_a);
 		n_b->target = l_target;
-		l_b = l_b->next;	
+		l_b = l_b->next;
 	}
 	// t_list *l_current = *stack_b;
 	// while (l_current)
@@ -148,12 +200,13 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 	// 	t_node *n_current  = ft_get_content(l_current);
 	// 	l_target = ft_get_target(n_current);
 	// 	n_target = ft_get_content(l_target);
-	// 	ft_printf("CURRENT = %d || TARGET = %p || VALUE = %d\n", n_current->value, n_current->target, n_target->value);
-	// 	l_current = l_current->next;	
+	// 	ft_printf("CURRENT = %d || TARGET = %p || VALUE = %d\n",
+	// n_current->value, n_current->target, n_target->value);
+	// 	l_current = l_current->next;
 	// }
 }
 
-void	ft_check_above(t_list	**stack)
+void	ft_check_above(t_list **stack)
 {
 	t_list	*l_current;
 	t_node	*n_current;

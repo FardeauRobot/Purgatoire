@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 13:20:56 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/18 14:09:33 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,8 @@ int	ft_is_in_lis(int *lis, int lis_len, int value)
 void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 {
 	t_node	*n_current;
-	t_node	*nb;
+	t_node	*n_a;
+	t_node	*n_b;
 	int s_len;
 	int i;
 
@@ -203,9 +204,12 @@ void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 		else
 		{
 			ft_pb(stack_a, stack_b, 1);
-			nb = ft_get_content(*stack_b);
-			if (nb->value < n_current->value)
-				ft_sb(stack_b, 1);
+			n_a = ft_get_content(*stack_a);
+			n_b = ft_get_content(*stack_b);
+			if (n_a->value > n_b->value)
+				ft_rb(stack_b, 1);
+			// else
+			// 	ft_rrb(stack_b, 1);
 		}
 	}
 }
