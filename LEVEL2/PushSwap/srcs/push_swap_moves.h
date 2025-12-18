@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:10:28 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:38:19 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/17 17:26:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,11 @@ void	ft_rrr(t_list **la, t_list **lb, int check);
 void	ft_push(t_list **stack_src, t_list **stack_dest);
 void	ft_pa(t_list **stack_b, t_list **stack_a, int check);
 void	ft_pb(t_list **stack_a, t_list **stack_b, int check);
+
+////////// SWAP.C //////// 
+void	ft_swap(t_list **lst);
+void	ft_sa(t_list **stack_a, int check);
+void	ft_sb(t_list **stack_b, int check);
+void	ft_ss(t_list **stack_a, t_list **stack_b, int check);
 
 #endif

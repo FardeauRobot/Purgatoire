@@ -17,6 +17,7 @@ SRCS_FILES =	main.c \
 				moves.c \
 				rotate.c \
 				push.c \
+				swap.c \
 				reverse_rotate.c \
 
 UTILS_FILES = 	parsing_utils.c \

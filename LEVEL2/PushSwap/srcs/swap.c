@@ -6,15 +6,45 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 17:24:16 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/16 16:19:44 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/17 17:27:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include  "push_swap_srcs.h"
 
-int	ft_swap(t_list **lst)
+void	ft_swap(t_list **lst)
 {
-	if (!lst || !*lst || !(*lst)->next)
-		return (1);
-	return (0);
+	t_list	*first;
+	t_list	*second;
+
+	if (!*lst || !(*lst)->next)
+		return ;
+	first = *lst;
+	second = (*lst)->next;
+	*lst = second;
+	first->next = second->next;
+	second->next = first;
+	return ;
+}
+
+void	ft_sa(t_list **stack_a, int check)
+{
+	ft_swap(stack_a);
+	if (check)
+		ft_printf("sa\n");
+}
+
+void	ft_sb(t_list **stack_b, int check)
+{
+	ft_swap(stack_b);
+	if (check)
+		ft_printf("sb\n");
+}
+
+void	ft_ss(t_list **stack_a, t_list **stack_b, int check)
+{
+	ft_swap(stack_a);
+	ft_swap(stack_b);
+	if (check)
+		ft_printf("ss\n");
 }

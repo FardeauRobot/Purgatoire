@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 18:08:08 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/17 17:35:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,13 +186,12 @@ int	ft_is_in_lis(int *lis, int lis_len, int value)
 void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 {
 	t_node	*n_current;
+	// t_node	*nb;
 	int s_len;
 	int i;
 
 	i = 0;
 	s_len = ft_lstsize(*stack_a);
-	ft_printf("LIS = \n");
-	ft_print_int_arr(lis, lis_len);
 	while (i < s_len)
 	{
 		n_current = (*stack_a)->content;
@@ -202,7 +201,12 @@ void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 			ft_ra(stack_a, 1);
 		}
 		else
+		{
 			ft_pb(stack_a, stack_b, 1);
+			// nb = ft_get_content(*stack_b);
+			// if (nb->value < n_current->value)
+			// 	ft_sb(stack_b, 1);
+		}
 	}
 }
 void	ft_init(t_list **stack_a, t_list **stack_b)
@@ -216,5 +220,4 @@ void	ft_init(t_list **stack_a, t_list **stack_b)
 	lis = ft_save_lis(stack_a, &lis_len);
 	ft_dispatch(stack_a, stack_b, lis, lis_len);
 	free(lis);
-	ft_lstprint_both(*stack_a, *stack_b);
 }
