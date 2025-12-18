@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:44:14 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 17:17:43 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/18 18:34:03 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,8 @@ int	*ft_save_lis(t_list **stack_a, int *lis_len)
 
 	max_index = 0;
 	s_len = ft_lstsize(*stack_a);
-	s_arr = ft_stack_to_arr(*stack_a, s_len); // Nous donne le tableau
+	s_arr = ft_stack_to_arr(*stack_a, s_len);
 	lis = ft_lis_init(s_len, 0);
-	// Nous renvoie la structure pour calcul de lis
 	parent = ft_lis_init(s_len, 1);
 	if (!s_arr || !lis || !parent)
 	{
