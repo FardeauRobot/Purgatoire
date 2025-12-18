@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:39:39 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 13:48:26 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/18 12:59:21 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		ft_parsing(t_list **stack, int argc, char **argv);
 //----------------------------//
 
 ////////// SORTING.C //////// 
+void	ft_get_cost(t_list **stack);
 void	ft_move(t_list *to_place, t_list **stack_a, t_list **stack_b);
 int	ft_sorting(t_list **la, t_list **lb);
 //----------------------------//

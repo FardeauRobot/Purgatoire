@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 18:47:40 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/17 17:35:35 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/18 13:16:34 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_compute_cost(t_list **stack_b)
 		l_target = ft_get_target(n_current);
 		n_target = ft_get_content(l_target);
 		n_current->cost = n_current->to_top;
-		n_current->cost += n_target->cost;
+		n_current->cost += n_target->to_top;
 		l_current = l_current->next;
 	}
 }
@@ -118,35 +118,39 @@ void	ft_affect_target(t_list **stack_a, t_list **stack_b)
 	l_b = *stack_b;
 	while (l_b)
 	{
-		l_target = ft_find_smallest(*stack_a);
-		n_target = ft_get_content(l_target);
 		n_b = ft_get_content(l_b);
+		// l_target = ft_find_smallest(*stack_a);
+		// n_target = ft_get_content(l_target);
+		l_target = NULL;
+		n_target = NULL;
 		l_a = *stack_a;
 		while (l_a)
 		{
 			n_a = ft_get_content(l_a);
-
-			if (n_a->value > n_b->value&&(n_b->value > n_target->value || n_a->value < n_target->value))
+			if (n_a -> value > n_b->value)
 			{
-				l_target = l_a;
-				n_target = ft_get_content(l_target);
+				if (!l_target || n_a->value < n_target->value)
+				{
+					l_target = l_a;
+					n_target = ft_get_content(l_target);
+				}
 			}
 			l_a = l_a->next;
 		}
-		if (n_target->value < n_b->value)
+		if (!l_target)
 			l_target = ft_find_smallest(*stack_a);
 		n_b->target = l_target;
 		l_b = l_b->next;	
 	}
-	t_list *l_current = *stack_b;
-	while (l_current)
-	{
-		t_node *n_current  = ft_get_content(l_current);
-		l_target = ft_get_target(n_current);
-		n_target = ft_get_content(l_target);
-		// ft_printf("CURRENT = %d || TARGET = %p || VALUE = %d\n", n_current->value, n_current->target, n_target->value);
-		l_current = l_current->next;	
-	}
+	// t_list *l_current = *stack_b;
+	// while (l_current)
+	// {
+	// 	t_node *n_current  = ft_get_content(l_current);
+	// 	l_target = ft_get_target(n_current);
+	// 	n_target = ft_get_content(l_target);
+	// 	ft_printf("CURRENT = %d || TARGET = %p || VALUE = %d\n", n_current->value, n_current->target, n_target->value);
+	// 	l_current = l_current->next;	
+	// }
 }
 
 void	ft_check_above(t_list	**stack)
@@ -157,13 +161,13 @@ void	ft_check_above(t_list	**stack)
 
 	l_current = *stack;
 	l_len = ft_lstsize(*stack);
-	while(l_current)
+	while (l_current)
 	{
 		n_current = ft_get_content(l_current);
-		if (l_current->index > l_len / 2)
-			n_current->above = 1;	
+		if (l_current->index < l_len / 2)
+			n_current->above = 1;
 		else
-			n_current->above = 0;	
+			n_current->above = 0;
 		l_current = l_current->next;
 	}
 }
@@ -171,9 +175,10 @@ void	ft_check_above(t_list	**stack)
 int	ft_sorting(t_list **stack_a, t_list **stack_b)
 {
 	t_list	*l_to_move;
+	t_node	*min;
 
 	l_to_move = NULL;
-	ft_init(stack_a, stack_b); // INITIALISE LA STACK B
+	ft_init(stack_a, stack_b);
 	while (*stack_b)
 	{
 		ft_lstindex(stack_a);
@@ -182,14 +187,14 @@ int	ft_sorting(t_list **stack_a, t_list **stack_b)
 		ft_check_above(stack_a);
 		ft_check_above(stack_b);
 		ft_affect_cost(stack_a, stack_b);
-		l_to_move = ft_find_cheapest(*stack_b); // A FAIRE
+		l_to_move = ft_find_cheapest(*stack_b);
 		ft_move(l_to_move, stack_a, stack_b);
-		// ft_lstprint_both(*stack_a, *stack_b);
 	}
-	t_node *min = ft_node_min(*stack_a);
-	while ((*stack_a)->content != min)
+	min = ft_node_min(*stack_a);
+	while ((*stack_a)->content != min && min->above == 1)
 		ft_ra(stack_a, 1);
-	// ft_lstprint_both(*stack_a, *stack_b);
+	while ((*stack_a)->content != min && min->above == 0)
+		ft_rra(stack_a, 1);
 	ft_clear_all(stack_a, stack_b);
 	return (0);
 }
