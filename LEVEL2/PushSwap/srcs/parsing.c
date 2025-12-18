@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 18:02:10 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/18 17:20:14 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_init_str(t_list **stack, char *str)
 	long	nb;
 	int		i;
 
-	arr = ft_split_charset((const char*)str, SPACE);
+	arr = ft_split_charset((const char *)str, SPACE);
 	if (!arr)
 		return (-1);
 	i = 0;
@@ -42,10 +42,9 @@ int	ft_init_str(t_list **stack, char *str)
 
 int	ft_no_double(t_list *stack)
 {
-	t_list 	*l_current;
+	t_list	*l_current;
 	t_node	*n_compared;
 	t_node	*n_current;
-
 
 	while (stack->next)
 	{
@@ -62,6 +61,7 @@ int	ft_no_double(t_list *stack)
 	}
 	return (0);
 }
+
 t_list	*ft_lstmax(t_list *stack)
 {
 	t_node	*node;
@@ -79,6 +79,7 @@ t_list	*ft_lstmax(t_list *stack)
 	}
 	return (l_max);
 }
+
 t_list	*ft_lstmin(t_list *stack)
 {
 	t_node	*node;
@@ -96,6 +97,7 @@ t_list	*ft_lstmin(t_list *stack)
 	}
 	return (min);
 }
+
 int	ft_is_sorted(t_list **lst)
 {
 	int		max;

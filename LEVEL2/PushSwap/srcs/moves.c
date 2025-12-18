@@ -1,3 +1,5 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -14,10 +16,10 @@
 
 /*
 
-A PRENDRE EN COMPTE : 
+A PRENDRE EN COMPTE :
 	Cout
 	Mediane
-	
+
 	if (above_a && above_b)
 	{
 		tant que index_a > index_b
@@ -51,7 +53,6 @@ A PRENDRE EN COMPTE :
 			ft_rrb;
 	}
 */
-
 
 // void	ft_move(t_list *to_place, t_list **stack_a, t_list **stack_b)
 // {
@@ -95,64 +96,64 @@ A PRENDRE EN COMPTE :
 // 			ft_rrr(stack_a, stack_b, 1);
 // 	}
 // 	ft_pa(stack_b, stack_a, 1);
-// 	return;
+// 	return ;
 // }
 
 /* Helper function to rotate both stacks simultaneously */
-static void	ft_rotate_both(t_list **stack_a, t_list **stack_b, 
-                        int *moves_a, int *moves_b, int reverse)
+static void	ft_rotate_both(t_list **stack_a, t_list **stack_b, int *moves_a,
+		int *moves_b, int reverse)
 {
-    while (*moves_a > 0 && *moves_b > 0)
-    {
-        if (reverse)
-            ft_rrr(stack_a, stack_b, 1);
-        else
-            ft_rr(stack_a, stack_b, 1);
-        (*moves_a)--;
-        (*moves_b)--;
-    }
+	while (*moves_a > 0 && *moves_b > 0)
+	{
+		if (reverse)
+			ft_rrr(stack_a, stack_b, 1);
+		else
+			ft_rr(stack_a, stack_b, 1);
+		(*moves_a)--;
+		(*moves_b)--;
+	}
 }
 
 /* Helper function to finish rotating a single stack */
-static void	ft_finish_rotate(t_list **stack, int *moves, 
-                        int reverse, char stack_name)
+static void	ft_finish_rotate(t_list **stack, int *moves, int reverse,
+		char stack_name)
 {
-    void (*rotate_func)(t_list **, int);
+	void	(*rotate_func)(t_list **, int);
 
-    if (reverse)
-        rotate_func = (stack_name == 'a') ? ft_rra : ft_rrb;
-    else
-        rotate_func = (stack_name == 'a') ? ft_ra : ft_rb;
-    while (*moves > 0)
-    {
-        rotate_func(stack, 1);
-        (*moves)--;
-    }
+	if (reverse)
+		rotate_func = (stack_name == 'a') ? ft_rra : ft_rrb;
+	else
+		rotate_func = (stack_name == 'a') ? ft_ra : ft_rb;
+	while (*moves > 0)
+	{
+		rotate_func(stack, 1);
+		(*moves)--;
+	}
 }
 
 void	ft_move(t_list *to_place, t_list **stack_a, t_list **stack_b)
 {
-    t_node	*n_to_place;
-    t_node	*n_target;
-    int		moves_a;
-    int		moves_b;
+	t_node *n_to_place;
+	t_node *n_target;
+	int moves_a;
+	int moves_b;
 
-    n_to_place = ft_get_content(to_place);
-    n_target = ft_get_content(ft_get_target(n_to_place));
-    moves_a = n_target->to_top;
-    moves_b = n_to_place->to_top;
+	n_to_place = ft_get_content(to_place);
+	n_target = ft_get_content(ft_get_target(n_to_place));
+	moves_a = n_target->to_top;
+	moves_b = n_to_place->to_top;
 
-    if (n_to_place->above == n_target->above)
-    {
-        ft_rotate_both(stack_a, stack_b, &moves_a, &moves_b, 
-                    !n_to_place->above);
-        ft_finish_rotate(stack_a, &moves_a, !n_target->above, 'a');
-        ft_finish_rotate(stack_b, &moves_b, !n_to_place->above, 'b');
-    }
-    else
-    {
-        ft_finish_rotate(stack_b, &moves_b, !n_to_place->above, 'b');
-        ft_finish_rotate(stack_a, &moves_a, !n_target->above, 'a');
-    }
-    ft_pa(stack_b, stack_a, 1);
+	if (n_to_place->above == n_target->above)
+	{
+		ft_rotate_both(stack_a, stack_b, &moves_a, &moves_b,
+			!n_to_place->above);
+		ft_finish_rotate(stack_a, &moves_a, !n_target->above, 'a');
+		ft_finish_rotate(stack_b, &moves_b, !n_to_place->above, 'b');
+	}
+	else
+	{
+		ft_finish_rotate(stack_b, &moves_b, !n_to_place->above, 'b');
+		ft_finish_rotate(stack_a, &moves_a, !n_target->above, 'a');
+	}
+	ft_pa(stack_b, stack_a, 1);
 }
