@@ -6,14 +6,14 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 12:10:28 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 15:24:10 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 17:35:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_MOVES_H
 # define PUSH_SWAP_MOVES_H
 
-#include "../push_swap.h"
+# include "../push_swap.h"
 
 ////////// ROTATE.C //////// 
 void	ft_rotate(t_list **lst);
@@ -31,5 +31,11 @@ void	ft_rrr(t_list **la, t_list **lb, int check);
 void	ft_push(t_list **stack_src, t_list **stack_dest);
 void	ft_pa(t_list **stack_b, t_list **stack_a, int check);
 void	ft_pb(t_list **stack_a, t_list **stack_b, int check);
+
+////////// SWAP.C //////// 
+void	ft_swap(t_list **lst);
+void	ft_sa(t_list **stack_a, int check);
+void	ft_sb(t_list **stack_b, int check);
+void	ft_ss(t_list **stack_a, t_list **stack_b, int check);
 
 #endif

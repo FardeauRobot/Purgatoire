@@ -1,5 +1,3 @@
-
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -8,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/13 17:30:14 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 13:03:22 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 17:43:33 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +14,11 @@
 
 /*
 */
-static void	ft_rotate_both(t_list **stack_a, t_list **stack_b, int *moves, int reverse)
+
+static void	ft_rotate_both(t_list **stack_a, t_list **stack_b,
+	int *moves, int reverse)
 {
-	while (*moves> 0)
+	while (*moves > 0)
 	{
 		if (reverse)
 			ft_rrr(stack_a, stack_b, 1);
@@ -31,25 +31,25 @@ static void	ft_rotate_both(t_list **stack_a, t_list **stack_b, int *moves, int r
 static void	ft_finish_rotate(t_list **stack, int *moves, int reverse,
 		char stack_name)
 {
-	void	(*move)(t_list **, int);
+	void	(*ft_move)(t_list **, int);
 
 	if (reverse)
 	{
 		if (stack_name == 'a')
-			move = ft_rra;
+			ft_move = ft_rra;
 		else
-			move = ft_rrb;
+			ft_move = ft_rrb;
 	}
 	else
 	{
 		if (stack_name == 'a')
-			move = ft_ra;
+			ft_move = ft_ra;
 		else
-			move = ft_rb;
+			ft_move = ft_rb;
 	}
 	while (*moves > 0)
 	{
-		move(stack, 1);
+		ft_move(stack, 1);
 		(*moves)--;
 	}
 }

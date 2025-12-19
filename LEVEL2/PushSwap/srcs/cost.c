@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:58:12 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 18:07:16 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 16:54:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_compute_cost(t_list **stack_b)
 	}
 }
 
+// void	ft_get_top(t_list **stack)
 void	ft_get_cost(t_list **stack)
 {
 	int		l_len;
@@ -42,7 +43,7 @@ void	ft_get_cost(t_list **stack)
 	l_len = ft_lstsize(*stack);
 	while (l_current)
 	{
-		n_current = l_current->content;
+		n_current = ft_get_content(l_current);
 		index = l_current->index;
 		if (l_current->index > l_len / 2)
 		{
@@ -67,8 +68,8 @@ t_list	*ft_find_cheapest(t_list *stack)
 	l_cheapest = stack;
 	while (stack)
 	{
-		n_cheapest = l_cheapest->content;
-		n_current = stack->content;
+		n_cheapest = ft_get_content(l_cheapest);
+		n_current = ft_get_content(stack);
 		if (n_cheapest->cost > n_current->cost)
 			l_cheapest = stack;
 		stack = stack->next;
@@ -80,8 +81,6 @@ void	ft_affect_cost(t_list **stack_a, t_list **stack_b)
 {
 	ft_lstindex(stack_a);
 	ft_lstindex(stack_b);
-	ft_check_above(stack_a);
-	ft_check_above(stack_b);
 	ft_affect_target(stack_a, stack_b);
 	ft_get_cost(stack_a);
 	ft_get_cost(stack_b);

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 15:18:50 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 16:40:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 {
 	t_node	*n_current;
 	int		s_len;
-	int		median;
 	int		min;
 	int		max;
+	long	median;
 
 	min = ft_get_content(ft_lstmin(*stack_a))->value;
 	max = ft_get_content(ft_lstmax(*stack_a))->value;
