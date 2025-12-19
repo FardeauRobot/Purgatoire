@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 17:14:48 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 12:01:33 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 11:37:18 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_reverse_rotate(t_list **lst)
 	t_list	*second_last;
 
 	if (!lst || !*lst || !(*lst)->next)
-		return;
-	first= *lst;
+		return ;
+	first = *lst;
 	last = ft_lstlast(*lst);
 	second_last = *lst;
 	while (second_last->next->next)

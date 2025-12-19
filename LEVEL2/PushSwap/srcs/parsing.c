@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 17:20:14 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 11:36:22 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,42 +60,6 @@ int	ft_no_double(t_list *stack)
 		stack = stack->next;
 	}
 	return (0);
-}
-
-t_list	*ft_lstmax(t_list *stack)
-{
-	t_node	*node;
-	t_node	*n_max;
-	t_list	*l_max;
-
-	l_max = stack;
-	while (stack)
-	{
-		node = ft_get_content(stack);
-		n_max = ft_get_content(l_max);
-		if (node->value > n_max->value)
-			l_max = stack;
-		stack = stack->next;
-	}
-	return (l_max);
-}
-
-t_list	*ft_lstmin(t_list *stack)
-{
-	t_node	*node;
-	t_node	*min_node;
-	t_list	*min;
-
-	min = stack;
-	while (stack)
-	{
-		node = ft_get_content(stack);
-		min_node = ft_get_content(min);
-		if (node->value < min_node->value)
-			min = stack;
-		stack = stack->next;
-	}
-	return (min);
 }
 
 int	ft_is_sorted(t_list **lst)

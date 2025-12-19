@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 16:30:33 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 17:15:07 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/19 11:37:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_srcs.h"
 
-void ft_rotate(t_list **lst)
+void	ft_rotate(t_list **lst)
 {
 	t_list	*first;
 	t_list	*last;
@@ -27,7 +27,7 @@ void ft_rotate(t_list **lst)
 	ft_lstindex(lst);
 }
 
-void ft_ra(t_list **lst, int check)
+void	ft_ra(t_list **lst, int check)
 {
 	ft_rotate(lst);
 	if (check)
@@ -41,7 +41,7 @@ void	ft_rb(t_list **lst, int check)
 		ft_printf("rb\n");
 }
 
-void ft_rr(t_list **la, t_list **lb, int check)
+void	ft_rr(t_list **la, t_list **lb, int check)
 {
 	ft_ra(la, 0);
 	ft_rb(lb, 0);

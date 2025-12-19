@@ -17,6 +17,7 @@ SRCS_CONVERSION = \
 		Conversion/ft_itoa.c \
 		Conversion/ft_overint.c \
 		Conversion/ft_get_max.c \
+		Conversion/ft_min_int.c \
 		Conversion/ft_int_swap.c \
 		Conversion/ft_int_cmp.c \
 

@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_min.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:06 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/19 11:59:34 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-// Standard headers
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdarg.h>
-
-// Include all subdirectory headers
-# include "Char/ft_char.h"
-# include "Strings/ft_strings.h"
-# include "Conversion/ft_conversion.h"
-# include "Memory/ft_memory.h"
-# include "List/ft_list.h"
-# include "GNL/ft_gnl.h"
-# include "Output/ft_output.h"
-
-#endif
+int	ft_min_int(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}

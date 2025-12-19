@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_conversion.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:06 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/19 12:00:00 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef FT_CONVERSION_H
+# define FT_CONVERSION_H
 
-// Standard headers
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdarg.h>
+// String to number conversions
+int		ft_atoi(const char *nptr);
+long	ft_atol(const char *nptr);
+int		ft_overint(long n);
 
-// Include all subdirectory headers
-# include "Char/ft_char.h"
-# include "Strings/ft_strings.h"
-# include "Conversion/ft_conversion.h"
-# include "Memory/ft_memory.h"
-# include "List/ft_list.h"
-# include "GNL/ft_gnl.h"
-# include "Output/ft_output.h"
+// Number to string conversions
+char	*ft_itoa(int n);
+
+// Integer comparison and min/max functions
+int		ft_min_int(int a, int b);
+int		ft_get_max(int *arr, int arr_len);
 
 #endif

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_char.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:06 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/19 12:00:00 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef FT_CHAR_H
+# define FT_CHAR_H
 
-// Standard headers
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdarg.h>
+// Character classification functions
+int		ft_isalnum(int c);
+int		ft_isalpha(int c);
+int		ft_isascii(int c);
+int		ft_isdigit(int c);
+int		ft_isprint(int c);
+int		ft_isspace(int c);
+int		ft_ischarset(int c, char *charset);
+int		ft_is_only(const char *s, int (*is)(int));
 
-// Include all subdirectory headers
-# include "Char/ft_char.h"
-# include "Strings/ft_strings.h"
-# include "Conversion/ft_conversion.h"
-# include "Memory/ft_memory.h"
-# include "List/ft_list.h"
-# include "GNL/ft_gnl.h"
-# include "Output/ft_output.h"
+// Character conversion functions
+int		ft_tolower(int c);
+int		ft_toupper(int c);
 
 #endif
