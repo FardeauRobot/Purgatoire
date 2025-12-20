@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:44:14 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 14:14:15 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:33:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_save_lis(t_list **stack_a, int *lis_len, int **lis)
 	s_arr = ft_stack_to_arr(*stack_a, s_len);
 	*lis = ft_lis_init(s_len, 0);
 	parent = ft_lis_init(s_len, 1);
-	if (!s_arr || !lis || !parent)
+	if (!s_arr || !*lis || !parent)
 	{
 		ft_free_lis(*lis, parent, s_arr);
 		exit(ft_error_stacks(stack_a, NULL));

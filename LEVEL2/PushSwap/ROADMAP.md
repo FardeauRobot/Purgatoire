@@ -1,5 +1,45 @@
 # A FAIRE
 
+## MALLOC TRACKING
+
+### Push_swap project malloc locations:
+
+1. **srcs/lis.c:20** - `ft_lis_init()` 
+   - `malloc(sizeof(int) * len)` - LIS array initialization
+   - Protected: Line 91 in `ft_save_lis()`
+
+2. **srcs/lis.c:63** - `ft_make_lis()`
+   - `malloc(sizeof(int) * max_len)` - Result LIS array
+   - Protected: Line 82 in `init.c` (`ft_init()`)
+
+3. **srcs/init.c:24** - `ft_stack_to_arr()`
+   - `malloc(sizeof(int) * size)` - Stack to array conversion
+   - Protected: Line 91 in `ft_save_lis()`
+
+4. **utils/node_utils.c:54** - `ft_new_node()`
+   - `malloc(sizeof(t_node))` - Node creation
+   - Protected: Need to verify caller checks
+
+5. **includes/libft/List/ft_lstnew.c:19** - `ft_lstnew()`
+   - `malloc(sizeof(t_list))` - List element creation
+   - Protected: Need to verify caller checks
+
+### Libft malloc locations (for reference):
+- Conversion/ft_itoa.c:45 - String conversion
+- Strings/ft_split_charset.c:54, 103 - String splitting
+- Strings/ft_strdup.c:23 - String duplication
+- Strings/ft_substr.c:26, 35 - Substring creation
+- Strings/ft_strmapi.c:23 - String mapping
+- Strings/ft_strjoin.c:23 - String joining
+- Strings/ft_split_sep.c:56, 105 - String splitting with separator
+- Strings/ft_strtrim.c:44 - String trimming
+- Memory/ft_calloc.c:25 - Allocated zeroed memory
+- Output/ft_printf_nbr.c:47 - Number to string conversion
+- GNL/get_next_line.c:44 - Buffer allocation
+- GNL/get_next_line_utils.c:35 - GNL string joining
+
+---
+
 ## Les fonctions pour trouver la substring la plus grande
 
 Nom de fonction :	int *ft_find_sub(t_list *lst)

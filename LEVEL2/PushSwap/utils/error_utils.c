@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 14:44:59 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 13:51:12 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:54:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,13 @@ int	ft_error_stacks(t_list **s_a, t_list **s_b)
 	ft_putstr_fd("Error\n", 2);
 	ft_clear_all(s_a, s_b);
 	return (1);
+}
+
+int	ft_error_init(t_list **stack, char **str, t_node *n_node, t_list *l_node)
+{
+	if (n_node)
+		free(n_node);
+	if (l_node)
+		free(l_node);
+	return (ft_error_parse(str, stack));
 }

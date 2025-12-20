@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 11:36:22 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:57:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_srcs.h"
 
-int	ft_init_str(t_list **stack, char *str)
+void	ft_init_str(t_list **stack, char *str)
 {
 	char	**arr;
 	t_node	*n_new;
@@ -22,7 +22,7 @@ int	ft_init_str(t_list **stack, char *str)
 
 	arr = ft_split_charset((const char *)str, SPACE);
 	if (!arr)
-		return (-1);
+		exit(ft_error_parse(arr, stack));
 	i = 0;
 	while (arr[i])
 	{
@@ -30,14 +30,13 @@ int	ft_init_str(t_list **stack, char *str)
 		if (ft_overint(nb) || !ft_is_number(arr[i]))
 			exit(ft_error_parse(arr, stack));
 		n_new = ft_node_init((int)nb);
-		if (!n_new)
-			exit(ft_error_parse(arr, stack));
 		l_new = ft_lstnew(n_new);
+		if (!n_new || !l_new)
+			exit(ft_error_init(stack, arr, n_new, l_new));
 		ft_lstadd_back(stack, l_new);
 		i++;
 	}
 	ft_free_array(arr);
-	return (0);
 }
 
 int	ft_no_double(t_list *stack)
@@ -88,8 +87,7 @@ int	ft_parsing(t_list **stack, int argc, char **argv)
 	i = 1;
 	while (argv[i] && i < argc)
 	{
-		if (ft_init_str(stack, argv[i]))
-			return (1);
+		ft_init_str(stack, argv[i]);
 		i++;
 	}
 	return (0);

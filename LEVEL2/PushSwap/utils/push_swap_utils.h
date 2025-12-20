@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 17:25:49 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 13:54:42 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:55:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 ////////// ERROR_UTILS.C ////////
 int		ft_error_parse(char **arr, t_list **stack);
 int		ft_error_stacks(t_list **s_a, t_list **s_b);
+int		ft_error_init(t_list **stack, char **str, t_node *n_node,
+			t_list *l_node);
 //----------------------------//
 
 ////////// FREE_UTILS.C ////////
