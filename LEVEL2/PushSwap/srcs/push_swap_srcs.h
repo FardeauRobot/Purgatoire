@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:39:39 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 11:36:47 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:11:09 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 ////////// LIS.C ////////
 int		*ft_lis_init(int len, int mod);
 void	ft_compute_lis(int *lis, int *parent, int *arr, int s_len);
-void	ft_max_lis(int lis[], int len, int *max_len, int *max_index);
 int		ft_free_lis(int *lis, int *par, int *s_arr);
-int		*ft_save_lis(t_list **stack_a, int *lis_len);
+void	ft_save_lis(t_list **stack_a, int *lis_len, int **lis);
 int		ft_is_in_lis(int *lis, int lis_len, int value);
 //----------------------------//
 

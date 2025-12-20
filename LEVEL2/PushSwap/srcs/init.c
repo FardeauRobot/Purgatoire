@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 16:40:48 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:17:09 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,11 @@ void	ft_init(t_list **stack_a, t_list **stack_b)
 	int	lis_len;
 
 	lis_len = 0;
+	lis = NULL;
 	stack_len = ft_lstsize(*stack_a);
-	lis = ft_save_lis(stack_a, &lis_len);
+	ft_save_lis(stack_a, &lis_len, &lis);
+	if (!lis)
+		exit(ft_error_stacks(stack_a, stack_b));
 	ft_dispatch(stack_a, stack_b, lis, lis_len);
 	free(lis);
 }

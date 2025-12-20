@@ -6,11 +6,23 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:45:25 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 14:58:56 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 13:53:34 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
+
+int	ft_free_lis(int *lis, int *par, int *s_arr)
+{
+	if (lis)
+		free(lis);
+	if (par)
+		free(par);
+	if (s_arr)
+		free(s_arr);
+	return (1);
+}
+
 
 void	ft_clear_all(t_list **s_a, t_list **s_b)
 {

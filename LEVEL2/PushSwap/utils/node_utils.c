@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 15:50:06 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 18:01:28 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 13:50:44 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ t_node	*ft_node_init(long nb)
 	new->target = NULL;
 	return (new);
 }
-

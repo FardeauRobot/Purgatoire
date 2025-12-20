@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 15:44:14 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 18:34:03 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 14:14:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,6 @@ void	ft_compute_lis(int *lis, int *parent, int *arr, int s_len)
 	}
 }
 
-void	ft_max_lis(int lis[], int len, int *max_len, int *max_index)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (lis[i] > *max_len)
-		{
-			*max_len = lis[i];
-			*max_index = i;
-		}
-		i++;
-	}
-}
-
 int	*ft_make_lis(int *s_arr, int *parent, int max_len, int max_index)
 {
 	int	i;
@@ -90,55 +74,27 @@ int	*ft_make_lis(int *s_arr, int *parent, int max_len, int max_index)
 	return (res);
 }
 
-int	ft_free_lis(int *lis, int *par, int *s_arr)
-{
-	if (lis)
-		free(lis);
-	if (par)
-		free(par);
-	if (s_arr)
-		free(s_arr);
-	return (1);
-}
-
-int	*ft_save_lis(t_list **stack_a, int *lis_len)
+void	ft_save_lis(t_list **stack_a, int *lis_len, int **lis)
 {
 	int	s_len;
 	int	max_index;
 	int	*s_arr;
-	int	*lis;
 	int	*parent;
 	int	*result;
 
 	max_index = 0;
 	s_len = ft_lstsize(*stack_a);
 	s_arr = ft_stack_to_arr(*stack_a, s_len);
-	lis = ft_lis_init(s_len, 0);
+	*lis = ft_lis_init(s_len, 0);
 	parent = ft_lis_init(s_len, 1);
 	if (!s_arr || !lis || !parent)
 	{
-		ft_free_lis(lis, parent, s_arr);
+		ft_free_lis(*lis, parent, s_arr);
 		exit(ft_error_stacks(stack_a, NULL));
 	}
-	ft_compute_lis(lis, parent, s_arr, s_len);
-	ft_max_lis(lis, s_len, lis_len, &max_index);
+	ft_compute_lis(*lis, parent, s_arr, s_len);
+	ft_max_lis(*lis, s_len, lis_len, &max_index);
 	result = ft_make_lis(s_arr, parent, *lis_len, max_index);
-	// if (!result)
-	// PROTECT
-	ft_free_lis(lis, parent, s_arr);
-	return (result);
-}
-
-int	ft_is_in_lis(int *lis, int lis_len, int value)
-{
-	int	i;
-
-	i = 0;
-	while (i < lis_len)
-	{
-		if (value == lis[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	ft_free_lis(*lis, parent, s_arr);
+	*lis = result;
 }

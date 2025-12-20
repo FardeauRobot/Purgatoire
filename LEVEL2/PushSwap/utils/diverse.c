@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 17:29:13 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/15 18:19:47 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 13:51:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_node	*ft_get_node(t_list *lst)
 		return (lst->content);
 	return (NULL);
 }
+
 void	ft_lstprint_nbr(t_list *lst)
 {
 	t_node	*tmp;

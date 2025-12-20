@@ -1,30 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_utils.c                                      :+:      :+:    :+:   */
+/*   lis_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 14:44:59 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 13:51:12 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/20 13:52:24 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 13:54:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap_utils.h"
 
-int	ft_error_parse(char **arr, t_list **stack)
+int	ft_is_in_lis(int *lis, int lis_len, int value)
 {
-	ft_putstr_fd("Error\n", 2);
-	if (arr)
-		ft_free_array(arr);
-	if (*stack)
-		ft_lstclear(stack, free);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (i < lis_len)
+	{
+		if (value == lis[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int	ft_error_stacks(t_list **s_a, t_list **s_b)
+void	ft_max_lis(int lis[], int len, int *max_len, int *max_index)
 {
-	ft_putstr_fd("Error\n", 2);
-	ft_clear_all(s_a, s_b);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (lis[i] > *max_len)
+		{
+			*max_len = lis[i];
+			*max_index = i;
+		}
+		i++;
+	}
 }

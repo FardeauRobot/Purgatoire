@@ -2,6 +2,7 @@ NAME = push_swap
 
 CC = cc -Wall -Wextra -Werror -g3 #g3 A DELETE
 
+SANITIZE = -fsanitize=address -fsanitize=leak
 
 SRCS_DIR = srcs
 UTILS_DIR = utils
@@ -25,6 +26,7 @@ SRCS_FILES =	main.c \
 UTILS_FILES = 	parsing_utils.c \
 				free_utils.c \
 				node_utils.c \
+				lis_utils.c \
 				sorting_utils.c \
 				diverse.c \
 				error_utils.c \
@@ -36,6 +38,7 @@ FILES = $(SRCS) $(UTILS) #$(INCLUDES)
 OBJS = $(FILES:.c=.o)
 
 INCLUDES    += -I. -I$(INCLUDES_DIR) -I$(LIBFT_DIR)
+
 
 all : $(LIBFT) $(NAME)
 
@@ -62,5 +65,11 @@ fclean : clean
 	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 re: fclean all
+debug: CFLAGS = -Wall -Wextra -Werror -g3 $(SANITIZE)
+debug: CC = cc $(CFLAGS)
+debug: fclean $(NAME)
 
-.PHONY: all clean fclean re
+sanitize: debug
+
+
+.PHONY: all clean fclean re debug sanitize
