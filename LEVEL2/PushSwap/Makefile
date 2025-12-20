@@ -27,7 +27,6 @@ UTILS_FILES = 	parsing_utils.c \
 				free_utils.c \
 				node_utils.c \
 				lis_utils.c \
-				sorting_utils.c \
 				diverse.c \
 				error_utils.c \
 
