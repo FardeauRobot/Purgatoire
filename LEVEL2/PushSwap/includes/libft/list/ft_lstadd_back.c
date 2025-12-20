@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:19:26 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 14:13:25 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 18:06:12 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 	if (!last)
 	{
 		*lst = new;
-		return;
+		return ;
 	}
 	last->next = new;
 	new->previous = last;

@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstget_index.c                                  :+:      :+:    :+:   */
+/*   ft_print_int_arr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 17:01:42 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 17:30:51 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/12 16:10:16 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:05:12 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-t_list	*ft_lstat_index(t_list *lst, int index)
+void	ft_print_int_arr(int *nb, int size)
 {
-	t_list *current;
+	int	i;
 
-	current = lst;
-	while (current)
+	i = 0;
+	while (i < size)
 	{
-		if (current->index == index)
-			return (current);
-		if (current->index > index)
-			return (NULL);
-		current = current->next;
+		ft_printf("arr[%d] = %d\n", i, nb[i]);
+		i++;
 	}
-	return (NULL);
 }

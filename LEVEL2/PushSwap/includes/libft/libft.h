@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:06 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 18:08:31 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include <stdarg.h>
 
 // Include all subdirectory headers
-# include "Char/ft_char.h"
-# include "Strings/ft_strings.h"
-# include "Conversion/ft_conversion.h"
-# include "Memory/ft_memory.h"
-# include "List/ft_list.h"
-# include "GNL/ft_gnl.h"
-# include "Output/ft_output.h"
+# include "char/ft_char.h"
+# include "strings/ft_strings.h"
+# include "conversion/ft_conversion.h"
+# include "memory/ft_memory.h"
+# include "list/ft_list.h"
+# include "gnl/ft_gnl.h"
+# include "output/ft_output.h"
 
 #endif

@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_arr_swap.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 18:05:34 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/13 17:16:49 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:05:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-int	ft_ischarset(int c, char *charset)
+void	ft_arr_swap(int *arr, int len)
 {
 	int	i;
 
 	i = 0;
-	while (charset[i])
+	while (i < len / 2)
 	{
-		if (c == charset[i])
-			return (1);
+		ft_int_swap(&arr[i], &arr[len - i]);
 		i++;
 	}
-	return (0);
 }

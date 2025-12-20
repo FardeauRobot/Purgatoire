@@ -12,82 +12,82 @@ CYAN = \033[0;36m
 BOLD = \033[1m
 
 SRCS_CONVERSION = \
-		Conversion/ft_atoi.c \
-		Conversion/ft_atol.c \
-		Conversion/ft_itoa.c \
-		Conversion/ft_overint.c \
-		Conversion/ft_get_max.c \
-		Conversion/ft_min_int.c \
-		Conversion/ft_int_swap.c \
-		Conversion/ft_int_cmp.c \
+		conversion/ft_atoi.c \
+		conversion/ft_atol.c \
+		conversion/ft_itoa.c \
+		conversion/ft_overint.c \
+		conversion/ft_get_max.c \
+		conversion/ft_min_int.c \
 
 SRCS_MEMORY = \
-		Memory/ft_bzero.c \
-		Memory/ft_calloc.c \
-		Memory/ft_memchr.c \
-		Memory/ft_memcmp.c \
-		Memory/ft_memcpy.c \
-		Memory/ft_memmove.c \
-		Memory/ft_memset.c \
-		Memory/ft_free_array.c \
-		Memory/ft_free_int_arr.c \
-		Memory/ft_arr_swap.c \
+		memory/ft_bzero.c \
+		memory/ft_calloc.c \
+		memory/ft_memchr.c \
+		memory/ft_memcmp.c \
+		memory/ft_memcpy.c \
+		memory/ft_memmove.c \
+		memory/ft_memset.c \
+		memory/ft_free_array.c \
+		memory/ft_free_int_arr.c \
+		memory/ft_arr_swap.c \
+		memory/ft_int_swap.c \
+		memory/ft_int_cmp.c \
 
 SRCS_CHAR = \
-		Char/ft_isalnum.c \
-		Char/ft_isalpha.c \
-		Char/ft_isascii.c \
-		Char/ft_ischarset.c \
-		Char/ft_isdigit.c \
-		Char/ft_isprint.c \
-		Char/ft_isspace.c \
-		Char/ft_tolower.c \
-		Char/ft_toupper.c \
-		Char/ft_is_only.c 
+		char/ft_isalnum.c \
+		char/ft_isalpha.c \
+		char/ft_isascii.c \
+		char/ft_ischarset.c \
+		char/ft_isdigit.c \
+		char/ft_isprint.c \
+		char/ft_isspace.c \
+		char/ft_tolower.c \
+		char/ft_toupper.c \
+		char/ft_is_only.c 
 
 SRCS_OUTPUT = \
-		Output/ft_putchar_fd.c \
-		Output/ft_putendl_fd.c \
-		Output/ft_putnbr_fd.c \
-		Output/ft_putstr_fd.c \
-		Output/ft_printf.c \
-		Output/ft_printf_nbr.c \
-		Output/ft_print_int_arr.c \
+		output/ft_putchar_fd.c \
+		output/ft_putendl_fd.c \
+		output/ft_putnbr_fd.c \
+		output/ft_putstr_fd.c \
+		output/ft_printf.c \
+		output/ft_printf_nbr.c \
+		output/ft_print_int_arr.c \
 
 SRCS_STRINGS = \
-		Strings/ft_split_sep.c \
-		Strings/ft_split_charset.c \
-		Strings/ft_strchr.c \
-		Strings/ft_strcheck.c \
-		Strings/ft_strdup.c \
-		Strings/ft_striteri.c \
-		Strings/ft_strjoin.c \
-		Strings/ft_strlcat.c \
-		Strings/ft_strlcpy.c \
-		Strings/ft_strlen.c \
-		Strings/ft_strmapi.c \
-		Strings/ft_strncmp.c \
-		Strings/ft_strnstr.c \
-		Strings/ft_strrchr.c \
-		Strings/ft_strtrim.c \
-		Strings/ft_substr.c
+		strings/ft_split_sep.c \
+		strings/ft_split_charset.c \
+		strings/ft_strchr.c \
+		strings/ft_strcheck.c \
+		strings/ft_strdup.c \
+		strings/ft_striteri.c \
+		strings/ft_strjoin.c \
+		strings/ft_strlcat.c \
+		strings/ft_strlcpy.c \
+		strings/ft_strlen.c \
+		strings/ft_strmapi.c \
+		strings/ft_strncmp.c \
+		strings/ft_strnstr.c \
+		strings/ft_strrchr.c \
+		strings/ft_strtrim.c \
+		strings/ft_substr.c
 
 SRCS_LIST = \
-		List/ft_lstadd_back.c \
-		List/ft_lstadd_front.c \
-		List/ft_lstclear.c \
-		List/ft_lstdelone.c \
-		List/ft_lstiter.c \
-		List/ft_lstlast.c \
-		List/ft_lstmap.c \
-		List/ft_lstnew.c \
-		List/ft_lstsize.c \
-		List/ft_lstindex.c \
-		List/ft_lstat_index.c \
+		list/ft_lstadd_back.c \
+		list/ft_lstadd_front.c \
+		list/ft_lstclear.c \
+		list/ft_lstdelone.c \
+		list/ft_lstiter.c \
+		list/ft_lstlast.c \
+		list/ft_lstmap.c \
+		list/ft_lstnew.c \
+		list/ft_lstsize.c \
+		list/ft_lstindex.c \
+		list/ft_lstat_index.c \
 
 SRCS_GNL = \
-		GNL/get_next_line.c \
-		GNL/get_next_line_utils.c
+		gnl/get_next_line.c \
+		gnl/get_next_line_utils.c
 
 SRCS = $(SRCS_CONVERSION) $(SRCS_MEMORY) $(SRCS_CHAR) $(SRCS_OUTPUT) $(SRCS_STRINGS) $(SRCS_LIST) $(SRCS_GNL)
 
