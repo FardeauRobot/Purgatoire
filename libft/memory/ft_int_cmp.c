@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_int_arr.c                                 :+:      :+:    :+:   */
+/*   ft_int_cmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/12 16:10:16 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/12 16:11:40 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/13 17:46:00 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:05:29 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-void	ft_print_int_arr(int *nb, int size)
+int	ft_int_cmp(int a, int b)
 {
-	int i;
-
-	i = 0;
-	while (i < size)
-	{
-		ft_printf("arr[%d] = %d\n", i, nb[i]);
-		i++;
-	}
+	return (a > b);
 }

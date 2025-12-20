@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcheck.c                                      :+:      :+:    :+:   */
+/*   ft_ischarset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:12:45 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/03 16:14:15 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-int	ft_strcheck(const char *s, int (*check)(int))
+int	ft_ischarset(int c, char *charset)
 {
 	int	i;
 
-	if (!s || !check)
-		return (0);
 	i = 0;
-	while (s[i])
+	while (charset[i])
 	{
-		if (!check(s[i]))
-			return (0);
+		if (c == charset[i])
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   ft_lstindex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:08:31 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/11 11:49:25 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:05:57 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#include "libft.h"
 
-// Standard headers
-# include <unistd.h>
-# include <stdlib.h>
-# include <limits.h>
-# include <stdarg.h>
+void	ft_lstindex(t_list **lst)
+{
+	int		i;
+	t_list	*current;
 
-// Include all subdirectory headers
-# include "char/ft_char.h"
-# include "strings/ft_strings.h"
-# include "conversion/ft_conversion.h"
-# include "memory/ft_memory.h"
-# include "list/ft_list.h"
-# include "gnl/ft_gnl.h"
-# include "output/ft_output.h"
-
-#endif
+	i = 0;
+	current = *lst;
+	while (current)
+	{
+		current->index = i;
+		i++;
+		current = current->next;
+	}
+}

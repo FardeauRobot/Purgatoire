@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:09:53 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/18 18:39:05 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 17:23:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ int	main(int argc, char **argv)
 		ft_lstclear(&stack_a, free);
 		return (0);
 	}
-	ft_sorting(&stack_a, &stack_b);
+	if (ft_lstsize(stack_a) >= 6)
+		ft_sorting(&stack_a, &stack_b);
+	else
+		ft_mini_sorting(&stack_a, &stack_b);
 	ft_clear_all(&stack_a, &stack_b);
 	return (0);
 }

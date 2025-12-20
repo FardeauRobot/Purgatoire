@@ -3,7 +3,7 @@
 # Script to quickly open PDF files from ~/Desktop/Purgatoire/Subjects
 # Usage: fopen <filename>
 
-SCRIPTS_PATH="$HOME/Desktop/Purgatoire/Subjects"
+SCRIPTS_PATH="$HOME/Documents/Subjects"
 
 # Colors for output
 RED='\033[0;31m'

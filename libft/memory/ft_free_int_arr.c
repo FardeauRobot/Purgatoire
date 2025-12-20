@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 19:55:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 19:56:06 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 18:05:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_int_arr(int **arr, int max)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < max)

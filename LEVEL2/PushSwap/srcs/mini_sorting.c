@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_int_cmp.c                                       :+:      :+:    :+:   */
+/*   mini_sorting.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/13 17:46:00 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 17:46:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/20 17:36:42 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 17:43:42 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap_srcs.h"
 
-int	ft_int_cmp(int a, int b)
+
+void	ft_mini_sorting(t_list **stack_a, t_list **stack_b)
 {
-	return (a > b);
+	(void)stack_a;
+	(void)stack_b;
+	return ;
 }

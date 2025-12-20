@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 12:39:39 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 14:42:45 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/20 17:44:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,7 @@ void	ft_get_cost(t_list **stack);
 void	ft_compute_cost(t_list **stack_b);
 //----------------------------//
 
+////////// COST.C ////////
+void	ft_mini_sorting(t_list **stack_a, t_list **stack_b);
+//----------------------------//
 #endif

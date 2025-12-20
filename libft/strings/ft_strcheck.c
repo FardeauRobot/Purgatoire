@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   ft_strcheck.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/13 17:17:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/13 17:18:34 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/03 16:12:45 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:04:56 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_int_swap(int *a, int *b)
+int	ft_strcheck(const char *s, int (*check)(int))
 {
-	int tmp;
+	int	i;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	if (!s || !check)
+		return (0);
+	i = 0;
+	while (s[i])
+	{
+		if (!check(s[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstindex.c                                      :+:      :+:    :+:   */
+/*   ft_min_int.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/11 11:49:25 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 12:20:23 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:06:18 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstindex(t_list **lst)
+int	ft_min_int(int a, int b)
 {
-	int		i;
-	t_list	*current;
-
-	i = 0;
-	current = *lst;
-	while (current)
-	{
-		current->index = i;
-		i++;
-		current = current->next;
-	}
+	if (a < b)
+		return (a);
+	return (b);
 }

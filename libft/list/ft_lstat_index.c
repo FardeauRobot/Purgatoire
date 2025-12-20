@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_max.c                                       :+:      :+:    :+:   */
+/*   ft_lstat_index.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/12 16:22:32 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/12 16:24:03 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/11 17:01:42 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:06:07 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
-int	ft_get_max(int *arr, int arr_len)
+t_list	*ft_lstat_index(t_list *lst, int index)
 {
-	int		i;
-	int		max;
+	t_list	*current;
 
-	i = 0;
-	max = 0;
-	while (i < arr_len)
+	current = lst;
+	while (current)
 	{
-		if (arr[i] > max)
-			max = arr[i];
-		i++;
+		if (current->index == index)
+			return (current);
+		if (current->index > index)
+			return (NULL);
+		current = current->next;
 	}
-	return (max);
+	return (NULL);
 }

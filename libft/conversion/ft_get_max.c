@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_get_max.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/12 13:19:26 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/04 14:13:25 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/12 16:22:32 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:04:45 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_get_max(int *arr, int arr_len)
 {
-	t_list	*last;
+	int		i;
+	int		max;
 
-	if (!lst || !new)
-		return ;
-	if (!*lst)
+	i = 0;
+	max = 0;
+	while (i < arr_len)
 	{
-		*lst = new;
-		return ;
+		if (arr[i] > max)
+			max = arr[i];
+		i++;
 	}
-	last = ft_lstlast(*lst);
-	if (!last)
-	{
-		*lst = new;
-		return;
-	}
-	last->next = new;
-	new->previous = last;
+	return (max);
 }
