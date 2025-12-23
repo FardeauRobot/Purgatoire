@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/08 16:46:14 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/18 13:40:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_srcs.h"
+#include "libft.h"
 
-
-int	main(void)
+void	ft_bzero(void *s, size_t n)
 {
-	t_vars	vars;
+	unsigned char	*tmp;
+	size_t			i;
 
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
-		return (1);
-	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello World");
-	// mlx_key_hook(mlx.win, ft_handle_keys, )
-	ft_printf("Coucou\n");
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
-	mlx_loop(vars.mlx);
-	return (0);
+	tmp = (unsigned char *)s;
+	i = 0;
+	while (i < n)
+	{
+		tmp[i] = '\0';
+		i++;
+	}
 }

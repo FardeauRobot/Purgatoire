@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/09 14:38:46 by tibras            #+#    #+#             */
+/*   Updated: 2025/11/20 15:12:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_srcs.h"
+#include "libft.h"
 
-
-int	main(void)
+char	*ft_strdup(const char *s1)
 {
-	t_vars	vars;
+	char	*str;
+	int		size;
+	int		i;
 
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
-		return (1);
-	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello World");
-	// mlx_key_hook(mlx.win, ft_handle_keys, )
-	ft_printf("Coucou\n");
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
-	mlx_loop(vars.mlx);
-	return (0);
+	i = 0;
+	size = ft_strlen((char *)s1);
+	str = malloc(sizeof(char) * size + 1);
+	if (!str)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }
+
+// int main ()
+// {
+// 	char *test= "Coucou";
+// 	char *tmp;
+
+// 	tmp = ft_strdup(test);
+// 	printf("%s\n", tmp);
+// }

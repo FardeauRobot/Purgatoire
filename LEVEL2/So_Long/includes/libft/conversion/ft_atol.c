@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/29 00:00:00 by                   #+#    #+#             */
+/*   Updated: 2025/11/29 18:20:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_srcs.h"
+#include "libft.h"
 
-
-int	main(void)
+long	ft_atol(const char *nptr)
 {
-	t_vars	vars;
+	long	nb;
+	int		sign;
+	int		i;
 
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
-		return (1);
-	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello World");
-	// mlx_key_hook(mlx.win, ft_handle_keys, )
-	ft_printf("Coucou\n");
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
-	mlx_loop(vars.mlx);
-	return (0);
+	sign = 1;
+	nb = 0;
+	i = 0;
+	while ((nptr[i] >= 9 && nptr[i] <= 13) || nptr[i] == ' ')
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
+	{
+		if (nptr[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		nb = nb * 10 + nptr[i] - '0';
+		i++;
+	}
+	return (nb * sign);
 }

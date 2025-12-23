@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_is_only.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/04 17:33:20 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/04 18:03:08 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_srcs.h"
+#include "libft.h"
 
-
-int	main(void)
+int	ft_is_only(const char *s, int (*is)(int))
 {
-	t_vars	vars;
+	int				i;
+	size_t			count;
+	unsigned char	uc;
 
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
+	if (!s || !is)
+		return (0);
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		uc = (unsigned char)s[i];
+		if (is(uc))
+			count++;
+		i++;
+	}
+	if (count == ft_strlen(s))
 		return (1);
-	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello World");
-	// mlx_key_hook(mlx.win, ft_handle_keys, )
-	ft_printf("Coucou\n");
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
-	mlx_loop(vars.mlx);
 	return (0);
 }

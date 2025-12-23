@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_get_max.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/12 16:22:32 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:04:45 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_srcs.h"
+#include "../libft.h"
 
-
-int	main(void)
+int	ft_get_max(int *arr, int arr_len)
 {
-	t_vars	vars;
+	int		i;
+	int		max;
 
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
-		return (1);
-	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello World");
-	// mlx_key_hook(mlx.win, ft_handle_keys, )
-	ft_printf("Coucou\n");
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
-	mlx_loop(vars.mlx);
-	return (0);
+	i = 0;
+	max = 0;
+	while (i < arr_len)
+	{
+		if (arr[i] > max)
+			max = arr[i];
+		i++;
+	}
+	return (max);
 }

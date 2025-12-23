@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/23 13:48:28 by tibras           ###   ########.fr       */
+/*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/20 18:08:31 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_srcs.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
+// Standard headers
+# include <unistd.h>
+# include <stdlib.h>
+# include <limits.h>
+# include <stdarg.h>
 
-int	main(void)
-{
-	t_vars	vars;
+// Include all subdirectory headers
+# include "char/ft_char.h"
+# include "strings/ft_strings.h"
+# include "conversion/ft_conversion.h"
+# include "memory/ft_memory.h"
+# include "list/ft_list.h"
+# include "gnl/ft_gnl.h"
+# include "output/ft_output.h"
 
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
-		return (1);
-	vars.win = mlx_new_window(vars.mlx, 600, 600, "Hello World");
-	// mlx_key_hook(mlx.win, ft_handle_keys, )
-	ft_printf("Coucou\n");
-	mlx_destroy_window(vars.mlx, vars.win);
-	mlx_destroy_display(vars.mlx);
-	mlx_loop(vars.mlx);
-	return (0);
-}
+#endif
