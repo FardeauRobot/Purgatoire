@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 19:16:33 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/11 20:31:20 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/29 14:00:14 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_print_nbr(long long nb, int l_base, int mod);
+int			ft_print_nbr(long long nb, int l_base, int mod);
 
 static int	ft_printf_strlen(char *str)
 {

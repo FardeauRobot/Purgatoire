@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:12:07 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 13:31:33 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/29 12:38:52 by tibras            #+#    #+#             */
+/*   Updated: 2025/12/29 16:12:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "so_long_srcs.h"
 
-# include "libft.h"
-# include "mlx.h"
-# include "utils/keys.h"
-
-typedef struct s_vars
+int ft_parsing(char *filepath)
 {
-	void	*mlx;
-	void	*win;
-}	t_vars;
-
-#endif
+	
+}
