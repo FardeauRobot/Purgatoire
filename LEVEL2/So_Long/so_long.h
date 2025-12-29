@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:12:07 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 13:31:33 by tibras           ###   ########.fr       */
+/*   Updated: 2025/12/29 17:47:14 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include "mlx.h"
 # include "utils/keys.h"
 
-typedef struct s_vars
+typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
-}	t_vars;
+}	t_game;
 
 #endif
