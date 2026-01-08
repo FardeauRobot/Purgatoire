@@ -6,15 +6,14 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:00 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/08 18:32:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_GNL_H
 # define FT_GNL_H
 
-# include <stdlib.h>
-
+# include "libft.h" 
 // Get Next Line configuration
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42

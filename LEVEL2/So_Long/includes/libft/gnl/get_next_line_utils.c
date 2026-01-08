@@ -6,11 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:01:17 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:28:46 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/08 18:26:44 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_gnl.h"
 
 size_t	ft_gnl_strlen(const char *str)
 {

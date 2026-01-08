@@ -3,24 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   imgs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/06 19:01:18 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/01/08 18:15:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IMGS_H
 # define IMGS_H
 
-# include "so_long_utils.h"
 
 // PATHS TO IMGS
 # define IMG_PATH "imgs/"
+# define PATH_SIZE 500
 
-// MACROS FOR READABILITY
-# define PUT_IMG(g, img, x, y) \
-    mlx_put_image_to_window((g)->mlx, (g)->win, (img), (x), (y))
+# define HOWLET_PATH "howlet/"
+# define PINK_PATH "pink/"
+# define BLUE_PATH "blue/"
+
+# define IDLE_PATH "idle_"
+# define MOVING_PATH "move_"
+# define PLACE_PATH "place_"
+
+# define RIGHT "r_"
+# define LEFT "l_"
+
+# define XPM ".xpm"
 
 typedef struct s_img
 {
@@ -28,5 +37,13 @@ typedef struct s_img
 	int		width;
 	int		height;
 }	t_img;
+
+// RECALL THE STRUCT 
+typedef struct s_game	t_game;
+typedef struct s_menu	t_menu;
+
+int	ft_put_img(t_game *game, t_img *img, int x, int y);
+void	ft_xpm_img(t_game *game, char *path, t_img *img);
+void	ft_menu_loader(t_game *game, t_menu *menu);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:08:31 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/08 18:27:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 // Standard headers
 # include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <limits.h>
 # include <stdarg.h>
+# include <fcntl.h>
 
 // Include all subdirectory headers
 # include "char/ft_char.h"

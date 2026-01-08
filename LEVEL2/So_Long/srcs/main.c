@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/06 19:01:30 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/01/08 18:20:55 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_srcs.h"
+#include "../utils/imgs.h"
 
 void	ft_destroy_menu_img(t_game *game)
 {
-	if (game->menu.character1[0].img)
+	if (game->menu.characters[0][0][0].img)
 	{
-		mlx_destroy_image(game->mlx, game->menu.character1[0].img);
-		game->menu.character1[0].img = NULL;
+		mlx_destroy_image(game->mlx, game->menu.characters[0][0][0].img);
+		game->menu.characters[0][0][0].img = NULL;
 	}
 }
 int ft_end_menu(t_game *game)
@@ -35,13 +36,14 @@ int	ft_handle_keys_menu(int keycode, t_game *game)
 	else if (keycode == KEY_A)
 	{
 		ft_destroy_menu_img(game);
-		game->menu.character1[0].img = mlx_xpm_file_to_image(game->mlx, IMG_PATH"Pink_Idle_0_64x64.xpm", &game->menu.character1[0].width, &game->menu.character1[0].height);
-		if (game->menu.character1[0].img)
+		ft_menu_loader(game, &game->menu);
+		if (game->menu.characters[0][0][0].img && game->menu.characters[1][0][0].img)
 		{
-			PUT_IMG(game, game->menu.character1[0].img, MENU_CENTER_OFF_X(100), MENU_CENTER_Y);
-			PUT_IMG(game, game->menu.character1[0].img, MENU_CENTER_X, MENU_CENTER_Y);
-			PUT_IMG(game, game->menu.character1[0].img, MENU_CENTER_OFF_X(-100), MENU_CENTER_Y);
+			ft_put_img(game, &game->menu.characters[0][0][0], 200, 200);
+			ft_put_img(game, &game->menu.characters[1][0][0], 300, 200);
 		}
+		else
+			ft_printf("YA PAS WESH\n");
 	}
 	else if (keycode == KEY_D)
 		mlx_clear_window(game->mlx, game->win);
@@ -50,12 +52,9 @@ int	ft_handle_keys_menu(int keycode, t_game *game)
 
 void	ft_run_menu(t_game *vars)
 {
-	// vars->test.img = mlx_xpm_file_to_image(vars->mlx, IMG_PATH"Pink_Idle_0_64x64.xpm", &vars->test.img_width, &vars->test.img_height);
-	// mlx_put_image_to_window(vars->mlx, vars->win, vars->test.img, 400, 400);
 	mlx_key_hook(vars->win, ft_handle_keys_menu, vars);
 	mlx_hook(vars->win, 17, 0, ft_end_menu, vars);
 	mlx_loop(vars->mlx);
-	// Cleanup after loop exits to avoid using freed X11 display inside mlx_loop
 	ft_destroy_menu_img(vars);
 	if (vars->win)
 	{
@@ -74,10 +73,16 @@ void	ft_run_menu(t_game *vars)
 
 
 #include <stdio.h>
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_game	game;
 
+	if (argc != 2)
+	{
+		ft_printf("ERREUR ARGUMENTS %s\n", argv[1]);
+		// ERREUR NBR ARGUMENTS = "Expects ./so_long mapname"
+	}
+	// ft_parsing(&game, argv[1]);
 	ft_bzero(&game, sizeof(t_game));
 	game.mlx = mlx_init();
 	if (!game.mlx)

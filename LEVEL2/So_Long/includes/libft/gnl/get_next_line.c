@@ -6,11 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:01:23 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/29 18:27:50 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/08 18:26:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_gnl.h"
 
 static char	*ft_arr_clean(char **arr, char *tmp, int mod)
 {

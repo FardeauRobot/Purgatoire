@@ -1,5 +1,6 @@
 # Directories
 SRCS_PATH			= srcs
+UTILS_PATH			= utils
 OBJS_PATH			= objs
 INC_PATH			= includes
 LIBFT_PATH			= $(INC_PATH)/libft
@@ -8,8 +9,11 @@ MLX_PATH			= $(INC_PATH)/minilibx-linux
 # Source Files
 SRCS_FILES			= main.c
 SRCS				= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
-OBJS				= $(SRCS:.o=.c)
 
+UTILS_FILES			= image_utils.c
+UTILS				= $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
+
+OBJS				= $(SRCS:.o=.c) $(UTILS:.o=.c)
 # Include Files
 INC_FILES			= so_long.h
 INC				= $(addprefix $(INC_PATH)/, $(INC_FILES))
