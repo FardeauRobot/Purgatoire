@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/08 18:32:35 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 19:46:49 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_GNL_H
 
 # include "libft.h" 
-// Get Next Line configuration
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
@@ -23,6 +23,7 @@
 char	*get_next_line(int fd);
 
 // Get Next Line utility functions
+void	ft_arr_clear_all(char **arr);
 size_t	ft_gnl_strlen(const char *str);
 char	*ft_gnl_strjoin(const char *s1, const char *s2);
 int		ft_gnl_strchr(const char *s, int c);

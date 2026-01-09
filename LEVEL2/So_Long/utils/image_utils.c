@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/08 18:19:19 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 17:22:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,15 @@ int	ft_put_img(t_game *game, t_img *img, int x, int y)
 	return (0);
 }
 
-void	ft_xpm_img(t_game *game, char *path, t_img *img)
+int	ft_xpm_img(t_game *game, char *path, t_img *img)
 {
 	if (!game || !img)
-		return;
+		return (FAILURE);
 	img->img = mlx_xpm_file_to_image(game->mlx, path, &img->width, &img->height);
+	if (!img->img)
+		return (FAILURE);
+	return (SUCCESS);
+	
 }
 
 int ft_path_append(char *dst, char *src)
@@ -62,9 +66,9 @@ char *ft_create_path(int i, int j)
 
 void	ft_menu_loader(t_game *game, t_menu *menu)
 {
-	int i;
-	int j;
-	char *path;
+	int		i;
+	int		j;
+	char	*path;
 
 	i = 0;
 	while (i < NB_CHARS)
@@ -73,7 +77,8 @@ void	ft_menu_loader(t_game *game, t_menu *menu)
 		while (j < NB_FRAMES_ANIM_CHAR)
 		{
 			path = ft_create_path(i, j);
-			ft_xpm_img(game, path, &menu->characters[i][0][j]);
+			if (!ft_xpm_img(game, path, &menu->characters[i][0][j]))
+				error_exit(game, "Error loading imgs menu\n");
 			free(path);
 			j++;
 		}

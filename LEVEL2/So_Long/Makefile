@@ -7,10 +7,13 @@ LIBFT_PATH			= $(INC_PATH)/libft
 MLX_PATH			= $(INC_PATH)/minilibx-linux
 
 # Source Files
-SRCS_FILES			= main.c
+SRCS_FILES			= main.c \
+						parsing.c
 SRCS				= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 
-UTILS_FILES			= image_utils.c
+UTILS_FILES			= image_utils.c \
+						errors.c \
+						memory_utils.c 
 UTILS				= $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
 
 OBJS				= $(SRCS:.o=.c) $(UTILS:.o=.c)
@@ -37,19 +40,19 @@ NAME				= so_long
 all: $(LIBFT) $(MLX) $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS)
 
 %.o:%.c
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 $(OBJS_PATH):
-	mkdir -p $(OBJS_PATH)
+	@mkdir -p $(OBJS_PATH)
 
 $(LIBFT):
-	make -C $(LIBFT_PATH)
+	@make -C $(LIBFT_PATH)
 
 $(MLX):
-	make -C $(MLX_PATH)
+	@make -C $(MLX_PATH) 
 
 clean:
 	$(RM) -r $(OBJS_PATH)

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/08 18:20:55 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 17:42:39 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ft_run_menu(t_game *vars)
 	mlx_hook(vars->win, 17, 0, ft_end_menu, vars);
 	mlx_loop(vars->mlx);
 	ft_destroy_menu_img(vars);
+	if (vars->map)
+		ft_clear_map(vars->map, vars->map_height);
 	if (vars->win)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
@@ -78,12 +80,9 @@ int	main(int argc, char **argv)
 	t_game	game;
 
 	if (argc != 2)
-	{
 		ft_printf("ERREUR ARGUMENTS %s\n", argv[1]);
-		// ERREUR NBR ARGUMENTS = "Expects ./so_long mapname"
-	}
-	// ft_parsing(&game, argv[1]);
 	ft_bzero(&game, sizeof(t_game));
+	ft_parsing(&game, argv[1]);
 	game.mlx = mlx_init();
 	if (!game.mlx)
 		return (1);

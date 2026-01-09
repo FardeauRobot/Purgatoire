@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:01:23 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/08 18:26:36 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 19:44:09 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static char	*ft_read_check(ssize_t n_read, char *arr, char **buf)
 	free(arr);
 	return (NULL);
 }
+
+
 
 static char	*ft_theline(char *arr, int fd)
 {
@@ -86,8 +88,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 	{
-		if (arr_s[fd])
+		if (fd >= 0 && fd < 1024 && arr_s[fd])
 			ft_arr_clean(&arr_s[fd], NULL, 0);
+		if (fd == -1)
+			ft_arr_clear_all(arr_s);
 		return (NULL);
 	}
 	arr_s[fd] = ft_theline(arr_s[fd], fd);

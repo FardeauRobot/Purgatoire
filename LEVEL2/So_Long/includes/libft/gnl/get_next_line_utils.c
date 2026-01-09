@@ -6,11 +6,24 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 14:01:17 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/08 18:26:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 19:41:22 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_gnl.h"
+
+void	ft_arr_clear_all(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (i < 1024)
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+}
 
 size_t	ft_gnl_strlen(const char *str)
 {

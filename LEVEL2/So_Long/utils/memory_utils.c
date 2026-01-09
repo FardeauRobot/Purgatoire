@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   memory_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:12:07 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 15:13:05 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/09 17:35:57 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/09 17:37:32 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#include "so_long_utils.h"
 
+void	ft_clear_map(char **map, ssize_t height)
+{
+	ssize_t i;
 
-// A DEEEEEELEEEEEEEETE
-# include <stdio.h>
-
-# include <string.h>
-
-# include "libft.h"
-# include "mlx.h"
-
-# include "utils/so_long_utils.h"
-# include "srcs/so_long_srcs.h"
-
-# include "utils/keys.h"
-# include "utils/imgs.h"
-# include "utils/errors.h"
-
-#endif
+	i = 0;
+	while (i < height)
+	{
+		if (map[i])
+			free(map[i]);
+		i++;
+	}
+	free(map);
+}

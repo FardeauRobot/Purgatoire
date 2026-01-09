@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/22 12:12:07 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 15:13:05 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/09 14:07:36 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/09 19:29:31 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
+# define ERR_BER 1
+# define ERR_OPEN 2
+# define ERR_LEN 3
 
-// A DEEEEEELEEEEEEEETE
-# include <stdio.h>
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
 
-# include <string.h>
+# define FAILURE 0
+# define SUCCESS 1
 
-# include "libft.h"
-# include "mlx.h"
-
-# include "utils/so_long_utils.h"
-# include "srcs/so_long_srcs.h"
-
-# include "utils/keys.h"
-# include "utils/imgs.h"
-# include "utils/errors.h"
+void error_measure_map(t_game *game, int fd, char *line, char *msg);
+void error_exit(t_game *game, char *msg);
 
 #endif
