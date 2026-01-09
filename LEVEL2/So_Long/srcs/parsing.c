@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 20:34:56 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 23:30:53 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../so_long.h"
+#include "so_long_srcs.h"
 
 int	ft_char_check(char *str)
 {
@@ -81,39 +81,70 @@ int	ft_check_walls(t_game *game, char *row_map, size_t row)
 		}
 	}
 	else
-		if (row_map[0] != '1' || row_map[game->map_width - 2] != '1')
+		if (row_map[0] != '1' || row_map[game->map_width - 1] != '1')
 			return (FAILURE);
 	return (SUCCESS);
 }
 
 // ft_check_components(&player)
+void	ft_find_assets(t_game *game, char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == 'C')
+			game->collectibles ++;
+		if (line[i] == 'E')
+			game->exit ++;
+		if (line[i] == 'P')
+			game->player ++;
+		i++;
+	}
+}
 
 void	ft_fill_map(t_game *game, char **map, int fd)
 {
 	size_t	i;
-	int		player;
-	int		collectibles;
-	int		exit;
-
 
 	if (fd == -1)
 		error_exit (game, "Can't open file to fill the map\n"); // ERREUR OPEN
 	i = 0;
-	player = 0;
-	collectibles = 0;
-	exit = 0;
 	while (i < game->map_height)
 	{
 		map[i] = get_next_line(fd);
-		if (!map[i] || ft_check_walls(game, map[i], i) == FAILURE)
-			ft_clear_map(map, game->map_height);
-		// ft_check_components(&player, &collectibles, &exit);
+		// if (map[i])
+		if (!map[i])
+			error_exit(game, "Failed allocation for the map\n");
+		ft_find_assets(game, map[i]);
+		if (ft_check_walls(game, map[i], i) == FAILURE)
+			error_exit(game, "Borders of the map are not only walls\n");
 		i++;
 	}
 	close(fd);
 }
 
-int ft_parsing(t_game *game, char *path_map)
+void	ft_init_game(t_game *game)
+{
+	game->map = NULL;
+	game->collectibles = 0;
+	game->exit = 0;
+	game->player = 0;
+	game->framerate = FRAMERATE;
+}
+
+void ft_check_assets(t_game *game)
+{
+	if (game->collectibles < 1)
+		error_exit(game, "Not enough collectibles\n");
+	if (game->exit < 1)
+		error_exit(game, "No exit found\n");
+	if (game->player < 1)
+		error_exit(game, "No player found\n");
+}
+
+void ft_parsing(t_game *game, char *path_map)
 {
 	int fd;
 
@@ -122,12 +153,13 @@ int ft_parsing(t_game *game, char *path_map)
 	fd = open(path_map, O_RDONLY);
 	if (fd == -1)
 		error_exit (game, "Can't open file to affect\n"); // ERREUR OPEN
+	ft_init_game(game);
 	ft_get_height(game, fd);
 	game->map = malloc (sizeof(char *) * game->map_height);
 	if (!game->map)
 		error_exit(game, "Fail malloc map[]\n"); // ERREUR MALLOC
 	fd = open(path_map, O_RDONLY);
 	ft_fill_map(game, game->map, fd);
+	ft_check_assets(game);
 	// ft_path_check(game->map);
-	return (0);
 }

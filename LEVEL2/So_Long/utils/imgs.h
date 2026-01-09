@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imgs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/09 17:23:12 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 23:17:31 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 # define RIGHT "r_"
 # define LEFT "l_"
+
+# define FRAMERATE 60
 
 # define XPM ".xpm"
 // RECALL THE STRUCT 

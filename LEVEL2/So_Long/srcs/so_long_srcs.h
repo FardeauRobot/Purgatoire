@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_srcs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 18:19:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 23:20:22 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ typedef struct s_game {
 	char	**map;
 	size_t		map_height;
 	size_t		map_width;
+	int		collectibles;
+	int		exit;
+	int		player;
 	int		framerate;
 	t_menu	menu;
 }	t_game;
 
-
-
-int ft_parsing(t_game *game, char *path_map);
+void ft_parsing(t_game *game, char *path_map);
 
 #endif

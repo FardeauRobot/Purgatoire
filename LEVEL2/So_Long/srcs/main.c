@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 17:42:39 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 23:09:59 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_srcs.h"
-#include "../utils/imgs.h"
 
 void	ft_destroy_menu_img(t_game *game)
 {
@@ -62,33 +61,35 @@ void	ft_run_menu(t_game *vars)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
 		vars->win = NULL;
-		ft_printf("FIN DE GAME\n");
 	}
 	if (vars->mlx)
 	{
 		mlx_destroy_display(vars->mlx);
 		free(vars->mlx);
 		vars->mlx = NULL;
-		ft_printf("FIN DE GAME 2\n");
+		ft_printf("FIN DE GAME \n");
 	}
 }
 
-
+void ft_game_init(t_game *game)
+{
+	game->mlx = mlx_init();
+	if (!game->mlx)
+		error_exit(game, "Couldn´t affect mlx\n");
+	game->win = mlx_new_window(game->mlx, MENU_WIDTH, MENU_HEIGHT, "Hello World");
+	if (!game->win)
+		error_exit(game, "Couldn´t affect win\n");
+}
 #include <stdio.h>
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
 	if (argc != 2)
-		ft_printf("ERREUR ARGUMENTS %s\n", argv[1]);
+		error_exit(NULL, "Wrong number of arguments || Prototyped ./so_long path_map\n");
 	ft_bzero(&game, sizeof(t_game));
 	ft_parsing(&game, argv[1]);
-	game.mlx = mlx_init();
-	if (!game.mlx)
-		return (1);
-	game.win = mlx_new_window(game.mlx, MENU_WIDTH, MENU_HEIGHT, "Hello World");
-	if (!game.win)
-		return (ft_end_menu(&game));
+	ft_game_init(&game);
 	ft_run_menu(&game);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:10:09 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 19:38:24 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/09 23:04:14 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	ft_printerror(char *msg)
 
 void error_measure_map(t_game *game, int fd, char *line, char *msg)
 {
-	// (void)line;
 	free(line);
 	close (fd);
 	error_exit(game, msg);
