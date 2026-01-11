@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 17:22:35 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/11 18:13:01 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	ft_xpm_img(t_game *game, char *path, t_img *img)
 		return (FAILURE);
 	return (SUCCESS);
 	
+}
+
+void	ft_destroy_img(t_game *game, t_img *img)
+{
+	if (img->img)
+		mlx_destroy_image(game->mlx, img->img);
+	img->img = NULL;
 }
 
 int ft_path_append(char *dst, char *src)
@@ -64,6 +71,30 @@ char *ft_create_path(int i, int j)
 	return (ft_strdup(path));
 }
 
+void	ft_clear_imgs(t_game *game, t_menu *menu)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	while (i < NB_CHARS)
+	{
+		j = 0;
+		while (j < NB_MOVES)
+		{
+			k = 0;
+			while (k < NB_FRAMES_ANIM_CHAR)
+			{
+				ft_destroy_img(game, &menu->characters[i][j][k]);
+				k++;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
 void	ft_menu_loader(t_game *game, t_menu *menu)
 {
 	int		i;
@@ -77,8 +108,13 @@ void	ft_menu_loader(t_game *game, t_menu *menu)
 		while (j < NB_FRAMES_ANIM_CHAR)
 		{
 			path = ft_create_path(i, j);
-			if (!ft_xpm_img(game, path, &menu->characters[i][0][j]))
+			if (!path)
+				error_exit(game, "Error allocating imgs menu\n");
+			if (ft_xpm_img(game, path, &menu->characters[i][IDLE][j]) == FAILURE)
+			{
+				free(path);
 				error_exit(game, "Error loading imgs menu\n");
+			}
 			free(path);
 			j++;
 		}

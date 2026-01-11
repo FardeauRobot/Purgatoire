@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 17:59:00 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/08 14:02:24 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/11 16:15:34 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "so_long_utils.h"
 
 // MENU SIZE
-# define MENU_WIDTH 800
-# define MENU_HEIGHT 600
+# define MENU_WIDTH 1000
+# define MENU_HEIGHT 800
 
 #endif

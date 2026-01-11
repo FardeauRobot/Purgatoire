@@ -8,7 +8,8 @@ MLX_PATH			= $(INC_PATH)/minilibx-linux
 
 # Source Files
 SRCS_FILES			= main.c \
-						parsing.c
+						parsing.c \
+						game.c
 SRCS				= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 
 UTILS_FILES			= image_utils.c \

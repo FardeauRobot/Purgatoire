@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/09 23:17:31 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/01/11 18:17:07 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define IMGS_H
 
 #include "../so_long.h"
+
+# define SLOT1 (int[2]){100, 100}
+# define SLOT2 (int[2]){200, 100}
+# define SLOT3 (int[2]){300, 100}
 
 // PATHS TO IMGS
 # define IMG_PATH "imgs/"
@@ -32,6 +36,7 @@
 # define FRAMERATE 60
 
 # define XPM ".xpm"
+
 // RECALL THE STRUCT 
 typedef struct s_img	t_img;
 typedef struct s_game	t_game;

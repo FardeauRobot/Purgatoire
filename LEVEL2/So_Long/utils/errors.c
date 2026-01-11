@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:10:09 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 23:04:14 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/01/11 18:16:43 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void error_exit(t_game *game, char *msg)
 	get_next_line(-1);
 	if (game)
 	{
+		ft_clear_imgs(game, &game->menu);
 		if (game->map)
 			ft_clear_map(game->map, game->map_height);
 		if (game->win)
