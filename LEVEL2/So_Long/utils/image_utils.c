@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/12 15:41:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/12 18:07:33 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_create_path(int i, int j, char *l_or_r)
 	return (ft_strdup(path));
 }
 
-void	ft_clear_imgs(t_game *game, t_menu *menu)
+void	ft_clear_imgs(t_game *game)
 {
 	int	i;
 	int	j;
@@ -87,8 +87,8 @@ void	ft_clear_imgs(t_game *game, t_menu *menu)
 			k = 0;
 			while (k < NB_FRAMES_ANIM_CHAR)
 			{
-				ft_destroy_img(game, &menu->characters[i][j][LEFT][k]);
-				ft_destroy_img(game, &menu->characters[i][j][RIGHT][k]);
+				ft_destroy_img(game, &game->characters[i][j][LEFT][k]);
+				ft_destroy_img(game, &game->characters[i][j][RIGHT][k]);
 				k++;
 			}
 			j++;
@@ -97,7 +97,7 @@ void	ft_clear_imgs(t_game *game, t_menu *menu)
 	}
 }
 
-void	ft_game_loader(t_game *game, t_menu *menu)
+void	ft_game_loader(t_game *game)
 {
 	int		i;
 	int		j;
@@ -117,17 +117,15 @@ void	ft_game_loader(t_game *game, t_menu *menu)
 				path_l = ft_create_path(i, j, "l_");
 				path_r = ft_create_path(i, j, "r_");
 				if (!path_l || !path_r)
-					error_exit(game, "Error allocating imgs menu\n");
-				if (ft_xpm_img(game, path_l,
-						&menu->characters[i][IDLE][LEFT][j]) == FAILURE
-					|| ft_xpm_img(game, path_r,
-						&menu->characters[i][IDLE][RIGHT][j]) == FAILURE)
+					error_exit(game, "Error allocating imgs\n", ERRN_MALLOC);
+				if (ft_xpm_img(game, path_l, &game->characters[i][j][LEFT][k]) == FAILURE
+					|| ft_xpm_img(game, path_r, &game->characters[i][j][RIGHT][k]) == FAILURE)
 				{
 					if (path_l)
 						free(path_l);
 					if (path_r)
 						free(path_r);
-					error_exit(game, "Error loading imgs menu\n");
+					error_exit(game, "Error loading imgs\n", ERRN_OPEN);
 				}
 				free(path_l);
 				free(path_r);

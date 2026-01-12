@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/12 15:50:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/12 18:04:05 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,19 @@ int	ft_get_height(t_game *game, int fd)
 
 	line = get_next_line(fd);
 	if (!line)
-		error_exit(game, "Empty file !\n");
+		error_exit(game, ERRS_EMPTY, ERRN_EMPTY);
 	game->map_height = 0;
 	game->map_width = ft_strlen(line) - 1;
 	while (line)
 	{
 		if (!ft_char_check(line))
-			error_measure_map(game, fd, line,
-				"Incorrect characters in the map\n");
+			error_measure_map(game, fd, line, ERRN_MAP_CHARS);
 		line_len = ft_strlen(line);
 		if (line[line_len - 1] == '\n')
 			line_len--;
 		game->map_height++;
 		if (game->map_width != line_len)
-			error_measure_map(game, fd, line, "Invalid shape of the map\n");
+			error_measure_map(game, fd, line, ERRN_MAP_SHAPE);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -110,16 +109,16 @@ void	ft_fill_map(t_game *game, char **map, int fd)
 	size_t	i;
 
 	if (fd == -1)
-		error_exit (game, "Can't open file to fill the map\n"); // ERREUR OPEN
+		error_exit (game, ERRS_OPEN_MAP, ERRN_OPEN_MAP);
 	i = 0;
 	while (i < game->map_height)
 	{
 		map[i] = get_next_line(fd);
 		if (!map[i])
-			error_exit(game, "Failed allocation for the map\n");
+			error_exit(game, "Failed allocation for the map\n", ERRN_MALLOC);
 		ft_find_assets(game, map[i]);
 		if (ft_check_walls(game, map[i], i) == FAILURE)
-			error_exit(game, "Borders of the map are not only walls\n");
+			error_exit(game, ERRS_MAP_WALLS, ERRN_MAP_WALLS);
 		i++;
 	}
 	close(fd);
@@ -137,11 +136,15 @@ void	ft_init_game(t_game *game)
 void	ft_check_assets(t_game *game)
 {
 	if (game->collectibles < 1)
-		error_exit(game, "Not enough collectibles\n");
+		error_exit(game, ERRS_MAP_COLLECT, ERRN_MAP_COLLECT);
 	if (game->exit < 1)
-		error_exit(game, "No exit found\n");
-	if (game->player < 1)
-		error_exit(game, "No player found\n");
+		error_exit(game, ERRS_MAP_EXIT, ERRN_MAP_EXIT);
+	if (game->player != 1)
+	{
+		if (game->player > 1)
+			error_exit(game, "Too much players detected\n", ERRN_MAP_PLAYER);
+		error_exit(game, ERRS_MAP_PLAYER, ERRN_MAP_PLAYER);
+	}
 }
 
 void	ft_parsing(t_game *game, char *path_map)
@@ -149,15 +152,15 @@ void	ft_parsing(t_game *game, char *path_map)
 	int	fd;
 
 	if (!ft_format_check(path_map))
-		error_exit (game, "File not ending with .ber\n"); // ERREUR OPEN
+		error_exit (game, ERRS_BER, ERRN_BER);
 	fd = open(path_map, O_RDONLY);
 	if (fd == -1)
-		error_exit (game, "Can't open file to affect\n"); // ERREUR OPEN
+		error_exit (game, ERRS_OPEN, ERRN_OPEN);
 	ft_init_game(game);
 	ft_get_height(game, fd);
 	game->map = malloc (sizeof(char *) * game->map_height);
 	if (!game->map)
-		error_exit(game, "Fail malloc map[]\n"); // ERREUR MALLOC
+		error_exit(game, "Fail malloc map[]\n", ERRN_MALLOC);
 	fd = open(path_map, O_RDONLY);
 	ft_fill_map(game, game->map, fd);
 	ft_check_assets(game);

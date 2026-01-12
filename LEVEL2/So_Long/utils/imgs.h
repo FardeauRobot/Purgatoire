@@ -40,10 +40,9 @@
 // RECALL THE STRUCT 
 typedef struct s_img	t_img;
 typedef struct s_game	t_game;
-typedef struct s_menu	t_menu;
 
 int		ft_put_img(t_game *game, t_img *img, int x, int y);
 int		ft_xpm_img(t_game *game, char *path, t_img *img);
-void	ft_game_loader(t_game *game, t_menu *menu);
+void		ft_game_loader(t_game *game);
 
 #endif
