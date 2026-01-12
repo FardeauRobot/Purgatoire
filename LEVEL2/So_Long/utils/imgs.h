@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imgs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/11 18:17:07 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/01/12 15:37:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define MOVING_PATH "move_"
 # define PLACE_PATH "place_"
 
-# define RIGHT "r_"
-# define LEFT "l_"
+# define RIGHT_P "r_"
+# define LEFT_P "l_"
 
 # define FRAMERATE 60
 
@@ -44,6 +44,6 @@ typedef struct s_menu	t_menu;
 
 int		ft_put_img(t_game *game, t_img *img, int x, int y);
 int		ft_xpm_img(t_game *game, char *path, t_img *img);
-void	ft_menu_loader(t_game *game, t_menu *menu);
+void	ft_game_loader(t_game *game, t_menu *menu);
 
 #endif

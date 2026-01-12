@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/11 18:04:33 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/01/12 15:51:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	ft_destroy_menu_img(t_game *game)
 {
 	ft_clear_imgs(game, &game->menu);
 }
-int ft_end_menu(t_game *game)
+
+int	ft_end_menu(t_game *game)
 {
 	if (game->mlx)
 		mlx_loop_end(game->mlx);
@@ -28,7 +29,8 @@ int	ft_handle_keys_menu(int keycode, t_game *game)
 	if (keycode == KEY_ESC)
 		ft_end_menu(game);
 	else if (keycode == KEY_A)
-		ft_put_img(game, &game->menu.characters[0][IDLE][0], MENU_WIDTH / 2 - 16, MENU_HEIGHT / 2 - 16);
+		ft_put_img(game, &game->menu.characters[0][IDLE][LEFT][0],
+			MENU_WIDTH / 2, MENU_HEIGHT / 2);
 	else if (keycode == KEY_D)
 		mlx_clear_window(game->mlx, game->win);
 	else if (keycode == KEY_SPACE)
@@ -36,7 +38,7 @@ int	ft_handle_keys_menu(int keycode, t_game *game)
 	return (0);
 }
 
-int ft_handle_keys(int keycode, t_game *game)
+int	ft_handle_keys(int keycode, t_game *game)
 {
 	if (game->display == MENU)
 		ft_handle_keys_menu(keycode, game);
@@ -45,10 +47,9 @@ int ft_handle_keys(int keycode, t_game *game)
 	return (0);
 }
 
-
 void	ft_run_menu(t_game *vars)
 {
-	ft_menu_loader(vars, &vars->menu);
+	ft_game_loader(vars, &vars->menu);
 	mlx_key_hook(vars->win, ft_handle_keys, vars);
 	mlx_hook(vars->win, 17, 0, ft_end_menu, vars);
 	mlx_loop(vars->mlx);
@@ -69,7 +70,7 @@ void	ft_run_menu(t_game *vars)
 	}
 }
 
-void ft_game_init(t_game *game)
+void	ft_game_init(t_game *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)
@@ -80,7 +81,6 @@ void ft_game_init(t_game *game)
 	// game->display = MENU;
 }
 
-#include <stdio.h>
 int	main(int argc, char **argv)
 {
 	t_game	game;
