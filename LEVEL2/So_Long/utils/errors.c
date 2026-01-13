@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:10:09 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/12 18:08:17 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:55:14 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	ft_clear_game(t_game *game)
 
 void	error_exit(t_game *game, char *msg, int err_nb)
 {
-	ft_printerror("Error\n");
+	if (err_nb != 0)
+		ft_printerror("Error\n");
 	ft_printerror(msg);
 	get_next_line(-1);
 	if (game)

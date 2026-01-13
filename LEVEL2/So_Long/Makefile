@@ -10,11 +10,13 @@ MLX_PATH			= $(INC_PATH)/minilibx-linux
 SRCS_FILES			= main.c \
 						parsing.c \
 						game.c
+
 SRCS				= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 
 UTILS_FILES			= image_utils.c \
 						errors.c \
 						memory_utils.c 
+
 UTILS				= $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
 
 OBJS				= $(SRCS:.o=.c) $(UTILS:.o=.c)

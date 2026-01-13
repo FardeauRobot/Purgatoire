@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/12 18:04:05 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:15:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	ft_check_walls(t_game *game, char *row_map, size_t row)
 }
 
 // ft_check_components(&player)
-void	ft_find_assets(t_game *game, char *line)
+void	ft_find_assets(t_game *game, char *line, int nb_line)
 {
 	int	i;
 
@@ -95,11 +95,18 @@ void	ft_find_assets(t_game *game, char *line)
 	while (line[i])
 	{
 		if (line[i] == 'C')
-			game->collectibles ++;
+			game->collectibles++;
 		if (line[i] == 'E')
-			game->exit ++;
+			game->exit++;
 		if (line[i] == 'P')
-			game->player ++;
+		{
+			if (game->nb_player == 0)
+			{
+				game->player_pos[0] = i;
+				game->player_pos[1] = nb_line;
+			}
+			game->nb_player++;
+		}
 		i++;
 	}
 }
@@ -116,7 +123,7 @@ void	ft_fill_map(t_game *game, char **map, int fd)
 		map[i] = get_next_line(fd);
 		if (!map[i])
 			error_exit(game, "Failed allocation for the map\n", ERRN_MALLOC);
-		ft_find_assets(game, map[i]);
+		ft_find_assets(game, map[i], i);
 		if (ft_check_walls(game, map[i], i) == FAILURE)
 			error_exit(game, ERRS_MAP_WALLS, ERRN_MAP_WALLS);
 		i++;
@@ -129,8 +136,12 @@ void	ft_init_game(t_game *game)
 	game->map = NULL;
 	game->collectibles = 0;
 	game->exit = 0;
-	game->player = 0;
-	game->framerate = FRAMERATE;
+	game->nb_player = 0;
+	game->frame = 0;
+	game->orient = O_LEFT;
+	game->active_char = 0;
+	game->move = IDLE;
+	game->move_count = 0;
 }
 
 void	ft_check_assets(t_game *game)
@@ -139,9 +150,9 @@ void	ft_check_assets(t_game *game)
 		error_exit(game, ERRS_MAP_COLLECT, ERRN_MAP_COLLECT);
 	if (game->exit < 1)
 		error_exit(game, ERRS_MAP_EXIT, ERRN_MAP_EXIT);
-	if (game->player != 1)
+	if (game->nb_player != 1)
 	{
-		if (game->player > 1)
+		if (game->nb_player > 1)
 			error_exit(game, "Too much players detected\n", ERRN_MAP_PLAYER);
 		error_exit(game, ERRS_MAP_PLAYER, ERRN_MAP_PLAYER);
 	}
@@ -160,8 +171,9 @@ void	ft_parsing(t_game *game, char *path_map)
 	ft_get_height(game, fd);
 	game->map = malloc (sizeof(char *) * game->map_height);
 	if (!game->map)
-		error_exit(game, "Fail malloc map[]\n", ERRN_MALLOC);
+		error_exit(game, ERRS_MALLOC_MAP, ERRN_MALLOC);
 	fd = open(path_map, O_RDONLY);
 	ft_fill_map(game, game->map, fd);
 	ft_check_assets(game);
+	ft_printf("ASSETS || COL = %d || EXIT = %d || PLAYER = %d\n", game->collectibles, game->exit, game->nb_player);
 }

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/12 17:05:45 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:30:59 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 // STANDARD DEFINES FOR READABILITY
 # define NB_FRAMES_ANIM_CHAR 1
+# define IMG_SIZE 64
 
 typedef enum e_chars
 {
@@ -24,17 +25,44 @@ typedef enum e_chars
 	HOWLET,
 	NB_CHARS
 }				t_chars;
+
+typedef enum e_directions
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+	NB_DIR
+}	t_directions;
+
 typedef enum e_moves
 {
 	IDLE,
 	NB_MOVES
 }				t_moves;
+
+
 typedef enum e_orientation
 {
-	LEFT,
-	RIGHT,
+	O_LEFT,
+	O_RIGHT,
 	NB_ORIENTATION
 }				t_orientation;
+
+typedef enum e_coordinates
+{
+	X,
+	Y,
+}	t_coordinates;
+
+typedef enum e_assets
+{
+	WALL,
+	GROUND,
+	COLLECTIBLE,
+	EXIT,
+	NB_ASSETS,
+}	t_assets;
 
 typedef struct s_img
 {
@@ -51,10 +79,17 @@ typedef struct s_game
 	char		**map;
 	size_t		map_height;
 	size_t		map_width;
+	int			active_char;
+	int			player_pos[2];
+	int			move;
+	int			move_count;
 	int			collectibles;
+	int			collected;
 	int			exit;
-	int			player;
-	int			framerate;
+	int			nb_player;
+	int			orient;
+	int			frame;
+	t_img		assets[NB_ASSETS];
 	t_img		characters[NB_CHARS][NB_MOVES]
 	[NB_ORIENTATION][NB_FRAMES_ANIM_CHAR];
 }				t_game;
@@ -64,8 +99,8 @@ void			ft_parsing(t_game *game, char *path_map);
 //------------------//
 
 ////// GAME.C //////
+int				ft_handle_keys(int keycode, t_game *game);
 int				ft_end_game(t_game *game);
-int				ft_handle_keys_game(int keycode, t_game *game);
 void			ft_launch_game(t_game *game);
 //------------------//
 

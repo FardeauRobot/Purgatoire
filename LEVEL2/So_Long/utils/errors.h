@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/12 18:07:11 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:55:44 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 
+# define WIN 0
 # define ERRN_ARGS 1
 # define ERRN_BER 2
 # define ERRN_OPEN 3
@@ -26,6 +27,7 @@
 # define ERRN_MAP_COLLECT 9
 # define ERRN_MAP_EXIT 10
 # define ERRN_MAP_PLAYER 11
+# define ERRN_LOAD_ASSETS 12
 # define ERRN_MALLOC 99
 # define ERRN_MLX 100
 
@@ -35,6 +37,7 @@
 # define ERRS_OPEN_MAP "Can't open file to fill the map\n"
 # define ERRS_EMPTY "File is empty\n"
 # define ERRS_MALLOC "Malloc failed\n"
+# define ERRS_MALLOC_MAP "Fail malloc map[]\n"
 # define ERRS_MAP_CHARS "Incorrect characters in the map\n"
 # define ERRS_MAP_SHAPE "Invalid shape of the map\n"
 # define ERRS_MAP_WALLS "Borders of the map are not only walls\n"
