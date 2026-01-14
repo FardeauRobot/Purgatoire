@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/14 17:57:52 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 18:17:10 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	ft_put_assets(t_game *game, long time)
 				ft_put_img(game,&game->walls[game->frame_assets], x ,y);
 			else if (game->map[y][x] == 'C') 
 				ft_put_img(game,&game->collectible[game->frame_assets], x ,y);
+			else if (game->map[y][x] == 'E')
+				ft_put_img(game,&game->exit[game->frame_assets], x ,y);
 			x++;
 		}
 		y++;
