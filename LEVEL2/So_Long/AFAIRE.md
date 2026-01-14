@@ -5,3 +5,4 @@ Affichage map;
 Mouvement perso;
 Recuperation collectibles;
 Compte des  moves;
+Affichage map :

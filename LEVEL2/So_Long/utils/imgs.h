@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/12 15:37:02 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/13 16:20:59 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@
 
 # define XPM ".xpm"
 
+# define WALL_XPM "imgs/assets/wall.xpm"
+# define GROUND_XPM "imgs/assets/floor.xpm"
+# define COLLECTIBLE_XPM "imgs/assets/collectible.xpm"
+# define EXIT_XPM "imgs/assets/exit.xpm"
+
 // RECALL THE STRUCT 
 typedef struct s_img	t_img;
 typedef struct s_game	t_game;
-typedef struct s_menu	t_menu;
 
 int		ft_put_img(t_game *game, t_img *img, int x, int y);
 int		ft_xpm_img(t_game *game, char *path, t_img *img);
-void	ft_game_loader(t_game *game, t_menu *menu);
+void	ft_game_loader(t_game *game);
 
 #endif
