@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 18:30:59 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 18:16:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include "../so_long.h"
 
 // STANDARD DEFINES FOR READABILITY
-# define NB_FRAMES_ANIM_CHAR 1
-# define IMG_SIZE 64
+# define NB_FRAMES_ANIM_CHAR 4
+# define NB_FRAMES_ANIM_ASSETS 4
 
 typedef enum e_chars
 {
 	PINK,
-	HOWLET,
+	// HOWLET,
 	NB_CHARS
 }				t_chars;
 
@@ -38,6 +38,7 @@ typedef enum e_directions
 typedef enum e_moves
 {
 	IDLE,
+	WALK,
 	NB_MOVES
 }				t_moves;
 
@@ -83,12 +84,19 @@ typedef struct s_game
 	int			player_pos[2];
 	int			move;
 	int			move_count;
-	int			collectibles;
 	int			collected;
+	int			collectibles;
 	int			exit;
 	int			nb_player;
-	int			orient;
 	int			frame;
+	int			frame_assets;
+	int			orient;
+	long		last_frame_ms;
+	long		last_frame_assets_ms;
+	long		last_move_ms;
+	t_img		walls[NB_FRAMES_ANIM_ASSETS];
+	t_img		collectible[NB_FRAMES_ANIM_ASSETS];
+	t_img		exit[NB_FRAMES_ANIM_ASSETS];
 	t_img		assets[NB_ASSETS];
 	t_img		characters[NB_CHARS][NB_MOVES]
 	[NB_ORIENTATION][NB_FRAMES_ANIM_CHAR];

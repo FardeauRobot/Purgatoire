@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:47:35 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/13 19:00:45 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 15:56:53 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,16 @@ int	ft_affect_pos(t_game *game, int direction, int pos_x, int pos_y )
 	if (direction == DOWN)
 		pos_y++;
 	if (direction == LEFT)
+	{
 		pos_x--;
+		game->orient = O_LEFT;
+	}
 	if (direction == RIGHT)
+	{
 		pos_x++;
-	if (ft_check_move(game, pos_x, pos_y) == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+		game->orient = O_RIGHT;
+	}
+	return (ft_check_move(game, pos_x, pos_y));
 }
 
 void	ft_move(t_game *game, int direction)
@@ -72,6 +76,7 @@ void	ft_move(t_game *game, int direction)
 		else 
 			ft_put_img(game, &game->assets[EXIT], pos_x, pos_y);
 	}
+	game->move = WALK;
 }
 
 int	ft_handle_keys(int keycode, t_game *game)

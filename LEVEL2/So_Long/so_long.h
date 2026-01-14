@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:12:07 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 13:58:29 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 12:28:46 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # include <string.h>
 # include <stdlib.h>
+# include <sys/time.h>
 
 # include "libft.h"
 # include "mlx.h"

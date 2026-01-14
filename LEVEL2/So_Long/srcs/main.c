@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 18:59:04 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:58:57 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_run_game(t_game *game)
 {
 	ft_game_loader(game);
-	ft_render_walls(game);
+	ft_render_static(game);
 	mlx_key_hook(game->win, ft_handle_keys, game);
 	mlx_loop_hook(game->mlx, ft_dynamic_render, game);
 	mlx_hook(game->win, 17, 0, ft_end_game, game);

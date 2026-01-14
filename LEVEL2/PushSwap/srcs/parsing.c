@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/29 16:22:21 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 14:57:35 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 18:10:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,6 @@ int	ft_parsing(t_list **stack, int argc, char **argv)
 	}
 	return (0);
 }
+
+"19 29 1"		1			5
+	argv 2		argv3		argv4
