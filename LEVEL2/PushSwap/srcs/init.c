@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/11 15:14:30 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 14:17:09 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 12:10:19 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,54 @@ void	ft_init_push(t_list **stack_a, t_list **stack_b, int median, int *s_len)
 	ft_pb(stack_a, stack_b, 1);
 }
 
+void	ft_insertion_sort(int *arr, int arr_len)
+{
+	int	i;
+	int	j;
+	int	check;
+
+	i = 1;
+	while (i < arr_len)
+	{
+		check = arr[i];
+		j = i - 1;
+		while (j >= 0 && arr[j] > check)
+		{
+			arr[j + 1] = arr[j];
+			j--;
+		}
+		arr[j + 1] = check;
+		i++;
+	}
+}
+
+int	ft_get_median(t_list *stack_a)
+{
+	int		*arr;
+	int		median;
+	int		lst_size;
+
+	lst_size = ft_lstsize(stack_a);
+	arr = ft_stack_to_arr(stack_a, lst_size);
+	if (!arr)
+		exit(ft_error_stacks(&stack_a, NULL));
+	ft_insertion_sort(arr, lst_size);
+	median = arr[lst_size / 2];
+	free(arr);
+	return (median);
+}
+
 void	ft_dispatch(t_list **stack_a, t_list **stack_b, int *lis, int lis_len)
 {
 	t_node	*n_current;
 	int		s_len;
 	int		min;
 	int		max;
-	long	median;
+	int		median;
 
 	min = ft_get_content(ft_lstmin(*stack_a))->value;
 	max = ft_get_content(ft_lstmax(*stack_a))->value;
-	median = (min + max) / 2;
+	median = ft_get_median(*stack_a);
 	s_len = ft_lstsize(*stack_a);
 	while (s_len > lis_len)
 	{
