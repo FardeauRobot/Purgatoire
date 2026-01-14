@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:10:09 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 18:55:14 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 15:36:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	ft_printerror(char *msg)
 {
 	if (!msg)
-		return ;
+		return;
 	write(2, msg, ft_strlen(msg));
 }
 

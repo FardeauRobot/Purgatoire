@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 18:15:11 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/14 17:33:01 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,15 +133,19 @@ void	ft_fill_map(t_game *game, char **map, int fd)
 
 void	ft_init_game(t_game *game)
 {
-	game->map = NULL;
 	game->collectibles = 0;
 	game->exit = 0;
 	game->nb_player = 0;
 	game->frame = 0;
-	game->orient = O_LEFT;
 	game->active_char = 0;
-	game->move = IDLE;
 	game->move_count = 0;
+	game->last_frame_ms = 0;
+	game->last_move_ms = 0;
+	game->frame_assets = 0;
+	game->last_frame_assets_ms = 0;
+	game->move = IDLE;
+	game->orient = O_LEFT;
+	game->map = NULL;
 }
 
 void	ft_check_assets(t_game *game)
