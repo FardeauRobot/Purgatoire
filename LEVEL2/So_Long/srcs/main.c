@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/14 16:58:57 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 13:31:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,3 +46,5 @@ int	main(int argc, char **argv)
 	ft_run_game(&game);
 	return (EXIT_SUCCESS);
 }
+
+

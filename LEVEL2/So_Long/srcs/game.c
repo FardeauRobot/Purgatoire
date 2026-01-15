@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:47:35 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/14 15:56:53 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 14:11:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_move(t_game *game, int direction)
 	pos_y = game->player_pos[Y];
 	if (ft_affect_pos(game, direction, pos_x, pos_y) == SUCCESS)
 	{
+		game->move_count++;
 		if (direction == UP)
 			game->player_pos[Y]--;
 		if (direction == DOWN)
@@ -71,10 +72,13 @@ void	ft_move(t_game *game, int direction)
 			game->player_pos[X]--;
 		if (direction == RIGHT)
 			game->player_pos[X]++;
-		if (game->map[pos_y][pos_x] != 'E')
-			ft_put_img(game, &game->assets[GROUND], pos_x, pos_y);
-		else 
+		if (game->map[pos_y][pos_x] == 'E')
 			ft_put_img(game, &game->assets[EXIT], pos_x, pos_y);
+		else
+		{
+			ft_put_img(game, &game->assets[GROUND], pos_x, pos_y);
+			game->map[pos_y][pos_x] = '0';
+		}
 	}
 	game->move = WALK;
 }
@@ -83,21 +87,19 @@ int	ft_handle_keys(int keycode, t_game *game)
 {
 	if (keycode == KEY_ESC)
 		ft_end_game(game);
-	else if (keycode == KEY_A)
+	else if (keycode == KEY_A || keycode == KEY_LEFT)
 		ft_move(game, LEFT);
-	else if (keycode == KEY_D)
+	else if (keycode == KEY_D || keycode == KEY_RIGHT)
 		ft_move(game, RIGHT);
-	else if (keycode == KEY_W)
+	else if (keycode == KEY_W || keycode == KEY_UP)
 		ft_move(game, UP);
-	else if (keycode == KEY_S)
+	else if (keycode == KEY_S || keycode == KEY_DOWN)
 		ft_move(game, DOWN);
 	else if (keycode == KEY_E)
 	{
 		game->active_char++; 
 		game->active_char = game->active_char % NB_CHARS;
 	}
-	else if (keycode == KEY_UP)
-		mlx_clear_window(game->mlx, game->win);
 	return (0);
 }
 

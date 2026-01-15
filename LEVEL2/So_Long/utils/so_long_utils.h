@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:00:21 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/14 17:00:15 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 14:08:51 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 # include "imgs.h"
 # include "keys.h"
-# include "display.h"
 
 # define TRUE 1
 # define SUCCESS 1

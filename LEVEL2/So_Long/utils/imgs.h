@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/14 17:48:56 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 14:14:00 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_game	t_game;
 
 int		ft_put_img(t_game *game, t_img *img, int x, int y);
 int		ft_xpm_img(t_game *game, char *path, t_img *img);
+void	ft_destroy_img(t_game *game, t_img *img);
 void	ft_game_loader(t_game *game);
 
 #endif
