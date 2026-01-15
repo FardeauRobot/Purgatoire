@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/14 18:16:58 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:39:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef enum e_chars
 {
 	PINK,
-	// HOWLET,
+	OWLET,
 	NB_CHARS
 }				t_chars;
 
@@ -96,7 +96,7 @@ typedef struct s_game
 	long		last_move_ms;
 	t_img		walls[NB_FRAMES_ANIM_ASSETS];
 	t_img		collectible[NB_FRAMES_ANIM_ASSETS];
-	t_img		exit[NB_FRAMES_ANIM_ASSETS];
+	t_img		exit_f[NB_FRAMES_ANIM_ASSETS];
 	t_img		assets[NB_ASSETS];
 	t_img		characters[NB_CHARS][NB_MOVES]
 	[NB_ORIENTATION][NB_FRAMES_ANIM_CHAR];

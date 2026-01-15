@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/14 18:17:10 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:22:18 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,12 @@ static long ft_now_ms(void)
 	return (tv.tv_sec * 1000L + tv.tv_usec / 1000L);
 }
 
-void	ft_put_assets(t_game *game, long time)
+void	ft_print_assets(t_game *game)
 {
 	size_t x;
 	size_t y;
 
 	y = 0;
-	if (time - game->last_frame_assets_ms >= FRAME_MS_ASSETS)
-	{
-		game->frame_assets = (game->frame_assets + 1) % NB_FRAMES_ANIM_ASSETS;
-		game->last_frame_assets_ms = time;
-	}
 	while (y < game->map_height)
 	{
 		x = 0;
@@ -42,11 +37,28 @@ void	ft_put_assets(t_game *game, long time)
 				ft_put_img(game,&game->walls[game->frame_assets], x ,y);
 			else if (game->map[y][x] == 'C') 
 				ft_put_img(game,&game->collectible[game->frame_assets], x ,y);
-			else if (game->map[y][x] == 'E')
-				ft_put_img(game,&game->exit[game->frame_assets], x ,y);
+			// else if (game->map[y][x] == 'E')
+			// 	ft_put_img(game,&game->exit_f[game->frame_assets], x ,y);
 			x++;
 		}
 		y++;
+	}
+}
+void	ft_put_assets(t_game *game, long time)
+{
+	char *nb_print;
+
+	if (time - game->last_frame_assets_ms >= FRAME_MS_ASSETS)
+	{
+		game->frame_assets = (game->frame_assets + 1) % NB_FRAMES_ANIM_ASSETS;
+		game->last_frame_assets_ms = time;
+		ft_print_assets(game);
+		nb_print = ft_itoa(game->move_count);
+		mlx_string_put(game->mlx, game->win, IMG_SIZE / 3, IMG_SIZE / 2, 0xFFFFFF, "NB MOVES = ");
+		if (!nb_print)
+			error_exit(game, "Error malloc print score\n", ERRN_MALLOC);
+		mlx_string_put(game->mlx, game->win, IMG_SIZE + (IMG_SIZE / 2 - 5), IMG_SIZE / 2, 0xFFFFFF, nb_print);
+		free(nb_print);
 	}
 }
 
@@ -70,37 +82,10 @@ int	ft_dynamic_render(t_game *game)
 		game->frame = (game->frame + 1) % NB_FRAMES_ANIM_CHAR;
 		game->last_frame_ms = time;
 	}
-	ft_put_img(game, &game->characters[game->active_char][game->move][game->orient][game->frame], game->player_pos[X], game->player_pos[Y]);
 	ft_put_assets(game, time);
+	ft_put_img(game, &game->characters[game->active_char][game->move][game->orient][game->frame], game->player_pos[X], game->player_pos[Y]);
 	return (0);
 }
-
-int	ft_put_img(t_game *game, t_img *img, int x, int y)
-{
-	if (!game || !game->mlx || !game->win || !img || !img->img)
-		error_exit(game, "Error put_img", 25);
-	mlx_put_image_to_window(game->mlx, game->win, img->img, x * IMG_SIZE, y * IMG_SIZE);
-	return (0);
-}
-
-int	ft_xpm_img(t_game *game, char *path, t_img *img)
-{
-	if (!game || !img)
-		return (FAILURE);
-	img->img = mlx_xpm_file_to_image(game->mlx, path, &img->width,
-			&img->height);
-	if (!img->img)
-		return (FAILURE);
-	return (SUCCESS);
-}
-
-void	ft_destroy_img(t_game *game, t_img *img)
-{
-	if (img->img)
-		mlx_destroy_image(game->mlx, img->img);
-	img->img = NULL;
-}
-
 
 int	ft_path_append(char *dst, char *src)
 {
@@ -222,6 +207,8 @@ void	ft_render_static(t_game *game)
 		{
 			if (game->map[i][j] == '0')
 				ft_put_img(game, &game->assets[GROUND], j, i);
+			if (game->map[i][j] == 'E')
+				ft_put_img(game, &game->assets[EXIT], j, i);
 			j++;
 		}
 		ft_printf("%s\n", game->map[i]);
@@ -273,6 +260,7 @@ void	ft_map_loader(t_game *game)
 		error_exit(game, "Error loading exit\n", ERRN_LOAD_ASSETS);
 	
 }
+
 void	ft_game_loader(t_game *game)
 {
 	int		i;

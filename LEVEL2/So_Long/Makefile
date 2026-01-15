@@ -16,6 +16,7 @@ SRCS				= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 UTILS_FILES			= image_utils.c \
 						errors.c \
 						memory_utils.c \
+						display_utils.c
 
 UTILS				= $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
 
