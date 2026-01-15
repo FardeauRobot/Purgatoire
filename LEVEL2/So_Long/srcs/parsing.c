@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/15 14:53:48 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:05:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,10 @@ char **ft_create_map_ff(t_game *game)
 	{
 		map_cpy[i] = ft_strdup(game->map[i]);
 		if (!map_cpy[i])
+		{
+			ft_clear_map(map_cpy, i);
 			error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+		}
 		ft_printf("CPY = %s\n", map_cpy[i]);
 		i++;
 	}
@@ -170,7 +173,18 @@ char **ft_create_map_ff(t_game *game)
 
 void	ft_check_exit(t_game *game)
 {
-	ft_create_map_ff(game);
+	char **map_ff;
+
+	map_ff = ft_create_map_ff(game);
+	if (!map_ff)
+		error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+	int i = 0;
+	while (map_ff[i])
+	{
+		ft_printf("%s\n",game[i]);
+		i++;
+	}
+	
 }
 
 void	ft_check_assets(t_game *game)

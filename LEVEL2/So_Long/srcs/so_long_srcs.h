@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/15 13:45:17 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:39:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 typedef enum e_chars
 {
 	PINK,
-	// HOWLET,
+	OWLET,
 	NB_CHARS
 }				t_chars;
 

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/15 14:14:00 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:39:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // PATHS TO IMGS
 # define IMG_PATH "imgs/"
 
-# define HOWLET_PATH "howlet/"
+# define HOWLET_PATH "owlet/"
 # define PINK_PATH "pink/"
 # define BLUE_PATH "blue/"
 

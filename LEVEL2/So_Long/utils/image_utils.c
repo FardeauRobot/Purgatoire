@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/15 14:21:47 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:22:18 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ft_put_assets(t_game *game, long time)
 		if (!nb_print)
 			error_exit(game, "Error malloc print score\n", ERRN_MALLOC);
 		mlx_string_put(game->mlx, game->win, IMG_SIZE + (IMG_SIZE / 2 - 5), IMG_SIZE / 2, 0xFFFFFF, nb_print);
+		free(nb_print);
 	}
 }
 
