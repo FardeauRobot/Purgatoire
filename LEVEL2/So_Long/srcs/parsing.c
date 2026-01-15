@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/14 17:33:01 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/15 14:53:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,31 @@ void	ft_init_game(t_game *game)
 	game->map = NULL;
 }
 
+char **ft_create_map_ff(t_game *game)
+{
+	char **map_cpy;
+	int	i;
+
+	i = 0;
+	map_cpy = malloc(sizeof(char *) * game->map_height);
+	if (!map_cpy)
+		error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+	while (game->map[i])
+	{
+		map_cpy[i] = ft_strdup(game->map[i]);
+		if (!map_cpy[i])
+			error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+		ft_printf("CPY = %s\n", map_cpy[i]);
+		i++;
+	}
+	return (map_cpy);
+}
+
+void	ft_check_exit(t_game *game)
+{
+	ft_create_map_ff(game);
+}
+
 void	ft_check_assets(t_game *game)
 {
 	if (game->collectibles < 1)
@@ -160,6 +185,7 @@ void	ft_check_assets(t_game *game)
 			error_exit(game, "Too much players detected\n", ERRN_MAP_PLAYER);
 		error_exit(game, ERRS_MAP_PLAYER, ERRN_MAP_PLAYER);
 	}
+	ft_check_exit(game);
 }
 
 void	ft_parsing(t_game *game, char *path_map)
