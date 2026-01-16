@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 11:39:29 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/15 18:39:52 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/16 15:43:57 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "../so_long.h"
 
 # define FRAME_MS_CHAR 150
-# define FRAME_MS_ASSETS 400 
+# define FRAME_MS_ASSETS 400
 
 # define IMG_SIZE 64
 
@@ -25,10 +25,12 @@
 
 # define HOWLET_PATH "owlet/"
 # define PINK_PATH "pink/"
-# define BLUE_PATH "blue/"
+# define BLUE_PATH "dude/"
 
 # define IDLE_PATH "idle_"
 # define MOVING_PATH "walk_"
+# define JUMP_PATH "jump_"
+# define ATTACK_PATH "attack_"
 
 # define RIGHT_P "r_"
 # define LEFT_P "l_"
@@ -39,7 +41,7 @@
 # define WALL_XPM "imgs/assets/wall_"
 # define COLLECTIBLE_XPM "imgs/assets/collectible_"
 # define GROUND_XPM "imgs/assets/floor.xpm"
-# define EXIT_XPM "imgs/assets/exit.xpm"
+# define EXIT_XPM "imgs/assets/exit_"
 
 // RECALL THE STRUCT 
 typedef struct s_img	t_img;
