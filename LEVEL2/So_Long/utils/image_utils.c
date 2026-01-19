@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/16 17:21:48 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 12:09:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,7 +252,7 @@ void	ft_game_loader(t_game *game)
 			k = 0;
 			while (k < NB_FRAMES_ANIM_CHAR)
 			{
-				path_l = ft_crate_path_char(i, j,"l_", k);
+				path_l = ft_create_path_char(i, j,"l_", k);
 				path_r = ft_create_path_char(i, j,"r_", k);
 				if (!path_l || !path_r)
 					error_exit(game, "Error allocating imgs\n", ERRN_MALLOC);
