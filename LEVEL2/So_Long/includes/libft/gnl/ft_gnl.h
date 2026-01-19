@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/09 19:46:49 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 13:10:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h" 
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 600
 # endif
 
 // Get Next Line main function

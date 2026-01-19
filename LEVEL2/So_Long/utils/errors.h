@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 18:55:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/16 17:10:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 # define ERRN_EMPTY 5
 # define ERRN_MAP_CHARS 6
 # define ERRN_MAP_SHAPE 7
-# define ERRN_MAP_WALLS 8
-# define ERRN_MAP_COLLECT 9
-# define ERRN_MAP_EXIT 10
-# define ERRN_MAP_PLAYER 11
-# define ERRN_LOAD_ASSETS 12
+# define ERRN_DISPLAY_SIZE 8
+# define ERRN_MAP_WALLS 9
+# define ERRN_MAP_COLLECT 10
+# define ERRN_MAP_EXIT 11
+# define ERRN_MAP_PLAYER 12
+# define ERRN_LOAD_ASSETS 13
 # define ERRN_MALLOC 99
 # define ERRN_MLX 100
 
@@ -40,6 +41,7 @@
 # define ERRS_MALLOC_MAP "Fail malloc map[]\n"
 # define ERRS_MAP_CHARS "Incorrect characters in the map\n"
 # define ERRS_MAP_SHAPE "Invalid shape of the map\n"
+# define ERRS_DISPLAY_SIZE "Map is too big for the screen\n"
 # define ERRS_MAP_WALLS "Borders of the map are not only walls\n"
 # define ERRS_MAP_COLLECT "Not enough collectibles\n"
 # define ERRS_MAP_EXIT "No exit found\n"

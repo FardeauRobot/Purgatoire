@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 17:35:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 15:16:30 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 12:34:22 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	ft_clear_map(char **map, ssize_t height)
 			free(map[i]);
 		i++;
 	}
-	free(map);
+	if (map)
+		free(map);
 }

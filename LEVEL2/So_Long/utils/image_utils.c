@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 15:54:36 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/15 18:22:18 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 12:09:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ft_print_assets(t_game *game)
 				ft_put_img(game,&game->walls[game->frame_assets], x ,y);
 			else if (game->map[y][x] == 'C') 
 				ft_put_img(game,&game->collectible[game->frame_assets], x ,y);
-			// else if (game->map[y][x] == 'E')
-			// 	ft_put_img(game,&game->exit_f[game->frame_assets], x ,y);
+			else if (game->map[y][x] == 'E')
+				ft_put_img(game,&game->exit_f[game->frame_assets], x ,y);
 			x++;
 		}
 		y++;
@@ -57,12 +57,11 @@ void	ft_put_assets(t_game *game, long time)
 		mlx_string_put(game->mlx, game->win, IMG_SIZE / 3, IMG_SIZE / 2, 0xFFFFFF, "NB MOVES = ");
 		if (!nb_print)
 			error_exit(game, "Error malloc print score\n", ERRN_MALLOC);
-		mlx_string_put(game->mlx, game->win, IMG_SIZE + (IMG_SIZE / 2 - 5), IMG_SIZE / 2, 0xFFFFFF, nb_print);
 		free(nb_print);
 	}
 }
 
-int	ft_dynamic_render(t_game *game)
+int	ft_dynamic_render(t_game *game, int act)
 {
 	long time;
 
@@ -82,7 +81,8 @@ int	ft_dynamic_render(t_game *game)
 		game->frame = (game->frame + 1) % NB_FRAMES_ANIM_CHAR;
 		game->last_frame_ms = time;
 	}
-	ft_put_assets(game, time);
+	if (act)
+		ft_put_assets(game, time);
 	ft_put_img(game, &game->characters[game->active_char][game->move][game->orient][game->frame], game->player_pos[X], game->player_pos[Y]);
 	return (0);
 }
@@ -115,13 +115,16 @@ char	*ft_create_path_char(int i, int j,  char *l_or_r, int k)
 		move = IDLE_PATH;
 	if (j == 1)
 		move = MOVING_PATH;
+	if (j == 2)
+		move = JUMP_PATH;
+	if (j == 3)
+		move = ATTACK_PATH;
 	frame[0] = '0' + k;
 	frame[1] = '\0';
 	if (ft_path_append(path, IMG_PATH) || ft_path_append(path, character)
 		|| ft_path_append(path, move) || ft_path_append(path, l_or_r)
 		|| ft_path_append(path, frame) || ft_path_append(path, XPM))
 		return (NULL);
-	ft_printf("PATH = %s\n", path);
 	return (ft_strdup(path));
 }
 
@@ -140,9 +143,9 @@ void	ft_clear_assets(t_game *game)
 	{
 		ft_destroy_img(game, &game->walls[i]);
 		ft_destroy_img(game, &game->collectible[i]);
+		ft_destroy_img(game, &game->exit_f[i]);
 		i++;
 	}
-		
 }
 
 void	ft_clear_imgs(t_game *game)
@@ -170,29 +173,6 @@ void	ft_clear_imgs(t_game *game)
 		i++;
 	}
 }
-// char	*ft_create_path_walls(void)
-// {
-// 	char	*path;
-// 	char	path[PATH_SIZE];
-// 	char	frame[2];
-
-// 	ft_bzero(path, PATH_SIZE);
-// 	else
-// 		return (NULL);
-// 	if (j == 0)
-// 		move = IDLE_PATH;
-// 	if (j == 1)
-// 		move = MOVING_PATH;
-
-// 	frame[0] = '0' + k;
-// 	frame[1] = '\0';
-// 	if (ft_path_append(path, IMG_PATH) || ft_path_append(path, character)
-// 		|| ft_path_append(path, move) || ft_path_append(path, l_or_r)
-// 		|| ft_path_append(path, frame) || ft_path_append(path, XPM))
-// 		return (NULL);
-// 	ft_printf("PATH = %s\n", path);
-// 	return (ft_strdup(path));
-// }
 
 void	ft_render_static(t_game *game)
 {
@@ -207,14 +187,10 @@ void	ft_render_static(t_game *game)
 		{
 			if (game->map[i][j] == '0')
 				ft_put_img(game, &game->assets[GROUND], j, i);
-			if (game->map[i][j] == 'E')
-				ft_put_img(game, &game->assets[EXIT], j, i);
 			j++;
 		}
-		ft_printf("%s\n", game->map[i]);
 		i++;
 	}
-	ft_printf("GAME HEIGHT = %d || GAME WIDTH = %d\n", game->map_height, game->map_height);
 }
 
 
@@ -226,7 +202,6 @@ char	*ft_create_path_assets(char *asset, char *frame)
 	if (ft_path_append(path, asset) || ft_path_append(path, frame)
 		|| ft_path_append(path, XPM))
 		return (NULL);
-	ft_printf("PATH = %s\n", path);
 	return (ft_strdup(path));
 }
 void	ft_map_loader(t_game *game)
@@ -241,23 +216,21 @@ void	ft_map_loader(t_game *game)
 	{
 		frame[0] = i + '0';
 		path = ft_create_path_assets(WALL_XPM, frame);
-		if (!path)
-			error_exit(game, ERRS_MALLOC, ERRN_MALLOC);
 		if (!ft_xpm_img(game, path, &game->walls[i]))
 			error_exit(game, "Error loading walls\n", ERRN_LOAD_ASSETS);
 		free(path);
 		path = ft_create_path_assets(COLLECTIBLE_XPM, frame);
-		if (!path)
-			error_exit(game, ERRS_MALLOC, ERRN_MALLOC);
 		if (!ft_xpm_img(game, path, &game->collectible[i]))
 			error_exit(game, "Error loading collectibles\n", ERRN_LOAD_ASSETS);
+		free(path);
+		path = ft_create_path_assets(EXIT_XPM, frame);
+		if (!ft_xpm_img(game, path, &game->exit_f[i]))
+			error_exit(game, "Error loading exit\n", ERRN_LOAD_ASSETS);
 		free(path);
 		i++;
 	}
 	if (!ft_xpm_img(game, GROUND_XPM, &game->assets[GROUND]))
 		error_exit(game, "Error loading ground\n", ERRN_LOAD_ASSETS);
-	if (!ft_xpm_img(game, EXIT_XPM, &game->assets[EXIT]))
-		error_exit(game, "Error loading exit\n", ERRN_LOAD_ASSETS);
 	
 }
 

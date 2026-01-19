@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:47:35 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/15 14:11:58 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/16 16:19:59 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_move(t_game *game, int direction)
 		if (direction == RIGHT)
 			game->player_pos[X]++;
 		if (game->map[pos_y][pos_x] == 'E')
-			ft_put_img(game, &game->assets[EXIT], pos_x, pos_y);
+			ft_put_img(game, &game->exit_f[game->frame], pos_x, pos_y);
 		else
 		{
 			ft_put_img(game, &game->assets[GROUND], pos_x, pos_y);
@@ -81,6 +81,7 @@ void	ft_move(t_game *game, int direction)
 		}
 	}
 	game->move = WALK;
+	game->frame = 0;
 }
 
 int	ft_handle_keys(int keycode, t_game *game)
@@ -96,9 +97,15 @@ int	ft_handle_keys(int keycode, t_game *game)
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
 		ft_move(game, DOWN);
 	else if (keycode == KEY_E)
+		game->active_char = (game->active_char + 1)% NB_CHARS;
+	else if (keycode == KEY_SPACE || keycode == KEY_Q)
 	{
-		game->active_char++; 
-		game->active_char = game->active_char % NB_CHARS;
+		game->move = JUMP;
+		if (keycode == KEY_Q)
+			game->move = ATTACK;
+		game->last_move_ms = 0;
+		game->frame = 0;
+		ft_dynamic_render(game, 0);
 	}
 	return (0);
 }

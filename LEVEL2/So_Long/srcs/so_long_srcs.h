@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/15 18:39:41 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 12:48:54 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_chars
 {
 	PINK,
 	OWLET,
+	DUDE,
 	NB_CHARS
 }				t_chars;
 
@@ -32,6 +33,7 @@ typedef enum e_directions
 	DOWN,
 	LEFT,
 	RIGHT,
+	NEUTRAL,
 	NB_DIR
 }	t_directions;
 
@@ -39,6 +41,8 @@ typedef enum e_moves
 {
 	IDLE,
 	WALK,
+	JUMP,
+	ATTACK,
 	NB_MOVES
 }				t_moves;
 
@@ -78,6 +82,8 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	char		**map;
+	int			display_height;
+	int			display_width;
 	size_t		map_height;
 	size_t		map_width;
 	int			active_char;
