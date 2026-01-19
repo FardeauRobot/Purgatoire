@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/06 18:00:21 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/16 12:22:32 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:09:12 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct s_game	t_game;
 ////// MEMORY_UTILS.C //////
 void	ft_free_paths(char *path_l, char *path_r);
 void	ft_clear_map(char **map, ssize_t height);
+void	ft_clear_game(t_game *game);
+void	error_measure_map(t_game *game, int fd, char *line, int err_nb);
 //------------------//
 
 ////// IMAGE_UTILS.C //////

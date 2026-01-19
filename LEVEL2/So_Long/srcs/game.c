@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/11 16:47:35 by fardeau           #+#    #+#             */
-/*   Updated: 2026/01/16 16:19:59 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:03:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_srcs.h"
 
-int ft_end_game(t_game *game)
+int	ft_end_game(t_game *game)
 {
 	if (game->mlx)
 		mlx_loop_end(game->mlx);
@@ -29,7 +29,7 @@ int	ft_check_move(t_game *game, int x, int y)
 		game->map[y][x] = '0';
 	}
 	else if (game->map[y][x] == 'E' && game->collected != game->collectibles)
-		ft_printf("You didn´t gather all the treasures : Collected = %d\n", game->collected);
+		ft_printf("Need %d more\n", game->collectibles - game->collected);
 	else if (game->map[y][x] == 'E' && game->collected >= game->collectibles)
 		error_exit(game, "YOU COLLECTED ALL THE TREASURES\n", WIN);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/19 12:57:55 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:57:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	ft_get_height(t_game *game, int fd)
 		line = get_next_line(fd);
 	}
 	get_next_line(-1);
-	// if (game->map_height * IMG_SIZE > game->display_height || game->map_width * IMG_SIZE > game->display_width)
-	// 		error_measure_map(game, fd, line, ERRN_DISPLAY_SIZE);
 }
 
 int	ft_check_walls(t_game *game, char *row_map, size_t row)
