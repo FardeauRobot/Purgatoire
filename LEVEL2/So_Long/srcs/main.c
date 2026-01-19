@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:10:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/15 13:31:24 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 12:58:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	ft_run_game(t_game *game)
 {
+	mlx_get_screen_size(game->mlx, &game->display_width, &game-> display_height);
+	if (game->map_height * IMG_SIZE > (size_t)game->display_height
+		|| game->map_width * IMG_SIZE > (size_t)game->display_width)
+		error_exit(game, ERRS_DISPLAY_SIZE, ERRN_DISPLAY_SIZE);
 	ft_game_loader(game);
 	ft_render_static(game);
 	mlx_key_hook(game->win, ft_handle_keys, game);

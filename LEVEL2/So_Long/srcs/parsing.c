@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/16 17:20:09 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/19 12:57:55 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ void	ft_fill_map(t_game *game, char **map, int fd)
 
 void	ft_init_game(t_game *game)
 {
-	// mlx_get_screen_size(game->mlx, &game->display_width, &game->display_height);
+	game->display_height = 0;
+	game->display_width = 0;
 	game->collectibles = 0;
 	game->exit = 0;
 	game->nb_player = 0;
@@ -241,6 +242,7 @@ void	ft_parsing(t_game *game, char *path_map)
 	game->map = malloc (sizeof(char *) * game->map_height);
 	if (!game->map)
 		error_exit(game, ERRS_MALLOC_MAP, ERRN_MALLOC);
+	ft_bzero(game->map, game->map_height * sizeof(char *));
 	fd = open(path_map, O_RDONLY);
 	ft_fill_map(game, game->map, fd);
 	ft_check_assets(game);
