@@ -20,10 +20,8 @@ UTILS_FILES			= image_utils.c \
 
 UTILS				= $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
 
-OBJS				= $(SRCS:.o=.c) $(UTILS:.o=.c)
+OBJS				= $(SRCS:.c=.o) $(UTILS:.c=.o)
 # Include Files
-INC_FILES			= so_long.h
-INC				= $(addprefix $(INC_PATH)/, $(INC_FILES))
 INC_FLAGS			= -I$(INC_PATH) -I$(LIBFT_PATH) -I$(MLX_PATH)
 
 # Libraries

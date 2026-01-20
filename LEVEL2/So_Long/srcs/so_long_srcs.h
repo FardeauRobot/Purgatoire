@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/19 12:48:54 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:18:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ typedef struct s_game
 	int			display_width;
 	size_t		map_height;
 	size_t		map_width;
-	int			active_char;
 	int			player_pos[2];
 	int			move;
 	int			move_count;
@@ -96,10 +95,11 @@ typedef struct s_game
 	int			nb_player;
 	int			frame;
 	int			frame_assets;
-	int			orient;
 	long		last_frame_ms;
 	long		last_frame_assets_ms;
 	long		last_move_ms;
+	int			orient;
+	int			active_char;
 	t_img		walls[NB_FRAMES_ANIM_ASSETS];
 	t_img		collectible[NB_FRAMES_ANIM_ASSETS];
 	t_img		exit_f[NB_FRAMES_ANIM_ASSETS];

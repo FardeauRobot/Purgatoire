@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/19 12:57:55 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:18:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ void	ft_get_height(t_game *game, int fd)
 		line = get_next_line(fd);
 	}
 	get_next_line(-1);
-	// if (game->map_height * IMG_SIZE > game->display_height || game->map_width * IMG_SIZE > game->display_width)
-	// 		error_measure_map(game, fd, line, ERRN_DISPLAY_SIZE);
 }
 
 int	ft_check_walls(t_game *game, char *row_map, size_t row)
@@ -239,7 +237,7 @@ void	ft_parsing(t_game *game, char *path_map)
 		error_exit (game, ERRS_OPEN, ERRN_OPEN);
 	ft_init_game(game);
 	ft_get_height(game, fd);
-	game->map = malloc (sizeof(char *) * game->map_height);
+	game->map = malloc(sizeof(char *) * game->map_height);
 	if (!game->map)
 		error_exit(game, ERRS_MALLOC_MAP, ERRN_MALLOC);
 	ft_bzero(game->map, game->map_height * sizeof(char *));
@@ -248,3 +246,4 @@ void	ft_parsing(t_game *game, char *path_map)
 	ft_check_assets(game);
 	ft_check_exit(game);
 }
+
