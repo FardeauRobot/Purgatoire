@@ -261,3 +261,65 @@ diff output.txt expected.txt
 - `man` pages for all functions (man 2 fork, man 2 execve, etc.)
 - TUTO.md - Detailed function reference
 - Test with simple commands first, then more complex ones
+
+---
+
+## Technical Concepts
+
+### 1. File Descriptor Duplication
+
+#### `dup(int oldfd)`
+- **Function:** Duplicates `oldfd` to the **lowest-numbered unused** file descriptor.
+- **Result:** Two FDs pointing to the same file table entry.
+
+#### `dup2(int oldfd, int newfd)`
+- **Function:** Duplicates `oldfd` specifically to `newfd`.
+- **Behavior:** If `newfd` is already open, it is closed silently first.
+- **Key Use Case:** Redirecting standard streams (e.g., `dup2(fd, STDOUT_FILENO)` makes `printf` write to `fd`).
+
+### 2. Pipe Ends (`pipe(int fd[2])`)
+
+A pipe is a unidirectional communication channel.
+- **`fd[1]` (Write End):** The "Microphone". You write data *into* this.
+- **`fd[0]` (Read End):** The "Speaker". You read data *out of* this.
+- **Flow:** Data written to `fd[1]` becomes immediately available at `fd[0]`.
+
+### 3. Pipe Internals (Kernel Buffer)
+
+- **Memory:** A pipe exists entirely in **Kernel RAM**, not on disk.
+- **Structure:** It is a circular ring buffer (typically 64KB on Linux).
+- **Behavior:**
+    - **Producer (Writer):** Writes to the buffer. `write()` calls block if the buffer is full.
+    - **Consumer (Reader):** Reads from the buffer. `read()` calls block if the buffer is empty.
+- **Atomicity:** Writes smaller than `PIPE_BUF` (4KB) are atomic (not interleaved with other writers).
+
+### 4. Process Synchronization (`waitpid`)
+
+#### Why wait?
+1.  **Synchronization:** The parent needs to know when children are done to avoid exiting too early.
+2.  **Resource Cleanup:** When a child dies, it becomes a **"Zombie"** (defunct). It stays in the system process table until its parent reads its exit code. `waitpid` performs this "reaping".
+
+#### Execution Flow Schema
+
+```text
+      TIME       PARENT PROCESS            CHILD 1 (Writer)          CHILD 2 (Reader)
+       |               |                          |                         |
+       |         pipe() created                   |                         |
+       |         fork() -----------------------> START                      |
+       |               |                          |                         |
+       |         fork() -------------------------------------------------> START
+       |               |                          |                         |
+       |         close(pipe_fds)                  |                         |
+       |         waitpid(pid1) ...waiting...    dup2(pipe, STDOUT)      dup2(pipe, STDIN)
+       |               |                        execve(cmd1)            execve(cmd2)
+       |               |                          |                         |
+       |               |                      WRITES DATA ------------>  READS DATA
+       |               |                          |                         |
+       |               |                         DIES                       |
+       v         [parent unblocks] <--------- (Exit Status)                 |
+                 waitpid(pid2) ...waiting...                                |
+                       |                                                   DIES
+                 [parent unblocks] <--------------------------------- (Exit Status)
+                 EXIT SUCCESS
+```
+
