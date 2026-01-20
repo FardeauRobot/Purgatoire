@@ -6,11 +6,19 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/20 16:16:35 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:39:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_srcs.h"
+
+char *ft_find_path(char *cmd, char **envp)
+{
+	char *path;
+	char **path_arr;
+
+	return (path);
+}
 
 int ft_strlen(char *str)
 {

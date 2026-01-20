@@ -323,3 +323,95 @@ A pipe is a unidirectional communication channel.
                  EXIT SUCCESS
 ```
 
+### 5. Multi-Pipe Schema (N Processes)
+
+For multiple commands (`cmd1 | cmd2 | cmd3 | ...`), the logic generalizes. The parent usually loops, creating a new pipe for each new child, passing the "read end" of the previous pipe to the next child.
+
+#### The "Rolling Pipe" Strategy
+
+```text
+ITERATION   PARENT ACTION              CHILD PROCESS (i) CONFIGURATION
+    |             |                                   |
+   i=0      pipe(fd_A)                  stdin  <-- infile
+            fork() ------------------>  stdout --> fd_A[1] (Write to A)
+            close(fd_A[1])              
+            prev_pipe = fd_A[0]           
+    |             |
+   i=1      pipe(fd_B)                  stdin  <-- prev_pipe (Read from A)
+            fork() ------------------>  stdout --> fd_B[1] (Write to B)
+            close(prev_pipe)              
+            close(fd_B[1])
+            prev_pipe = fd_B[0]
+    |             |
+   ...         .......                             .......
+    |             |
+   i=Last   (No new pipe needed)        stdin  <-- prev_pipe (Read from Prev)
+            fork() ------------------>  stdout --> outfile
+            close(prev_pipe)
+    |             |
+   Wait     waitpid(-1) loop            [All Children Run in Parallel]
+```
+
+**Crucial:** The Parent uses `close()` in every iteration. If the parent keeps any write-end open, the children reading from those pipes will never see EOF and will hang forever.
+
+### 6. Summary of Key Discussions
+
+#### A. Signals: SIGKILL vs SIGTERM
+- **SIGKILL (9):** The "Nuclear Option". Immediate removal by kernel. Cannot be caught or ignored. Used only for frozen processes/emergencies.
+- **SIGTERM (15):** The polite request to terminate. Can be handled (cleanup, save, etc.).
+
+#### B. Importance of `close()`
+Closing file descriptors before `execve` is mandatory for two reasons:
+1.  **Preventing Hangs (EOF):** `read()` only returns 0 (EOF) when **ALL** write ends of a pipe are closed. If the parent or a sibling keeps a write-end open, the reader waits forever.
+2.  **Cleanliness:** Prevents resource leaks and polluting the child process with useless FDs.
+
+#### C. The "Pipe" Philosophy
+- **Origin:** Douglas McIlroy (1964) - "Connect programs like a garden hose".
+- **Concept:** Unidirectional flow of bytes in kernel memory (no disk I/O).
+- **Usages:**
+    - **Compression:** `tar | gzip` (Zero storage backup).
+    - **Networking:** `cat file | nc server` (File transfer via netcat).
+    - **Infinite Streams:** `cat /dev/urandom | aplay`.
+
+#### D. The `execve` Mechanism ("Brain Transplant")
+- **Behavior:** Replaces the current process's memory (code, stack, heap) with a new program.
+- **Persistence:** **PID and File Descriptors survive.** This is the core magic of Pipex: you set up the FDs (`dup2`), then `execve` effectively "pours" the new program into your pre-configured FD container.
+- **Return:** NEVER returns on success. If it returns, it failed.
+
+#### E. Multiple Writers
+- Multiple processes can write to the same pipe end.
+- **Sequential:** `(cmd1; cmd2) | cmd3` (Clean).
+- **Concurrent:** If writing < 4KB (PIPE_BUF), the kernel guarantees **atomicity** (data won't be scrambled/interleaved).
+
+### 7. Deepening Understanding (Q&A)
+
+Here are 5 advanced questions to solidify your mastery of the subject.
+
+#### Q1: What is a "Zombie Process" and why is it dangerous?
+**A:** A Zombie is a child process that has completed execution (called `exit()`), but its entry in the process table is still there because the parent hasn't read its exit status yet.
+*   **Why it happens:** The parent forgot to call `wait()` or `waitpid()`.
+*   **Danger:** Zombies don't consume CPU or RAM, but they consume **PIDs** (Process IDs). Since PIDs are finite (max 32768 on many systems), a "Zombie Apocalypse" can prevent the OS from starting any new processes, crashing the server.
+
+#### Q2: Why doesn't `execve` find the command if I just verify `PATH` exists?
+**A:** `execve` is "dumb". It does not search.
+*   **Shell vs Kernel:** When you type `ls` in Bash, the **Shell** iterates through directories in `$PATH`, checks where `ls` lives (e.g., `/usr/bin/ls`), and *then* calls `execve("/usr/bin/ls", ...)`.
+*   **Your Task:** You must manually replicate this behavior: split the `PATH` variable, join each path with `/cmd`, and use `access()` to check if the binary is executable before passing it to `execve`.
+
+#### Q3: What is a "Pipe Deadlock" and how do I cause it?
+**A:** A deadlock happens when two processes are stuck waiting for each other forever.
+*   **Scenario:** A pipe buffer fills up (64KB).
+*   **The Trap:** If the Parent tries to `waitpid()` for the Child to finish *before* reading the data the Child is writing, and the Child writes > 64KB, the Child will **BLOCK** (sleep) waiting for space to clear. The Parent is blocked waiting for the Child to exit. They wait for each other eternally.
+
+#### Q4: Why can't I pass `*.c` to `execve` like in the shell?
+**A:** Wildcard expansion (globbing) is a feature of the **Shell** program (Bash/Zsh), not the Kernel.
+*   If you pass `*.c` to `execve`, the command receives the literal string `"*.c"`. It will try to open a file actually named `*.c`.
+*   To support this, you would have to write your own code to read the directory and match filenames against the pattern *before* calling exec.
+
+#### Q5: What is the difference between a "File Descriptor" and a "File Pointer" (`FILE *`)?
+**A:**
+*   **File Descriptor (`int`):** A raw integer used by the **Kernel** (syscalls: `read`, `write`, `open`). Buffering is handled by the kernel/disk.
+*   **File Pointer (`FILE *`):** A C struct used by the **Standard Library** (libc functions: `fopen`, `fprintf`, `fscanf`). It adds a layer of user-space buffering for performance.
+*   **Pipex:** Must use File Descriptors (`int`) because `pipe()` and `dup2()` are low-level system calls working directly with the kernel.
+
+
+
