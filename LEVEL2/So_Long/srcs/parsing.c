@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/19 15:57:50 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:18:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ void	ft_parsing(t_game *game, char *path_map)
 		error_exit (game, ERRS_OPEN, ERRN_OPEN);
 	ft_init_game(game);
 	ft_get_height(game, fd);
-	game->map = malloc (sizeof(char *) * game->map_height);
+	game->map = malloc(sizeof(char *) * game->map_height);
 	if (!game->map)
 		error_exit(game, ERRS_MALLOC_MAP, ERRN_MALLOC);
 	ft_bzero(game->map, game->map_height * sizeof(char *));
@@ -246,3 +246,4 @@ void	ft_parsing(t_game *game, char *path_map)
 	ft_check_assets(game);
 	ft_check_exit(game);
 }
+

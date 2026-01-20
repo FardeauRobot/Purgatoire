@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 17:35:57 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/19 16:12:36 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:55:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_free_paths(char *path_l, char *path_r)
 
 void	ft_clear_map(char **map, ssize_t height)
 {
-	ssize_t i;
+	ssize_t	i;
 
 	i = 0;
 	while (i < height)
