@@ -6,19 +6,20 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/20 16:39:43 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/21 13:50:33 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_srcs.h"
 
-char *ft_find_path(char *cmd, char **envp)
-{
-	char *path;
-	char **path_arr;
+// char *ft_find_path(char *cmd, char **envp)
+// {
+// 	char *path;
+// 	char **path_arr;
 
-	return (path);
-}
+// 	// if (access(path, ))
+// 	return (path);
+// }
 
 int ft_strlen(char *str)
 {
@@ -55,20 +56,38 @@ int main (int argc, char **argv, char **envp)
 {
 	t_pipe	pipe_test;
 	int		in_fd;
+	int		pid;
 	int		out_fd;
 
 	(void)argc;
 	(void)argv;
+	(void)envp;
 	in_fd = open("tests/infile", O_RDONLY);
 	out_fd = open("tests/outfile", O_RDWR | O_CREAT, 0644);
 	pipe(pipe_test.pipe_fd);
-	int i = 0;
-	while (envp[i])
+	pid = fork();
+	if (pid == 0)
 	{
-		printf("%s\n", envp[i]);
-		i++;
+		printf("%d\n", pid);
 	}
-	ft_putstr_fd("COUCOU\n", out_fd);
-	ft_print_fd(in_fd, out_fd);
+	waitpid(pid, NULL, 0);
+	printf("%d\n", pid);
+
+	// int i = 0;
+	// while (envp[i])
+	// {
+	// 	printf("%s\n", envp[i]);
+	// 	i++;
+	// }
+	// ft_putstr_fd("COUCOU\n", out_fd);
+	// ft_print_fd(in_fd, out_fd);
 	ft_close_fd(in_fd, out_fd);
 }
+
+// buf[600];
+// bzero
+// buf = cat (split[i], buf);
+// buf = cat ('/', buf);
+// buf = (cmd, buf);
+// if (access)
+// 	return (path);

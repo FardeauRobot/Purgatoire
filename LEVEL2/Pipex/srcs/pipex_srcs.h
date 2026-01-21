@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/20 15:31:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/21 13:24:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ typedef enum e_ends {
 
 typedef struct s_pipe {
 	int pipe_fd[2];
+	int status;
 	char *cmd;
 	char *path;
+	char **arg_pipe;
 }	t_pipe;
 
 #endif
