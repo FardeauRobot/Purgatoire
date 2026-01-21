@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/21 13:50:33 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/21 18:46:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 // 	return (path);
 // }
 
-int ft_strlen(char *str)
-{
-	size_t i;
+// int ft_strlen(char *str)
+// {
+// 	size_t i;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (str[i])
+// 		i++;
+// 	return (i);
+// }
 
 void	ft_putstr_fd(char *str, int fd)
 {
@@ -52,37 +52,38 @@ void	ft_close_fd(int in_fd, int out_fd)
 		close(out_fd);
 }
 
+void	ft_init_arr_pipe(char **argv, t_pipe *arr_pipe, int size, char **envp)
+{
+	int i;
+	
+	i = 0;
+	(void)envp;
+	while (i < size)
+	{
+
+		arr_pipe[i].arg_pipe = NULL;
+		arr_pipe[i].cmd = NULL;
+		arr_pipe[i].path = NULL;
+		arr_pipe[i].arg_pipe = ft_split_charset(argv[i + 2], SPACE);
+		// if (!arr_pipe[i]->arg_pipe)
+		// {
+		// }
+		i++;
+	}
+}
+
 int main (int argc, char **argv, char **envp)
 {
-	t_pipe	pipe_test;
-	int		in_fd;
-	int		pid;
-	int		out_fd;
+	t_data	pipex;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	in_fd = open("tests/infile", O_RDONLY);
-	out_fd = open("tests/outfile", O_RDWR | O_CREAT, 0644);
-	pipe(pipe_test.pipe_fd);
-	pid = fork();
-	if (pid == 0)
-	{
-		printf("%d\n", pid);
-	}
-	waitpid(pid, NULL, 0);
-	printf("%d\n", pid);
-
-	// int i = 0;
-	// while (envp[i])
-	// {
-	// 	printf("%s\n", envp[i]);
-	// 	i++;
-	// }
-	// ft_putstr_fd("COUCOU\n", out_fd);
-	// ft_print_fd(in_fd, out_fd);
-	ft_close_fd(in_fd, out_fd);
+	pipex.count_fctn = argc - 3;
+	pipex.arr_pipe = ft_calloc(sizeof(t_pipe),pipex.count_fctn);
+	if (!pipex.arr_pipe)
+		exit(1);
+	ft_init_arr_pipe(argv, *pipex.arr_pipe, pipex.count_fctn, envp);
+	ft_free_arr_pipe(pipex.arr_pipe, pipex.count_fctn);
 }
+
 
 // buf[600];
 // bzero

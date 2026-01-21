@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/21 13:24:43 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:57:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define ERR_CMD_NOT_FOUND 127
 # define ERR_SIGKIL 128
 
+# define SPACE " \a\b\t\n\v\f\r"
+
 typedef enum e_ends {
 	READ,
 	WRITE, 
@@ -45,4 +47,18 @@ typedef struct s_pipe {
 	char **arg_pipe;
 }	t_pipe;
 
+typedef struct s_data {
+	int		count_fctn;
+	t_pipe	**arr_pipe;
+}	t_data;
+
+////// PARSING.C //////
+char *ft_find_path(char *str);
+char *ft_get_path(char **envp);
+char *ft_correct_path(char **envp, char *cmd);
+//---------------/
+
+////// FREE_UTILS.C //////
+void	ft_free_arr_pipe(t_pipe **arr_pipe, int size);
+//---------------/
 #endif

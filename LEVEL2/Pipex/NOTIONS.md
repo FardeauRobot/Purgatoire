@@ -263,6 +263,61 @@ To truly master these concepts, consult the following high-quality sources:
     *   *Why:* A classic, approachable guide specifically focused on Inter-Process Communication.
     *   *Link:* [https://beej.us/guide/bgipc/](https://beej.us/guide/bgipc/)
 
+---
+
+## VII. Bonus: The `here_doc` (Here Document)
+
+### 1. What is it?
+A **Here Document** (here_doc) is a way to pass a multi-line string directly into a command's standard input (Stdin) from the shell, without creating a separate file.
+
+In standard shells, it uses the `<<` operator followed by a **LIMITER** keyword.
+
+### 2. The Logic (Shell vs Pipex)
+**Bash Case:**
+```bash
+# cat reads from stdin until it sees "EOF"
+cat << EOF | grep "hello" >> outfile
+hello world
+this is a test
+EOF
+```
+*   You type lines.
+*   Once you type `EOF` on a new line, the shell stops reading.
+*   It sends everything you just typed into `cat`.
+*   `cat` passes it to `grep`.
+
+**Pipex Case:**
+The subject asks you to replicate:
+```bash
+./pipex here_doc LIMITER cmd1 cmd2 outfile
+```
+This should behave exactly like:
+```bash
+cmd1 << LIMITER | cmd2 >> outfile
+```
+
+### 3. Usage & Implementation Strategy
+Unlike the mandatory part where input comes from a file (`infile`), in `here_doc`, input comes from **User Input (Stdin)**.
+
+**Steps:**
+1.  **Detect Mode:** Check if `argv[1]` is `"here_doc"`.
+2.  **Create a Temporary Pipe:** You need a place to store what the user types before feeding it to `cmd1`. A `pipe()` is perfect for this.
+3.  **Read Loop:**
+    *   Read from Standard Input (File Descriptor 0) line by line (hello `get_next_line`!).
+    *   Compare the line with `LIMITER` (plus `\n`).
+    *   If it matches: **Stop reading**.
+    *   If no match: **Write** the line into the write-end of your temporary pipe.
+4.  **Execute:**
+    *   For `cmd1`: Set its input (Stdin) to the *read-end* of that temporary pipe.
+    *   For `outfiles`: Note that `here_doc` implies append mode (`>>`), so open your outfile with `O_WRONLY | O_CREAT | O_APPEND`.
+
+### 4. Difficulties & Traps
+1.  **The Limiter Newline:** `get_next_line` usually keeps the `\n`. Your limiter command argument (`argv[2]`) won't have it. `ft_strncmp("EOF", "EOF\n", n)` might trick you. Make sure you compare exactly.
+2.  **Unlink/Cleanup:** You don't necessarily need a physical temporary file (like `.tmp_heredoc`), but if you do create one, ensure you `unlink` it before exiting. Using a `pipe` buffer in memory is cleaner and faster.
+3.  **Hanging Processes:** If you don't close the write-end of your special input pipe after writing the user input, `cmd1` will wait forever for more data (EOF never comes).
+4.  **Prompt:** Bash prints `> ` or `heredoc> ` while waiting for lines. Displaying this prompt can be nice, but check the subject/grading sheet if it's allowed or required.
+
+
 
 
 
