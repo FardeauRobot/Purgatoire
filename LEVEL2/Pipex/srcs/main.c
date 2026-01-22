@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/21 18:46:28 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/22 14:31:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,37 +58,112 @@ void	ft_init_arr_pipe(char **argv, t_pipe *arr_pipe, int size, char **envp)
 	
 	i = 0;
 	(void)envp;
+	// (void)argv;
+	// (void)arr_pipe;
 	while (i < size)
 	{
-
-		arr_pipe[i].arg_pipe = NULL;
-		arr_pipe[i].cmd = NULL;
-		arr_pipe[i].path = NULL;
 		arr_pipe[i].arg_pipe = ft_split_charset(argv[i + 2], SPACE);
-		// if (!arr_pipe[i]->arg_pipe)
-		// {
-		// }
+		// arr_pipe[i].cmd = NULL;
+		// arr_pipe[i].path = NULL;
+		// arr_pipe[i].arg_pipe = ft_split_charset(argv[i + 2], SPACE);
 		i++;
 	}
 }
 
 int main (int argc, char **argv, char **envp)
 {
-	t_data	pipex;
+	t_data pipex;
 
+	// INITIALISATION
+	pipex.arr_pipe = NULL;
 	pipex.count_fctn = argc - 3;
-	pipex.arr_pipe = ft_calloc(sizeof(t_pipe),pipex.count_fctn);
+	// printf("%d\n", pipex.count_fctn);
+	pipex.arr_pipe = ft_calloc(sizeof(t_pipe *) ,pipex.count_fctn);
 	if (!pipex.arr_pipe)
-		exit(1);
-	ft_init_arr_pipe(argv, *pipex.arr_pipe, pipex.count_fctn, envp);
-	ft_free_arr_pipe(pipex.arr_pipe, pipex.count_fctn);
+		return (-1);
+	int i = 0;
+	while (i < pipex.count_fctn)
+	{
+		pipex.arr_pipe[i] = ft_calloc(sizeof(t_pipe), 1);
+		pipex.arr_pipe[i]->arg_pipe = ft_split_charset(argv[i + 2], SPACE);
+		if (pipex.arr_pipe[i]->arg_pipe == NULL)
+			return (-1);
+		pipex.arr_pipe[i]->cmd = pipex.arr_pipe[i]->arg_pipe[0];
+			// ERROR_EXIT PARSING
+		i++;
+	}
+	int j;
+	i = 0;
+	while (pipex.arr_pipe[i])
+	{
+		j = 0;
+		while (pipex.arr_pipe[i]->arg_pipe[j])
+		{
+			// ft_printf("%s\n", pipex.arr_pipe[i]->arg_pipe[j]);
+			j++;
+		}
+		i++;
+	}
+
+	// ON A RECUPERE LES ARGUMENTS
+	// ON PASSE AU TEST POUR VOIR SI CA FONCTIONNE
+	i = 0;
+	int pid;
+	int status;
+	while (i < pipex.count_fctn)
+	{
+		if (i < pipex.count_fctn - 1)
+		{
+			if (pipe(pipex.arr_pipe[i]->pipe_fd))
+				exit(-1);
+		}
+		pid = fork();
+		if (pid == 0)
+		{
+			pipex.arr_pipe[i]->path = ft_correct_path(envp, pipex.arr_pipe[i]->cmd);
+			if (pipex.arr_pipe[i]->path == NULL)
+				return (-1);
+			if (i == 0)
+			{
+				pipex.fd_infile = open(argv[1], O_RDONLY);
+				if (pipex.fd_infile < 0)
+					exit(-1);
+
+				dup2(pipex.fd_infile, STDIN_FILENO);
+				close(pipex.fd_infile);
+
+				dup2(pipex.arr_pipe[i]->pipe_fd[WRITE], STDOUT_FILENO);
+
+				close(pipex.arr_pipe[i]->pipe_fd[READ]);
+				close(pipex.arr_pipe[i]->pipe_fd[WRITE]);
+			}
+			if (i == pipex.count_fctn - 1)
+			{
+				dup2(pipex.arr_pipe[i - 1]->pipe_fd[READ], STDIN_FILENO);
+				close(pipex.arr_pipe[i - 1]->pipe_fd[READ]);
+				pipex.fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				if (pipex.fd_outfile < 0)
+					exit(-1);
+				dup2(pipex.fd_outfile, STDOUT_FILENO);
+				close(pipex.fd_outfile);
+			}
+			// printf("CMD = %s\n", pipex.arr_pipe[i]->cmd);
+			// printf("PATH = %s\n", pipex.arr_pipe[i]->path);
+			if (execve(pipex.arr_pipe[i]->path, pipex.arr_pipe[i]->arg_pipe, envp))
+				exit(-1);
+				// ERROR_EXIT CHILD
+		}
+		else
+		{
+			printf("PARENT\n");
+		}
+		i++;
+		i = 0;
+		while (i < pipex.count_fctn)
+		{
+			waitpid(-1, &status, 0);
+			i++;
+		}
+	}
+return (0);
 }
-
-
-// buf[600];
-// bzero
-// buf = cat (split[i], buf);
-// buf = cat ('/', buf);
-// buf = (cmd, buf);
-// if (access)
-// 	return (path);

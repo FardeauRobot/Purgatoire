@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 16:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/21 17:44:15 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/22 13:05:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,12 @@ char *ft_correct_path(char **envp, char *cmd)
 	while (arr_path[i])
 	{
 		ft_bzero(path, 500);
-		ttl_len = ft_strlcat(path, (const char *)arr_path[i], ft_strlen(arr_path[i]) + 1);
-		ttl_len = ft_strlcat(path, "/", ttl_len + 2);
-		ttl_len = ft_strlcat(path, cmd, ttl_len + ft_strlen(cmd) + 1);
+		ttl_len = ft_strlcat(path, (const char *)arr_path[i], sizeof(path));
+		ttl_len = ft_strlcat(path, "/", sizeof(path));
+		ttl_len = ft_strlcat(path, cmd, sizeof(path));
 		if (!access(path, X_OK))
 		{
+			ft_printf("%s\n", path);
 			ft_free_arr_path(arr_path);
 			return (ft_strdup(path));
 		}
@@ -85,4 +86,7 @@ char *ft_correct_path(char **envp, char *cmd)
 	return (NULL);
 }
 
-// int ft_parsing(char **argv, t_pipe )
+// void	ft_parsing(t_data *pipex)
+// {
+
+// }

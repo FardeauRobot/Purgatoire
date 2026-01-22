@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/21 17:57:52 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/22 14:16:32 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct s_pipe {
 
 typedef struct s_data {
 	int		count_fctn;
+	int		fd_infile;
+	int		fd_outfile;
 	t_pipe	**arr_pipe;
 }	t_data;
 
