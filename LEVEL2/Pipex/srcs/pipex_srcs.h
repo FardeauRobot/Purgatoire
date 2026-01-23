@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/22 14:16:32 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/23 13:48:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,21 @@
 # define EXIT_ERROR 1
 # define EXIT_SUCCESS 0
 
-
-# define ERR_GEN 1
-# define ERR_ARGS 2
-# define ERR_EXEC 126
-# define ERR_CMD_NOT_FOUND 127
-# define ERR_SIGKIL 128
-
 # define SPACE " \a\b\t\n\v\f\r"
+
+typedef enum e_errors {
+	ERR_GEN = 1.
+	ERR_ARGS = 2,
+	ERR_EXEC = 126,
+	ERR_CMD_NOT_FOUND = 127,
+	ERR_SIGKILL = 128,
+}	t_errors;
+
+typedef enum e_open {
+	INFILE,
+	OUTFILE,
+	HERE_DOC,
+}	t_open;
 
 typedef enum e_ends {
 	READ,

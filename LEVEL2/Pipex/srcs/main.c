@@ -6,30 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/22 16:10:08 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/23 13:49:14 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_srcs.h"
-
-// char *ft_find_path(char *cmd, char **envp)
-// {
-// 	char *path;
-// 	char **path_arr;
-
-// 	// if (access(path, ))
-// 	return (path);
-// }
-
-// int ft_strlen(char *str)
-// {
-// 	size_t i;
-
-// 	i = 0;
-// 	while (str[i])
-// 		i++;
-// 	return (i);
-// }
 
 void	ft_putstr_fd(char *str, int fd)
 {
@@ -50,6 +31,11 @@ void	ft_close_fd(int in_fd, int out_fd)
 		close(in_fd);
 	if (out_fd >= 0) 
 		close(out_fd);
+}
+
+void	ft_open_file(char *path, t_open j)
+{
+
 }
 
 void	ft_init_arr_pipe(char **argv, t_pipe *arr_pipe, int size, char **envp)
@@ -77,11 +63,11 @@ int main (int argc, char **argv, char **envp)
 	// INITIALISATION
 	pipex.arr_pipe = NULL;
 	pipex.count_fctn = argc - 3;
-	// printf("%d\n", pipex.count_fctn);
 	pipex.arr_pipe = ft_calloc(sizeof(t_pipe *) ,pipex.count_fctn);
 	if (!pipex.arr_pipe)
 		return (-1);
 	int i = 0;
+	// CREATION DES PIPES
 	while (i < pipex.count_fctn)
 	{
 		pipex.arr_pipe[i] = ft_calloc(sizeof(t_pipe), 1);
@@ -92,18 +78,19 @@ int main (int argc, char **argv, char **envp)
 			// ERROR_EXIT PARSING
 		i++;
 	}
-	int j;
-	i = 0;
-	while (pipex.arr_pipe[i])
-	{
-		j = 0;
-		while (pipex.arr_pipe[i]->arg_pipe[j])
-		{
-			// ft_printf("%s\n", pipex.arr_pipe[i]->arg_pipe[j]);
-			j++;
-		}
-		i++;
-	}
+	// IMPRESSION DES PIPES
+	// int j;
+	// i = 0;
+	// while (pipex.arr_pipe[i])
+	// {
+	// 	j = 0;
+	// 	while (pipex.arr_pipe[i]->arg_pipe[j])
+	// 	{
+	// 		// ft_printf("%s\n", pipex.arr_pipe[i]->arg_pipe[j]);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 
 	// ON A RECUPERE LES ARGUMENTS
 	// ON PASSE AU TEST POUR VOIR SI CA FONCTIONNE
@@ -128,11 +115,14 @@ int main (int argc, char **argv, char **envp)
 				if (pipex.fd_infile < 0)
 					exit(-1);
 
+				// REDIRECTION ENTREE
 				dup2(pipex.fd_infile, STDIN_FILENO);
 				close(pipex.fd_infile);
 
+				// REDIRECTION SORTIE
 				dup2(pipex.arr_pipe[i]->pipe_fd[WRITE], STDOUT_FILENO);
 
+				/// CLOSING
 				close(pipex.arr_pipe[i]->pipe_fd[READ]);
 				close(pipex.arr_pipe[i]->pipe_fd[WRITE]);
 			}
@@ -140,7 +130,6 @@ int main (int argc, char **argv, char **envp)
 			{
 				dup2(pipex.arr_pipe[i - 1]->pipe_fd[READ], STDIN_FILENO);
 				close(pipex.arr_pipe[i - 1]->pipe_fd[READ]);
-				close(pipex.arr_pipe[i - 1]->pipe_fd[WRITE]);
 				pipex.fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (pipex.fd_outfile < 0)
 					exit(-1);
