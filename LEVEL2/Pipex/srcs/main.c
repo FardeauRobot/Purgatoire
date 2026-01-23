@@ -6,152 +6,36 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/23 13:49:14 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/23 18:32:19 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_srcs.h"
 
-void	ft_putstr_fd(char *str, int fd)
-{
-	write(fd, str, ft_strlen(str));
-}
 
-void ft_print_fd(int in_fd, int out_fd)
-{
-	if (in_fd > -2)
-		printf("in_fd = %d\n", in_fd);
-	if (out_fd > -2)
-		printf("out_fd = %d\n", out_fd);
-}
+/* 
+	ON INITIALISE LA STRUCT (pipex, argv, envp)
+		On affecte envs avec envp
+		exit_code set a 0
+		Check si heredoc
+			Si heredoc -> on recupere le limiter
+		ON CREE LA LISTE CHAINEE 
+	ON TRAITE LES CMDS
+		Création du noeud cmd
+			args = argv[i + 2]
+			path
+			fd_in = -1
+			fd_out = -1
+			pid = -1
+			next = NULL
 
-void	ft_close_fd(int in_fd, int out_fd)
-{
-	if (in_fd >= 0)
-		close(in_fd);
-	if (out_fd >= 0) 
-		close(out_fd);
-}
-
-void	ft_open_file(char *path, t_open j)
-{
-
-}
-
-void	ft_init_arr_pipe(char **argv, t_pipe *arr_pipe, int size, char **envp)
-{
-	int i;
-	
-	i = 0;
-	(void)envp;
-	// (void)argv;
-	// (void)arr_pipe;
-	while (i < size)
-	{
-		arr_pipe[i].arg_pipe = ft_split_charset(argv[i + 2], SPACE);
-		// arr_pipe[i].cmd = NULL;
-		// arr_pipe[i].path = NULL;
-		// arr_pipe[i].arg_pipe = ft_split_charset(argv[i + 2], SPACE);
-		i++;
-	}
-}
-
+*/
 int main (int argc, char **argv, char **envp)
 {
-	t_data pipex;
-
-	// INITIALISATION
-	pipex.arr_pipe = NULL;
-	pipex.count_fctn = argc - 3;
-	pipex.arr_pipe = ft_calloc(sizeof(t_pipe *) ,pipex.count_fctn);
-	if (!pipex.arr_pipe)
-		return (-1);
-	int i = 0;
-	// CREATION DES PIPES
-	while (i < pipex.count_fctn)
-	{
-		pipex.arr_pipe[i] = ft_calloc(sizeof(t_pipe), 1);
-		pipex.arr_pipe[i]->arg_pipe = ft_split_charset(argv[i + 2], SPACE);
-		if (pipex.arr_pipe[i]->arg_pipe == NULL)
-			return (-1);
-		pipex.arr_pipe[i]->cmd = pipex.arr_pipe[i]->arg_pipe[0];
-			// ERROR_EXIT PARSING
-		i++;
-	}
-	// IMPRESSION DES PIPES
-	// int j;
-	// i = 0;
-	// while (pipex.arr_pipe[i])
-	// {
-	// 	j = 0;
-	// 	while (pipex.arr_pipe[i]->arg_pipe[j])
-	// 	{
-	// 		// ft_printf("%s\n", pipex.arr_pipe[i]->arg_pipe[j]);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-
-	// ON A RECUPERE LES ARGUMENTS
-	// ON PASSE AU TEST POUR VOIR SI CA FONCTIONNE
-	i = 0;
-	int pid;
-	while (i < pipex.count_fctn)
-	{
-		if (i < pipex.count_fctn - 1)
-		{
-			if (pipe(pipex.arr_pipe[i]->pipe_fd))
-				exit(-1);
-		}
-		pid = fork();
-		if (pid == 0)
-		{
-			pipex.arr_pipe[i]->path = ft_correct_path(envp, pipex.arr_pipe[i]->cmd);
-			if (pipex.arr_pipe[i]->path == NULL)
-				return (-1);
-			if (i == 0)
-			{
-				pipex.fd_infile = open(argv[1], O_RDONLY);
-				if (pipex.fd_infile < 0)
-					exit(-1);
-
-				// REDIRECTION ENTREE
-				dup2(pipex.fd_infile, STDIN_FILENO);
-				close(pipex.fd_infile);
-
-				// REDIRECTION SORTIE
-				dup2(pipex.arr_pipe[i]->pipe_fd[WRITE], STDOUT_FILENO);
-
-				/// CLOSING
-				close(pipex.arr_pipe[i]->pipe_fd[READ]);
-				close(pipex.arr_pipe[i]->pipe_fd[WRITE]);
-			}
-			if (i == pipex.count_fctn - 1)
-			{
-				dup2(pipex.arr_pipe[i - 1]->pipe_fd[READ], STDIN_FILENO);
-				close(pipex.arr_pipe[i - 1]->pipe_fd[READ]);
-				pipex.fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-				if (pipex.fd_outfile < 0)
-					exit(-1);
-				dup2(pipex.fd_outfile, STDOUT_FILENO);
-				close(pipex.fd_outfile);
-			}
-			if (execve(pipex.arr_pipe[i]->path, pipex.arr_pipe[i]->arg_pipe, envp))
-				// ERROR_EXIT CHILD
-				exit(-1);
-		}
-		if (i > 0)
-		{
-			close(pipex.arr_pipe[i - 1]->pipe_fd[READ]);
-			close(pipex.arr_pipe[i - 1]->pipe_fd[WRITE]);
-		}
-		i++;
-	}
-	i = 0;
-	while (i < pipex.count_fctn)
-	{
-		waitpid(-1, NULL, 0);
-		i++;
-	}
-return (0);
+	t_pipex	pipex;
+	t_cmd	test;
+	
+	(void)argc;
+	(void)argv;
+	ft_print_char_arr(pipex.envs);
 }

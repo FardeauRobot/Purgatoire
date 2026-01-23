@@ -6,7 +6,7 @@
 #    By: tibras <tibras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/01/21 17:26:56 by tibras           ###   ########.fr        #
+#    Updated: 2026/01/23 17:11:58 by tibras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ CFLAGS		= -Wall -Wextra -Werror -I$(LIBFT_PATH)
 ########################################################
 SRCS_PATH	= srcs
 SRCS_FILES	= main.c \
-				parsing.c \
-				free_utils.c
+				print_tests.c \
+				errors.c
 
 SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 OBJS		= $(SRCS:.c=.o)

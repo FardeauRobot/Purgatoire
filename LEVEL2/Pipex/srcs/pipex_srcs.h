@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/23 13:48:35 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/23 17:09:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define SPACE " \a\b\t\n\v\f\r"
 
 typedef enum e_errors {
-	ERR_GEN = 1.
+	ERR_GEN = 1,
 	ERR_ARGS = 2,
 	ERR_EXEC = 126,
 	ERR_CMD_NOT_FOUND = 127,
@@ -46,28 +46,25 @@ typedef enum e_ends {
 	WRITE, 
 }	t_ends;
 
-typedef struct s_pipe {
-	int pipe_fd[2];
-	int status;
-	char *cmd;
+typedef struct s_cmd {
+	char **args;
 	char *path;
-	char **arg_pipe;
-}	t_pipe;
+	int		fd_in;
+	int		fd_out;
+	pid_t	pid;
+	struct s_cmd *next;
+}	t_cmd;
 
-typedef struct s_data {
-	int		count_fctn;
-	int		fd_infile;
-	int		fd_outfile;
-	t_pipe	**arr_pipe;
-}	t_data;
+typedef struct s_pipex {
+	t_cmd	*cmds;
+	char	**envs;
+	int exit_code;
+	int is_heredoc;
+	char *limiter;
+} t_pipex;
 
-////// PARSING.C //////
-char *ft_find_path(char *str);
-char *ft_get_path(char **envp);
-char *ft_correct_path(char **envp, char *cmd);
-//---------------/
+////// PRINT_TESTS.C //////
+void	ft_print_char_arr(char **arr);
+//-----------------/
 
-////// FREE_UTILS.C //////
-void	ft_free_arr_pipe(t_pipe **arr_pipe, int size);
-//---------------/
 #endif

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 16:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/22 13:05:48 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/23 16:46:54 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ char *ft_correct_path(char **envp, char *cmd)
 	size_t ttl_len;
 	char path[500];
 	char *correct_path;
+	// PASSER LA STRUCT AVEC ARG PIPE
 	char **arr_path;
 
 	correct_path = ft_get_path(envp);
@@ -85,8 +86,3 @@ char *ft_correct_path(char **envp, char *cmd)
 	ft_free_array(arr_path);
 	return (NULL);
 }
-
-// void	ft_parsing(t_data *pipex)
-// {
-
-// }
