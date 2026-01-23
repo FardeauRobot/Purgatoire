@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/22 14:31:50 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:10:08 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int main (int argc, char **argv, char **envp)
 	// ON PASSE AU TEST POUR VOIR SI CA FONCTIONNE
 	i = 0;
 	int pid;
-	int status;
 	while (i < pipex.count_fctn)
 	{
 		if (i < pipex.count_fctn - 1)
@@ -141,29 +140,29 @@ int main (int argc, char **argv, char **envp)
 			{
 				dup2(pipex.arr_pipe[i - 1]->pipe_fd[READ], STDIN_FILENO);
 				close(pipex.arr_pipe[i - 1]->pipe_fd[READ]);
+				close(pipex.arr_pipe[i - 1]->pipe_fd[WRITE]);
 				pipex.fd_outfile = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 				if (pipex.fd_outfile < 0)
 					exit(-1);
 				dup2(pipex.fd_outfile, STDOUT_FILENO);
 				close(pipex.fd_outfile);
 			}
-			// printf("CMD = %s\n", pipex.arr_pipe[i]->cmd);
-			// printf("PATH = %s\n", pipex.arr_pipe[i]->path);
 			if (execve(pipex.arr_pipe[i]->path, pipex.arr_pipe[i]->arg_pipe, envp))
-				exit(-1);
 				// ERROR_EXIT CHILD
+				exit(-1);
 		}
-		else
+		if (i > 0)
 		{
-			printf("PARENT\n");
+			close(pipex.arr_pipe[i - 1]->pipe_fd[READ]);
+			close(pipex.arr_pipe[i - 1]->pipe_fd[WRITE]);
 		}
 		i++;
-		i = 0;
-		while (i < pipex.count_fctn)
-		{
-			waitpid(-1, &status, 0);
-			i++;
-		}
+	}
+	i = 0;
+	while (i < pipex.count_fctn)
+	{
+		waitpid(-1, NULL, 0);
+		i++;
 	}
 return (0);
 }

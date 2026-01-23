@@ -108,3 +108,69 @@ sequenceDiagram
                                                 v
                                            [Child 2] FD 1 (STDOUT) -> [File/Terminal]
 ```
+
+---
+
+## `waitpid`: comprehensive breakdown
+
+The `waitpid` system call is used to wait for state changes in a child process of the calling process, and obtain information about the child whose state has changed.
+
+### 1. Prototype
+```c
+#include <sys/wait.h>
+
+pid_t waitpid(pid_t pid, int *wstatus, int options);
+```
+
+### 2. Parameters Breakdown
+
+#### `pid` (Which child to wait for?)
+*   **`<-1`**: Wait for any child process whose process group ID is equal to the absolute value of `pid`.
+*   **`-1`**: Wait for **any** child process (same behavior as `wait()` function).
+*   **`0`**: Wait for any child process whose process group ID is equal to that of the calling process.
+*   **`> 0`**: Wait for the specific child whose process ID is equal to the value of `pid`.
+
+#### `wstatus` (Where to store the exit info?)
+*   A pointer to an integer where `waitpid` can store the **status information** of the child.
+*   If this is `NULL`, the status information is discarded.
+*   You use macros to inspect this integer:
+    *   `WIFEXITED(status)`: True if child exited normally.
+    *   `WEXITSTATUS(status)`: Returns the exit code (e.g., return value of main or exit() argument).
+    *   `WIFSIGNALED(status)`: True if child was terminated by a signal.
+
+#### `options` (How to wait?)
+*   **`0`**: The default. The parent process **suspends execution** (blocks) until the child changes state (exits).
+*   **`WNOHANG`**: Return immediately if no child has exited. Use this for non-blocking waits.
+*   **`WUNTRACED`**: Also return if a child has stopped (e.g., paused by a signal).
+
+### 3. Return Values
+*   **`> 0`**: The Process ID (PID) of the child whose state has changed.
+*   **`0`**: (Only if `WNOHANG` is used) No child state has changed yet.
+*   **`-1`**: An error occurred (e.g., no child processes found relative to the `pid` argument).
+
+### 4. Why is it crucial?
+
+1.  **Synchronization**: It ensures the parent only continues or finishes after the child is done. In a shell or pipe command, you usually want to wait for the command to finish before showing the prompt again.
+2.  **Resource Cleanup (Reaping Zombies)**:
+    *   When a child finishes, it becomes a **"Zombie"** (Process state `Z`).
+    *   It stays in the process table to hold its exit status, just in case the parent wants to read it.
+    *   Calling `waitpid` reads this status and tells the OS "I saw it, you can delete this entry now."
+    *   Without `waitpid`, zombies accumulate and fill up the process table.
+
+### 5. Standard Usage Schema
+```c
+pid_t pid = fork();
+
+if (pid == 0) {
+    // Child Process
+    exit(42);
+}
+else {
+    // Parent Process
+    int status;
+    waitpid(pid, &status, 0); // Block until child exits
+    
+    if (WIFEXITED(status))
+        printf("Child exited with code %d\n", WEXITSTATUS(status));
+}
+```
