@@ -1,88 +1,61 @@
-/* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 16:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/23 16:46:54 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/26 18:23:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_srcs.h"
 
-char *ft_find_path(char *str)
+
+void ft_get_path_line(t_pipex *pipex)
 {
-	int i;
-	char *env_path;
+	size_t	i;
 
 	i = 0;
-	env_path = "PATH=";
-	while (str[i] == env_path[i])
-		i++;
-	if (!env_path[i])
-		return (str + i);
-	return (NULL);
+	pipex->path_line = NULL;
+	while (pipex->envs[i])
+		if (ft_strncmp(pipex->envs[i++], "PATH=", 5) == 0)
+			pipex->path_line = pipex->envs[i - 1] + 5;
 }
 
-char *ft_get_path(char **envp)
+void ft_valid_path(t_pipex *pipex, t_cmd *cmd)
 {
-	int i;
-	char *path;
+	char buffer[BUFFER_SIZE];
+	char *argv[ARGS_NBR + 1];
+	size_t start;
+	size_t end;
+	size_t i;
 
+	if (!pipex->path_line)
+		exit (1);
+	start = 0;
 	i = 0;
-	while (envp[i])
+	while (i < ARGS_NBR && cmd->args[i][0])
 	{
-		path = ft_find_path(envp[i]);
-		if (path)
-			return (path);
-		i++;
-	}
-	return (NULL);
-}
-
-static void ft_free_arr_path(char **arr_path)
-{
-	int i;
-
-	i = 0;
-	while (arr_path[i])
-	{
-		free(arr_path[i]);
+		argv[i] = cmd->args[i];
 		i++;
 	}
-	free(arr_path);
-}
-
-char *ft_correct_path(char **envp, char *cmd)
-{
-	int i;
-	size_t ttl_len;
-	char path[500];
-	char *correct_path;
-	// PASSER LA STRUCT AVEC ARG PIPE
-	char **arr_path;
-
-	correct_path = ft_get_path(envp);
-	arr_path = ft_split_sep(correct_path, ':');
-	if (!arr_path)
-		exit(1);
-	i = 0;
-	while (arr_path[i])
+	argv[i] = NULL;
+	while (pipex->path_line[start])
 	{
-		ft_bzero(path, 500);
-		ttl_len = ft_strlcat(path, (const char *)arr_path[i], sizeof(path));
-		ttl_len = ft_strlcat(path, "/", sizeof(path));
-		ttl_len = ft_strlcat(path, cmd, sizeof(path));
-		if (!access(path, X_OK))
+		ft_bzero(buffer, BUFFER_SIZE);
+		end = start;
+		i = 0;
+		while ( pipex->path_line[end] != '\0' && pipex->path_line[end] != ':')
+			buffer[i++] = pipex->path_line[end++];
+		ft_strlcat(buffer, "/", BUFFER_SIZE);
+		ft_strlcat(buffer, cmd->args[0], BUFFER_SIZE);
+		ft_strlcpy(cmd->path, buffer, BUFFER_SIZE);
+		ft_printf("Cmd->path = %s\n", cmd->path);
+		if (!access(cmd->path, F_OK))
 		{
-			ft_printf("%s\n", path);
-			ft_free_arr_path(arr_path);
-			return (ft_strdup(path));
+			execve(cmd->path, argv, pipex->envs);
+			break;
 		}
-		i++;
+		start = end + 1;
 	}
-	ft_free_array(arr_path);
-	return (NULL);
 }

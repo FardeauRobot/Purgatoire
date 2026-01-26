@@ -6,7 +6,7 @@
 #    By: tibras <tibras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/01/23 17:11:58 by tibras           ###   ########.fr        #
+#    Updated: 2026/01/26 16:31:11 by tibras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,14 +18,13 @@ LIBFT_PATH	= includes/libft
 LIBFT		= $(LIBFT_PATH)/libft.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I$(LIBFT_PATH)
+CFLAGS		= -fsanitize=address -Wall -Wextra -Werror -I$(LIBFT_PATH)
 
 ######################### SRCS ######################### 
 ########################################################
 SRCS_PATH	= srcs
 SRCS_FILES	= main.c \
-				print_tests.c \
-				errors.c
+				parsing.c \
 
 SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 OBJS		= $(SRCS:.c=.o)
@@ -36,6 +35,9 @@ OBJS		= $(SRCS:.c=.o)
 ########################################################
 
 all: $(NAME)
+
+test: $(NAME)
+	./pipex
 
 $(LIBFT):
 	make -C $(LIBFT_PATH)
