@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/26 17:24:36 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/27 08:26:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # define EXIT_SUCCESS 0
 
 # define BUFFER_SIZE 4096
-# define CMDS_NBR 256
-# define ENVS_CMD_NBR 512
+# define CMDS_NBR 64
+# define ENVS_CMD_NBR 128
 # define PATH_SIZE 200
-# define ARGS_SIZE 200
+# define ARGS_SIZE 128
 # define ARGS_NBR 128
 
 # define SPACE " \a\b\t\n\v\f\r"
@@ -56,7 +56,7 @@ typedef enum e_ends {
 
 typedef struct s_cmd {
 	char args[ARGS_NBR][ARGS_SIZE];
-	char path[PATH_SIZE];
+	char path[BUFFER_SIZE];
 	int fd[NB_ENDS];
 	pid_t	pid;
 	struct s_cmd *next;

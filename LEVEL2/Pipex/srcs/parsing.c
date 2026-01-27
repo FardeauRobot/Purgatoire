@@ -15,6 +15,11 @@ void ft_get_path_line(t_pipex *pipex)
 {
 	size_t	i;
 
+	if (!pipex->envs || !*pipex->envs)
+	{
+		ft_printf("SUCE\n");
+		exit (1);
+	}
 	i = 0;
 	pipex->path_line = NULL;
 	while (pipex->envs[i])
@@ -47,9 +52,9 @@ void ft_valid_path(t_pipex *pipex, t_cmd *cmd)
 		i = 0;
 		while ( pipex->path_line[end] != '\0' && pipex->path_line[end] != ':')
 			buffer[i++] = pipex->path_line[end++];
-		ft_strlcat(buffer, "/", BUFFER_SIZE);
-		ft_strlcat(buffer, cmd->args[0], BUFFER_SIZE);
-		ft_strlcpy(cmd->path, buffer, BUFFER_SIZE);
+		if (ft_strlcat(buffer, "/", BUFFER_SIZE) > BUFFER_SIZE ||
+			ft_strlcat(buffer, cmd->args[0], BUFFER_SIZE) > BUFFER_SIZE ||
+			ft_strlcpy(cmd->path, buffer, BUFFER_SIZE) > BUFFER_SIZE)
 		ft_printf("Cmd->path = %s\n", cmd->path);
 		if (!access(cmd->path, F_OK))
 		{
