@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:35 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/25 22:20:13 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "ft_conversion.h"
 
-int	ft_ischarset(int c, char *charset)
+double	ft_atof(const char *str)
 {
-	int	i;
-
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	(void)str;
+	return (0.0);
 }

@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_calloc_gc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 09:50:53 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_ischarset(int c, char *charset)
+void	*ft_calloc_gc(size_t count, size_t size, t_list **gc_head)
 {
-	int	i;
+	void	*tmp;
+	size_t	range;
 
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	if (size != 0 && count > (size_t) - 1 / size)
+		return (NULL);
+	range = size * count;
+	tmp = ft_gc_malloc(range, gc_head);
+	if (!tmp)
+		return (NULL);
+	ft_bzero(tmp, range);
+	return (tmp);
 }

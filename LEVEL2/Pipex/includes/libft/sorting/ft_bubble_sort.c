@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_bubble_sort.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:09:10 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/25 21:58:18 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "sorting.h"
 
-int	ft_ischarset(int c, char *charset)
+/* API: see sorting.h */
+void	ft_bubble_sort(int *arr, size_t size)
 {
-	int	i;
-
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	(void)arr;
+	(void)size;
 }

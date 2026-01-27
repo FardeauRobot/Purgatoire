@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_substr_gc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 10:39:08 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_ischarset(int c, char *charset)
+char	*ft_substr_gc(char const *s, unsigned int start, size_t len, t_list **gc_head)
 {
-	int	i;
+	char	*sub;
 
-	i = 0;
-	while (charset[i])
+	sub = ft_substr(s, start, len);
+	if (!sub)
+		return (NULL);
+	if (ft_gc_add_node(gc_head, sub))
 	{
-		if (c == charset[i])
-			return (1);
-		i++;
+		free(sub);
+		return (NULL);
 	}
-	return (0);
+	return (sub);
 }

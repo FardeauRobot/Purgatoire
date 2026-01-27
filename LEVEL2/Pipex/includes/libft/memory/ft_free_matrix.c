@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:10 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 13:29:19 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "ft_memory.h"
 
-int	ft_ischarset(int c, char *charset)
+void	ft_free_matrix(char ***matrix)
 {
-	int	i;
+	char	**arr;
+	size_t	i;
 
+	if (!matrix || !*matrix)
+		return ;
+	arr = *matrix;
 	i = 0;
-	while (charset[i])
+	while (arr[i])
 	{
-		if (c == charset[i])
-			return (1);
+		free(arr[i]);
 		i++;
 	}
-	return (0);
+	free(arr);
+	*matrix = NULL;
 }

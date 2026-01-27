@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_lstnew_gc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 09:50:29 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_ischarset(int c, char *charset)
+t_list	*ft_lstnew_gc(void *content, t_list **gc_head)
 {
-	int	i;
+	t_list	*element;
 
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	element = ft_gc_malloc(sizeof(t_list), gc_head);
+	if (!element)
+		return (NULL);
+	element->content = content;
+	element->next = NULL;
+	element->previous = NULL;
+	return (element);
 }

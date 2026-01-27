@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:20 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 13:59:05 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "ft_strings.h"
 
-int	ft_ischarset(int c, char *charset)
+#include <stdio.h>
+
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int	i;
+	int i;
+	unsigned char *us1;
+	unsigned char *us2;
 
 	i = 0;
-	while (charset[i])
+	us1 = (unsigned char *)s1;
+	us2 = (unsigned char *)s2;
+	while (us1[i] || us2[i])
 	{
-		if (c == charset[i])
-			return (1);
+		if (us1[i] != us2[i])
+			return (us1[i] - us2[i]);
 		i++;
 	}
 	return (0);

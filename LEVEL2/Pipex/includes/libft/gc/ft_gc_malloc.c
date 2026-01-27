@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_gc_malloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 09:53:49 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "ft_gc.h"
 
-int	ft_ischarset(int c, char *charset)
+void	*ft_gc_malloc(size_t size, t_list **gc_head)
 {
-	int	i;
+	void	*ptr;
 
-	i = 0;
-	while (charset[i])
+	ptr = malloc(size);
+	if (!ptr)
+		return (NULL);
+	if (ft_gc_add_node(gc_head, ptr) == 1)
 	{
-		if (c == charset[i])
-			return (1);
-		i++;
+		free(ptr);
+		return (NULL);
 	}
-	return (0);
+	return (ptr);
 }

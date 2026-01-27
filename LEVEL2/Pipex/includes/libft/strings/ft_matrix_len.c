@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   ft_matrix_len.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:30 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 12:44:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "ft_strings.h"
 
-int	ft_ischarset(int c, char *charset)
+size_t	ft_matrix_len(char **matrix)
 {
-	int	i;
+	int i;
 
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
+	if (!matrix || !*matrix)
+		return (0);
+	i = 0;	
+	while (matrix[i])
 		i++;
-	}
-	return (0);
+	return (i);
 }

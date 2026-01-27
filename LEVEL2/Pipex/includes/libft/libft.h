@@ -6,14 +6,12 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 18:19:51 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/26 16:00:49 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:41:07 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-
-# define BUFFER_SIZE 4096
 
 // Standard headers
 # include <unistd.h>
@@ -29,5 +27,9 @@
 # include "list/ft_list.h"
 # include "gnl/ft_gnl.h"
 # include "output/ft_output.h"
+# include "utils/utils.h"
+# include "sorting/sorting.h"
+# include "gc/ft_gc.h"
+
 
 #endif

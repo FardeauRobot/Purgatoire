@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ischarset.c                                     :+:      :+:    :+:   */
+/*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/26 13:37:42 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 12:11:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#ifndef MACROS_H
+# define MACROS_H
 
-int	ft_ischarset(int c, char *charset)
-{
-	int	i;
+# define FAILURE 0
+# define SUCCESS 1
 
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
+# define EXIT_ERROR 1
+# define EXIT_SUCCESS 0
+
+# define SPACE " \a\b\t\n\v\f\r"
+
+typedef enum e_errors {
+	ERR_GEN = 1,
+	ERR_ARGS = 2,
+	ERR_EXEC = 126,
+	ERR_CMD_NOT_FOUND = 127,
+	ERR_SIGKILL = 128,
+}	t_errors;
+
+typedef enum e_select {
+	FIRST = 1,
+	SECOND = 2,
+	BOTH = 3,
+}	t_select;
+
+# endif
