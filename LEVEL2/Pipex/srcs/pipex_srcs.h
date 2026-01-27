@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/27 08:26:28 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/27 12:05:31 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ typedef enum e_ends {
 typedef struct s_cmd {
 	char args[ARGS_NBR][ARGS_SIZE];
 	char path[BUFFER_SIZE];
-	int fd[NB_ENDS];
+	int fd[2];
 	pid_t	pid;
 	struct s_cmd *next;
 }	t_cmd;
 
 typedef struct s_pipex {
-	t_cmd	cmds[CMDS_NBR];
+	t_cmd	*cmds;
 	char	**envs;
 	char	*path_line;
 	int		infile_fd;
