@@ -6,30 +6,20 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/28 14:46:12 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/28 17:21:53 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_srcs.h"
 
-/* 
-	ON INITIALISE LA STRUCT (pipex, argv, envp)
-		On affecte envs avec envp
-		exit_code set a 0
-		Check si heredoc
-			Si heredoc -> on recupere le limiter
-		ON CREE LA LISTE CHAINEE 
-	ON TRAITE LES CMDS
-		Création du noeud cmd
-			args = argv[i + 2]
-			path
-			fd_in = -1
-			fd_out = -1
-			pid = -1
-			next = NULL
-
-*/
-
+// CLOSE.C
+void	ft_close_files(t_pipex *pipex)
+{
+	if (pipex->infile_fd != -1)
+		close(pipex->infile_fd);
+	if (pipex->outfile_fd != -1)
+		close(pipex->outfile_fd);
+}
 
 void	ft_close_pipes(int *pipe)
 {
@@ -39,6 +29,9 @@ void	ft_close_pipes(int *pipe)
 		close(pipe[WRITE]);
 }
 
+//////////////////////////////////////
+
+// INIT.C
 // Affect the pipex.paths to splitter envp of PATH=
 void	ft_find_path_env(t_pipex *pipex)
 {
@@ -56,7 +49,7 @@ void	ft_find_path_env(t_pipex *pipex)
 	}
 	pipex->paths = ft_split_sep_gc(path, ':', &pipex->gc);
 	if (!pipex->paths)
-		error_exit(pipex, 1, "ERROR\n");
+		error_exit(pipex, 1, "Error, no PATH found\n");
 }
 
 // Set default values to pipex structs
@@ -94,10 +87,10 @@ void	ft_default_pipex(t_pipex *pipex, char **envp, int argc, char **argv)
 		pipex->infile_fd = open(pipex->infile, O_RDONLY);
 		if (pipex->infile_fd == -1)
 			perror(pipex->infile);
-		pipex->outfile_fd = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	}
-	if ( pipex->outfile_fd == -1)
-		error_exit(pipex, ERR_FD, "Error opening outfile\n");
+	pipex->outfile_fd = open(pipex->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (pipex->outfile_fd == -1)
+		perror(pipex->outfile);
 }
 
 char	*ft_affect_path(t_pipex *pipex, char *cmd)
@@ -163,7 +156,30 @@ void	ft_init_pipex(t_pipex *pipex, char **envp, char **argv, int argc)
 	ft_load_cmds(pipex, argv);
 }
 
-void	ft_exec_pipes(t_pipex *pipex)
+void	ft_exec_child(t_pipex *pipex, int i)
+{
+	if (i == 0)
+	{
+		if (pipex->infile_fd == -1)
+			error_exit(pipex, 1, "No such file or directory\n");
+		dup2(pipex->infile_fd, STDIN_FILENO);
+		close(pipex->infile_fd);
+	}
+	else
+		dup2(pipex->pipe_arr[i - 1][READ], STDIN_FILENO);
+	if (i == pipex->cmd_nbr - 1)
+	{
+		if (pipex->outfile_fd == -1)
+			error_exit(pipex, 1, "No such file or directory\n");
+		dup2(pipex->outfile_fd, STDOUT_FILENO);
+		close(pipex->outfile_fd);
+	}
+	else
+		dup2(pipex->pipe_arr[i][WRITE], STDOUT_FILENO);
+	// ft_close_files(pipex);
+}
+
+void	ft_open_pipes(t_pipex *pipex)
 {
 	int i;
 
@@ -174,49 +190,41 @@ void	ft_exec_pipes(t_pipex *pipex)
 			error_exit(pipex, ERR_PIPE, "Error while creating pipe\n");
 		i++;
 	}
+}
+
+void	ft_exec_pipes(t_pipex *pipex)
+{
+	int i;
+
+	ft_open_pipes(pipex);
 	i = 0;
 	while (i < pipex->cmd_nbr)
 	{
 		pipex->pid_arr[i] = fork();
 		if (pipex->pid_arr[i] == 0)
 		{
-			if (i == 0)
-			{
-				if (pipex->infile_fd == -1)
-					error_exit(pipex, ERR_FD, "Can't access infile");
-				dup2(pipex->infile_fd, STDIN_FILENO);
-				close(pipex->infile_fd);
-			}
-			else
-				dup2(pipex->pipe_arr[i - 1][READ], STDIN_FILENO);
-			if (i == pipex->cmd_nbr - 1)
-			{
-				dup2(pipex->outfile_fd, STDOUT_FILENO);
-				close(pipex->outfile_fd);
-			}
-			else
-				dup2(pipex->pipe_arr[i][WRITE], STDOUT_FILENO);
-			int j = 0;
-			while (j++ < pipex->cmd_nbr -1)
-				ft_close_pipes(pipex->pipe_arr[j - 1]);
-			if (!pipex->cmds[i]->path)
-				error_exit(pipex, ERR_CMD_NOT_FOUND, "Cmd not found\n");
+			ft_exec_child(pipex, i);
+			if (access(pipex->cmds[i]->path, F_OK) || !pipex->cmds[i]->path)
+				error_exit(pipex, ERR_EXEC, "Command not found\n");
 			execve(pipex->cmds[i]->path, pipex->cmds[i]->args, pipex->envs);
 			error_exit(pipex, ERR_EXEC, "Cmd not executed properly \n");
 		}
 		i++;
 	}
-
+	ft_close_files(pipex);
 	i = 0;
 	while (i++ < pipex->cmd_nbr - 1)
 		ft_close_pipes(pipex->pipe_arr[i - 1]);
-	if (pipex->infile_fd != -1)
-		close(pipex->infile_fd);
-	if (pipex->outfile_fd != -1)
-		close(pipex->outfile_fd);
 	i = 0;
 	while (i++ < pipex->cmd_nbr)
-		waitpid(pipex->pid_arr[i - 1], &pipex->exit_code, 0);
+	{
+		waitpid(0, &pipex->exit_code, 0);
+		if (WIFEXITED(pipex->exit_code))
+			pipex->exit_code = WEXITSTATUS(pipex->exit_code);
+		else if (WIFSIGNALED(pipex->exit_code))
+			pipex->exit_code = 128 + WTERMSIG(pipex->exit_code);
+		i++;
+	}
 }
 
 // MAIN
@@ -229,5 +237,5 @@ int main (int argc, char **argv, char **envp)
 	pipex.envs = envp;
 	ft_init_pipex(&pipex, envp, argv, argc);
 	ft_exec_pipes(&pipex);
-	error_exit(&pipex, 0, NULL);
+	error_exit(&pipex, pipex.exit_code, NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 13:37:42 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/28 14:38:18 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/28 14:54:42 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef enum e_errors {
 	ERR_ARGS = 2,
 	ERR_MALLOC = 99,
 	ERR_PIPE = 100,
-	ERR_FD = 101,
 	ERR_EXEC = 126,
 	ERR_CMD_NOT_FOUND = 127,
 	ERR_SIGKILL = 128,

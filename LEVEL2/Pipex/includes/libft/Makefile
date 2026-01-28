@@ -1,6 +1,6 @@
 NAME = libft.a
 
-CC = cc -Wall -Wextra -Werror -I. 
+CC = cc -Wall -Wextra -Werror -fsanitize=address -I. 
 
 # Terminal colors for a nicer build output
 RESET = \033[0m
