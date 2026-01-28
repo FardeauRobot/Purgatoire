@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/27 14:49:59 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:06:39 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,21 @@ typedef struct s_cmd {
 	char **args;
 	char *path;
 	int	error;
-	struct s_cmd *next;
 }	t_cmd;
 
 typedef struct s_pipex {
-	t_cmd	*cmds;
+	t_cmd	**cmds;
 	char	**envs;
 	char	**paths;
-	int		cmd_nbr;
 	char	*infile;
 	char	*outfile;
+	int		cmd_nbr;
 	int		infile_fd;
 	int		outfile_fd;
 	int		exit_code;
 	int		is_heredoc;
-	pid_t	*pid;
+	int		**pipe_arr;
+	pid_t	*pid_arr;
 	char	*limiter;
 	t_list	*gc;
 } t_pipex;
@@ -68,4 +68,7 @@ typedef struct s_pipex {
 ////// PARSING.C //////
 //-----------------/
 
+////// ERRORS.C //////
+void	error_exit(t_pipex *pipex, int error, char *err_msg);
+//-----------------/
 #endif

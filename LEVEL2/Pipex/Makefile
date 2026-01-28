@@ -6,7 +6,7 @@
 #    By: tibras <tibras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/01/27 14:53:41 by tibras           ###   ########.fr        #
+#    Updated: 2026/01/28 12:57:59 by tibras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,14 @@ LIBFT_PATH	= includes/libft
 LIBFT		= $(LIBFT_PATH)/libft.a
 
 CC			= cc
-CFLAGS		= -fsanitize=address -Wall -Wextra -Werror -I$(LIBFT_PATH)
+CFLAGS		= -Wall -Wextra -Werror -I$(LIBFT_PATH)
 
 ######################### SRCS ######################### 
 ########################################################
 SRCS_PATH	= srcs
 SRCS_FILES	= main.c \
 				parsing.c \
+				errors.c \
 
 SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 OBJS		= $(SRCS:.c=.o)

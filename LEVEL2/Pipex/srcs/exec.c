@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup_gc.c                                    :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/28 08:52:44 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/28 11:35:19 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/28 12:58:21 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "pipex_srcs.h"
 
-char	*ft_strndup_gc(const char *s, size_t n, t_list **gc_head)
+void	ft_exec_pipes(t_pipex *pipex)
 {
-	char	*dup;
+	int i;
 
-	dup = ft_strndup(s, n);
-	if (!dup)
-		return (NULL);
-	if (ft_gc_add_node(gc_head, dup))
+	i = 0;
+	while (i < pipex->cmd_nbr)
 	{
-		free(dup);
-		return (NULL);
+		pipex->
 	}
-	return (dup);
 }
