@@ -6,7 +6,7 @@
 #    By: tibras <tibras@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/01/28 15:54:58 by tibras           ###   ########.fr        #
+#    Updated: 2026/01/29 14:14:27 by tibras           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS_PATH	= srcs
 SRCS_FILES	= main.c \
 				parsing.c \
 				errors.c \
+				close.c
 
 SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 OBJS		= $(SRCS:.c=.o)

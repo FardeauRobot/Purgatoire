@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/28 12:06:39 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/29 14:31:21 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ typedef struct s_pipex {
 	char	*limiter;
 	t_list	*gc;
 } t_pipex;
+
+////// CLOSE.C //////
+void	ft_close_files(t_pipex *pipex);
+void	ft_close_pipes(t_pipex *pipex);
+//-----------------/
 
 ////// MAIN.C //////
 //-----------------/
