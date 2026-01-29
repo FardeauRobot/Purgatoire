@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 16:02:09 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/20 13:48:49 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/21 16:30:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 
 # include "srcs/pipex_srcs.h"
+# include "libft.h"
 
 // MACROS
 /*

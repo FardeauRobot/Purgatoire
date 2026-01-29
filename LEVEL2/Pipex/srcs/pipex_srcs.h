@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/20 15:31:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:06:39 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,56 @@
 
 # include "../pipex.h"
 
-# define FAILURE 0
-# define SUCCESS 1
 
-# define EXIT_ERROR 1
-# define EXIT_SUCCESS 0
+// # define BUFFER_SIZE 4096
+// # define CMDS_NBR 64
+// # define ENVS_CMD_NBR 128
+// # define PATH_SIZE 200
+// # define ARGS_SIZE 128
+// # define ARGS_NBR 128
 
-
-# define ERR_GEN 1
-# define ERR_ARGS 2
-# define ERR_EXEC 126
-# define ERR_CMD_NOT_FOUND 127
-# define ERR_SIGKIL 128
+typedef enum e_open {
+	INFILE,
+	OUTFILE,
+	HERE_DOC,
+}	t_open;
 
 typedef enum e_ends {
 	READ,
 	WRITE, 
+	NB_ENDS,
 }	t_ends;
 
-typedef struct s_pipe {
-	int pipe_fd[2];
-	char *cmd;
+typedef struct s_cmd {
+	char **args;
 	char *path;
-}	t_pipe;
+	int	error;
+}	t_cmd;
 
+typedef struct s_pipex {
+	t_cmd	**cmds;
+	char	**envs;
+	char	**paths;
+	char	*infile;
+	char	*outfile;
+	int		cmd_nbr;
+	int		infile_fd;
+	int		outfile_fd;
+	int		exit_code;
+	int		is_heredoc;
+	int		**pipe_arr;
+	pid_t	*pid_arr;
+	char	*limiter;
+	t_list	*gc;
+} t_pipex;
+
+////// MAIN.C //////
+//-----------------/
+
+////// PARSING.C //////
+//-----------------/
+
+////// ERRORS.C //////
+void	error_exit(t_pipex *pipex, int error, char *err_msg);
+//-----------------/
 #endif
