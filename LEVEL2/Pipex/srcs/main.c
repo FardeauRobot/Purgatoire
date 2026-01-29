@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/29 14:36:59 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/29 14:38:16 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,8 @@ void	ft_open_pipes(t_pipex *pipex)
 
 	i = 0;
 	while (i < pipex->cmd_nbr - 1)
-	{
 		if (pipe(pipex->pipe_arr[i++]) == -1)
 			error_exit(pipex, ERR_PIPE, "Error while creating pipe\n");
-	}
 }
 
 void	ft_exec_pipes(t_pipex *pipex)
