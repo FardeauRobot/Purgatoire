@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 14:13:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/29 14:33:12 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/29 20:34:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,4 @@ void	ft_close_pipes(t_pipex *pipex)
 			close(pipex->pipe_arr[i][WRITE]);
 		i++;
 	}
-	ft_close_files(pipex);
 }

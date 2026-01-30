@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/29 14:31:21 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/29 20:42:57 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	ft_close_pipes(t_pipex *pipex);
 //-----------------/
 
 ////// PARSING.C //////
+void	ft_find_path_env(t_pipex *pipex);
+void	ft_default_pipex(t_pipex *pipex, char **envp, int argc, char **argv);
+void	ft_load_cmds(t_pipex *pipex, char **argv);
 //-----------------/
 
 ////// ERRORS.C //////
