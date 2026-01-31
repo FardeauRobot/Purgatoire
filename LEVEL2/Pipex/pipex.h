@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 16:02:09 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/21 16:30:23 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/31 16:49:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@
 	O_CREAT     // Create file if it doesn't exist
 	O_TRUNC     // Truncate (empty) file if it exists
 	O_APPEND    // Append to end of file
-}
 */
+
+
+
 #endif

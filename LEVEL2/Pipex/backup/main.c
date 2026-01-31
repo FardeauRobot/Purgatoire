@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:36:13 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/30 10:43:33 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/30 12:33:08 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_exec_pipes(t_pipex *pipex)
 
 	ft_open_pipes(pipex);
 	i = 0;
-	while (i < pipex->cmd_nbr)
+	while (i < pipex->cmd_nbr - 1)
 	{
 		pipex->pid_arr[i] = fork();
 		if (pipex->pid_arr[i] == -1)

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:35:44 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/29 20:42:57 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/30 12:10:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ typedef enum e_open {
 
 typedef enum e_ends {
 	READ,
-	WRITE, 
+	WRITE,
 	NB_ENDS,
 }	t_ends;
 
 typedef struct s_cmd {
-	char **args;
-	char *path;
-	int	error;
+	char	**args;
+	char	*path;
+	int		error;
 }	t_cmd;
 
 typedef struct s_pipex {
