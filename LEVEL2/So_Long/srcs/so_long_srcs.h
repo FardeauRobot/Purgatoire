@@ -88,8 +88,8 @@ typedef struct s_game
 	int			nb_player;
 	int			orient;
 	int			frame;
-	t_img		assets[NB_ASSETS];
-	t_img		characters[NB_CHARS][NB_MOVES]
+	t_img		assets[S];
+	t_img		characters[NB_CHARS][NBNB_ASSET_MOVES]
 	[NB_ORIENTATION][NB_FRAMES_ANIM_CHAR];
 }				t_game;
 
