@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tibras <tibras@student.42.fr>              +#+  +:+       +#+         #
+#    By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/01/30 12:19:15 by tibras           ###   ########.fr        #
+#    Updated: 2026/02/15 16:59:25 by fardeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,21 +14,24 @@
 #################################################################
 NAME		= pipex
 
-LIBFT_PATH	= includes/libft
+LIBFT_PATH	= libft
 LIBFT		= $(LIBFT_PATH)/libft.a
 
 CC			= cc
-CFLAGS		= -fsanitize=address -Wall -Wextra -Werror -I$(LIBFT_PATH)
+CFLAGS		= -fsanitize=address -Wall -Wextra -Werror -I$(LIBFT_PATH) -I$(LIBFT_PATH)/includes -Iincludes
 
 ######################### SRCS ######################### 
 ########################################################
-SRCS_PATH	= srcs
+SRCS_PATH	= src
 SRCS_FILES	= main.c \
 				parsing.c \
+				init.c \
+				exec.c \
 				errors.c 
 
 SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 OBJS		= $(SRCS:.c=.o)
+DEPS		= $(OBJS:.o=.d)
 
 ######################### MAKE #########################
 ########################################################
@@ -44,10 +47,10 @@ $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(DEPS)
 	make -C $(LIBFT_PATH) clean
 
 fclean: clean
@@ -55,5 +58,7 @@ fclean: clean
 	make -C $(LIBFT_PATH) fclean
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re
