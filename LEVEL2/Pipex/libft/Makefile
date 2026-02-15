@@ -1,6 +1,6 @@
 NAME = libft.a
 
-CC = cc -Wall -Wextra -Werror -I. -Iincludes 
+CC = cc -Wall -Wextra -Werror -Iincludes -I. 
 
 # Terminal colors for a nicer build output
 RESET = \033[0m
@@ -14,16 +14,17 @@ BOLD = \033[1m
 SRCS_CONVERSION = \
 		conversion/ft_atoi.c \
 		conversion/ft_atol.c \
+		conversion/ft_atof.c \
 		conversion/ft_itoa.c \
 		conversion/ft_overint.c \
 		conversion/ft_get_max.c \
 		conversion/ft_min_int.c \
-		conversion/ft_atof.c \
 		conversion/ft_max_int.c \
 
 SRCS_MEMORY = \
 		memory/ft_bzero.c \
 		memory/ft_calloc.c \
+		memory/ft_realloc.c \
 		memory/ft_memchr.c \
 		memory/ft_memcmp.c \
 		memory/ft_memcpy.c \
@@ -31,13 +32,12 @@ SRCS_MEMORY = \
 		memory/ft_memset.c \
 		memory/ft_free_array.c \
 		memory/ft_free_int_arr.c \
+		memory/ft_memdel.c \
+		memory/ft_free_matrix.c \
 		memory/ft_arr_swap.c \
+		memory/ft_memswap.c \
 		memory/ft_int_swap.c \
 		memory/ft_int_cmp.c \
-		memory/ft_free_matrix.c \
-		memory/ft_memdel.c \
-		memory/ft_memswap.c \
-		memory/ft_realloc.c \
 
 SRCS_CHAR = \
 		char/ft_isalnum.c \
@@ -55,17 +55,18 @@ SRCS_OUTPUT = \
 		output/ft_putchar_fd.c \
 		output/ft_putendl_fd.c \
 		output/ft_putnbr_fd.c \
+		output/ft_putnbr_base.c \
 		output/ft_putstr_fd.c \
 		output/ft_printf.c \
 		output/ft_printf_nbr.c \
 		output/ft_print_int_arr.c \
-		output/ft_putnbr_base.c \
 
 SRCS_STRINGS = \
 		strings/ft_split_sep.c \
 		strings/ft_split_charset.c \
 		strings/ft_strchr.c \
 		strings/ft_strcheck.c \
+		strings/ft_strcmp.c \
 		strings/ft_strdup.c \
 		strings/ft_strndup.c \
 		strings/ft_striteri.c \
@@ -80,8 +81,7 @@ SRCS_STRINGS = \
 		strings/ft_strrchr.c \
 		strings/ft_strtrim.c \
 		strings/ft_substr.c \
-		strings/ft_matrix_len.c \
-		strings/ft_strcmp.c
+		strings/ft_matrix_len.c
 
 SRCS_LIST = \
 		list/ft_lstadd_back.c \
@@ -96,40 +96,48 @@ SRCS_LIST = \
 		list/ft_lstindex.c \
 		list/ft_lstat_index.c \
 
-SRCS_GC = \
-		gc/ft_calloc_gc.c \
-		gc/ft_gc_add_node.c \
-		gc/ft_gc_free_all.c \
-		gc/ft_gc_malloc.c \
-		gc/ft_itoa_gc.c \
-		gc/ft_lstmap_gc.c \
-		gc/ft_lstnew_gc.c \
-		gc/ft_split_charset_gc.c \
-		gc/ft_split_sep_gc.c \
-		gc/ft_strdup_gc.c \
-		gc/ft_strjoin_gc.c \
-		gc/ft_strmapi_gc.c \
-		gc/ft_strndup_gc.c \
-		gc/ft_strtrim_gc.c \
-		gc/ft_substr_gc.c \
-
 SRCS_GNL = \
 		gnl/get_next_line.c \
 		gnl/get_next_line_utils.c
 
-SRCS = $(SRCS_CONVERSION) $(SRCS_MEMORY) $(SRCS_CHAR) $(SRCS_OUTPUT) $(SRCS_STRINGS) $(SRCS_LIST) $(SRCS_GNL) $(SRCS_GC)
+SRCS_SORTING = \
+		sorting/ft_bubble_sort.c \
+		sorting/ft_bucket_sort.c \
+		sorting/ft_counting_sort.c \
+		sorting/ft_heap_sort.c \
+		sorting/ft_insertion_sort.c \
+		sorting/ft_merge_sort.c \
+		sorting/ft_qsort.c \
+		sorting/ft_radix_sort.c \
+		sorting/ft_selection_sort.c \
+		sorting/ft_shell_sort.c \
 
-TOTAL_FILES := $(words $(SRCS))
-COUNT_FILE = .make_count
+SRCS_GC = \
+		gc/ft_gc_malloc.c \
+		gc/ft_gc_add_node.c \
+		gc/ft_gc_free_all.c \
+		gc/ft_strdup_gc.c \
+		gc/ft_substr_gc.c \
+		gc/ft_strjoin_gc.c \
+		gc/ft_strtrim_gc.c \
+		gc/ft_itoa_gc.c \
+		gc/ft_calloc_gc.c \
+		gc/ft_strmapi_gc.c \
+		gc/ft_strndup_gc.c \
+		gc/ft_split_charset_gc.c \
+		gc/ft_split_sep_gc.c \
+		gc/ft_lstnew_gc.c \
+		gc/ft_lstmap_gc.c \
+
+SRCS = $(SRCS_CONVERSION) $(SRCS_MEMORY) $(SRCS_CHAR) $(SRCS_OUTPUT) $(SRCS_STRINGS) $(SRCS_LIST) $(SRCS_GNL) $(SRCS_SORTING) $(SRCS_GC)
 
 OBJS = $(SRCS:.c=.o)
-DEPS = $(OBJS:.o=.d)
 
 
 all : bannerbuild $(NAME) 
 
 $(NAME) : $(OBJS)
-	@printf "\n$(CYAN)$(BOLD)Archiving: $(NAME)$(RESET)\n"
+	@printf "$(CYAN)$(BOLD)Archiving: $(NAME)$(RESET)\n"
 	@ar rcs $(NAME) $(OBJS)
 	@printf "$(GREEN)Build finished: $(NAME) created.\n$(RESET)"
 	@printf "\n$(CYAN)=====================================\n$(RESET)"
@@ -137,23 +145,17 @@ $(NAME) : $(OBJS)
 	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 %.o : %.c
-	@$(CC) -MMD -MP -c $< -o $@
-	@curr=$$(cat $(COUNT_FILE) 2>/dev/null || echo 0); \
-	curr=$$((curr + 1)); \
-	echo $$curr > $(COUNT_FILE); \
-	percent=$$((curr * 100 / $(TOTAL_FILES))); \
-	printf "$(GREEN)[%-50s] %d%% %s$(RESET)\r" "$$(awk -v p=$$percent 'BEGIN {len=int(p*50/100); for(i=0;i<len;i++) printf "="}')" "$$percent" "$<"
+#	@printf "$(YELLOW)Compiling: %s -> %s$(RESET)\n" "$<" "$@"
+	@$(CC) -c $< -o $@
 
 bannerbuild:
 	@printf "\n$(CYAN)=====================================\n$(RESET)"
 	@printf "     $(BOLD)LIBFT - Building (all targets)$(RESET)\n"
 	@printf "$(CYAN)=====================================$(RESET)\n\n"
-	@echo 0 > $(COUNT_FILE)
 
 clean : 
 	@printf "$(BLUE)Cleaning object files...$(RESET)\n"
-	@rm -f $(OBJS) $(DEPS)
-	@rm -f $(COUNT_FILE)
+	@rm -f $(OBJS)
 	@printf "$(GREEN)Objects removed: $(words $(OBJS))$(RESET)\n"
 
 
@@ -175,6 +177,13 @@ re : fclean
 	make all
 	@printf "$(CYAN)Rebuild complete: $(NAME)$(RESET)\n"
 
-.PHONY : clean fclean all re
+test: $(NAME)
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "     $(BOLD)LIBFT - RUNNING TESTS$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n"
+	@$(CC) -g3 -I. test_main.c $(NAME) -o test_runner
+	@./test_runner
+	@rm -f test_runner
 
--include $(DEPS)
+
+.PHONY : clean fclean all re test

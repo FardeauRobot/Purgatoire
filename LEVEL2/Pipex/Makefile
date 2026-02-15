@@ -1,64 +1,38 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/02/15 16:59:25 by fardeau          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = pipex
 
-######################### GENERAL RULES ######################### 
-#################################################################
-NAME		= pipex
+SRCS = src/main.c \
+		src/parsing.c \
+		src/path.c \
+		src/exec.c \
+		src/errors.c
 
-LIBFT_PATH	= libft
-LIBFT		= $(LIBFT_PATH)/libft.a
+OBJ_DIR = objs
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+CC = cc -Wall -Wextra -Werror
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
+INCS = -I. -Iincludes -I$(LIBFT_DIR)
 
-CC			= cc
-CFLAGS		= -fsanitize=address -Wall -Wextra -Werror -I$(LIBFT_PATH) -I$(LIBFT_PATH)/includes -Iincludes
-
-######################### SRCS ######################### 
-########################################################
-SRCS_PATH	= src
-SRCS_FILES	= main.c \
-				parsing.c \
-				init.c \
-				exec.c \
-				errors.c 
-
-SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
-OBJS		= $(SRCS:.c=.o)
-DEPS		= $(OBJS:.o=.d)
-
-######################### MAKE #########################
-########################################################
 all: $(NAME)
 
-test: $(NAME)
-	./pipex
-
 $(LIBFT):
-	make -C $(LIBFT_PATH)
+	make -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(OBJS) $(LIBFT) $(INCS) -o $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(INCS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(DEPS)
-	make -C $(LIBFT_PATH) clean
+	rm -rf $(OBJ_DIR)
+	make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(LIBFT_PATH) fclean
+	make fclean -C $(LIBFT_DIR)
 
 re: fclean all
-
--include $(DEPS)
 
 .PHONY: all clean fclean re

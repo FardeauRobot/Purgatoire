@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:00 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/26 13:50:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_STRINGS_H
 
 # include <stdlib.h>
-# include "basic_enums.h"
+# include "macros.h"
 
 // String examination functions
 size_t	ft_strlen(const char *s);
@@ -28,7 +28,7 @@ size_t	ft_matrix_len(char **matrix);
 
 // String manipulation functions
 char	*ft_strdup(const char *s1);
-char	*ft_strndup(const char *s1, size_t n);
+char	*ft_strndup(const char *s, size_t n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strjoin_free(char *s1, char const *s2, t_select option);

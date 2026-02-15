@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ischarset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 16:18:55 by tibras            #+#    #+#             */
-/*   Updated: 2026/02/15 17:15:14 by fardeau          ###   ########.fr       */
+/*   Updated: 2025/12/20 18:04:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "libft.h"
 
 int	ft_ischarset(int c, char *charset)
 {

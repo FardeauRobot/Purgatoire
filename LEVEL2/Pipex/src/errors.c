@@ -5,28 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 16:23:57 by fardeau           #+#    #+#             */
-/*   Updated: 2026/02/15 16:57:40 by fardeau          ###   ########.fr       */
+/*   Created: 2026/02/15 18:00:00 by fardeau           #+#    #+#             */
+/*   Updated: 2026/02/15 19:02:14 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
-int ft_error(int error, char *error_str)
+int	ft_error_print(char *str)
 {
-	if (error_str)
-		ft_putstr_fd(error_str, STDERR_FILENO);
-	return (error);
+	ft_putstr_fd(str, STDERR_FILENO);
+	return (1);
 }
 
-int	ft_exit(t_pipex *pipex, int error, char *error_str)
+void	ft_pipex_exit(t_pipex *pipex, int error, char *str)
 {
-	if (error_str)
-		ft_putstr_fd(error_str, STDERR_FILENO);
-	if (pipex->cmds[0].infd > 2)
-		close(pipex->cmds[0].infd);
-	if (pipex->cmds[1].outfd > 2)
-		close(pipex->cmds[1].outfd);
+	if (str)
+		ft_error_print(str);
+	ft_gc_free_all(&pipex->gc);
+	exit(error);
+}
+
+void	ft_child_exit(t_pipex *pipex, int error)
+{
 	ft_gc_free_all(&pipex->gc);
 	exit(error);
 }
