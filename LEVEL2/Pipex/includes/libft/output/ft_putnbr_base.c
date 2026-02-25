@@ -6,16 +6,16 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 22:12:45 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/26 13:16:59 by tibras           ###   ########.fr       */
+/*   Updated: 2026/02/20 10:39:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_output.h"
+#include "libft.h"
 
 void	ft_putnbr_base(int nbr, char *base)
 {
 	long	nb;
-	size_t len_base;
+	size_t	len_base;
 
 	len_base = ft_strlen(base);
 	if (len_base < 2)

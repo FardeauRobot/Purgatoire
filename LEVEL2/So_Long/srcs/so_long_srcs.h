@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/22 12:11:38 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/20 17:18:02 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/29 20:23:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef enum e_moves
 	ATTACK,
 	NB_MOVES
 }				t_moves;
-
 
 typedef enum e_orientation
 {
