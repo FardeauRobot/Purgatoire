@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 18:00:00 by fardeau           #+#    #+#             */
-/*   Updated: 2026/02/15 19:13:22 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/02/23 10:37:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-// RECUPERE LES PATHS DEPUIS L'ENV (meme logique que ft_get_path de check2.c)
 static char	**ft_path_get(t_pipex *pipex)
 {
 	char	*env;
@@ -27,7 +26,6 @@ static char	**ft_path_get(t_pipex *pipex)
 	return (paths);
 }
 
-// TESTE CHAQUE PATH (meme logique que ft_test_path de check2.c)
 static char	*ft_path_test(t_pipex *pipex, char **paths, char *cmd)
 {
 	char		*tmp;
@@ -46,7 +44,6 @@ static char	*ft_path_test(t_pipex *pipex, char **paths, char *cmd)
 	return (NULL);
 }
 
-// RESOUT LE CHEMIN COMPLET D'UNE COMMANDE (meme logique que ft_check_cmd)
 char	*ft_path_resolve(t_pipex *pipex, char *cmd)
 {
 	char		**paths;
@@ -57,6 +54,16 @@ char	*ft_path_resolve(t_pipex *pipex, char *cmd)
 		return (NULL);
 	if (access(cmd, X_OK) == 0)
 		return (cmd);
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK) == 0)
+		{
+			perror(cmd);
+			ft_child_exit(pipex, PERM_DENIED);
+		}
+		perror(cmd);
+		return (NULL);
+	}
 	paths = ft_path_get(pipex);
 	if (!paths)
 		return (NULL);

@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 18:00:00 by fardeau           #+#    #+#             */
-/*   Updated: 2026/02/15 19:08:58 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/02/23 12:15:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-// FERME UN FD SI VALIDE
-static void	ft_fd_close(int *fd)
-{
-	if (*fd > 2)
-	{
-		close(*fd);
-		*fd = -1;
-	}
-}
-
-// FERME TOUS LES FD OUVERTS
-static void	ft_fds_close_all(t_pipex *pipex)
-{
-	ft_fd_close(&pipex->pipefd[0]);
-	ft_fd_close(&pipex->pipefd[1]);
-	ft_fd_close(&pipex->cmd1.infd);
-	ft_fd_close(&pipex->cmd2.outfd);
-}
 
 // REDIRIGE LES FD DU CHILD EN FONCTION DE SA POSITION
 static void	ft_child_redirect(t_pipex *pipex, t_position pos)
@@ -51,7 +32,7 @@ static void	ft_child_redirect(t_pipex *pipex, t_position pos)
 	{
 		ft_fds_close_all(pipex);
 		ft_gc_free_all(&pipex->gc);
-		exit(1);
+		exit(STANDARD_ERROR);
 	}
 	dup2(in_fd, STDIN_FILENO);
 	dup2(out_fd, STDOUT_FILENO);
@@ -71,12 +52,30 @@ static void	ft_child_exec(t_pipex *pipex, t_position pos)
 	if (!cmd->path)
 	{
 		ft_gc_free_all(&pipex->gc);
-		exit(127);
+		exit(CMD_NOT_FOUND);
 	}
 	execve(cmd->path, cmd->args, pipex->envp);
 	perror(cmd->args[0]);
 	ft_gc_free_all(&pipex->gc);
-	exit(127);
+	if (errno == EACCES)
+		exit(PERM_DENIED);
+	exit(CMD_NOT_FOUND);
+}
+
+static void	ft_child_wait(int pid2, int *status)
+{
+	int		reaped;
+	int		tmp_status;
+	pid_t	wpid;
+
+	reaped = 0;
+	while (reaped < 2)
+	{
+		wpid = waitpid(-1, &tmp_status, 0);
+		if (wpid == pid2)
+			*status = tmp_status;
+		reaped++;
+	}
 }
 
 // LANCE LE PIPELINE : pipe + 2 forks (meme logique que ft_exec mais avec pipe)
@@ -92,16 +91,17 @@ int	ft_pipeline_exec(t_pipex *pipex)
 		return (1);
 	}
 	pid1 = fork();
+	if (pid1 == -1)
+		return (perror("fork"), 1);
 	if (pid1 == 0)
 		ft_child_exec(pipex, CHILD_FIRST);
 	pid2 = fork();
+	if (pid2 == -1)
+		return (perror("fork"), 1);
 	if (pid2 == 0)
 		ft_child_exec(pipex, CHILD_SECOND);
-	// PARENT : FERME TOUT ET ATTEND LES 2 ENFANTS
 	ft_fds_close_all(pipex);
-	waitpid(pid1, &status, 0);
-	waitpid(pid2, &status, 0);
-	// RETOURNE LE CODE DE SORTIE DU DERNIER CHILD (comme le shell)
+	ft_child_wait(pid2, &status);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
