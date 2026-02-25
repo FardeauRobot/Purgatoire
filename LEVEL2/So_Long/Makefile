@@ -13,9 +13,10 @@ SRCS_FILES		= main.c \
 
 SRCS				= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 
-UTILS_FILES		= image_utils.c \
-					errors.c \
-					memory_utils.c 
+UTILS_FILES			= image_utils.c \
+						errors.c \
+						memory_utils.c \
+						display_utils.c
 
 UTILS			= $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
 
@@ -52,10 +53,10 @@ $(OBJS_PATH):
 	@mkdir -p $(OBJS_PATH)
 
 $(LIBFT):
-	@make -C $(LIBFT_PATH)
+	@make -j -C $(LIBFT_PATH)
 
 $(MLX):
-	@make -C $(MLX_PATH) 
+	@make -j -C $(MLX_PATH) 
 
 clean:
 	$(RM) -r $(OBJS_PATH)

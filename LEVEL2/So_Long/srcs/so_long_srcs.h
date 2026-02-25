@@ -16,13 +16,14 @@
 # include "../so_long.h"
 
 // STANDARD DEFINES FOR READABILITY
-# define NB_FRAMES_ANIM_CHAR 1
-# define IMG_SIZE 64
+# define NB_FRAMES_ANIM_CHAR 4
+# define NB_FRAMES_ANIM_ASSETS 4
 
 typedef enum e_chars
 {
 	PINK,
-	HOWLET,
+	OWLET,
+	DUDE,
 	NB_CHARS
 }				t_chars;
 
@@ -32,12 +33,16 @@ typedef enum e_directions
 	DOWN,
 	LEFT,
 	RIGHT,
+	NEUTRAL,
 	NB_DIR
 }	t_directions;
 
 typedef enum e_moves
 {
 	IDLE,
+	WALK,
+	JUMP,
+	ATTACK,
 	NB_MOVES
 }				t_moves;
 
@@ -76,20 +81,29 @@ typedef struct s_game
 	void		*mlx;
 	void		*win;
 	char		**map;
+	int			display_height;
+	int			display_width;
 	size_t		map_height;
 	size_t		map_width;
-	int			active_char;
 	int			player_pos[2];
 	int			move;
 	int			move_count;
-	int			collectibles;
 	int			collected;
+	int			collectibles;
 	int			exit;
 	int			nb_player;
-	int			orient;
 	int			frame;
-	t_img		assets[S];
-	t_img		characters[NB_CHARS][NBNB_ASSET_MOVES]
+	int			frame_assets;
+	long		last_frame_ms;
+	long		last_frame_assets_ms;
+	long		last_move_ms;
+	int			orient;
+	int			active_char;
+	t_img		walls[NB_FRAMES_ANIM_ASSETS];
+	t_img		collectible[NB_FRAMES_ANIM_ASSETS];
+	t_img		exit_f[NB_FRAMES_ANIM_ASSETS];
+	t_img		assets[NB_ASSETS];
+	t_img		characters[NB_CHARS][NB_MOVES]
 	[NB_ORIENTATION][NB_FRAMES_ANIM_CHAR];
 }				t_game;
 

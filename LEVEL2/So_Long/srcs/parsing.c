@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 18:21:27 by tibras            #+#    #+#             */
-/*   Updated: 2026/01/13 18:15:11 by tibras           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:18:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_format_check(char *filepath)
 	return (SUCCESS);
 }
 
-int	ft_get_height(t_game *game, int fd)
+void	ft_get_height(t_game *game, int fd)
 {
 	char	*line;
 	size_t	line_len;
@@ -62,8 +62,6 @@ int	ft_get_height(t_game *game, int fd)
 		line = get_next_line(fd);
 	}
 	get_next_line(-1);
-	close (fd);
-	return (0);
 }
 
 int	ft_check_walls(t_game *game, char *row_map, size_t row)
@@ -133,22 +131,92 @@ void	ft_fill_map(t_game *game, char **map, int fd)
 
 void	ft_init_game(t_game *game)
 {
-	game->map = NULL;
+	game->display_height = 0;
+	game->display_width = 0;
 	game->collectibles = 0;
 	game->exit = 0;
 	game->nb_player = 0;
 	game->frame = 0;
-	game->orient = O_LEFT;
 	game->active_char = 0;
-	game->move = IDLE;
 	game->move_count = 0;
+	game->last_frame_ms = 0;
+	game->last_move_ms = 0;
+	game->frame_assets = 0;
+	game->last_frame_assets_ms = 0;
+	game->move = IDLE;
+	game->orient = O_LEFT;
+	game->map = NULL;
+}
+
+char **ft_create_map_ff(t_game *game)
+{
+	char **map_cpy;
+	size_t	i;
+
+	i = 0;
+	map_cpy = malloc(sizeof(char *) * game->map_height);
+	if (!map_cpy)
+		error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+	ft_bzero(map_cpy, game->map_height * sizeof(char *));
+	while (i < game->map_height)
+	{
+		map_cpy[i] = ft_strdup(game->map[i]);
+		if (!map_cpy[i])
+		{
+			ft_clear_map(map_cpy, i);
+			error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+		}
+		i++;
+	}
+	return (map_cpy);
+}
+
+int ft_flood_fill(char **map, int y, int x, int *gold_count)
+{
+	int	exit_found;
+
+	exit_found = 0;
+	if (map[y][x] == '1' || map[y][x] == 'F')
+		return (FAILURE);
+	if (map[y][x] == 'C')
+		(*gold_count)--;
+	if (map[y][x] == 'E')
+		exit_found = 1;
+	map[y][x] = 'F';
+	if (ft_flood_fill(map, y - 1, x, gold_count))
+		exit_found = 1;
+	if (ft_flood_fill(map, y + 1, x, gold_count))
+		exit_found = 1;
+	if (ft_flood_fill(map, y, x + 1, gold_count))
+		exit_found = 1;
+	if (ft_flood_fill(map, y, x - 1, gold_count))
+		exit_found = 1;
+	return (SUCCESS);
+}
+
+void	ft_check_exit(t_game *game)
+{
+	char **map_ff;
+	int		gold_count;
+
+	gold_count = game->collectibles;
+	map_ff = ft_create_map_ff(game);
+	if (!map_ff)
+		error_exit(game, "Error malloc flood-fill\n", ERRN_MALLOC);
+	if (!ft_flood_fill(map_ff, game->player_pos[1], game->player_pos[0], &gold_count) || gold_count != 0)
+	{
+		ft_clear_map(map_ff, game->map_height);
+		error_exit(game, ERRS_MAP_EXIT, ERRN_MAP_EXIT);
+	}
+	ft_clear_map(map_ff, game->map_height);
+	
 }
 
 void	ft_check_assets(t_game *game)
 {
 	if (game->collectibles < 1)
 		error_exit(game, ERRS_MAP_COLLECT, ERRN_MAP_COLLECT);
-	if (game->exit < 1)
+	if (game->exit != 1)
 		error_exit(game, ERRS_MAP_EXIT, ERRN_MAP_EXIT);
 	if (game->nb_player != 1)
 	{
@@ -169,11 +237,13 @@ void	ft_parsing(t_game *game, char *path_map)
 		error_exit (game, ERRS_OPEN, ERRN_OPEN);
 	ft_init_game(game);
 	ft_get_height(game, fd);
-	game->map = malloc (sizeof(char *) * game->map_height);
+	game->map = malloc(sizeof(char *) * game->map_height);
 	if (!game->map)
 		error_exit(game, ERRS_MALLOC_MAP, ERRN_MALLOC);
+	ft_bzero(game->map, game->map_height * sizeof(char *));
 	fd = open(path_map, O_RDONLY);
 	ft_fill_map(game, game->map, fd);
 	ft_check_assets(game);
-	ft_printf("ASSETS || COL = %d || EXIT = %d || PLAYER = %d\n", game->collectibles, game->exit, game->nb_player);
+	ft_check_exit(game);
 }
+
