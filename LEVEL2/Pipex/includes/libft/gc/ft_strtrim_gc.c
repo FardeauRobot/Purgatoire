@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim_gc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 10:39:08 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_min_int(int a, int b)
+char	*ft_strtrim_gc(char const *s1, char const *set, t_list **gc_head)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	char	*trim;
+
+	trim = ft_strtrim(s1, set);
+	if (!trim)
+		return (NULL);
+	if (ft_gc_add_node(gc_head, trim))
+	{
+		free(trim);
+		return (NULL);
+	}
+	return (trim);
 }

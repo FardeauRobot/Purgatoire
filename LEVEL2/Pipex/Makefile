@@ -1,58 +1,54 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tibras <tibras@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/12/16 16:02:09 by tibras            #+#    #+#              #
-#    Updated: 2026/01/28 15:54:58 by tibras           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = pipex
 
-######################### GENERAL RULES ######################### 
-#################################################################
-NAME		= pipex
+CC = cc -Wall -Wextra -Werror
 
-LIBFT_PATH	= includes/libft
-LIBFT		= $(LIBFT_PATH)/libft.a
+INCS = -I. -Iincludes -I$(LIBFT_DIR) -I$(LIBFT_DIR)/includes
 
-CC			= cc
-CFLAGS		= -fsanitize=address -Wall -Wextra -Werror -I$(LIBFT_PATH)
+RESET = \033[0m
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+CYAN = \033[0;36m
+BOLD = \033[1m
 
-######################### SRCS ######################### 
-########################################################
-SRCS_PATH	= srcs
-SRCS_FILES	= main.c \
-				parsing.c \
-				errors.c \
+SRCS = src/main.c \
+		src/parsing.c \
+		src/path.c \
+		src/exec.c \
+		src/utils.c \
+		src/parsing_utils.c
 
-SRCS		= $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
-OBJS		= $(SRCS:.c=.o)
+OBJ_DIR = objs
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+LIBFT_DIR = includes/libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-######################### MAKE #########################
-########################################################
 all: $(NAME)
 
-test: $(NAME)
-	./pipex
-
 $(LIBFT):
-	make -C $(LIBFT_PATH)
+	make -C $(LIBFT_DIR)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBFT) $(INCS) -o $(NAME)
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "  $(BOLD)$(GREEN)PIPEX - BUILD DONE (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(INCS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
-	make -C $(LIBFT_PATH) clean
+	rm -rf $(OBJ_DIR)
+	make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(LIBFT_PATH) fclean
+	make fclean -C $(LIBFT_DIR)
+	@printf "\n$(CYAN)=====================================\n$(RESET)"
+	@printf "  $(BOLD)$(RED)PIPEX - DELETE DONE (all targets)$(RESET)\n"
+	@printf "$(CYAN)=====================================$(RESET)\n\n"
 
 re: fclean all
 

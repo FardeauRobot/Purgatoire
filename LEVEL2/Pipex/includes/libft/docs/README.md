@@ -6,13 +6,16 @@ A compact C utility library aligned with the 42 curriculum. `libft` exposes safe
 
 The source files are organized into the following subdirectories:
 
-- **Char/**: Character checks and case conversion (`ft_isalnum`, `ft_toupper`, etc.)
-- **Conversion/**: String/Integer conversions (`ft_atoi`, `ft_itoa`, etc.)
-- **GNL/**: Get Next Line (`get_next_line`)
-- **List/**: Linked list manipulation (`ft_lstnew`, `ft_lstadd_back`, etc.)
-- **Memory/**: Memory manipulation (`ft_memset`, `ft_calloc`, etc.)
-- **Output/**: Printing and file descriptor output (`ft_putstr_fd`, `ft_printf`, etc.)
-- **Strings/**: String manipulation (`ft_strlen`, `ft_split`, etc.)
+- **includes/**: All header files.
+- **char/**: Character checks and case conversion (`ft_isalnum`, `ft_toupper`, etc.)
+- **conversion/**: String/Integer conversions (`ft_atoi`, `ft_itoa`, etc.)
+- **gc/**: Garbage Collector and GC-managed functions (`ft_gc_malloc`, `ft_calloc_gc`, etc.)
+- **gnl/**: Get Next Line (`get_next_line`)
+- **list/**: Linked list manipulation (`ft_lstnew`, `ft_lstadd_back`, etc.)
+- **memory/**: Memory manipulation (`ft_memset`, `ft_calloc`, etc.)
+- **output/**: Printing and file descriptor output (`ft_putstr_fd`, `ft_printf`, etc.)
+- **sorting/**: Sorting algorithms.
+- **strings/**: String manipulation (`ft_strlen`, `ft_split`, etc.)
 
 Each code block below uses a fixed-width layout so every line has the same number of characters, making the reference easy to scan in raw form.
 
