@@ -17,8 +17,6 @@ BOLD		= \033[1m
 # ============== DIRECTORIES ===============================
 SRCS_PATH	= src
 INC_PATH	= includes
-LIBFT_DIR	= libft
-LIBFT		= $(LIBFT_DIR)/libft.a
 
 # ============== SUB-DIRECTORIES ===========================
 CORE_PATH		= $(SRCS_PATH)/core
@@ -36,7 +34,7 @@ CORE_FILES		=
 PARSING_FILES	= parsing.c
 
 # Utility module
-UTILS_FILES		= error.c 
+UTILS_FILES		= error.c output.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -50,8 +48,7 @@ OBJS	= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 # ============== COMPILATION ===============================
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g3
-INCS	= -I. -I$(INC_PATH) -I$(LIBFT_DIR) -I$(LIBFT_DIR)/includes
-LFLAGS	= -L$(LIBFT_DIR) -lft
+INCS	= -I. -I$(INC_PATH)
 
 # ============================================================
 #                        RULES
@@ -59,11 +56,9 @@ LFLAGS	= -L$(LIBFT_DIR) -lft
 
 all: $(NAME)
 
-$(LIBFT):
-	@make -C $(LIBFT_DIR) --no-print-directory
 
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(INCS) $(LFLAGS) -o $(NAME)
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(INCS) $(LFLAGS) -o $(NAME)
 	@printf "\n$(WHITE)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)$(GREEN)BUILD COMPLETE$(RESET)\n"
 	@printf "$(WHITE)=====================================$(RESET)\n\n"
@@ -79,7 +74,6 @@ $(OBJ_DIR)/%.o: %.c
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@make clean -C $(LIBFT_DIR) --no-print-directory
 	@printf "\n$(WHITE)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)$(YELLOW)CLEAN COMPLETE$(RESET)\n"
 	@printf "$(WHITE)=====================================$(RESET)\n\n"
@@ -87,7 +81,6 @@ clean:
 fclean:
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR) --no-print-directory
 	@printf "\n$(WHITE)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)$(YELLOW)FCLEAN COMPLETE$(RESET)\n"
 	@printf "$(WHITE)=====================================$(RESET)\n\n"
@@ -113,10 +106,6 @@ thread: fclean
 # ============== NORMINETTE ================================
 
 checknorm:
-	@printf "\n$(CYAN)=====================================\n$(RESET)"
-	@printf "	   $(BOLD)CHECK NORM LIBFT$(RESET)\n"
-	@printf "$(CYAN)=====================================$(RESET)\n\n"
-	@norminette $(LIBFT_DIR)
 	@printf "\n$(CYAN)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)CHECK NORM INCLUDES$(RESET)\n"
 	@printf "$(CYAN)=====================================$(RESET)\n\n"

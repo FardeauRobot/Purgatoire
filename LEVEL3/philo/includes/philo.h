@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 14:43:01 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 22:21:07 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@
 /* ============== STANDARD LIBRARIES ======================= */
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <errno.h>
-# include <string.h>
-
-/* ============== PROJECT LIBRARIES ======================== */
-# include "libft.h"
+# include <limits.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 /* ============== PROJECT HEADERS ========================== */
 # include "defines.h"
 # include "parsing.h"
+# include "utils.h"
 # include "structures.h"
 # include "errors.h"
 

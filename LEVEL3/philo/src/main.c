@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:03:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 14:40:28 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 21:53:51 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	main(int argc, char **argv)
 	t_philo	philo;
 
 	if (ft_parsing(&philo, argc, argv) != SUCCESS)
-		return (ERR_ARGS);
-	ft_putstr_fd("Hello from project template!\n", 1);
+		return (ERRN_PARSING);
 	return (EXIT_SUCCESS);
 }

@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 12:52:33 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 13:41:18 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/02 19:00:52 by fardeau           #+#    #+#             */
+/*   Updated: 2026/03/02 19:03:47 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int	ft_isdigit(int c)
-{
-	return (c >= '0' && c <= '9');
-}
+// UTILS/OUTPUT.C
+void	ft_putstr_fd(char *str, int fd);
+void	ft_putendl_fd(char *str, int fd);
+
+
+#endif

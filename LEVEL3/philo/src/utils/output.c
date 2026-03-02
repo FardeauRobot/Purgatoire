@@ -1,18 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 12:36:31 by tibras            #+#    #+#             */
-/*   Updated: 2025/11/18 13:41:05 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
+/*   Updated: 2026/03/02 19:05:49 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-int	ft_isalpha(int c)
+void	ft_putstr_fd(char *str, int fd)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	if (i > 0)
+		write(fd, str, i);
+}
+
+void	ft_putendl_fd(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
+	write(fd, "\n", 1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 14:35:10 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 22:14:56 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,31 @@
 
 typedef enum e_state
 {
-	ONE_FORK,
+	FORK_L,
+	FORK_R,
 	EATING,
 	THINKING,
-	SLEEPING
+	SLEEPING,
+	DEAD
 }	t_state;
 
 typedef struct s_guest
 {
+	int		id;
 	int		nb_meals;
 	int		time_last_meal;
+	t_state	status;
 }	t_guest;
 
 typedef struct s_philo
 {
-	// int		argc;
-	// char	**argv;
-	t_guest	*guests;
+	t_guest	**guests;
 	int		nb_philo;
 	int		nb_forks;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		need_meals;
-	int		exit_code;
+	time_t	time_to_die;
+	time_t	time_to_eat;
+	time_t	time_to_sleep;
+	int		needed_meals;
 }	t_philo;
 
 /*

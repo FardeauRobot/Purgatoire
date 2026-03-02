@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 14:42:51 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 22:06:03 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 typedef enum e_err
 {
+	SUCCESS,
+	STANDARD_ERROR,
 	ERR_NONE,
 	ERR_MALLOC,
-	ERR_ARGS,
+	ERRN_PARSING,
 	ERR_OPEN,
 	ERR_UNKNOWN
 }	t_err;
@@ -28,16 +30,16 @@ typedef enum e_err
 ** Usage:  print_error("open", ERR_MSG_PERM);
 */
 # define ERR_MSG_MALLOC		"memory allocation failed"
-# define ERR_MSG_OPEN		"cannot open file"
-# define ERR_MSG_PERM		"permission denied"
 # define EXPECTED_ARGS		"Expects : NB_PHILO DYING_TIME EATING_TIM SLEEP_TIME (NB_OF_MEALS)"
 # define ERR_MSG_ARGS		"Wrong number of arguments."
-# define ERR_MSG_FD			"bad file descriptor"
+# define ERR_PARSING		"Error parsing : "
+# define INVALID_PARAM		"Argument is not a number : "
+# define OVERINT			"Argument doesn't fit in an it"
 
 /* ============== ERROR FUNCTIONS ========================== */
 /* src/utils/error.c */
 int		ft_error(char *context, char *detail, int error);
-void	exit_error(t_philo *philo, char *context, char *detail, int error);
+void	ft_exit(t_philo *philo, char *context, char *detail, int error);
 int		check_args(int argc, int expected, char *usage);
 
 /* ============== MEMORY HELPERS =========================== */
