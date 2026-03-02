@@ -5,17 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 08:26:12 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/02 13:05:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_DEFINES_H
-# define PHILO_DEFINES_H
+#ifndef DEFINES_H
+# define DEFINES_H
 
-/* ============== RETURN CODES ============================= */
-# define SUCCESS 0
-# define FAILURE 1
 
 /* ============== LIMITS =================================== */
 /*
@@ -26,14 +23,10 @@
 
 /* ============== ENUMS ==================================== */
 
-typedef enum e_err
-{
-	ERR_NONE,
-	ERR_MALLOC,
-	ERR_OPEN,
-	ERR_ARGS,
-	ERR_UNKNOWN
-}	t_err;
+/* ============== MACROS ==================================== */
+/* ============== RETURN CODES ============================= */
+# define SUCCESS 0
+# define FAILURE 1
 
 /*
 ** Add project-specific enums here, e.g.:

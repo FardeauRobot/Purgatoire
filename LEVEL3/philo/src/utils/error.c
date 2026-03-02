@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by author            #+#    #+#             */
-/*   Updated: 2026/03/02 08:35:38 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/02 13:01:49 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/02 13:06:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "philo.h"
 
@@ -34,6 +35,7 @@ void	print_error(char *context, char *detail)
 */
 void	exit_error(t_data *data, char *context, char *detail)
 {
+	(void)data;
 	print_error(context, detail);
 	// ADD FREE
 

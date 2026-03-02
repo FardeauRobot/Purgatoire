@@ -5,16 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 08:27:21 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/02 13:24:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_STRUCTURES_H
-# define PHILO_STRUCTURES_H
-
-# include "defines.h"
-# include "libft.h"
+#ifndef STRUCTURES_H
+# define STRUCTURES_H
 
 /* ============== STRUCTURES =============================== */
 
@@ -23,13 +20,36 @@
 ** Centralises all runtime data so it can be passed to functions cleanly.
 ** Add your fields here as the project grows.
 */
-typedef struct s_data
+
+typedef enum e_state
 {
-	int		argc;
-	char	**argv;
-	char	**envp;
+	ONE_FORK,
+	EATING,
+	THINKING,
+	SLEEPING
+}	t_state;
+
+typedef struct s_guest
+{
+	int		nb_meals;
+	
+	int		time_last_meal;
+	int		
+}	t_guest;
+
+typedef struct s_philo
+{
+	// int		argc;
+	// char	**argv;
+	t_guest	*guests;
+	int		nb_philo;
+	int		nb_forks;
+	int		time_to_die;
+	int		time_to_eat;
+	int		time_to_sleep;
+	int		need_meals;
 	int		exit_code;
-}	t_data;
+}	t_philo;
 
 /*
 ** Add project-specific structures here, e.g.:

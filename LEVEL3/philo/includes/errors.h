@@ -6,12 +6,12 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 08:34:34 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 13:04:42 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_ERRORS_H
-# define PHILO_ERRORS_H
+#ifndef ERRORS_H
+# define ERRORS_H
 
 typedef enum e_err
 {
