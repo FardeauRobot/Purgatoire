@@ -18,6 +18,3 @@ my_project
 # Valgrind
 vgcore.*
 readline.supp
-
-# Debug
-core
