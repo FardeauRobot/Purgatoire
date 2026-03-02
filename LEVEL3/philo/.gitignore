@@ -1,0 +1,19 @@
+# Build artifacts
+objs/
+*.o
+*.d
+*.a
+
+# Binary
+philo
+
+# Editor / OS
+.vscode/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Valgrind
+vgcore.*
+readline.supp
