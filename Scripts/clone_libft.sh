@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# clone_libft.sh - Clone libft_official into includes/libft and detach it from git
+# Usage: clone_libft.sh
+# Clones https://github.com/FardeauRobot/libft_official.git into ./includes/libft
+# then removes the .git directory so the folder is a plain, unlinked copy.
+
+set -euo pipefail
+
+REPO_URL="https://github.com/FardeauRobot/libft_official.git"
+DEST_DIR="$(pwd)/includes"
+LIBFT_DIR="$DEST_DIR/libft"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+info(){ echo -e "${BLUE}$1${NC}"; }
+warn(){ echo -e "${YELLOW}$1${NC}"; }
+err(){ echo -e "${RED}$1${NC}"; }
+ok(){ echo -e "${GREEN}$1${NC}"; }
+
+# Handle existing libft directory
+if [ -d "$LIBFT_DIR" ]; then
+  warn "libft already exists at $LIBFT_DIR"
+  read -rp "Remove and re-clone? [y/N] " answer
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    info "Removing existing libft..."
+    rm -rf "$LIBFT_DIR"
+  else
+    info "Aborting."
+    exit 0
+  fi
+fi
+
+# Create includes directory if needed
+if [ ! -d "$DEST_DIR" ]; then
+  info "Creating includes directory at $DEST_DIR"
+  mkdir -p "$DEST_DIR"
+fi
+
+# Clone the repository
+info "Cloning $REPO_URL into $LIBFT_DIR ..."
+if ! git clone "$REPO_URL" "$LIBFT_DIR"; then
+  err "git clone failed. Check your connection or the repository URL."
+  exit 1
+fi
+
+# Detach from git — make it a plain folder
+info "Removing .git directory to detach from git..."
+rm -rf "$LIBFT_DIR/.git"
+
+ok "Done! libft is now available at $LIBFT_DIR (not linked to git)."
+ls -la "$LIBFT_DIR"
