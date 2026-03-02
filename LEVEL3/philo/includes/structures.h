@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 13:24:24 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 14:35:10 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ typedef enum e_state
 typedef struct s_guest
 {
 	int		nb_meals;
-	
 	int		time_last_meal;
-	int		
 }	t_guest;
 
 typedef struct s_philo

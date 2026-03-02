@@ -33,7 +33,7 @@ SKELETON_FILES	= main.c
 CORE_FILES		=
 
 # Parsing module
-PARSING_FILES	=
+PARSING_FILES	= parsing.c
 
 # Utility module
 UTILS_FILES		= error.c 

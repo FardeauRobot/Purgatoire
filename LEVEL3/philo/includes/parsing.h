@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/02 13:03:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 14:40:28 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/02 14:32:18 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/02 14:43:21 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-int	main(int argc, char **argv)
-{
-	t_philo	philo;
+typedef	struct s_philo t_philo;
 
-	if (ft_parsing(&philo, argc, argv) != SUCCESS)
-		return (ERR_ARGS);
-	ft_putstr_fd("Hello from project template!\n", 1);
-	return (EXIT_SUCCESS);
-}
+// SRC/PARSING.C
+int	ft_parsing(t_philo *philo, int argc, char **argv);
+
+#endif

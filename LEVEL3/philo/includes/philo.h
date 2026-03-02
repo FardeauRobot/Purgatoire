@@ -6,10 +6,9 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 13:04:26 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 14:43:01 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PHILO_H
 # define PHILO_H
@@ -27,6 +26,7 @@
 
 /* ============== PROJECT HEADERS ========================== */
 # include "defines.h"
+# include "parsing.h"
 # include "structures.h"
 # include "errors.h"
 
