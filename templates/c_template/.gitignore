@@ -1,0 +1,23 @@
+# Build artifacts
+objs/
+*.o
+*.d
+*.a
+
+# Binary
+# TODO: replace with your actual binary name
+my_project
+
+# Editor / OS
+.vscode/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Valgrind
+vgcore.*
+readline.supp
+
+# Debug
+core
