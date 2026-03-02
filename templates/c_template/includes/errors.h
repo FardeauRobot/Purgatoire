@@ -6,14 +6,21 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 08:26:12 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/02 08:34:34 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-# include "structures.h"
+typedef enum e_err
+{
+	ERR_NONE,
+	ERR_MALLOC,
+	ERR_OPEN,
+	ERR_ARGS,
+	ERR_UNKNOWN
+}	t_err;
 
 /* ============== ERROR MESSAGES ============================ */
 /*
