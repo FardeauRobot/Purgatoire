@@ -6,12 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 14:31:25 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 09:37:25 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 14:46:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// CHECK NUMS
 int ft_isnum(char *str)
 {
 	int i;
@@ -25,6 +26,8 @@ int ft_isnum(char *str)
 	return (SUCCESS);
 }
 
+
+// INIT NUMBERS
 static int	ft_atoll_safe(char *str, long long *nb)
 {
 	int i;
@@ -69,11 +72,12 @@ static void	ft_philo_fill(t_philo *philo, long long tmp, int i)
 	}
 }
 
-static void	ft_philo_init(t_philo *philo, char **argv)
+int	ft_parsing(t_philo *philo, int argc, char **argv)
 {
-	int 	i;
-	long long	tmp;
-
+	int i;
+	long long tmp;
+	if (argc < 5 || argc > 6)
+		return (ft_error(ERR_MSG_ARGS, EXPECTED_ARGS, ERRN_PARSING));
 	i = 0;
 	while (argv[++i])
 	{
@@ -81,12 +85,5 @@ static void	ft_philo_init(t_philo *philo, char **argv)
 		ft_atoll_safe(argv[i], &tmp);
 		ft_philo_fill(philo, tmp, i);
 	}
-}
-
-int	ft_parsing(t_philo *philo, int argc, char **argv)
-{
-	if (argc < 5 || argc > 6)
-		return (ft_error(ERR_MSG_ARGS, EXPECTED_ARGS, ERRN_PARSING));
-	ft_philo_init(philo, argv);
 	return (SUCCESS);
 }

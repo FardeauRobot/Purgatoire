@@ -28,13 +28,13 @@ UTILS_PATH		= $(SRCS_PATH)/utils
 SKELETON_FILES	= main.c
 
 # Core module
-CORE_FILES		=
+CORE_FILES		= start.c
 
 # Parsing module
 PARSING_FILES	= parsing.c
 
 # Utility module
-UTILS_FILES		= error.c output.c
+UTILS_FILES		= error.c output.c reaper.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -88,6 +88,12 @@ fclean:
 re: fclean all
 
 # ============== DEBUG & ANALYSIS ==========================
+
+test: $(NAME)
+	./philo	5 1000 200 400
+
+testopt: $(NAME)
+	./philo	5 1000 200 400 10
 
 leaks: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \

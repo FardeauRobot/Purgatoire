@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 09:32:49 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 15:06:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef enum e_err
 	ERR_MALLOC,
 	ERRN_PARSING,
 	ERR_OPEN,
+	ERR_THREADS,
 	ERR_UNKNOWN
 }	t_err;
 
@@ -29,16 +30,20 @@ typedef enum e_err
 ** Centralise your error strings here for consistency.
 ** Usage:  print_error("open", ERR_MSG_PERM);
 */
-# define ERR_MSG_MALLOC		"memory allocation failed"
 # define EXPECTED_ARGS		"Expects : NB_PHILO DYING_TIME EATING_TIM SLEEP_TIME (NB_OF_MEALS)"
+# define INVALID_PARAM		"Argument is not a valid number : "
 # define ERR_MSG_ARGS		"Wrong number of arguments. "
 # define ERR_PARSING		"Error parsing : "
-# define ERR_GUESTS			"Not enough room at the table."
 # define ERR_MAX_CAP		"Expects at most 250 guests"
+# define ERR_MAX_MEALS		"Can eat at most 10 000 meals, seems enough"
+# define ERR_GUESTS			"Not enough room at the table."
 # define ERR_TIME			"Duration exceeds the limit of the program : "
 # define ERR_MEALS			"Philosophers can't eat that much ... "
-# define ERR_MAX_MEALS		"Can eat at most 10 000 meals, seems enough"
-# define INVALID_PARAM		"Argument is not a valid number : "
+
+# define ERR_THREAD			"Error threads : "
+# define ERR_THREAD_INIT	"Initialization didn't work."
+
+# define ERR_MSG_MALLOC		"memory allocation failed"
 
 /* ============== ERROR FUNCTIONS ========================== */
 /* src/utils/error.c */

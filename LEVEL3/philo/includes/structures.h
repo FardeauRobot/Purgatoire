@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 22:14:56 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/03 14:56:24 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ typedef enum e_state
 
 typedef struct s_guest
 {
-	int		id;
-	int		nb_meals;
-	int		time_last_meal;
-	t_state	status;
+	int			id;
+	pthread_t	thread;
+	int		    nb_meals;
+	int		    time_last_meal;
+	t_state		status;
 }	t_guest;
 
 typedef struct s_philo
 {
-	t_guest	**guests;
+	t_guest	guests[250];
 	int		nb_philo;
 	int		nb_forks;
 	time_t	time_to_die;

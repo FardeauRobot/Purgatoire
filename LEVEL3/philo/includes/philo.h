@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 09:27:02 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 14:41:04 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 /* ============== PROJECT HEADERS ========================== */
 # include "defines.h"
-# include "parsing.h"
 # include "utils.h"
 # include "structures.h"
 # include "errors.h"

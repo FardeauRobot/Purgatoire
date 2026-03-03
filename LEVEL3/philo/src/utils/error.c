@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:49 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 09:32:22 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 15:10:11 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,9 @@ void	ft_bzero(void *ptr, int size)
 		str[i] = 0;
 }
 
-void	ft_free_philo (t_philo *philo)
+void	ft_free_philo(t_philo *philo)
 {
-	int i;
-	
-	i = -1;
-	while (++i < philo->nb_philo)
-	{
-		if (philo->guests[i])
-			free(philo->guests[i]);
-	}
+	ft_bzero(philo, sizeof(t_philo));
 }
 
 int	ft_error(char *context, char *detail, int error)

@@ -1,21 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   reaper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/02 14:32:18 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 09:12:29 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/03 15:20:22 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/03 15:20:29 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
-
-typedef	struct s_philo t_philo;
-
-// SRC/PARSING.C
-int	ft_parsing(t_philo *philo, int argc, char **argv);
-
-#endif
+#include "philo.h"
