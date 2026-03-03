@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 14:41:04 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 19:44:04 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # include <sys/time.h>
 
 /* ============== PROJECT HEADERS ========================== */
+# include "structures.h"
 # include "defines.h"
 # include "utils.h"
-# include "structures.h"
 # include "errors.h"
 
 /* ============== CORE ===================================== */

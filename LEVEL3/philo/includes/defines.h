@@ -3,17 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 15:13:09 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 19:50:30 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# include "structures.h"
+/* ============== COLORS =================================== */
+
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE "\033[0;34m"
+# define MAGENTA "\033[0;35m"
+# define CYAN "\033[0;36m"
+# define WHITE "\033[0;37m"
+# define RESET "\033[0m"
 
 /* ============== LIMITS =================================== */
 /*
@@ -22,18 +31,9 @@
 ** # define MAX_ARGS 256
 */
 
-/* ============== ENUMS ==================================== */
-
-/* ============== MACROS ==================================== */
-
-# define MAX_TIME 100000
+# define MAX_TIME 1000000
 # define MAX_GUESTS 250
 # define MAX_MEALS 10000
- 
-/*
-** Add project-specific enums here, e.g.:
-** typedef enum e_token_type { ... } t_token_type;
-*/
 
 // PARSING.C
 int	ft_parsing(t_philo *philo, int argc, char **argv);
@@ -41,4 +41,6 @@ int	ft_parsing(t_philo *philo, int argc, char **argv);
 // START.C
 void	ft_start(t_philo *philo);
 
+// OUTPUT.C
+void	ft_action_print(int t_id, t_state state);
 #endif

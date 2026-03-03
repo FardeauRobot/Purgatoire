@@ -3,23 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 14:56:24 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 19:44:01 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-/* ============== STRUCTURES =============================== */
+# include <pthread.h>
+# include <time.h>
 
-/*
-** t_data - main project context
-** Centralises all runtime data so it can be passed to functions cleanly.
-** Add your fields here as the project grows.
-*/
+/* ============== ENUMS ==================================== */
 
 typedef enum e_state
 {
@@ -29,11 +26,26 @@ typedef enum e_state
 	THINKING,
 	SLEEPING,
 	DEAD
-}	t_state;
+}			t_state;
+
+typedef enum e_scales
+{
+	SECONDS,
+	MILLISECONDS,
+	MICROSECONDS,
+}			t_scales;
+
+/* ============== STRUCTURES =============================== */
+
+/*
+** t_data - main project context
+** Centralises all runtime data so it can be passed to functions cleanly.
+** Add your fields here as the project grows.
+*/
 
 typedef struct s_guest
 {
-	int			id;
+	int			t_id;
 	pthread_t	thread;
 	int		    nb_meals;
 	int		    time_last_meal;

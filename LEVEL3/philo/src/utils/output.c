@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/03 09:27:06 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/03 19:49:09 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 
 void	ft_putstr_fd(char *str, int fd)
 {
@@ -27,6 +28,20 @@ void	ft_putendl_fd(char *str, int fd)
 {
 	ft_putstr_fd(str, fd);
 	write(fd, "\n", 1);
+}
+
+void	ft_action_print(int t_id, t_state state)
+{
+	if (state == EATING)
+		printf(GREEN" %d is eating\n"RESET, t_id);
+	if (state == SLEEPING)
+		printf(CYAN" %d is sleeping\n"RESET, t_id);
+	if (state == FORK_L || state == FORK_R)
+		printf(YELLOW" %d has taken a fork\n"RESET, t_id);
+	if (state == THINKING)
+		printf(BLUE" %d is thinking\n"RESET, t_id);
+	if (state == DEAD)
+		printf(RED" %d died\n"RESET, t_id);
 }
 
 // TODO : A DELETE
