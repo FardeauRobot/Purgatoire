@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:03:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 21:53:51 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/03 09:37:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	main(int argc, char **argv)
 {
 	t_philo	philo;
 
+	ft_bzero(&philo, sizeof(t_philo));
 	if (ft_parsing(&philo, argc, argv) != SUCCESS)
 		return (ERRN_PARSING);
+	ft_print_main_philo(&philo);
 	return (EXIT_SUCCESS);
 }

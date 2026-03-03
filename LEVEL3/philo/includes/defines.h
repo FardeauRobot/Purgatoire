@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 21:52:47 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/03 09:09:10 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 
 /* ============== MACROS ==================================== */
 
+# define MAX_TIME 100000
+# define MAX_GUESTS 250
+# define MAX_MEALS 10000
+ 
 /*
 ** Add project-specific enums here, e.g.:
 ** typedef enum e_token_type { ... } t_token_type;

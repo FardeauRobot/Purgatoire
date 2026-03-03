@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 22:06:03 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/03 09:32:49 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,14 @@ typedef enum e_err
 */
 # define ERR_MSG_MALLOC		"memory allocation failed"
 # define EXPECTED_ARGS		"Expects : NB_PHILO DYING_TIME EATING_TIM SLEEP_TIME (NB_OF_MEALS)"
-# define ERR_MSG_ARGS		"Wrong number of arguments."
+# define ERR_MSG_ARGS		"Wrong number of arguments. "
 # define ERR_PARSING		"Error parsing : "
-# define INVALID_PARAM		"Argument is not a number : "
-# define OVERINT			"Argument doesn't fit in an it"
+# define ERR_GUESTS			"Not enough room at the table."
+# define ERR_MAX_CAP		"Expects at most 250 guests"
+# define ERR_TIME			"Duration exceeds the limit of the program : "
+# define ERR_MEALS			"Philosophers can't eat that much ... "
+# define ERR_MAX_MEALS		"Can eat at most 10 000 meals, seems enough"
+# define INVALID_PARAM		"Argument is not a valid number : "
 
 /* ============== ERROR FUNCTIONS ========================== */
 /* src/utils/error.c */

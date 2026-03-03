@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 22:21:07 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/03 09:27:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+// TODO : A DELETE
+# include <stdio.h>
 
 /* ============== STANDARD LIBRARIES ======================= */
 # include <stdlib.h>
