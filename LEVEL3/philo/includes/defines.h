@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 09:35:05 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:07:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	ft_parsing(t_philo *philo, int argc, char **argv);
 void	ft_action_print(t_guest *guest);
 
 // ACTIONS.C
+void	ft_status_change(t_guest *guest, t_state status);
 int	ft_eat(t_guest *guest);
 int	ft_sleep(t_guest *guest);
 int	ft_think(t_guest *guest);
@@ -96,4 +97,8 @@ void	ft_exec_finished(t_philo *philo);
 
 // ERROR.C
 void	ft_philo_clean(t_philo *philo);
+
+// REAPER.C
+void	*ft_reaper(void *ptr);
+
 #endif

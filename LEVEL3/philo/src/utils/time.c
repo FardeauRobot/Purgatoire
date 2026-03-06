@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:47:51 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 09:19:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:07:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ void	ft_precise_sleep(t_guest *guest)
 	start = ft_get_time(MILLISECONDS);
 	while (!ft_meal(guest->data))
 	{
-		if ((ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_sleep)
+		if (guest->status == SLEEPING && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_sleep)
 			break;
-		// usleep(500);
+		if (guest->status == EATING && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_eat)
+			break;
 	}
 }

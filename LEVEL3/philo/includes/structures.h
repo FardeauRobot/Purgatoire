@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 09:21:16 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 12:52:19 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@ typedef struct s_philo	t_philo;
 
 typedef struct s_guest
 {
-	int			t_id;
-	pthread_t	thread;
-	int		    nb_meals;
-	int		    time_last_meal;
-	t_state		status;
-	pthread_mutex_t *forks[2];
-	pthread_mutex_t *print;
-	t_philo		*data;
+	pthread_t		thread;
+	int				t_id;
+	int				nb_meals;
+	long long		time_last_meal;
+	t_state			status;
+	pthread_mutex_t m_status;
+	pthread_mutex_t	m_last_meal;
+	pthread_mutex_t	*forks[2];
+	pthread_mutex_t	*print;
+	t_philo			*data;
 }	t_guest;
 
 typedef struct s_philo

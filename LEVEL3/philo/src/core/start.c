@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:15 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 10:34:06 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:07:30 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void	ft_guests_arr(t_philo *philo)
 		philo->guests[i].t_id = i + 1;
 		philo->guests[i].data = philo;
 		philo->guests[i].status = STANDARD;
+		philo->guests[i].time_last_meal = philo->start_time;
+		pthread_mutex_init(&philo->guests[i].m_last_meal, NULL);
+		pthread_mutex_init(&philo->guests[i].m_status, NULL);
 		philo->guests[i].forks[LEFT] = &philo->m_fork[i];
 		if (i == 0)
 			philo->guests[i].forks[RIGHT] = &philo->m_fork[philo->nb_philo - 1];
@@ -74,10 +77,14 @@ void	ft_guests_arr(t_philo *philo)
 
 void	ft_start(t_philo *philo)
 {
-	int	i;
+	int		i;
+	pthread_t	reaper;
 
 	ft_guests_arr(philo);
+	if (pthread_create(&reaper, NULL, ft_reaper, philo))
+		ft_exit(philo, ERR_THREAD, ERR_INIT, ERRN_THREADS);
 	i = -1;
 	while (++i < philo->nb_philo)
 		pthread_join(philo->guests[i].thread, NULL);
+	pthread_join(reaper, NULL);
 }

@@ -6,12 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/06 09:16:15 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 12:06:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 void	ft_putstr_fd(char *str, int fd)
 {

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 14:31:25 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 09:24:16 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 13:05:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static int ft_mutex_init(t_philo *philo)
 {
 	if (pthread_mutex_init(&philo->m_print, NULL) ||
 			pthread_mutex_init(&philo->m_is_dead, NULL) ||
-			pthread_mutex_init(&philo->m_lock_eat, NULL))
+			pthread_mutex_init(&philo->m_lock_eat, NULL) ||
+			pthread_mutex_init(&philo->m_full, NULL))
 		return (STANDARD_ERROR);
-	ft_forks_init(philo);
 	return (SUCCESS);
 }
 
@@ -46,7 +46,6 @@ static void	ft_philo_fill(t_philo *philo, long long tmp, int i)
 			ft_exit(NULL, ERR_GUESTS, ERR_MAX_CAP, ERRN_PARSING);
 		philo->nb_philo = (int)tmp;
 		philo->nb_forks = (int)tmp;
-		ft_forks_init(philo);
 	}
 	if (i == 2)
 		philo->time_to_die = (time_t)tmp;
@@ -79,6 +78,7 @@ int	ft_parsing(t_philo *philo, int argc, char **argv)
 		ft_atoll_safe(argv[i], &tmp);
 		ft_philo_fill(philo, tmp, i);
 	}
+	ft_forks_init(philo);
 	philo->start_time = ft_get_time(MILLISECONDS);
 	return (SUCCESS);
 }

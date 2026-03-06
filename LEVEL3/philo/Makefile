@@ -34,7 +34,7 @@ CORE_FILES		= start.c actions.c
 PARSING_FILES	= parsing.c
 
 # Utility module
-UTILS_FILES		= error.c output.c parsing_utils.c time.c
+UTILS_FILES		= error.c output.c parsing_utils.c time.c reaper.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -89,7 +89,7 @@ re: fclean all
 
 # ============== DEBUG & ANALYSIS ==========================
 # Usage: make test ARGS="5 800 200 200"
-ARGS		?= 5 800 200 200
+ARGS		?= 5 800 200 200 10
 
 test: $(NAME)
 	./$(NAME) $(ARGS)
@@ -133,6 +133,46 @@ sanitize: fclean
 thread: fclean
 	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=thread" all
 	env TSAN_OPTIONS="halt_on_error=1" ./$(NAME) $(ARGS)
+
+test1: all
+	@echo "\n--- Test 1: 1 Philo (Should die ~800ms) ---"
+	$(EXEC) 1 800 200 200
+
+test2: all
+	@echo "\n--- Test 2: 5 Philos (Should survive, CTRL+C to stop) ---"
+	$(EXEC) 5 800 200 200
+
+test3: all
+	@echo "\n--- Test 3: 4 Philos tight timing (Should survive, CTRL+C to stop) ---"
+	$(EXEC) 4 410 200 200
+
+test4: all
+	@echo "\n--- Test 4: 5 Philos, 7 meals (Should exit cleanly after 7 meals) ---"
+	$(EXEC) 5 800 200 200 7
+
+test5: all
+	@echo "\n--- Test 5: 4 Philos imminent death (Should die ~310ms) ---"
+	./$(NAME) 4 310 200 100
+
+test6: all
+	@echo "\n--- Test 6: 200 Philos stress test (Should survive, CTRL+C to stop) ---"
+	$(EXEC) 200 800 200 200
+
+test7: all
+	@echo "\n--- Test 7: 4 Philos tight timing + 5 meals (Should exit cleanly) ---"
+	$(EXEC) 4 410 200 200 5
+
+test8: all
+	@echo "\n--- Test 8: 5 Philos tight timing odd (Should survive, CTRL+C to stop) ---"
+	$(EXEC) 5 600 150 150
+
+test9: all
+	@echo "\n--- Test 9: 5 Philos, 1 meal fast exit (Should exit cleanly fast) ---"
+	$(EXEC) 5 800 200 200 1
+
+test10: all
+	@echo "\n--- Test 10: 4 Philos instant death (Should die ~10ms) ---"
+	$(EXEC) 4 10 200 200
 
 # ============== NORMINETTE ================================
 
