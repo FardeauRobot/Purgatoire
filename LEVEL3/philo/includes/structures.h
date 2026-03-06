@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 12:52:19 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 16:31:38 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ typedef struct s_philo
 	int		nb_forks;
 	int		needed_meals;
 	int		full;
+	int	is_dead;
 	long long	start_time;
 	time_t	time_to_die;
 	time_t	time_to_eat;
 	time_t	time_to_sleep;
-	t_state	is_dead;
 	pthread_mutex_t *m_fork;
 	pthread_mutex_t m_lock_eat;
 	pthread_mutex_t m_is_dead;

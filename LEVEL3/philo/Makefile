@@ -112,7 +112,7 @@ leaks_supp: $(NAME)
 helgrind: $(NAME)
 	valgrind --tool=helgrind --history-level=approx \
 		--conflict-cache-size=1000000 \
-		--log-file=helgrind.log ./$(NAME) $(ARGS)
+		--log-file=helgrind.log ./$(NAME) 5 800 200 200 7
 	@printf "$(CYAN)\nHelgrind report saved to: $(BOLD)helgrind.log$(RESET)\n"
 	@cat helgrind.log
 
@@ -168,11 +168,11 @@ test8: all
 
 test9: all
 	@echo "\n--- Test 9: 5 Philos, 1 meal fast exit (Should exit cleanly fast) ---"
-	$(EXEC) 5 800 200 200 1
+	./philo 5 800 200 200 1
 
 test10: all
 	@echo "\n--- Test 10: 4 Philos instant death (Should die ~10ms) ---"
-	$(EXEC) 4 10 200 200
+	./philo 4 10 200 200
 
 # ============== NORMINETTE ================================
 

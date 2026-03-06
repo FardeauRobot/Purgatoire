@@ -6,11 +6,31 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:37:28 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 15:42:47 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 16:39:53 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		ft_dead_check(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->m_is_dead);
+	if (philo->is_dead == 1)
+	{
+		pthread_mutex_unlock(&philo->m_is_dead);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->m_is_dead);
+	pthread_mutex_lock(&philo->m_full);
+	if (philo->full == philo->nb_philo)
+	{
+		pthread_mutex_unlock(&philo->m_full);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->m_full);
+
+	return (0);
+}
 
 void	ft_status_change(t_guest *guest, t_state status)
 {
@@ -19,35 +39,23 @@ void	ft_status_change(t_guest *guest, t_state status)
 	pthread_mutex_unlock(&guest->m_status);
 }
 
-int		ft_dead_check(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->m_is_dead);
-	if (philo->is_dead == DEAD)
-	{
-		pthread_mutex_unlock(&philo->m_is_dead);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->m_is_dead);
-	return (0);
-}
-
 void	ft_fork_handler(t_guest *guest, t_fork side)
 {
-	if (ft_dead_check(guest->data))
-	{
-		if (side == LEFT && guest->status == FORK)
-			pthread_mutex_unlock(guest->forks[RIGHT]);
-		if (side == RIGHT && guest->status == FORK)
-			pthread_mutex_unlock(guest->forks[LEFT]);
-		return;
-	}
 	if (side != BOTH)
 	{
+		if (ft_dead_check(guest->data))
+		{
+			if (guest->t_id % 2 && guest->status == FORK)
+				pthread_mutex_unlock(guest->forks[LEFT]);
+			else if (guest->status == FORK)
+				pthread_mutex_unlock(guest->forks[RIGHT]);
+			return;
+		}
 		pthread_mutex_lock(guest->forks[side]);
 		ft_status_change(guest, FORK);
 		ft_action_print(guest);
 	}
-	else
+	else if (side == BOTH)
 	{
 		pthread_mutex_unlock(guest->forks[LEFT]);
 		pthread_mutex_unlock(guest->forks[RIGHT]);

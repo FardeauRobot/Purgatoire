@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:15 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 15:51:36 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 16:32:13 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->m_is_dead);
-	if (philo->is_dead == DEAD)
+	if (philo->is_dead == 1)
 	{
 		pthread_mutex_unlock(&philo->m_is_dead);
 		return (1);
@@ -53,9 +53,13 @@ void	*ft_routine(void *ptr)
 	}
 	while (!ft_meal(guest->data))
 	{
-		ft_eat(guest);
-		ft_sleep(guest);
-		ft_think(guest);
+		if (guest->data->needed_meals == 0
+			|| guest->nb_meals < guest->data->needed_meals)
+		{
+			ft_eat(guest);
+			ft_sleep(guest);
+			ft_think(guest);
+		}
 	}
 	return (NULL);
 }
