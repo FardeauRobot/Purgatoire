@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:15 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 09:34:25 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 10:34:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*ft_routine(void *ptr)
 	guest = (t_guest *)ptr;
 	i = -1;
 	if (guest->t_id % 2)
-		usleep(300000);
+		usleep(3000);
 	while (!ft_meal(guest->data))
 	{
 		ft_eat(guest);
@@ -61,14 +61,14 @@ void	ft_guests_arr(t_philo *philo)
 		philo->guests[i].t_id = i + 1;
 		philo->guests[i].data = philo;
 		philo->guests[i].status = STANDARD;
-		if (pthread_create(&philo->guests[i].thread, NULL, ft_routine, &philo->guests[i]))
-			ft_exit(philo, ERR_THREAD, ERR_INIT, ERRN_THREADS);
 		philo->guests[i].forks[LEFT] = &philo->m_fork[i];
 		if (i == 0)
 			philo->guests[i].forks[RIGHT] = &philo->m_fork[philo->nb_philo - 1];
 		else
 			philo->guests[i].forks[RIGHT] = &philo->m_fork[i - 1];
 		philo->guests[i].print = &philo->m_print;
+		if (pthread_create(&philo->guests[i].thread, NULL, ft_routine, &philo->guests[i]))
+			ft_exit(philo, ERR_THREAD, ERR_INIT, ERRN_THREADS);
 	}
 }
 

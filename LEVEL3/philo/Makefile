@@ -111,12 +111,18 @@ leaks_supp: $(NAME)
 # Detects data races and lock-order violations (most useful for philo)
 helgrind: $(NAME)
 	valgrind --tool=helgrind --history-level=approx \
-		--conflict-cache-size=1000000 ./$(NAME) $(ARGS)
+		--conflict-cache-size=1000000 \
+		--log-file=helgrind.log ./$(NAME) $(ARGS)
+	@printf "$(CYAN)\nHelgrind report saved to: $(BOLD)helgrind.log$(RESET)\n"
+	@cat helgrind.log
 
 # Alternative thread error detector (faster than helgrind, less false positives)
 drd: $(NAME)
 	valgrind --tool=drd --check-stack-var=yes \
-		--segment-merging=no ./$(NAME) $(ARGS)
+		--segment-merging=no \
+		--log-file=drd.log ./$(NAME) $(ARGS)
+	@printf "$(CYAN)\nDRD report saved to: $(BOLD)drd.log$(RESET)\n"
+	@cat drd.log
 
 sanitize: fclean
 	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -fno-omit-frame-pointer" all
