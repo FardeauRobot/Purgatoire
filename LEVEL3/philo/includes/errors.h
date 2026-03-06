@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 15:06:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/04 13:03:22 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ typedef enum e_err
 {
 	SUCCESS,
 	STANDARD_ERROR,
-	ERR_NONE,
-	ERR_MALLOC,
+	ERRN_NONE,
+	ERRN_MALLOC,
 	ERRN_PARSING,
-	ERR_OPEN,
-	ERR_THREADS,
-	ERR_UNKNOWN
+	ERRN_OPEN,
+	ERRN_THREADS,
+	ERRN_MUTEX,
+	ERRN_UNKNOWN
 }	t_err;
 
 /* ============== ERROR MESSAGES ============================ */
@@ -41,7 +42,9 @@ typedef enum e_err
 # define ERR_MEALS			"Philosophers can't eat that much ... "
 
 # define ERR_THREAD			"Error threads : "
-# define ERR_THREAD_INIT	"Initialization didn't work."
+# define ERR_INIT	"Initialization didn't work."
+
+# define ERR_MUTEX			"Error mutexes init : "
 
 # define ERR_MSG_MALLOC		"memory allocation failed"
 

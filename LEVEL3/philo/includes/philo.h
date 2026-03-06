@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 19:44:04 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/04 12:49:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 # include <stdio.h>
 
 /* ============== STANDARD LIBRARIES ======================= */
+# include <pthread.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-# include <pthread.h>
 # include <sys/time.h>
 
 /* ============== PROJECT HEADERS ========================== */

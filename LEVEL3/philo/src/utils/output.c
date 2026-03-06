@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   output.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/03 19:49:09 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/06 09:16:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,24 @@ void	ft_putendl_fd(char *str, int fd)
 	write(fd, "\n", 1);
 }
 
-void	ft_action_print(int t_id, t_state state)
+void	ft_action_print(t_guest *guest)
 {
-	if (state == EATING)
-		printf(GREEN" %d is eating\n"RESET, t_id);
-	if (state == SLEEPING)
-		printf(CYAN" %d is sleeping\n"RESET, t_id);
-	if (state == FORK_L || state == FORK_R)
-		printf(YELLOW" %d has taken a fork\n"RESET, t_id);
-	if (state == THINKING)
-		printf(BLUE" %d is thinking\n"RESET, t_id);
-	if (state == DEAD)
-		printf(RED" %d died\n"RESET, t_id);
+	long long tsp;
+
+	tsp = ft_get_time(MILLISECONDS);
+	tsp -= guest->data->start_time;
+	pthread_mutex_lock(guest->print);
+	if (guest->status == EATING)
+		printf(GREEN"%lld %d %s"RESET, tsp, guest->t_id, STR_EAT);
+	if (guest->status == SLEEPING)
+		printf(CYAN"%lld %d %s"RESET, tsp, guest->t_id, STR_SLEEPING);
+	if (guest->status == FORK)
+		printf(YELLOW"%lld %d %s"RESET, tsp, guest->t_id, STR_FORK);
+	if (guest->status == THINKING)
+		printf(BLUE"%lld %d %s"RESET, tsp, guest->t_id, STR_THINKING);
+	if (guest->status == DEAD)
+		printf(RED"%lld %d %s"RESET, tsp, guest->t_id, STR_DEAD);
+	pthread_mutex_unlock(guest->print);
 }
 
 // TODO : A DELETE

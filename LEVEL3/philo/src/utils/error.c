@@ -6,27 +6,11 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:49 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/03 15:10:11 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 09:35:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_bzero(void *ptr, int size)
-{
-	int i;
-	char *str;
-
-	i = -1;
-	str = (char *)ptr;
-	while (++i < size)
-		str[i] = 0;
-}
-
-void	ft_free_philo(t_philo *philo)
-{
-	ft_bzero(philo, sizeof(t_philo));
-}
 
 int	ft_error(char *context, char *detail, int error)
 {
@@ -40,10 +24,23 @@ int	ft_error(char *context, char *detail, int error)
 	return (error);
 }
 
+void	ft_philo_clean(t_philo *philo)
+{
+	int i;
+
+	pthread_mutex_destroy(&philo->m_lock_eat);
+	pthread_mutex_destroy(&philo->m_print);
+	pthread_mutex_destroy(&philo->m_is_dead);
+	pthread_mutex_destroy(&philo->m_full);
+	i = -1;
+	while (++i < philo->nb_forks)
+		pthread_mutex_destroy(&philo->m_fork[i]);
+	free(philo->m_fork);
+}
+
 void	ft_exit(t_philo *philo, char *context, char *detail, int error)
 {
-	if (philo)
-		ft_free_philo(philo);
+	ft_philo_clean(philo);
 	ft_error(context, detail, error);
 	exit(EXIT_FAILURE);
 }

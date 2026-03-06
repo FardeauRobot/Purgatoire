@@ -28,13 +28,13 @@ UTILS_PATH		= $(SRCS_PATH)/utils
 SKELETON_FILES	= main.c
 
 # Core module
-CORE_FILES		= start.c
+CORE_FILES		= start.c actions.c
 
 # Parsing module
 PARSING_FILES	= parsing.c
 
 # Utility module
-UTILS_FILES		= error.c output.c reaper.c
+UTILS_FILES		= error.c output.c parsing_utils.c time.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -88,26 +88,45 @@ fclean:
 re: fclean all
 
 # ============== DEBUG & ANALYSIS ==========================
+# Usage: make test ARGS="5 800 200 200"
+ARGS		?= 5 800 200 200
 
 test: $(NAME)
-	./philo	5 1000 200 400
+	./$(NAME) $(ARGS)
+
+testbokou: $(NAME)
+	./$(NAME) 100 1000 200 400
 
 testopt: $(NAME)
-	./philo	5 1000 200 400 10
+	./$(NAME) 5 1000 200 400 10
 
 leaks: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
-		--track-origins=yes ./$(NAME)
+		--track-origins=yes ./$(NAME) $(ARGS)
 
 leaks_supp: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
-		--suppressions=readline.supp --track-origins=yes ./$(NAME)
+		--suppressions=readline.supp --track-origins=yes ./$(NAME) $(ARGS)
+
+# Detects data races and lock-order violations (most useful for philo)
+helgrind: $(NAME)
+	valgrind --tool=helgrind --history-level=approx \
+		--conflict-cache-size=1000000 ./$(NAME) $(ARGS)
+
+# Alternative thread error detector (faster than helgrind, less false positives)
+drd: $(NAME)
+	valgrind --tool=drd --check-stack-var=yes \
+		--segment-merging=no ./$(NAME) $(ARGS)
 
 sanitize: fclean
 	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -fno-omit-frame-pointer" all
 
+# Compile with thread sanitizer then run (fastest way to catch data races)
+# If you get "unexpected memory mapping" error, run first:
+#   sudo sysctl vm.mmap_rnd_bits=28  (kernel >= 5.18 ASLR incompatibility with TSan)
 thread: fclean
 	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=thread" all
+	env TSAN_OPTIONS="halt_on_error=1" ./$(NAME) $(ARGS)
 
 # ============== NORMINETTE ================================
 
@@ -144,4 +163,4 @@ todo:
 	@grep -rn --color=always 'TODO\|FIXME\|HACK\|XXX' $(SRCS_PATH) $(INC_PATH) || \
 		printf "$(GREEN)  None found!$(RESET)\n"
 
-.PHONY: all clean fclean re leaks leaks_supp sanitize thread checknorm count todo
+.PHONY: all clean fclean re leaks leaks_supp helgrind drd sanitize thread checknorm count todo test testbokou testopt
