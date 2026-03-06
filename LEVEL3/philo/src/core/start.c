@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:15 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 13:07:30 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 15:51:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ void	*ft_routine(void *ptr)
 	i = -1;
 	if (guest->t_id % 2)
 		usleep(3000);
+	if (guest->data->nb_philo == 1)
+	{
+		ft_status_change(guest, THINKING);
+		ft_action_print(guest);
+		ft_status_change(guest, ALONE);
+		ft_precise_sleep(guest);
+		ft_status_change(guest, DEAD);
+		ft_action_print(guest);
+		return (NULL);
+	}
 	while (!ft_meal(guest->data))
 	{
 		ft_eat(guest);
@@ -62,6 +72,7 @@ void	ft_guests_arr(t_philo *philo)
 		philo->guests[i].data = philo;
 		philo->guests[i].status = STANDARD;
 		philo->guests[i].time_last_meal = philo->start_time;
+		// TODO : PROTEGER INIT MUTEX
 		pthread_mutex_init(&philo->guests[i].m_last_meal, NULL);
 		pthread_mutex_init(&philo->guests[i].m_status, NULL);
 		philo->guests[i].forks[LEFT] = &philo->m_fork[i];

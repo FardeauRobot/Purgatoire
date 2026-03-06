@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/06 12:06:43 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 15:52:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,17 @@ void	ft_action_print(t_guest *guest)
 {
 	long long tsp;
 
+	pthread_mutex_lock(guest->print);
 	tsp = ft_get_time(MILLISECONDS);
 	tsp -= guest->data->start_time;
-	pthread_mutex_lock(guest->print);
+	if (ft_dead_check(guest->data))
+	{
+		if (guest->status == DEAD)
+			printf(RED"%lld %d %s"RESET, tsp, guest->t_id, STR_DEAD);
+		pthread_mutex_unlock(guest->print);
+		return;
+	}
+	// pthread_mutex_lock(&guest->m_status);
 	if (guest->status == EATING)
 		printf(GREEN"%lld %d %s"RESET, tsp, guest->t_id, STR_EAT);
 	if (guest->status == SLEEPING)
@@ -44,8 +52,6 @@ void	ft_action_print(t_guest *guest)
 		printf(YELLOW"%lld %d %s"RESET, tsp, guest->t_id, STR_FORK);
 	if (guest->status == THINKING)
 		printf(BLUE"%lld %d %s"RESET, tsp, guest->t_id, STR_THINKING);
-	if (guest->status == DEAD)
-		printf(RED"%lld %d %s"RESET, tsp, guest->t_id, STR_DEAD);
 	pthread_mutex_unlock(guest->print);
 }
 

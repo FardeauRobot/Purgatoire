@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 13:07:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 14:33:26 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef enum e_state
 	SLEEPING,
 	DEAD,
 	ALIVE,
+	ALONE,
 	STANDARD
 }			t_state;
 
@@ -84,6 +85,7 @@ void	ft_action_print(t_guest *guest);
 
 // ACTIONS.C
 void	ft_status_change(t_guest *guest, t_state status);
+int		ft_dead_check(t_philo *philo);
 int	ft_eat(t_guest *guest);
 int	ft_sleep(t_guest *guest);
 int	ft_think(t_guest *guest);

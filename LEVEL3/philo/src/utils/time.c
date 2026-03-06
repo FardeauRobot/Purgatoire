@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:47:51 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 13:07:50 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/06 14:34:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	ft_precise_sleep(t_guest *guest)
 		if (guest->status == SLEEPING && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_sleep)
 			break;
 		if (guest->status == EATING && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_eat)
+			break;
+		if (guest->status == ALONE && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_die) 
 			break;
 	}
 }

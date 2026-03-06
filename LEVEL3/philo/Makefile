@@ -136,7 +136,7 @@ thread: fclean
 
 test1: all
 	@echo "\n--- Test 1: 1 Philo (Should die ~800ms) ---"
-	$(EXEC) 1 800 200 200
+	./$(NAME) 1 800 200 200
 
 test2: all
 	@echo "\n--- Test 2: 5 Philos (Should survive, CTRL+C to stop) ---"
