@@ -102,21 +102,20 @@
 ==507003==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
 ==507003==    by 0x401CCF: ft_forks_init (parsing.c:20)
 ==507003==    by 0x401AE2: ft_parsing (parsing.c:80)
-==507003==    by 0x40122C: main (main.c:20)
-==507003==  Block was alloc'd by thread #1
-==507003== 
-==507003== 
-==507003== ----------------------------------------------------------------
-==507003== 
-==507003== Thread #1 unlocked lock at 0x4AA80E0 currently held by thread #2
-==507003==    at 0x48511E6: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==507003==    by 0x40181D: ft_fork_handler (actions.c:68)
-==507003==    by 0x4015EA: ft_start (start.c:77)
-==507003==    by 0x40124D: main (main.c:22)
-==507003==  Lock at 0x4AA80E0 was first observed
-==507003==    at 0x4854BFE: pthread_mutex_init (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
-==507003==    by 0x401D50: ft_forks_init (parsing.c:26)
-==507003==    by 0x401AE2: ft_parsing (parsing.c:80)
+==507003==    by ==494931== 
+==494931== Process terminating with default action of signal 1 (SIGHUP)
+==494931==    at 0x490D117: __futex_abstimed_wait_common64 (futex-internal.c:57)
+==494931==    by 0x490D117: __futex_abstimed_wait_common (futex-internal.c:87)
+==494931==    by 0x490D117: __futex_abstimed_wait_cancelable64 (futex-internal.c:139)
+==494931==    by 0x4912623: __pthread_clockjoin_ex (pthread_join_common.c:105)
+==494931==    by 0x48508F5: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==494931==    by 0x4015F1: ft_start (start.c:76)
+==494931==    by 0x40124D: main (main.c:22)
+==494931== 
+==494931== For lists of detected and suppressed errors, rerun with: -s
+==494931== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 76719 from 87)
+)
+ng.c:80)
 ==507003==    by 0x40122C: main (main.c:20)
 ==507003==  Address 0x4aa80e0 is 160 bytes inside a block of size 200 alloc'd
 ==507003==    at 0x484A919: malloc (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
@@ -150,3 +149,25 @@
 ==507003==    at 0x4910A66: start_thread (pthread_create.c:593)
 ==507003==    by 0x49A1A83: clone (clone.S:100)
 ==507003== 
+==507003== 
+==507003== Process terminating with default action of signal 1 (SIGHUP)
+==507003==    at 0x490D117: __futex_abstimed_wait_common64 (futex-internal.c:57)
+==507003==    by 0x490D117: __futex_abstimed_wait_common (futex-internal.c:87)
+==507003==    by 0x490D117: __futex_abstimed_wait_cancelable64 (futex-internal.c:139)
+==507003==    by 0x4912623: __pthread_clockjoin_ex (pthread_join_common.c:105)
+==507003==    by 0x48508F5: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==507003==    by 0x401608: ft_start (start.c:78)
+==507003==    by 0x40124D: main (main.c:22)
+==507003== 
+==507003== For lists of detected and suppressed errors, rerun with: -s
+==507003== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 15640 from 87)
+64 (futex-internal.c:57)
+==495446==    by 0x490D117: __futex_abstimed_wait_common (futex-internal.c:87)
+==495446==    by 0x490D117: __futex_abstimed_wait_cancelable64 (futex-internal.c:139)
+==495446==    by 0x4912623: __pthread_clockjoin_ex (pthread_join_common.c:105)
+==495446==    by 0x48508F5: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==495446==    by 0x4015F1: ft_start (start.c:76)
+==495446==    by 0x40124D: main (main.c:22)
+==495446== 
+==495446== For lists of detected and suppressed errors, rerun with: -s
+==495446== ERROR SUMMARY: 5 errors from 5 contexts (suppressed: 52675 from 102)

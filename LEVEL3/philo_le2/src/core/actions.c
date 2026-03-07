@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:37:28 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/07 22:29:41 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/07 22:54:33 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	ft_think(t_guest *guest)
         think_time = (guest->data->time_to_eat * 2)
             - guest->data->time_to_sleep;
         if (think_time > 0)
-            usleep(think_time * 1000);
+            usleep(think_time * 100);
     }
     return (SUCCESS);
 }
