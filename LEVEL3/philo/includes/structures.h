@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structures.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/06 16:31:38 by tibras           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STRUCTURES_H
+# define STRUCTURES_H
+
+# include "defines.h"
+# include <pthread.h>
+# include <time.h>
+
+/* ============== STRUCTURES =============================== */
+
+typedef struct s_philo	t_philo;
+
+typedef struct s_guest
+{
+	pthread_t		thread;
+	int				t_id;
+	int				nb_meals;
+	long long		time_last_meal;
+	t_state			status;
+	pthread_mutex_t m_status;
+	pthread_mutex_t	m_last_meal;
+	pthread_mutex_t	*forks[2];
+	pthread_mutex_t	*print;
+	t_philo			*data;
+}	t_guest;
+
+typedef struct s_philo
+{
+	t_guest	guests[MAX_GUESTS];
+	int		nb_philo;
+	int		nb_forks;
+	int		needed_meals;
+	int		full;
+	int	is_dead;
+	long long	start_time;
+	time_t	time_to_die;
+	time_t	time_to_eat;
+	time_t	time_to_sleep;
+	pthread_mutex_t *m_fork;
+	pthread_mutex_t m_lock_eat;
+	pthread_mutex_t m_is_dead;
+	pthread_mutex_t m_print;
+	pthread_mutex_t m_full;
+}	t_philo;
+
+#endif
