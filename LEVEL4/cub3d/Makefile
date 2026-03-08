@@ -33,10 +33,10 @@ SKELETON_FILES	= main.c
 CORE_FILES		=
 
 # Parsing module
-PARSING_FILES	=
+PARSING_FILES	= parsing.c
 
 # Utility module
-UTILS_FILES		= error.c 
+UTILS_FILES		= error.c output.c parsing_utils.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -96,9 +96,18 @@ re: fclean all
 
 # ============== DEBUG & ANALYSIS ==========================
 
+test: $(NAME)
+	./$(NAME) ./maps/working/basic.cub
+
+testformat: $(NAME)
+	./$(NAME) ./maps/broken/broken_format.ber
+
+testopen: $(NAME)
+	./$(NAME) ./maps/broken/broken_access.cub
+
 leaks: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
-		--track-origins=yes ./$(NAME)
+		--track-origins=yes ./$(NAME) ./maps/working/basic.cub
 
 leaks_supp: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \

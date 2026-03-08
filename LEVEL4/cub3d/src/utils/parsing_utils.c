@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by author            #+#    #+#             */
-/*   Updated: 2026/03/08 19:12:40 by fardeau          ###   ########.fr       */
+/*   Created: 2026/03/08 11:59:48 by fardeau           #+#    #+#             */
+/*   Updated: 2026/03/08 12:00:00 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
+int	ft_format_check(char *filepath)
 {
-	t_cub data;
+	int	len_path;
 
-	ft_bzero(&data, sizeof(t_cub));
-	ft_parsing(&data, argv, argc);
-	ft_cub_print(&data);
-	ft_data_clean(&data);
-	return (EXIT_SUCCESS);
+	len_path = ft_strlen(filepath);
+	if (ft_strncmp(&filepath[len_path - 4], ".cub", 4))
+		return (FAILURE);
+	return (SUCCESS);
 }

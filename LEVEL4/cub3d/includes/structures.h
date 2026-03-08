@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/02 08:27:21 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/08 18:59:32 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,32 @@
 ** Centralises all runtime data so it can be passed to functions cleanly.
 ** Add your fields here as the project grows.
 */
-typedef struct s_data
+typedef struct s_img
 {
-	int		argc;
-	char	**argv;
-	char	**envp;
-	int		exit_code;
-}	t_data;
+	int     width;
+	int     height;
+	void	*img;
+}	t_img;
+
+typedef struct s_textures
+{
+	char *north;
+	char *south;
+	char *east;
+	char *west;
+	char *floor;
+	char *ceiling;
+}	t_textures;
+
+typedef struct s_cub
+{
+	int			fd_map;
+	char		**file;
+	char	    **map;
+	t_textures	textures;
+	t_list		*gc_global;
+	t_list		*gc_tmp;
+}	t_cub;
 
 /*
 ** Add project-specific structures here, e.g.:
