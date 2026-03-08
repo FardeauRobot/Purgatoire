@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 19:19:24 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/08 19:24:48 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/08 19:31:47 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int	ft_textures_parsing(t_cub *data)
 		ret = ft_textures_fill(data, data->file[i]);
 		if (ret != SUCCESS && ret != FAILURE)
 			return (ret);
-		if (ret == FAILURE && data->file[i][0] != '\n')
+		if (ret == FAILURE && !ft_is_only(data->file[i], ft_isspace))
 		{
 			data->index_map_start = i;
 			return (SUCCESS);

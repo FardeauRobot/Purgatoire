@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:55:12 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/08 19:25:06 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/08 20:53:13 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	ft_cub_print(t_cub *data)
 {
 	ft_printf("[CUB3D MAIN STRUCT]\n");
 	ft_printf("[FD_MAP = %d]\n", data->fd_map);
-	// ft_matrix_print(data->file);
-	ft_textures_print(&data->textures);
 	ft_printf("[INDEX START = %d]\n", data->index_map_start);
+	ft_printf("[PLAYER START = [%d|%d]]\n", data->start_pos[0], data->start_pos[1]);
+	ft_textures_print(&data->textures);
+	ft_printf("[MAP]\n");
+	ft_matrix_print(data->map);
 }
