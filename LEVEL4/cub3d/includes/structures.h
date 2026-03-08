@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/08 18:59:32 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/08 19:24:18 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_cub
 {
 	int			fd_map;
 	char		**file;
+	int			index_map_start;
 	char	    **map;
 	t_textures	textures;
 	t_list		*gc_global;

@@ -12,6 +12,9 @@
 
 #include "cub3d.h"
 
+/*
+** MAIN - ENTRY POINT, INITS DATA, PARSES, PRINTS AND CLEANS UP
+*/
 int	main(int argc, char **argv)
 {
 	t_cub data;

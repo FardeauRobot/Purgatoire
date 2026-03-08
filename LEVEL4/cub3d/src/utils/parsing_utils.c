@@ -12,6 +12,10 @@
 
 #include "cub3d.h"
 
+/*
+** FT_FORMAT_CHECK - VALIDATES THAT THE FILE EXTENSION IS .CUB
+** RETURNS SUCCESS IF VALID, FAILURE OTHERWISE
+*/
 int	ft_format_check(char *filepath)
 {
 	int	len_path;

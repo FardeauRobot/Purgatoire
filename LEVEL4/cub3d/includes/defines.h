@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/08 19:10:01 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/08 19:20:30 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 
 // PARSING/PARSING.C
 int	ft_parsing(t_cub *data, char **argv, int argc);
+
+// PARSING/PARSING_TEXTURES.C
+int	ft_file_store(t_cub *data);
+int	ft_textures_parsing(t_cub *data);
 
 // UTILS/OUTPUT.C
 void	ft_matrix_print(char **matrix);

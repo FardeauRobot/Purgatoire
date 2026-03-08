@@ -13,8 +13,8 @@
 #include "cub3d.h"
 
 /*
-** print_error - prints a formatted error message to stderr
-** Format: "project: <context>: <detail>\n"
+** FT_ERROR - PRINTS A FORMATTED ERROR MESSAGE TO STDERR
+** FORMAT: "ERROR\n<CONTEXT>: <DETAIL>\n"
 */
 int	ft_error(char *context, char *detail, int error)
 {
@@ -30,6 +30,9 @@ int	ft_error(char *context, char *detail, int error)
 	return (error);
 }
 
+/*
+** FT_DATA_CLEAN - FREES ALL RESOURCES (GNL BUFFER, FD, GARBAGE COLLECTORS)
+*/
 void	ft_data_clean(t_cub *data)
 {
 	get_next_line(-1);
@@ -39,7 +42,7 @@ void	ft_data_clean(t_cub *data)
 }
 
 /*
-** exit_error - prints error, frees resources, and exits with FAILURE
+** FT_EXIT - PRINTS ERROR, FREES RESOURCES, AND EXITS WITH ERROR CODE
 */
 void	ft_exit(t_cub *data, int error, char *context, char *detail)
 {
@@ -50,8 +53,8 @@ void	ft_exit(t_cub *data, int error, char *context, char *detail)
 }
 
 /*
-** check_args - validates argument count
-** Returns SUCCESS if argc == expected, prints usage and returns FAILURE otherwise
+** CHECK_ARGS - VALIDATES ARGUMENT COUNT
+** RETURNS SUCCESS IF ARGC == EXPECTED, PRINTS USAGE AND RETURNS FAILURE OTHERWISE
 */
 int	check_args(int argc, int expected, char *usage)
 {
