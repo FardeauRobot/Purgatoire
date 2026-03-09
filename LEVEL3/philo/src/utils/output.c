@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/06 15:52:43 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:00:50 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,21 @@ void	ft_action_print(t_guest *guest)
 	pthread_mutex_lock(guest->print);
 	tsp = ft_get_time(MILLISECONDS);
 	tsp -= guest->data->start_time;
+	// [FIX] Death print is now handled by the reaper. Here we just
+	// silently bail if someone is dead — no more prints after death.
 	if (ft_dead_check(guest->data))
 	{
-		if (guest->status == DEAD)
-			printf(RED"%lld %d %s"RESET, tsp, guest->t_id, STR_DEAD);
 		pthread_mutex_unlock(guest->print);
-		return;
+		return ;
 	}
-	// pthread_mutex_lock(&guest->m_status);
 	if (guest->status == EATING)
-		printf(GREEN"%lld %d %s"RESET, tsp, guest->t_id, STR_EAT);
+		printf("%lld %d %s", tsp, guest->t_id, STR_EAT);
 	if (guest->status == SLEEPING)
-		printf(CYAN"%lld %d %s"RESET, tsp, guest->t_id, STR_SLEEPING);
+		printf("%lld %d %s", tsp, guest->t_id, STR_SLEEPING);
 	if (guest->status == FORK)
-		printf(YELLOW"%lld %d %s"RESET, tsp, guest->t_id, STR_FORK);
+		printf("%lld %d %s", tsp, guest->t_id, STR_FORK);
 	if (guest->status == THINKING)
-		printf(BLUE"%lld %d %s"RESET, tsp, guest->t_id, STR_THINKING);
+		printf("%lld %d %s", tsp, guest->t_id, STR_THINKING);
 	pthread_mutex_unlock(guest->print);
 }
 

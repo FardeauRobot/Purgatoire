@@ -34,7 +34,7 @@ CORE_FILES		= start.c actions.c
 PARSING_FILES	= parsing.c
 
 # Utility module
-UTILS_FILES		= error.c output.c parsing_utils.c time.c reaper.c
+UTILS_FILES		= error.c output.c parsing_utils.c time.c reaper.c utils.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -112,7 +112,7 @@ leaks_supp: $(NAME)
 helgrind: $(NAME)
 	valgrind --tool=helgrind --history-level=approx \
 		--conflict-cache-size=1000000 \
-		--log-file=helgrind.log ./$(NAME) 5 800 200 200 7
+		--log-file=helgrind.log ./$(NAME) $(ARGS)
 	@printf "$(CYAN)\nHelgrind report saved to: $(BOLD)helgrind.log$(RESET)\n"
 	@cat helgrind.log
 
@@ -131,7 +131,7 @@ sanitize: fclean
 # If you get "unexpected memory mapping" error, run first:
 #   sudo sysctl vm.mmap_rnd_bits=28  (kernel >= 5.18 ASLR incompatibility with TSan)
 thread: fclean
-	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=thread" all
+	$(MAKE) CFLAGS="$(CFLAGS) -pthread" all
 	env TSAN_OPTIONS="halt_on_error=1" ./$(NAME) $(ARGS)
 
 test1: all

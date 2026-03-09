@@ -6,11 +6,26 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:47:51 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 14:34:36 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:00:49 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long long	ft_think_time(t_guest *guest)
+{
+	long long	tt;
+
+	if (guest->data->nb_philo % 2)
+		tt = guest->data->time_to_eat * 2
+			- guest->data->time_to_sleep;
+	else
+		tt = guest->data->time_to_eat
+			- guest->data->time_to_sleep;
+	if (tt < 0)
+		tt = 0;
+	return (tt);
+}
 
 long long ft_get_time(t_scales scale)
 {
@@ -35,11 +50,21 @@ void	ft_precise_sleep(t_guest *guest)
 	start = ft_get_time(MILLISECONDS);
 	while (!ft_meal(guest->data))
 	{
-		if (guest->status == SLEEPING && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_sleep)
-			break;
-		if (guest->status == EATING && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_eat)
-			break;
-		if (guest->status == ALONE && (ft_get_time(MILLISECONDS) - start) >= guest->data->time_to_die) 
-			break;
+		if (guest->status == SLEEPING
+			&& (ft_get_time(MILLISECONDS) - start)
+			>= guest->data->time_to_sleep)
+			break ;
+		if (guest->status == EATING
+			&& (ft_get_time(MILLISECONDS) - start)
+			>= guest->data->time_to_eat)
+			break ;
+		if (guest->status == THINKING
+			&& (ft_get_time(MILLISECONDS) - start)
+			>= ft_think_time(guest))
+			break ;
+		if (guest->status == ALONE
+			&& (ft_get_time(MILLISECONDS) - start)
+			>= guest->data->time_to_die)
+			break ;
 	}
 }

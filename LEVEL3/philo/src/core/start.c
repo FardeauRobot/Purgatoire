@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:15 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 16:32:13 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:24:15 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,8 @@
 
 int	ft_meal(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->m_is_dead);
-	if (philo->is_dead == 1)
-	{
-		pthread_mutex_unlock(&philo->m_is_dead);
+	if (ft_dead_check(philo))
 		return (1);
-	}
-	pthread_mutex_unlock(&philo->m_is_dead);
-	pthread_mutex_lock(&philo->m_full);
-	if (philo->full == philo->nb_philo)
-	{
-		pthread_mutex_unlock(&philo->m_full);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->m_full);
 	usleep(200);
 	return (0);
 }
@@ -39,27 +27,21 @@ void	*ft_routine(void *ptr)
 
 	guest = (t_guest *)ptr;
 	i = -1;
-	if (guest->t_id % 2)
-		usleep(3000);
 	if (guest->data->nb_philo == 1)
 	{
-		ft_status_change(guest, THINKING);
-		ft_action_print(guest);
-		ft_status_change(guest, ALONE);
-		ft_precise_sleep(guest);
-		ft_status_change(guest, DEAD);
-		ft_action_print(guest);
+		pthread_mutex_lock(guest->forks[LEFT]);
+		ft_status_change(guest, FORK);
+		while (!ft_dead_check(guest->data))
+			usleep(200);
+		pthread_mutex_unlock(guest->forks[LEFT]);
 		return (NULL);
 	}
+	if (guest->t_id % 2 == 0)
+		usleep(guest->data->time_to_eat * 5);
 	while (!ft_meal(guest->data))
 	{
-		if (guest->data->needed_meals == 0
-			|| guest->nb_meals < guest->data->needed_meals)
-		{
-			ft_eat(guest);
-			ft_sleep(guest);
-			ft_think(guest);
-		}
+		if (ft_eat(guest) || ft_sleep(guest) || ft_think(guest))
+			break ;
 	}
 	return (NULL);
 }
@@ -102,4 +84,9 @@ void	ft_start(t_philo *philo)
 	while (++i < philo->nb_philo)
 		pthread_join(philo->guests[i].thread, NULL);
 	pthread_join(reaper, NULL);
+	// if (philo->full == philo->nb_philo)
+	// {
+	// 	ft_putstr_fd("Well, what a feast it was !\n", STDOUT_FILENO);
+	// 	ft_putstr_fd("Everybody's about to explode\n", STDOUT_FILENO);
+	// }
 }

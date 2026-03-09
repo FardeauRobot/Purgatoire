@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 14:33:26 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 09:13:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	ft_sleep(t_guest *guest);
 int	ft_think(t_guest *guest);
 
 // TIME.C
+long long	ft_think_time(t_guest *guest);
 long long	ft_get_time(t_scales scale);
 void	ft_precise_sleep(t_guest *guest);
 
@@ -99,6 +100,12 @@ void	ft_exec_finished(t_philo *philo);
 
 // ERROR.C
 void	ft_philo_clean(t_philo *philo);
+
+// UTILS.C
+void	ft_status_change(t_guest *guest, t_state status);
+void	ft_meal_update(t_guest *guest);
+long long	ft_meal_read(t_guest *guest);
+int		ft_dead_check(t_philo *philo);
 
 // REAPER.C
 void	*ft_reaper(void *ptr);

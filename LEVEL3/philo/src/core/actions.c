@@ -6,40 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:37:28 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 16:39:53 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:17:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		ft_dead_check(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->m_is_dead);
-	if (philo->is_dead == 1)
-	{
-		pthread_mutex_unlock(&philo->m_is_dead);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->m_is_dead);
-	pthread_mutex_lock(&philo->m_full);
-	if (philo->full == philo->nb_philo)
-	{
-		pthread_mutex_unlock(&philo->m_full);
-		return (1);
-	}
-	pthread_mutex_unlock(&philo->m_full);
-
-	return (0);
-}
-
-void	ft_status_change(t_guest *guest, t_state status)
-{
-	pthread_mutex_lock(&guest->m_status);
-	guest->status = status;
-	pthread_mutex_unlock(&guest->m_status);
-}
-
-void	ft_fork_handler(t_guest *guest, t_fork side)
+int	ft_fork_handler(t_guest *guest, t_fork side)
 {
 	if (side != BOTH)
 	{
@@ -49,49 +22,51 @@ void	ft_fork_handler(t_guest *guest, t_fork side)
 				pthread_mutex_unlock(guest->forks[LEFT]);
 			else if (guest->status == FORK)
 				pthread_mutex_unlock(guest->forks[RIGHT]);
-			return;
+			return (1);
 		}
 		pthread_mutex_lock(guest->forks[side]);
 		ft_status_change(guest, FORK);
 		ft_action_print(guest);
+		return (0);
 	}
-	else if (side == BOTH)
-	{
-		pthread_mutex_unlock(guest->forks[LEFT]);
-		pthread_mutex_unlock(guest->forks[RIGHT]);
-	}
+	pthread_mutex_unlock(guest->forks[LEFT]);
+	pthread_mutex_unlock(guest->forks[RIGHT]);
+	return (0);
 }
 
-void	ft_meal_update(t_guest *guest)
+static int	ft_take_forks(t_guest *guest)
 {
-	pthread_mutex_lock(&guest->m_last_meal);
-	guest->time_last_meal = ft_get_time(MILLISECONDS);
-	pthread_mutex_unlock(&guest->m_last_meal);
+	if (guest->t_id % 2)
+	{
+		if (ft_fork_handler(guest, LEFT))
+			return (1);
+		if (ft_fork_handler(guest, RIGHT))
+			return (1);
+	}
+	else
+	{
+		if (ft_fork_handler(guest, RIGHT))
+			return (1);
+		if (ft_fork_handler(guest, LEFT))
+			return (1);
+	}
+	return (0);
 }
 
 int	ft_eat(t_guest *guest)
 {
 	if (ft_dead_check(guest->data))
 		return (1);
-	if (guest->t_id % 2)
-	{
-		ft_fork_handler(guest, LEFT);
-		ft_fork_handler(guest, RIGHT);
-	}
-	else
-	{
-		ft_fork_handler(guest, RIGHT);
-		ft_fork_handler(guest, LEFT);
-	}
+	if (ft_take_forks(guest))
+		return (1);
 	ft_status_change(guest, EATING);
 	guest->nb_meals++;
-	if (guest->nb_meals == guest->data->needed_meals)
+	if (guest->nb_meals == guest->data->needed_meals && guest->nb_meals != 0)
 	{
 		pthread_mutex_lock(&guest->data->m_full);
 		guest->data->full++;
 		pthread_mutex_unlock(&guest->data->m_full);
 	}
-	ft_action_print(guest);
 	ft_meal_update(guest);
 	ft_precise_sleep(guest);
 	ft_fork_handler(guest, BOTH);
@@ -103,16 +78,26 @@ int	ft_sleep(t_guest *guest)
 	if (ft_dead_check(guest->data))
 		return (1);
 	ft_status_change(guest, SLEEPING);
-	ft_action_print(guest);
 	ft_precise_sleep(guest);
 	return (SUCCESS);
 }
 
 int	ft_think(t_guest *guest)
 {
+	long long	think_time;
+
 	if (ft_dead_check(guest->data))
 		return (1);
 	ft_status_change(guest, THINKING);
-	ft_action_print(guest);
+	if (guest->data->nb_philo % 2)
+		think_time = guest->data->time_to_eat * 2
+			- guest->data->time_to_sleep;
+	else
+		think_time = guest->data->time_to_eat
+			- guest->data->time_to_sleep;
+	if (think_time < 0)
+		think_time = 0;
+	if (think_time > 0)
+		ft_precise_sleep(guest);
 	return (SUCCESS);
 }
