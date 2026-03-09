@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:49 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:39:46 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:16:30 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_error(char *context, char *detail, int error)
 	ft_putstr_fd("philo: ", 2);
 	if (context && !detail)
 		ft_putendl_fd(context, 2);
-	else 
+	else
 		ft_putstr_fd(context, 2);
 	if (detail)
 		ft_putendl_fd(detail, 2);
@@ -26,7 +26,7 @@ int	ft_error(char *context, char *detail, int error)
 
 void	ft_philo_clean(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	pthread_mutex_destroy(&philo->m_lock_eat);
 	pthread_mutex_destroy(&philo->m_print);

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:47:51 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:00:49 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:45:12 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ long long	ft_think_time(t_guest *guest)
 	return (tt);
 }
 
-long long ft_get_time(t_scales scale)
+long long	ft_get_time(t_scales scale)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL))
 		return (-1);
-
 	if (scale == SECONDS)
 		return (tv.tv_sec + tv.tv_usec / 1000000);
 	else if (scale == MILLISECONDS)

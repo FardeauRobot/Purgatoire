@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/09 10:00:50 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:38:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putstr_fd(char *str, int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -31,26 +31,26 @@ void	ft_putendl_fd(char *str, int fd)
 
 void	ft_action_print(t_guest *guest)
 {
-	long long tsp;
+	long long	tsp;
 
 	pthread_mutex_lock(guest->print);
 	tsp = ft_get_time(MILLISECONDS);
 	tsp -= guest->data->start_time;
-	// [FIX] Death print is now handled by the reaper. Here we just
-	// silently bail if someone is dead — no more prints after death.
+	if (guest->status == DEAD)
+		printf(RED"%lld %d %s"RESET, tsp, guest->t_id, STR_DEAD);
 	if (ft_dead_check(guest->data))
 	{
 		pthread_mutex_unlock(guest->print);
 		return ;
 	}
 	if (guest->status == EATING)
-		printf("%lld %d %s", tsp, guest->t_id, STR_EAT);
+		printf(GREEN"%lld %d %s"RESET, tsp, guest->t_id, STR_EAT);
 	if (guest->status == SLEEPING)
-		printf("%lld %d %s", tsp, guest->t_id, STR_SLEEPING);
+		printf(BLUE"%lld %d %s"RESET, tsp, guest->t_id, STR_SLEEPING);
 	if (guest->status == FORK)
-		printf("%lld %d %s", tsp, guest->t_id, STR_FORK);
+		printf(YELLOW"%lld %d %s"RESET, tsp, guest->t_id, STR_FORK);
 	if (guest->status == THINKING)
-		printf("%lld %d %s", tsp, guest->t_id, STR_THINKING);
+		printf(CYAN"%lld %d %s"RESET, tsp, guest->t_id, STR_THINKING);
 	pthread_mutex_unlock(guest->print);
 }
 
@@ -59,8 +59,8 @@ void	ft_print_main_philo(t_philo *philo)
 {
 	printf("[NB OF GUESTS = %d]\n", philo->nb_philo);
 	printf("[NB OF FORKS = %d]\n", philo->nb_forks);
-	printf("[TIME TO DIE = %ld]\n",(long)philo->time_to_die);
-	printf("[TIME TO EAT = %ld]\n",(long)philo->time_to_eat);
-	printf("[TIME TO SLEEP = %ld]\n",(long)philo->time_to_sleep);
+	printf("[TIME TO DIE = %ld]\n", (long)philo->time_to_die);
+	printf("[TIME TO EAT = %ld]\n", (long)philo->time_to_eat);
+	printf("[TIME TO SLEEP = %ld]\n", (long)philo->time_to_sleep);
 	printf("[NB OF MEALS = %d]\n", philo->needed_meals);
 }

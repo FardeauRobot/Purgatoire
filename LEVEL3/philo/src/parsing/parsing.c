@@ -6,16 +6,15 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 14:31:25 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:32:39 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:17:58 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
 static void	ft_forks_init(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	philo->m_fork = malloc(sizeof(pthread_mutex_t) * philo->nb_forks);
 	if (!philo->m_fork)
@@ -28,12 +27,12 @@ static void	ft_forks_init(t_philo *philo)
 	}
 }
 
-static int ft_mutex_init(t_philo *philo)
+static int	ft_mutex_init(t_philo *philo)
 {
-	if (pthread_mutex_init(&philo->m_print, NULL) ||
-			pthread_mutex_init(&philo->m_is_dead, NULL) ||
-			pthread_mutex_init(&philo->m_lock_eat, NULL) ||
-			pthread_mutex_init(&philo->m_full, NULL))
+	if (pthread_mutex_init(&philo->m_print, NULL)
+		|| pthread_mutex_init(&philo->m_is_dead, NULL)
+		|| pthread_mutex_init(&philo->m_lock_eat, NULL)
+		|| pthread_mutex_init(&philo->m_full, NULL))
 		return (STANDARD_ERROR);
 	return (SUCCESS);
 }
@@ -65,8 +64,9 @@ static void	ft_philo_fill(t_philo *philo, long long tmp, int i)
 
 int	ft_parsing(t_philo *philo, int argc, char **argv)
 {
-	int i;
-	long long tmp;
+	int			i;
+	long long	tmp;
+
 	if (argc < 5 || argc > 6)
 		return (ft_error(ERR_MSG_ARGS, EXPECTED_ARGS, ERRN_PARSING));
 	i = 0;
@@ -76,8 +76,6 @@ int	ft_parsing(t_philo *philo, int argc, char **argv)
 	{
 		tmp = 0;
 		ft_atoll_safe(argv[i], &tmp);
-		// if (tmp < 0)
-		// 	ft_exit(philo, ERR_MSG_ARGS, EXPECTED_ARGS, ERRN_PARSING);
 		ft_philo_fill(philo, tmp, i);
 	}
 	ft_forks_init(philo);

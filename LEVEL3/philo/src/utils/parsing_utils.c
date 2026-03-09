@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 09:17:08 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:39:54 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:11:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	ft_bzero(void *ptr, int size)
 {
-	int i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = -1;
 	str = (char *)ptr;
@@ -24,9 +24,9 @@ void	ft_bzero(void *ptr, int size)
 }
 
 // CHECK NUMS
-int ft_isnum(char *str)
+int	ft_isnum(char *str)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (str[++i])
@@ -40,7 +40,7 @@ int ft_isnum(char *str)
 // INIT NUMBERS
 int	ft_atoll_safe(char *str, long long *nb)
 {
-	int i;
+	int	i;
 
 	if (ft_isnum(str) != SUCCESS)
 		ft_exit(NULL, INVALID_PARAM, str, ERRN_PARSING);

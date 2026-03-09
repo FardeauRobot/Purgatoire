@@ -6,13 +6,13 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 14:37:28 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:17:23 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:30:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_fork_handler(t_guest *guest, t_fork side)
+static int	ft_fork_handler(t_guest *guest, t_fork side)
 {
 	if (side != BOTH)
 	{

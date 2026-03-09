@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:41:52 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:25:38 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,8 @@ typedef enum e_err
 }	t_err;
 
 /* ============== ERROR MESSAGES ============================ */
-/*
-** Centralise your error strings here for consistency.
-** Usage:  print_error("open", ERR_MSG_PERM);
-*/
-# define EXPECTED_ARGS		"Expects : NB_PHILO DYING_TIME EATING_TIM SLEEP_TIME (NB_OF_MEALS)"
+
+# define EXPECTED_ARGS		"Expects: NB_PHILO D_TIME E_TIME S_TIME (NB_MEALS)"
 # define INVALID_PARAM		"Argument is not a valid number : "
 # define ERR_MSG_ARGS		"Wrong number of arguments. "
 # define ERR_PARSING		"Error parsing : "

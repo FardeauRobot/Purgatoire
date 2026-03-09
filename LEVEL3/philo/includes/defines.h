@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 09:13:48 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:37:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,45 +69,48 @@ typedef enum e_scales
 typedef struct s_philo	t_philo;
 typedef struct s_guest	t_guest;
 
-// START.C
-int	ft_meal(t_philo *philo);
-void	ft_start(t_philo *philo);
+/* ============== FUNCTIONS ==================================== */
 
-// PARSING_UILS.C
-int ft_isnum(char *str);
-int	ft_atoll_safe(char *str, long long *nb);
+// START.C
+int			ft_meal(t_philo *philo);
+void		ft_start(t_philo *philo);
 
 // PARSING.C
-int	ft_parsing(t_philo *philo, int argc, char **argv);
+int			ft_parsing(t_philo *philo, int argc, char **argv);
+
+// PARSING_UILS.C
+int			ft_isnum(char *str);
+int			ft_atoll_safe(char *str, long long *nb);
 
 // OUTPUT.C
-void	ft_action_print(t_guest *guest);
+void		ft_action_print(t_guest *guest);
 
 // ACTIONS.C
-void	ft_status_change(t_guest *guest, t_state status);
-int		ft_dead_check(t_philo *philo);
-int	ft_eat(t_guest *guest);
-int	ft_sleep(t_guest *guest);
-int	ft_think(t_guest *guest);
+int			ft_eat(t_guest *guest);
+int			ft_sleep(t_guest *guest);
+int			ft_think(t_guest *guest);
 
 // TIME.C
 long long	ft_think_time(t_guest *guest);
 long long	ft_get_time(t_scales scale);
-void	ft_precise_sleep(t_guest *guest);
-
-// TIME.C
-void	ft_exec_finished(t_philo *philo);
-
-// ERROR.C
-void	ft_philo_clean(t_philo *philo);
-
-// UTILS.C
-void	ft_status_change(t_guest *guest, t_state status);
-void	ft_meal_update(t_guest *guest);
-long long	ft_meal_read(t_guest *guest);
-int		ft_dead_check(t_philo *philo);
+void		ft_precise_sleep(t_guest *guest);
 
 // REAPER.C
-void	*ft_reaper(void *ptr);
+void		*ft_reaper(void *ptr);
+
+// ERROR.C
+void		ft_philo_clean(t_philo *philo);
+
+// UTILS.C
+void		ft_status_change(t_guest *guest, t_state status);
+void		ft_meal_update(t_guest *guest);
+long long	ft_meal_read(t_guest *guest);
+int			ft_dead_check(t_philo *philo);
+
+// UTILS/OUTPUT.C
+void		ft_bzero(void *ptr, int size);
+void		ft_putstr_fd(char *str, int fd);
+void		ft_putendl_fd(char *str, int fd);
+void		ft_print_main_philo(t_philo *philo);
 
 #endif

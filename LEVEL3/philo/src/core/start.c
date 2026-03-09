@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/03 14:39:15 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:24:15 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:29:46 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	ft_meal(t_philo *philo)
 	return (0);
 }
 
-void	*ft_routine(void *ptr)
+static void	*ft_routine(void *ptr)
 {
-	int i;
-	t_guest *guest;
+	int		i;
+	t_guest	*guest;
 
 	guest = (t_guest *)ptr;
 	i = -1;
@@ -46,9 +46,9 @@ void	*ft_routine(void *ptr)
 	return (NULL);
 }
 
-void	ft_guests_arr(t_philo *philo)
+static void	ft_guests_arr(t_philo *philo)
 {
-	int i;
+	int	i;
 
 	ft_bzero(&philo->guests, MAX_GUESTS * sizeof(t_guest));
 	i = -1;
@@ -58,23 +58,24 @@ void	ft_guests_arr(t_philo *philo)
 		philo->guests[i].data = philo;
 		philo->guests[i].status = STANDARD;
 		philo->guests[i].time_last_meal = philo->start_time;
-		// TODO : PROTEGER INIT MUTEX
-		pthread_mutex_init(&philo->guests[i].m_last_meal, NULL);
-		pthread_mutex_init(&philo->guests[i].m_status, NULL);
+		if (pthread_mutex_init(&philo->guests[i].m_last_meal, NULL)
+			|| pthread_mutex_init(&philo->guests[i].m_status, NULL))
+			ft_exit(philo, ERR_MUTEX, ERR_INIT, ERRN_THREADS);
 		philo->guests[i].forks[LEFT] = &philo->m_fork[i];
 		if (i == 0)
 			philo->guests[i].forks[RIGHT] = &philo->m_fork[philo->nb_philo - 1];
 		else
 			philo->guests[i].forks[RIGHT] = &philo->m_fork[i - 1];
 		philo->guests[i].print = &philo->m_print;
-		if (pthread_create(&philo->guests[i].thread, NULL, ft_routine, &philo->guests[i]))
+		if (pthread_create(&philo->guests[i].thread, NULL,
+				ft_routine, &philo->guests[i]))
 			ft_exit(philo, ERR_THREAD, ERR_INIT, ERRN_THREADS);
 	}
 }
 
 void	ft_start(t_philo *philo)
 {
-	int		i;
+	int			i;
 	pthread_t	reaper;
 
 	ft_guests_arr(philo);
@@ -84,9 +85,4 @@ void	ft_start(t_philo *philo)
 	while (++i < philo->nb_philo)
 		pthread_join(philo->guests[i].thread, NULL);
 	pthread_join(reaper, NULL);
-	// if (philo->full == philo->nb_philo)
-	// {
-	// 	ft_putstr_fd("Well, what a feast it was !\n", STDOUT_FILENO);
-	// 	ft_putstr_fd("Everybody's about to explode\n", STDOUT_FILENO);
-	// }
 }

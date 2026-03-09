@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 15:20:20 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 10:20:07 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 11:13:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ long long	ft_meal_read(t_guest *guest)
 	return (tmp);
 }
 
-int		ft_dead_check(t_philo *philo)
+int	ft_dead_check(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->m_is_dead);
 	if (philo->is_dead == 1)
