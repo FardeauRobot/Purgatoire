@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/04 13:03:22 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:41:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum e_err
 # define INVALID_PARAM		"Argument is not a valid number : "
 # define ERR_MSG_ARGS		"Wrong number of arguments. "
 # define ERR_PARSING		"Error parsing : "
-# define ERR_MAX_CAP		"Expects at most 250 guests"
+# define ERR_MAX_CAP		"Expects at most 200 guests"
 # define ERR_MAX_MEALS		"Can eat at most 10 000 meals, seems enough"
 # define ERR_GUESTS			"Not enough room at the table."
 # define ERR_TIME			"Duration exceeds the limit of the program : "

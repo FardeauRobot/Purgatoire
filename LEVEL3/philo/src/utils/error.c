@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:49 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 15:56:52 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:39:46 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	ft_philo_clean(t_philo *philo)
 
 void	ft_exit(t_philo *philo, char *context, char *detail, int error)
 {
-	ft_philo_clean(philo);
+	if (philo)
+		ft_philo_clean(philo);
 	ft_error(context, detail, error);
 	exit(EXIT_FAILURE);
 }

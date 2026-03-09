@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/04 09:17:08 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/04 12:40:22 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:39:54 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_atoll_safe(char *str, long long *nb)
 	i = -1;
 	while (str[++i])
 		*nb = *nb * 10 + str[i] - '0';
-	if (*nb > MAX_TIME)
+	if (*nb > MAX_TIME || *nb <= 0)
 		ft_exit(NULL, ERR_TIME, str, ERRN_PARSING);
 	if (*nb == 0)
 		ft_exit(NULL, INVALID_PARAM, str, ERRN_PARSING);

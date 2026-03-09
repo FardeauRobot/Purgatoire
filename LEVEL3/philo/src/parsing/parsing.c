@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 14:31:25 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/06 15:37:14 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 10:32:39 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	ft_parsing(t_philo *philo, int argc, char **argv)
 	{
 		tmp = 0;
 		ft_atoll_safe(argv[i], &tmp);
+		// if (tmp < 0)
+		// 	ft_exit(philo, ERR_MSG_ARGS, EXPECTED_ARGS, ERRN_PARSING);
 		ft_philo_fill(philo, tmp, i);
 	}
 	ft_forks_init(philo);
