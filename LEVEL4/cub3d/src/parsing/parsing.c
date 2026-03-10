@@ -6,12 +6,15 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:03:04 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/08 20:53:24 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/10 23:13:45 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+// FILE IN CHARGE OF THE PARSING BEFORE EXECUTION OF THE GAME
+
+// FILL THE MAP BASED ON THE FILE STORED IN T_CUB FILE
 int	ft_map_fill(t_cub *data)
 {
 	int i;
@@ -19,7 +22,7 @@ int	ft_map_fill(t_cub *data)
 	i = 0; 
 	while (data->file[i + data->index_map_start])
 		i++;
-	data->map = ft_calloc_gc(i, sizeof(char *), &data->gc_global);
+	data->map = ft_calloc_gc(i + 1, sizeof(char *), &data->gc_global);
 	if (!data->map)
 		return (ft_error(ERR_MSG_PARSING, ERR_MSG_MALLOC, ERRN_MALLOC));
 	i = -1;
@@ -28,21 +31,24 @@ int	ft_map_fill(t_cub *data)
 	return (SUCCESS);
 }
 
+// CHECKS FOR EMPTY CELLS OR NO WALLS ON THE T_DATA MAP
 static int	ft_cell_check(char **map, int y, int x)
 {
-    if (y == 0 || !map[y + 1])
-        return (FAILURE);
-    if (x == 0 || x >= (int)ft_strlen(map[y]) - 1)
-        return (FAILURE);
-    if (x >= (int)ft_strlen(map[y - 1]) || map[y - 1][x] == ' ')
-        return (FAILURE);
-    if (x >= (int)ft_strlen(map[y + 1]) || map[y + 1][x] == ' ')
-        return (FAILURE);
-    if (map[y][x - 1] == ' ' || map[y][x + 1] == ' ')
-        return (FAILURE);
-    return (SUCCESS);
+	if (y == 0 || !map[y + 1])
+		return (FAILURE);
+	if (x == 0)
+		return (FAILURE);
+	if (x >= (int)ft_strlen(map[y + 1]) || x >= (int)ft_strlen(map[y - 1]))
+		return (FAILURE);
+	if (ft_isspace(map[y - 1][x]) || ft_isspace(map[y + 1][x]))
+		return (FAILURE);
+	if (ft_isspace(map[y][x - 1]) || ft_isspace(map[y][x + 1]))
+		return (FAILURE);
+	return (SUCCESS);
 }
 
+// GOES THROUGH ALL THE MAPS AND CHECK FOR INVALID CHARS / MAP NOT CLOSED BY WALLS
+// ALSO INITALIZES INFOS ABOUT PLAYER (POS AND ORIENTATION)
 int	ft_map_check(t_cub *data)
 {
 	int x;
@@ -54,22 +60,25 @@ int	ft_map_check(t_cub *data)
 		x = -1;
 		while (data->map[y][++x] && data->map[y][x] != '\n')
 		{
-			if (ft_ischarset(data->map[y][x], "0NSEW"))
+			if (ft_ischarset(data->map[y][x], "01NSEW"))
 			{
 				if (ft_ischarset(data->map[y][x], "NSEW"))
 				{
-					if (data->start_pos[0] != 0 || data->start_pos[1] != 0)
+					if (data->player.pos[0] != 0 || data->player.pos[1] != 0)
 						return (ft_error(ERR_MSG_PARSING, ERR_MSG_PLAYER_COUNT, ERRN_PARSING));
-					data->start_pos[0] = y;
-					data->start_pos[1] = x;
+					ft_player_init(&data->player, x, y, data->map[y][x]);
 				}
-				if (ft_cell_check(data->map, y, x) != SUCCESS)
+				if (data->map[y][x] != '1' && ft_cell_check(data->map, y, x) != SUCCESS)
 					return (ft_error(ERR_MSG_PARSING, ERR_MSG_WALLS, ERRN_PARSING));
 			}
+			else if (!ft_isspace(data->map[y][x]))
+				return (ft_error(ERR_MSG_PARSING, ERR_MSG_INVALID_CHAR, ERRN_PARSING));
 		}
 	}
 	return (SUCCESS);
 }
+
+// TODO : HOW DO WE HANDLE THE CASE WHERE A TEXTURE INFO IS AFTER THE MAP
 
 /*
 ** FT_PARSING - MAIN PARSING ENTRY POINT
@@ -103,9 +112,9 @@ int	ft_parsing(t_cub *data, char **argv, int argc)
 
 	// CHECK MAP
 	if (ft_map_check(data) != SUCCESS) 
-		// TODO : CHANGE LE EXIT
 		ft_exit(data, ERRN_PARSING, NULL, NULL);
 
+	// RELEASE TMP MALLOCS (SPLITS / GNL / FILE)
 	ft_gc_free_all(&data->gc_tmp);
 	return (SUCCESS);
 }

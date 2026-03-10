@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 19:19:24 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/08 19:31:47 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/10 19:51:57 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ int	ft_file_store(t_cub *data)
 	line = get_next_line(data->fd_map);
 	while (line)
 	{
-		ft_gc_add_node(&data->gc_tmp, line);
+		if (ft_gc_add_node(&data->gc_tmp, line))
+			return (ft_error(ERR_MSG_PARSING, ERR_MSG_MALLOC, ERRN_MALLOC));
 		node = ft_lstnew_gc(line, &data->gc_tmp);
 		if (!node)
 			return (ft_error(ERR_MSG_PARSING, ERR_MSG_MALLOC, ERRN_MALLOC));

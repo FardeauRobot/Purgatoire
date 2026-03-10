@@ -1,0 +1,10 @@
+# Suppression for minilibx internal uninitialized bytes passed to X11/xcb
+{
+   mlx_uninit_xcb
+   Memcheck:Param
+   writev(vector[0])
+   ...
+   obj:*libxcb*
+   ...
+   fun:mlx_int_anti_resize_win
+}

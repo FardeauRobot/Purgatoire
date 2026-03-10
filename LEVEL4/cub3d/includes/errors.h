@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/08 20:50:41 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/10 23:01:08 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef enum e_err
 	ERRN_NONE,
 	ERRN_EMPTY_FILE,
 	ERRN_MALLOC,
+	ERRN_LOAD,
 	ERRN_OPEN,
 	ERRN_ARGS,
 	ERRN_TEXTURES,
@@ -35,12 +36,15 @@ typedef enum e_err
 # define ERR_MSG_ARGC	    "takes only : ./cub3d ./path_to_map"
 # define ERR_MSG_FORMAT		"file must end in .cub"
 # define ERR_MSG_INVALID_ID		"file must end in .cub"
+# define ERR_MSG_INVALID_CHAR	"Invalid char found on the map"
 # define ERR_MSG_PLAYER_COUNT	"Too much player located on the map"
 # define ERR_MSG_WALLS		"Map isn't closed by walls"
 # define ERR_MSG_PARSING	"error parsing"
 # define ERR_MSG_TEXTURES	"couldn't load all textures"
 # define ERR_MSG_OPEN		"cannot open file"
 # define ERR_MSG_EMPTY	    "empty file"
+# define ERR_MSG_LOADING	"Error while loading game"
+# define ERR_MSG_MLX		"Mlx didn't initiate properly"
 
 // ========= ERRORS_PARSING ============ //
 

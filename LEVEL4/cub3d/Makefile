@@ -19,6 +19,8 @@ SRCS_PATH	= src
 INC_PATH	= includes
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
+MLX_DIR		= minilibx-linux
+MLX			= $(MLX_DIR)/libmlx.a
 
 # ============== SUB-DIRECTORIES ===========================
 CORE_PATH		= $(SRCS_PATH)/core
@@ -30,13 +32,13 @@ UTILS_PATH		= $(SRCS_PATH)/utils
 SKELETON_FILES	= main.c
 
 # Core module
-CORE_FILES		=
+CORE_FILES		= game.c
 
 # Parsing module
-PARSING_FILES	= parsing.c parsing_textures.c
+PARSING_FILES	= parsing.c parsing_textures.c parsing_utils.c
 
 # Utility module
-UTILS_FILES		= error.c output.c parsing_utils.c
+UTILS_FILES		= error.c output.c loading_utils.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -50,8 +52,8 @@ OBJS	= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 # ============== COMPILATION ===============================
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g3
-INCS	= -I. -I$(INC_PATH) -I$(LIBFT_DIR) -I$(LIBFT_DIR)/includes
-LFLAGS	= -L$(LIBFT_DIR) -lft
+INCS	= -I. -I$(INC_PATH) -I$(LIBFT_DIR) -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
+LFLAGS	= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11
 
 # ============================================================
 #                        RULES
@@ -62,7 +64,10 @@ all: $(NAME)
 $(LIBFT):
 	@make -C $(LIBFT_DIR) --no-print-directory
 
-$(NAME): $(LIBFT) $(OBJS)
+$(MLX):
+	@make -C $(MLX_DIR) --no-print-directory
+
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(INCS) $(LFLAGS) -o $(NAME)
 	@printf "\n$(WHITE)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)$(GREEN)BUILD COMPLETE$(RESET)\n"
@@ -80,6 +85,7 @@ $(OBJ_DIR)/%.o: %.c
 clean:
 	@rm -rf $(OBJ_DIR)
 	@make clean -C $(LIBFT_DIR) --no-print-directory
+	@make clean -C $(MLX_DIR) --no-print-directory
 	@printf "\n$(WHITE)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)$(YELLOW)CLEAN COMPLETE$(RESET)\n"
 	@printf "$(WHITE)=====================================$(RESET)\n\n"
@@ -88,6 +94,7 @@ fclean:
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(NAME)
 	@make fclean -C $(LIBFT_DIR) --no-print-directory
+	@make clean -C $(MLX_DIR) --no-print-directory
 	@printf "\n$(WHITE)=====================================\n$(RESET)"
 	@printf "	   $(BOLD)$(YELLOW)FCLEAN COMPLETE$(RESET)\n"
 	@printf "$(WHITE)=====================================$(RESET)\n\n"
@@ -96,8 +103,10 @@ re: fclean all
 
 # ============== DEBUG & ANALYSIS ==========================
 
+TEST= ./$(NAME) ./maps/working/basic.cub
+
 test: $(NAME)
-	./$(NAME) ./maps/working/basic.cub
+	$(TEST)
 
 testformat: $(NAME)
 	./$(NAME) ./maps/broken/broken_format.ber
@@ -105,13 +114,16 @@ testformat: $(NAME)
 testopen: $(NAME)
 	./$(NAME) ./maps/broken/broken_access.cub
 
+testwalls: $(NAME)
+	./$(NAME) ./maps/broken/broken_walls.cub
+
 leaks: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
-		--track-origins=yes ./$(NAME) ./maps/working/basic.cub
+		--track-origins=yes $(TEST)
 
 leaks_supp: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes \
-		--suppressions=readline.supp --track-origins=yes ./$(NAME)
+		--suppressions=readline.supp --track-origins=yes $(TEST)
 
 sanitize: fclean
 	$(MAKE) CFLAGS="$(CFLAGS) -fsanitize=address -fno-omit-frame-pointer" all

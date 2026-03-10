@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/08 11:59:48 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/08 12:00:00 by fardeau          ###   ########.fr       */
+/*   Created: 2026/03/10 22:23:39 by fardeau           #+#    #+#             */
+/*   Updated: 2026/03/10 22:24:05 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#ifndef KEYS_H
+# define KEYS_H
 
-/*
-** FT_FORMAT_CHECK - VALIDATES THAT THE FILE EXTENSION IS .CUB
-** RETURNS SUCCESS IF VALID, FAILURE OTHERWISE
-*/
-int	ft_format_check(char *filepath)
-{
-	int	len_path;
+// DEFINE THE CONTROLS
+// WASD & co.
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
+# define KEY_Q 113
+# define KEY_E 101
 
-	len_path = ft_strlen(filepath);
-	if (ft_strncmp(&filepath[len_path - 4], ".cub", 4))
-		return (FAILURE);
-	return (SUCCESS);
-}
+// ARROWS
+# define KEY_UP 65362
+# define KEY_DOWN 65364
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
+
+// MISC
+# define KEY_ESC 65307
+# define KEY_SPACE 32
+# define KEY_ENTER 65293
+
+#endif

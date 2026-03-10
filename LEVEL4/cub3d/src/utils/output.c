@@ -6,11 +6,14 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:55:12 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/08 20:53:13 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/10 23:03:31 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// TODO : A DELETE A LA FIN
+//  FOR THE TEST
 
 /*
 ** FT_MATRIX_PRINT - PRINTS ALL STRINGS OF A NULL-TERMINATED CHAR ** TO STDOUT
@@ -43,11 +46,11 @@ void	ft_textures_print(t_textures *textures)
 */
 void	ft_cub_print(t_cub *data)
 {
-	ft_printf("[CUB3D MAIN STRUCT]\n");
-	ft_printf("[FD_MAP = %d]\n", data->fd_map);
-	ft_printf("[INDEX START = %d]\n", data->index_map_start);
-	ft_printf("[PLAYER START = [%d|%d]]\n", data->start_pos[0], data->start_pos[1]);
+	printf("[CUB3D MAIN STRUCT]\n");
+	printf("[FD_MAP = %d]\n", data->fd_map);
+	printf("[INDEX START = %d]\n", data->index_map_start);
+	printf("[PLAYER START = [%.2f|%.2f]]\n", data->player.pos[0], data->player.pos[1]);
 	ft_textures_print(&data->textures);
-	ft_printf("[MAP]\n");
+	printf("[MAP]\n");
 	ft_matrix_print(data->map);
 }

@@ -1,29 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   render_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/01 00:00:00 by author            #+#    #+#             */
-/*   Updated: 2026/03/10 22:45:51 by fardeau          ###   ########.fr       */
+/*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
+/*   Updated: 2026/03/10 22:45:04 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// THIS IS THE MAIN
-
-/*
-** MAIN - ENTRY POINT, INITS DATA, PARSES, PRINTS AND CLEANS UP
-*/
-int	main(int argc, char **argv)
-{
-	t_cub data;
-
-	ft_bzero(&data, sizeof(t_cub));
-	ft_parsing(&data, argv, argc);
-	ft_cub_print(&data);
-	ft_game(&data);
-	return (EXIT_SUCCESS);
-}
+// FILE USED TO RENDER THE MINIMAP
