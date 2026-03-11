@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 12:08:12 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/11 17:27:52 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,13 @@
 # define	WIN_NAME 	"cub3d"
 
 # define	TILE_SIZE 32
+# define	CHAR_SIZE TILE_SIZE / 4
+
 # define	EMPTY_TILE_COL 0xFFFFFF
 # define	WALL_TILE_COL 0xC0C0C0
+# define	CHAR_COL 0xFF0000
 
+# define	CHAR_SPEED 0.4
 
 /* ============== CORE ============================= */
 // GAME.C
@@ -47,9 +51,11 @@ int	ft_textures_parsing(t_cub *data);
 int	ft_map_render(void *cub);
 
 // RENDER_UTILS.C
+void	ft_img_init(t_cub *data, t_img *img, int width, int height);
 void	ft_pixel_draw(t_tile *tile, int x, int y, int color);
 
 // IMGS_INIT.C
+void	ft_tile_init(t_tile *tile);
 void	ft_tile_draw(t_tile *tile, int map_x, int map_y);
 void	ft_minimap_draw(t_minimap *minimap);
 
@@ -69,6 +75,7 @@ void	ft_data_clean(t_cub *data);
 void	ft_mlx_init(t_cub *data);
 
 // MAIN.C
+void	ft_char_init(t_cub *data);
 void	ft_minimap_init(t_map *map);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 11:12:21 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/11 16:38:09 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,11 @@ typedef struct s_map
 // STRUCTURE USED TO STORE ALL THE PLAYER INFOS
 typedef struct s_player
 {
+	t_img			char_img;
+	int				color;
 	double			pos[2];
 	t_orientation	orient;
+	t_cub			*data;
 }	t_player;
 
 // STRUCTURE USED AS THE MAIN ACCESS POINT

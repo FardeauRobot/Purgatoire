@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:59:48 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 11:07:47 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/11 16:26:48 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 void	ft_player_set(t_player *player, int x, int y, char orient)
 {
-	player->pos[0] = (double)y;
-	player->pos[1] = (double)x;
+	player->pos[0] = (double)y + 0.5;
+	player->pos[1] = (double)x + 0.5;
 	if (orient == 'N')
 		player->orient = NORTH;
 	if (orient == 'S')

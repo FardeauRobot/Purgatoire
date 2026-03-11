@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by author            #+#    #+#             */
-/*   Updated: 2026/03/10 22:45:15 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 17:30:41 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ int	ft_error(char *context, char *detail, int error)
 	return (error);
 }
 
+void	ft_destroy_imgs(t_cub *data)
+{
+	mlx_destroy_image(data->mlx, data->map.minimap.tiles[0].tile_img.img);
+	mlx_destroy_image(data->mlx, data->map.minimap.tiles[1].tile_img.img);
+	mlx_destroy_image(data->mlx, data->player.char_img.img);
+}
+
 /*
 ** FT_DATA_CLEAN - FREES ALL RESOURCES (GNL BUFFER, FD, GARBAGE COLLECTORS)
 */
@@ -39,6 +46,7 @@ void	ft_data_clean(t_cub *data)
 {
 	close(data->fd_map);
 	get_next_line(-1);
+	ft_destroy_imgs(data);
 	ft_gc_free_all(&data->gc_global);
 	ft_gc_free_all(&data->gc_tmp);
 	if (data->win)
