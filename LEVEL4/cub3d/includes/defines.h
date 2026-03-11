@@ -53,12 +53,15 @@ void	ft_char_draw(t_player *player);
 int	ft_map_render(void *cub);
 
 // RENDER_UTILS.C
-void	ft_img_init(t_cub *data, t_img *img, int width, int height);
 void	ft_img_pixel_put(t_img *img, int x, int y, int color);
 void	ft_img_fill(t_img *img, int color);
 
 // IMGS_INIT.C
+void	ft_img_init(t_cub *data, t_img *img, int width, int height);
 void	ft_minimap_init(t_map *map);
+void	ft_char_init(t_cub *data);
+
+// RENDER_MAP.C
 void	ft_tile_draw(t_tile *tile, int map_x, int map_y);
 
 /* ============== UTILS ============================= */
@@ -75,8 +78,5 @@ void	ft_data_clean(t_cub *data);
 
 // ERROR.C
 void	ft_mlx_init(t_cub *data);
-
-// MAIN.C
-void	ft_char_init(t_cub *data);
 
 #endif

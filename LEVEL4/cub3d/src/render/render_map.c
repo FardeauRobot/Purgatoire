@@ -12,6 +12,16 @@
 
 #include "cub3d.h"
 
+// FUNCTION USED TO DRAW ONE MINIMAP TILE AT THE GIVEN MAP POSITION
+void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
+{
+	mlx_put_image_to_window(tile->minimap->map->data->mlx,
+		tile->minimap->map->data->win,
+		tile->tile_img.img,
+		tile->minimap->offset_x + (map_x * TILE_SIZE),
+		tile->minimap->offset_y + (map_y * TILE_SIZE));
+}
+
 // FUNCTION USED TO DRAW THE WHOLE MINIMAP FROM THE MAP GRID
 void	ft_minimap_draw(t_minimap *minimap)
 {

@@ -12,20 +12,6 @@
 
 #include "cub3d.h"
 
-// FUNCTION USED TO INITIALIZE AN MLX IMAGE AND ITS RAW PIXEL BUFFER
-void	ft_img_init(t_cub *data, t_img *img, int width, int height)
-{
-	img->height = height;
-	img->width = width;
-	img->img = mlx_new_image(data->mlx, img->width, img->height);
-	if (!img->img)
-		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_FAIL_MLX);
-	img->addr = mlx_get_data_addr(img->img, &img->bpp,
-			&img->line_len, &img->endian);
-	if (!img->addr)
-		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_FAIL_MLX);
-}
-
 // FUNCTION USED TO WRITE ONE PIXEL AT THE GIVEN POSITION INSIDE AN IMAGE
 void	ft_img_pixel_put(t_img *img, int x, int y, int color)
 {

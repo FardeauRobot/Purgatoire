@@ -20,14 +20,18 @@ static int	ft_tile_color_get(t_etile content)
 	return (EMPTY_TILE_COL);
 }
 
-// FUNCTION USED TO DRAW ONE MINIMAP TILE AT THE GIVEN MAP POSITION
-void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
+// FUNCTION USED TO INITIALIZE AN MLX IMAGE AND ITS RAW PIXEL BUFFER
+void	ft_img_init(t_cub *data, t_img *img, int width, int height)
 {
-	mlx_put_image_to_window(tile->minimap->map->data->mlx,
-		tile->minimap->map->data->win,
-		tile->tile_img.img,
-		tile->minimap->offset_x + (map_x * TILE_SIZE),
-		tile->minimap->offset_y + (map_y * TILE_SIZE));
+	img->height = height;
+	img->width = width;
+	img->img = mlx_new_image(data->mlx, img->width, img->height);
+	if (!img->img)
+		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_FAIL_MLX);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp,
+			&img->line_len, &img->endian);
+	if (!img->addr)
+		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_FAIL_MLX);
 }
 
 // FUNCTION USED TO INITIALIZE ONE TILE IMAGE WITH THE RIGHT COLOR
