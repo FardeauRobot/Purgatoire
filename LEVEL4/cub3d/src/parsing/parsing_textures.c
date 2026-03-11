@@ -142,8 +142,8 @@ int	ft_file_store(t_cub *data)
 */
 int	ft_textures_parsing(t_cub *data)
 {
-	int i;
-	int ret;
+	int	i;
+	int	ret;
 
 	i = -1;
 	while (data->file[++i])
@@ -153,7 +153,7 @@ int	ft_textures_parsing(t_cub *data)
 			return (ret);
 		if (ret == FAILURE && !ft_is_only(data->file[i], ft_isspace))
 		{
-			data->index_map_start = i;
+			data->map.index_map_start = i;
 			return (SUCCESS);
 		}
 	}

@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_map.c                                       :+:      :+:    :+:   */
+/*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 10:42:01 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/11 08:37:28 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/11 11:25:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// FILE USED TO RENDER THE MINIMAP
-
-int	ft_map_render(void *cub)
+void	ft_pixel_draw(t_tile *tile, int x, int y, int color)
 {
-	t_cub *data;
+	t_img	*img;
+	void	*win;
 
-	data = (t_cub *)cub;
-	ft_minimap_draw(&data->map.minimap);
-	return (SUCCESS);
+	img = &tile->tile_img;
+	win = (void *)tile->minimap->map->data->win;
+	if (!img || !img->addr)
+		return;
+	if (x < 0 || y < 0)
+		return;
+	if (x >= img->width || y >= img->height)
+		return;
+	mlx_pixel_put(img, win, x, y, color);
 }

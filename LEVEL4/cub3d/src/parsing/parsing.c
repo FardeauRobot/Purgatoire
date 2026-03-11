@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:03:04 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/10 23:13:45 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 11:07:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,40 @@
 
 // FILE IN CHARGE OF THE PARSING BEFORE EXECUTION OF THE GAME
 
+static int	ft_map_width(char **map)
+{
+	int	i;
+	int	len;
+	int	max;
+
+	i = 0;
+	max = 0;
+	while (map[i])
+	{
+		len = ft_strlen(map[i]);
+		if (len > max)
+			max = len;
+		i++;
+	}
+	return (max);
+}
+
 // FILL THE MAP BASED ON THE FILE STORED IN T_CUB FILE
 int	ft_map_fill(t_cub *data)
 {
-	int i;
+	int	i;
 
-	i = 0; 
-	while (data->file[i + data->index_map_start])
+	i = 0;
+	while (data->file[i + data->map.index_map_start])
 		i++;
-	data->map = ft_calloc_gc(i + 1, sizeof(char *), &data->gc_global);
-	if (!data->map)
+	data->map.map = ft_calloc_gc(i + 1, sizeof(char *), &data->gc_global);
+	if (!data->map.map)
 		return (ft_error(ERR_MSG_PARSING, ERR_MSG_MALLOC, ERRN_MALLOC));
 	i = -1;
-	while (data->file[++i + data->index_map_start])
-		data->map[i] = data->file[i + data->index_map_start];
+	while (data->file[++i + data->map.index_map_start])
+		data->map.map[i] = data->file[i + data->map.index_map_start];
+	data->map.height = i;
+	data->map.width = ft_map_width(data->map.map);
 	return (SUCCESS);
 }
 
@@ -51,27 +71,29 @@ static int	ft_cell_check(char **map, int y, int x)
 // ALSO INITALIZES INFOS ABOUT PLAYER (POS AND ORIENTATION)
 int	ft_map_check(t_cub *data)
 {
-	int x;
-	int y;
+	int		x;
+	int		y;
+	char	**map;
 
+	map = data->map.map;
 	y = -1;
-	while (data->map[++y])
+	while (map[++y])
 	{
 		x = -1;
-		while (data->map[y][++x] && data->map[y][x] != '\n')
+		while (map[y][++x] && map[y][x] != '\n')
 		{
-			if (ft_ischarset(data->map[y][x], "01NSEW"))
+			if (ft_ischarset(map[y][x], "01NSEW"))
 			{
-				if (ft_ischarset(data->map[y][x], "NSEW"))
+				if (ft_ischarset(map[y][x], "NSEW"))
 				{
 					if (data->player.pos[0] != 0 || data->player.pos[1] != 0)
 						return (ft_error(ERR_MSG_PARSING, ERR_MSG_PLAYER_COUNT, ERRN_PARSING));
-					ft_player_init(&data->player, x, y, data->map[y][x]);
+					ft_player_set(&data->player, x, y, map[y][x]);
 				}
-				if (data->map[y][x] != '1' && ft_cell_check(data->map, y, x) != SUCCESS)
+				if (map[y][x] != '1' && ft_cell_check(map, y, x) != SUCCESS)
 					return (ft_error(ERR_MSG_PARSING, ERR_MSG_WALLS, ERRN_PARSING));
 			}
-			else if (!ft_isspace(data->map[y][x]))
+			else if (!ft_isspace(map[y][x]))
 				return (ft_error(ERR_MSG_PARSING, ERR_MSG_INVALID_CHAR, ERRN_PARSING));
 		}
 	}
@@ -114,6 +136,7 @@ int	ft_parsing(t_cub *data, char **argv, int argc)
 	if (ft_map_check(data) != SUCCESS) 
 		ft_exit(data, ERRN_PARSING, NULL, NULL);
 
+	data->map.data = data;
 	// RELEASE TMP MALLOCS (SPLITS / GNL / FILE)
 	ft_gc_free_all(&data->gc_tmp);
 	return (SUCCESS);

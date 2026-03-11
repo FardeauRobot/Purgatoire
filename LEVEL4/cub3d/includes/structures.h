@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/10 23:01:41 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 11:12:21 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ typedef enum e_orientation
 	EAST
 }	t_orientation;
 
+typedef enum e_etile
+{
+	EMPTY,
+	WALL
+}	t_etile;
+
 
 /* ============== STRUCTURES =============================== */
 
@@ -34,6 +40,13 @@ typedef enum e_orientation
 ** Centralises all runtime data so it can be passed to functions cleanly.
 ** Add your fields here as the project grows.
 */
+
+// RECALL FOR STRUCTURES USED BELOW THEIR CHILDREN
+typedef struct s_map t_map;
+typedef struct s_cub t_cub;
+typedef struct s_minimap t_minimap;
+
+// STRUCTURE USED TO STORE THE DIFFERENT INFOS ABOUT AN IMG
 typedef struct s_img
 {
 	void	*img;
@@ -41,59 +54,78 @@ typedef struct s_img
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
+	int		color;
 }	t_img;
 
+
+// STRUCTURE USED TO STORE ALL THE DIFFERENT TEXTURES INFO
 typedef struct s_textures
 {
+	t_img	empty_tile_map;
+	t_img	wall_tile_map;
 	char *north;
-	t_img *wall_n;
+	t_img wall_n;
 	char *south;
-	t_img *wall_s;
+	t_img wall_s;
 	char *east;
-	t_img *wall_e;
+	t_img wall_e;
 	char *west;
-	t_img *wall_w;
+	t_img wall_w;
 	char *floor;
 	char *ceiling;
 }	t_textures;
 
-typedef struct s_img_database
+// STRUCTURE USED TO PRINT TILES OF THE MINIMAP
+typedef struct s_tile
 {
-	/* data */
-	t_img	tile_wall;
-	t_img	tile_empty;
-	t_img	wall_north;
-	t_img	wall_south;
-	t_img	wall_west;
-	t_img	wall_east;
-}	t_img_database;
+	t_img	tile_img;
+	int y;
+	int x;
+	int color;
+	t_minimap *minimap;
+}	t_tile;
 
+// STRUCTURE USED TO STORE ALL THE MINIMAP INFOS -> NESTED IN MAP
+typedef struct s_minimap
+{
+	int		offset_x;
+	int		offset_y;
+	t_map	*map;
+	t_tile	tiles[2];
+}	t_minimap;
+
+// STRUCTURE USED TO STORE ALL THE MAP INFOS
+typedef struct s_map
+{
+	int	    index_map_start;
+	char 	**map;
+	int 	height;
+	int 	width;
+	t_minimap		minimap;
+	t_cub			*data;
+}	t_map;
+
+// STRUCTURE USED TO STORE ALL THE PLAYER INFOS
 typedef struct s_player
 {
 	double			pos[2];
 	t_orientation	orient;
 }	t_player;
 
-
+// STRUCTURE USED AS THE MAIN ACCESS POINT
 typedef struct s_cub
 {
 	void		    *mlx;
 	void		    *win;
-	int			    fd_map;
 	char		    **file;
-	int			    index_map_start;
-	char	    	**map;
+	int			    fd_map;
+	t_map			map;
 	t_player		player;
 	t_textures		textures;
-	t_img_database	img_data;
 	t_list		    *gc_global;
 	t_list		    *gc_tmp;
 }	t_cub;
-
-/*
-** Add project-specific structures here, e.g.:
-** typedef struct s_token { ... } t_token;
-** typedef struct s_cmd   { ... } t_cmd;
-*/
 
 #endif

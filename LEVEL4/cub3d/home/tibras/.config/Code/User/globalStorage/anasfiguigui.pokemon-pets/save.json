@@ -1,0 +1,22 @@
+{
+    "money": 0,
+    "pets": [
+        {
+            "specie": "Bulbasaur",
+            "name": "Bulbasaur",
+            "color": "generation 1",
+            "form": "Bulbasaur",
+            "sprite": "bulbasaur",
+            "spriteSize": 32
+        },
+        {
+            "specie": "Squirtle",
+            "name": "Squirtle",
+            "color": "generation 1",
+            "form": "Squirtle",
+            "sprite": "squirtle",
+            "spriteSize": 32
+        }
+    ],
+    "decoration": []
+}

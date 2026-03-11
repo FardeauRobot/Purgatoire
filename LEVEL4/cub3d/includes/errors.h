@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/10 23:01:08 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 11:30:45 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef enum e_err
 # define ERR_MSG_EMPTY	    "empty file"
 # define ERR_MSG_LOADING	"Error while loading game"
 # define ERR_MSG_MLX		"Mlx didn't initiate properly"
+# define ERR_FAIL_MLX		"Something went wrong with MLX"
 
 // ========= ERRORS_PARSING ============ //
 

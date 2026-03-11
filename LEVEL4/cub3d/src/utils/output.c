@@ -48,9 +48,10 @@ void	ft_cub_print(t_cub *data)
 {
 	printf("[CUB3D MAIN STRUCT]\n");
 	printf("[FD_MAP = %d]\n", data->fd_map);
-	printf("[INDEX START = %d]\n", data->index_map_start);
+	printf("[INDEX START = %d]\n", data->map.index_map_start);
+	printf("[MAP SIZE = %d x %d]\n", data->map.width, data->map.height);
 	printf("[PLAYER START = [%.2f|%.2f]]\n", data->player.pos[0], data->player.pos[1]);
 	ft_textures_print(&data->textures);
 	printf("[MAP]\n");
-	ft_matrix_print(data->map);
+	ft_matrix_print(data->map.map);
 }

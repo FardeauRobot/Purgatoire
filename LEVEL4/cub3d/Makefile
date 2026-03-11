@@ -24,6 +24,7 @@ MLX			= $(MLX_DIR)/libmlx.a
 
 # ============== SUB-DIRECTORIES ===========================
 CORE_PATH		= $(SRCS_PATH)/core
+RENDER_PATH		= $(SRCS_PATH)/render
 PARSING_PATH	= $(SRCS_PATH)/parsing
 UTILS_PATH		= $(SRCS_PATH)/utils
 
@@ -37,6 +38,9 @@ CORE_FILES		= game.c
 # Parsing module
 PARSING_FILES	= parsing.c parsing_textures.c parsing_utils.c
 
+# Render module
+RENDER_FILES	= render_map.c render_utils.c imgs_init.c
+
 # Utility module
 UTILS_FILES		= error.c output.c loading_utils.c
 
@@ -44,6 +48,7 @@ UTILS_FILES		= error.c output.c loading_utils.c
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
 		$(addprefix $(CORE_PATH)/, $(CORE_FILES)) \
 		$(addprefix $(PARSING_PATH)/, $(PARSING_FILES)) \
+		$(addprefix $(RENDER_PATH)/, $(RENDER_FILES)) \
 		$(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
 
 OBJ_DIR	= objs

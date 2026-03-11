@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:59:48 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/10 23:02:15 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 11:07:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** RETURNS SUCCESS IF VALID, FAILURE OTHERWISE
 */
 
-void	ft_player_init(t_player *player, int x, int y, char orient)
+void	ft_player_set(t_player *player, int x, int y, char orient)
 {
 	player->pos[0] = (double)y;
 	player->pos[1] = (double)x;
