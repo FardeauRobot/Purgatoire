@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 17:27:52 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 17:35:27 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,18 @@ int	ft_textures_parsing(t_cub *data);
 
 /* ============== RENDER ============================= */
 // RENDER_MAP.C
+void	ft_minimap_draw(t_minimap *minimap);
+void	ft_char_draw(t_player *player);
 int	ft_map_render(void *cub);
 
 // RENDER_UTILS.C
 void	ft_img_init(t_cub *data, t_img *img, int width, int height);
-void	ft_pixel_draw(t_tile *tile, int x, int y, int color);
+void	ft_img_pixel_put(t_img *img, int x, int y, int color);
+void	ft_img_fill(t_img *img, int color);
 
 // IMGS_INIT.C
-void	ft_tile_init(t_tile *tile);
+void	ft_minimap_init(t_map *map);
 void	ft_tile_draw(t_tile *tile, int map_x, int map_y);
-void	ft_minimap_draw(t_minimap *minimap);
 
 /* ============== UTILS ============================= */
 // OUTPUT.C
@@ -76,6 +78,5 @@ void	ft_mlx_init(t_cub *data);
 
 // MAIN.C
 void	ft_char_init(t_cub *data);
-void	ft_minimap_init(t_map *map);
 
 #endif

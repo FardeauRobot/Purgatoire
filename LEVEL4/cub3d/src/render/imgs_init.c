@@ -6,46 +6,21 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 08:49:47 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 17:32:47 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 17:49:27 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	ft_char_img_fill(t_player *character)
+// FUNCTION USED TO RETURN THE DISPLAY COLOR ASSOCIATED WITH A TILE TYPE
+static int	ft_tile_color_get(t_etile content)
 {
-	int			x;
-	int			y;
-	char		*dst;
-	t_img		*img;
-
-	img = &character->char_img;
-	y = -1;
-	while (++y < img->height)
-	{
-		x = -1;
-		while (++x < img->width)
-		{
-			dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-			*(unsigned int *)dst = character->color;
-		}
-	}
+	if (content == WALL)
+		return (WALL_TILE_COL);
+	return (EMPTY_TILE_COL);
 }
 
-void	ft_tile_init(t_tile *tile)
-{
-	int x;
-	int y;
-
-	y = -1;
-	while (++y < TILE_SIZE)
-	{
-		x = -1;
-		while (++x < TILE_SIZE)
-			ft_pixel_draw(tile, x, y, tile->tile_img.color);
-	}
-}
-
+// FUNCTION USED TO DRAW ONE MINIMAP TILE AT THE GIVEN MAP POSITION
 void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
 {
 	mlx_put_image_to_window(tile->minimap->map->data->mlx,
@@ -55,34 +30,32 @@ void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
 		tile->minimap->offset_y + (map_y * TILE_SIZE));
 }
 
-void	ft_minimap_draw(t_minimap *minimap)
+// FUNCTION USED TO INITIALIZE ONE TILE IMAGE WITH THE RIGHT COLOR
+void ft_tiles_init(t_tile *tile, t_minimap *minimap, t_etile content)
 {
-	int y;
-	int x;
-
-	y = -1;
-	while (++y < minimap->map->height)
-	{
-		x = -1;
-		while (++x < minimap->map->width)
-		{
-			if (ft_ischarset(minimap->map->map[y][x], "0NSEW"))
-				ft_tile_draw(&minimap->tiles[EMPTY], x, y);
-			else if (minimap->map->map[y][x] == '1')
-				ft_tile_draw(&minimap->tiles[WALL], x, y);
-		}
-	}
+	tile->minimap = minimap;
+	ft_img_init(minimap->map->data, &tile->tile_img, TILE_SIZE, TILE_SIZE);
+	tile->tile_img.color = ft_tile_color_get(content);
+	ft_img_fill(&tile->tile_img, tile->tile_img.color);
 }
 
-// FUNCTION USED TO PRINT THE CHAR POSITION ON THE MINIMAP
+// FUNCTION USED TO INITIALIZE ALL IMAGES NEEDED BY THE MINIMAP
+void	ft_minimap_init(t_map *map)
+{
+	map->minimap.map = map;
+	ft_tiles_init(&map->minimap.tiles[EMPTY], &map->minimap, EMPTY);
+	ft_tiles_init(&map->minimap.tiles[WALL], &map->minimap, WALL);
+}
+
+// FUNCTION USED TO INITIALIZE THE PLAYER MARKER IMAGE FOR THE MINIMAP
 void	ft_char_init(t_cub *data)
 {
-	t_player *character;
+	t_player	*character;
 
 	character = &data->player;
 	character->data = data;
-	character->color = CHAR_COL;
 	ft_img_init(data, &character->char_img, CHAR_SIZE, CHAR_SIZE);
-	ft_char_img_fill(character);
+	character->char_img.color = CHAR_COL;
+	ft_img_fill(&character->char_img, character->char_img.color);
 }
 

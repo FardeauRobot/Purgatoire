@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 16:38:09 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 17:38:47 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_tile
 	t_img	tile_img;
 	int y;
 	int x;
-	int color;
 	t_minimap *minimap;
 }	t_tile;
 
@@ -111,7 +110,6 @@ typedef struct s_map
 typedef struct s_player
 {
 	t_img			char_img;
-	int				color;
 	double			pos[2];
 	t_orientation	orient;
 	t_cub			*data;

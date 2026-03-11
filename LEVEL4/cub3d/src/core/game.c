@@ -12,6 +12,7 @@
 
 #include "cub3d.h"
 
+// FUNCTION USED TO HANDLE KEYBOARD INPUT DURING THE GAME LOOP
 int	ft_keys_handle(int keycode, void *data)
 {
 	t_cub *cub;
@@ -33,7 +34,7 @@ int	ft_keys_handle(int keycode, void *data)
 	return (SUCCESS);
 }
 
-
+// FUNCTION USED TO INITIALIZE MLX, THE MINIMAP AND THE PLAYER MARKER
 void	ft_game_init(t_cub *data)
 {
 	ft_mlx_init(data);
@@ -46,9 +47,7 @@ void	ft_game_init(t_cub *data)
 	ft_printf("COUCOU INIT\n");
 }
 
-/*
-** HANDLES ALL THE GAME LOGIC AFTER PARSING
-*/
+// FUNCTION USED TO START THE GAME LOOP AFTER PARSING IS DONE
 void	ft_game(t_cub *data)
 {
 	ft_game_init(data);
