@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 17:35:08 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 19:36:00 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,30 @@ void	ft_char_draw(t_player *player)
 	int	screen_y;
 
 	screen_x = player->data->map.minimap.offset_x
-		+ (int)(player->pos[1] * TILE_SIZE) - (player->char_img.width / 2);
+		+ (int)(player->pos_x * TILE_SIZE) - (player->char_img.width / 2);
 	screen_y = player->data->map.minimap.offset_y
-		+ (int)(player->pos[0] * TILE_SIZE) - (player->char_img.height / 2);
+		+ (int)(player->pos_y * TILE_SIZE) - (player->char_img.height / 2);
 	mlx_put_image_to_window(player->data->mlx,
 		player->data->win,
 		player->char_img.img,
+		screen_x,
+		screen_y);
+}
+
+void	ft_orient_draw(t_player *player)
+{
+	int	screen_x;
+	int	screen_y;
+
+	screen_x = player->data->map.minimap.offset_x
+		+ (int)((player->pos_x + player->dir_x) * TILE_SIZE)
+		- (player->test_view.width / 2);
+	screen_y = player->data->map.minimap.offset_y
+		+ (int)((player->pos_y + player->dir_y) * TILE_SIZE)
+		- (player->test_view.height / 2);
+	mlx_put_image_to_window(player->data->mlx,
+		player->data->win,
+		player->test_view.img,
 		screen_x,
 		screen_y);
 }
@@ -67,5 +85,6 @@ int	ft_map_render(void *cub)
 	data = (t_cub *)cub;
 	ft_minimap_draw(&data->map.minimap);
 	ft_char_draw(&data->player);
+	ft_orient_draw(&data->player);
 	return (SUCCESS);
 }

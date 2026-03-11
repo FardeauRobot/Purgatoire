@@ -42,7 +42,7 @@ PARSING_FILES	= parsing.c parsing_textures.c parsing_utils.c
 RENDER_FILES	= render_map.c render_utils.c imgs_init.c
 
 # Utility module
-UTILS_FILES		= error.c output.c loading_utils.c
+UTILS_FILES		= error.c output.c loading_utils.c vectors.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \

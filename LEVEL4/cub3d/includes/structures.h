@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 17:38:47 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 19:30:36 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,13 @@ typedef struct s_map
 typedef struct s_player
 {
 	t_img			char_img;
-	double			pos[2];
+	t_img			test_view;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			camera_plane_x;
+	double			camera_plane_y;
 	t_orientation	orient;
 	t_cub			*data;
 }	t_player;

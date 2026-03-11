@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 08:49:47 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 17:49:27 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 19:37:39 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	ft_char_init(t_cub *data)
 	character = &data->player;
 	character->data = data;
 	ft_img_init(data, &character->char_img, CHAR_SIZE, CHAR_SIZE);
+	ft_img_init(data, &character->test_view, CHAR_SIZE / 2, CHAR_SIZE / 2);
 	character->char_img.color = CHAR_COL;
 	ft_img_fill(&character->char_img, character->char_img.color);
+	ft_img_fill(&character->test_view, character->char_img.color);
 }
 

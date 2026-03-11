@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 21:54:39 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 17:18:52 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 19:47:39 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,24 @@ int	ft_keys_handle(int keycode, void *data)
 		if (cub->mlx)
 			mlx_loop_end(cub->mlx);
 	}
+	if (keycode == KEY_LEFT)
+	{
+		cub->player.dir_x -= 0.1;
+		cub->player.dir_y += 0.1;
+	}
+	if (keycode == KEY_RIGHT)
+	{
+		cub->player.dir_x += 0.1;
+		cub->player.dir_y -= 0.1;
+	}
 	if (keycode == KEY_W)
-		cub->player.pos[0]--;
+		cub->player.pos_y--;
 	if (keycode == KEY_S)
-		cub->player.pos[0]++;
+		cub->player.pos_y++;
 	if (keycode == KEY_A)
-		cub->player.pos[1]--;
+		cub->player.pos_x--;
 	if (keycode == KEY_D)
-		cub->player.pos[1]++;
+		cub->player.pos_x++;
 	return (SUCCESS);
 }
 

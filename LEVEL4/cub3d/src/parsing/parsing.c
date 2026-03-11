@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:03:04 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 11:07:43 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/11 18:53:02 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	ft_map_check(t_cub *data)
 			{
 				if (ft_ischarset(map[y][x], "NSEW"))
 				{
-					if (data->player.pos[0] != 0 || data->player.pos[1] != 0)
+					if (data->player.pos_y != 0 || data->player.pos_x != 0)
 						return (ft_error(ERR_MSG_PARSING, ERR_MSG_PLAYER_COUNT, ERRN_PARSING));
 					ft_player_set(&data->player, x, y, map[y][x]);
 				}

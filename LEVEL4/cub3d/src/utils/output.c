@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:55:12 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/10 23:03:31 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/11 18:53:44 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_cub_print(t_cub *data)
 	printf("[FD_MAP = %d]\n", data->fd_map);
 	printf("[INDEX START = %d]\n", data->map.index_map_start);
 	printf("[MAP SIZE = %d x %d]\n", data->map.width, data->map.height);
-	printf("[PLAYER START = [%.2f|%.2f]]\n", data->player.pos[0], data->player.pos[1]);
+	printf("[PLAYER START = [%.2f|%.2f]]\n", data->player.pos_y, data->player.pos_x);
 	ft_textures_print(&data->textures);
 	printf("[MAP]\n");
 	ft_matrix_print(data->map.map);
