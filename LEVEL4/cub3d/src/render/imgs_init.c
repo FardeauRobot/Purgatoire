@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imgs_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 08:49:47 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 19:37:39 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/13 17:43:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_img_init(t_cub *data, t_img *img, int width, int height)
 void ft_tiles_init(t_tile *tile, t_minimap *minimap, t_etile content)
 {
 	tile->minimap = minimap;
-	ft_img_init(minimap->map->data, &tile->tile_img, TILE_SIZE, TILE_SIZE);
+	ft_img_init(DATA(minimap), &tile->tile_img, TILE_SIZE, TILE_SIZE);
 	tile->tile_img.color = ft_tile_color_get(content);
 	ft_img_fill(&tile->tile_img, tile->tile_img.color);
 }

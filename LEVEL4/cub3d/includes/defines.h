@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/13 12:09:32 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:43:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 /* ============== RETURN CODES ============================= */
 # define SUCCESS 0
 # define FAILURE 1
+
+/* ============== MACROS ============================================= */
+# define DATA(ptr) 		((t_cub *)ft_get_struct(ptr, S_DATA))
+# define MAP(ptr) 		((t_map *)ft_get_struct(ptr, S_MAP))
+# define MINIMAP(ptr) 	((t_minimap *)ft_get_struct(ptr, S_MINIMAP))
+# define PLAYER(ptr) 	((t_player *)ft_get_struct(ptr, S_PLAYER))
 
 /* ============== GAME MACROS ============================= */
 
@@ -78,5 +84,10 @@ void	ft_data_clean(t_cub *data);
 
 // ERROR.C
 void	ft_mlx_init(t_cub *data);
+
+// STRUCT_UTILS.C
+void	ft_struct_affect(t_cub *data, t_p_structs *p_structs);
+void	*ft_get_struct(void *ptr, int struct_id);
+void	ft_init_structs(t_cub *data);
 
 #endif

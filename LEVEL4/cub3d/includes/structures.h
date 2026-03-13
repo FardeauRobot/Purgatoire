@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/13 12:39:58 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/13 13:23:44 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@ typedef enum e_etile
 	EMPTY,
 	WALL
 }	t_etile;
+
+typedef enum e_struct_id
+{
+	S_DATA,
+	S_MAP,
+	S_MINIMAP,
+	S_PLAYER
+}	t_struct_id;
 
 /* ============== STRUCTURES =============================== */
 

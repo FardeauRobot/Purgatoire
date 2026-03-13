@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/13 12:32:38 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:43:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // FUNCTION USED TO DRAW ONE MINIMAP TILE AT THE GIVEN MAP POSITION
 void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
 {
-	mlx_put_image_to_window(tile->minimap->map->data->mlx,
-		tile->minimap->map->data->win,
+	mlx_put_image_to_window(DATA(tile->minimap)->mlx,
+		DATA(tile->minimap)->win,
 		tile->tile_img.img,
 		tile->minimap->offset_x + (map_x * TILE_SIZE),
 		tile->minimap->offset_y + (map_y * TILE_SIZE));
@@ -49,12 +49,12 @@ void	ft_char_draw(t_player *player)
 	int	screen_x;
 	int	screen_y;
 
-	screen_x = player->data->map.minimap.offset_x
+	screen_x = DATA(player)->map.minimap.offset_x
 		+ (int)(player->pos_x * TILE_SIZE) - (player->char_img.width / 2);
-	screen_y = player->data->map.minimap.offset_y
+	screen_y = DATA(player)->map.minimap.offset_y
 		+ (int)(player->pos_y * TILE_SIZE) - (player->char_img.height / 2);
-	mlx_put_image_to_window(player->data->mlx,
-		player->data->win,
+	mlx_put_image_to_window(DATA(player)->mlx,
+		DATA(player)->win,
 		player->char_img.img,
 		screen_x,
 		screen_y);
@@ -65,14 +65,14 @@ void	ft_orient_draw(t_player *player)
 	int	screen_x;
 	int	screen_y;
 
-	screen_x = player->data->map.minimap.offset_x
+	screen_x = DATA(player)->map.minimap.offset_x
 		+ (int)((player->pos_x + player->dir_x) * TILE_SIZE)
 		- (player->test_view.width / 2);
-	screen_y = player->data->map.minimap.offset_y
+	screen_y = DATA(player)->map.minimap.offset_y
 		+ (int)((player->pos_y + player->dir_y) * TILE_SIZE)
 		- (player->test_view.height / 2);
-	mlx_put_image_to_window(player->data->mlx,
-		player->data->win,
+	mlx_put_image_to_window(DATA(player)->mlx,
+		DATA(player)->win,
 		player->test_view.img,
 		screen_x,
 		screen_y);

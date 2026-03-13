@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 21:54:39 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/12 10:59:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/13 17:43:28 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ int	ft_keys_handle(int keycode, void *data)
 // FUNCTION USED TO INITIALIZE MLX, THE MINIMAP AND THE PLAYER MARKER
 void	ft_game_init(t_cub *data)
 {
+	ft_init_structs(data);
 	ft_mlx_init(data);
-	data->map.minimap.map = &data->map;
-	data->map.data = data;
 	ft_minimap_init(&data->map);
 	ft_char_init(data);
 	// ft_map_init(data->map.minimap);
