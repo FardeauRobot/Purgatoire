@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 21:54:39 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 19:47:39 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/12 10:59:20 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_game_init(t_cub *data)
 	ft_minimap_init(&data->map);
 	ft_char_init(data);
 	// ft_map_init(data->map.minimap);
-	// ft_minimap_init(data->map.minimap);
 	ft_printf("COUCOU INIT\n");
 }
 

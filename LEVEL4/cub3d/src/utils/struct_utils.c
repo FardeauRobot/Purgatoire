@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vectors.c                                          :+:      :+:    :+:   */
+/*   struct_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/11 18:59:00 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/12 11:01:06 by tibras           ###   ########.fr       */
+/*   Created: 2026/03/13 12:36:28 by tibras            #+#    #+#             */
+/*   Updated: 2026/03/13 12:42:40 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	ft_oritentation_hande(t_player *player)
+void	ft_struct_affect(t_cub *data, t_p_structs *p_structs)
 {
-	(void)player->dir_x;
-	(void)player->dir_y;
+	p_structs->p_data = data;
+	p_structs->p_map = &data->map;
+	p_structs->p_minimap = &data->minimap;
+	p_structs->p_player = &data->player;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 19:36:00 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/13 12:32:38 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
 // FUNCTION USED TO DRAW THE WHOLE MINIMAP FROM THE MAP GRID
 void	ft_minimap_draw(t_minimap *minimap)
 {
+	
 	int	y;
 	int	x;
 
