@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/08 11:03:04 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 18:53:02 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 16:41:27 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	ft_map_width(char **map)
 }
 
 // FILL THE MAP BASED ON THE FILE STORED IN T_CUB FILE
-int	ft_map_fill(t_cub *data)
+void	ft_map_fill(t_cub *data)
 {
 	int	i;
 
@@ -42,13 +42,12 @@ int	ft_map_fill(t_cub *data)
 		i++;
 	data->map.map = ft_calloc_gc(i + 1, sizeof(char *), &data->gc_global);
 	if (!data->map.map)
-		return (ft_error(ERR_MSG_PARSING, ERR_MSG_MALLOC, ERRN_MALLOC));
+		ft_exit(data, ERRN_MALLOC, ERR_MSG_PARSING, ERR_MSG_MALLOC);
 	i = -1;
 	while (data->file[++i + data->map.index_map_start])
 		data->map.map[i] = data->file[i + data->map.index_map_start];
 	data->map.height = i;
 	data->map.width = ft_map_width(data->map.map);
-	return (SUCCESS);
 }
 
 // CHECKS FOR EMPTY CELLS OR NO WALLS ON THE T_DATA MAP
@@ -69,7 +68,7 @@ static int	ft_cell_check(char **map, int y, int x)
 
 // GOES THROUGH ALL THE MAPS AND CHECK FOR INVALID CHARS / MAP NOT CLOSED BY WALLS
 // ALSO INITALIZES INFOS ABOUT PLAYER (POS AND ORIENTATION)
-int	ft_map_check(t_cub *data)
+void	ft_map_check(t_cub *data)
 {
 	int		x;
 	int		y;
@@ -87,17 +86,16 @@ int	ft_map_check(t_cub *data)
 				if (ft_ischarset(map[y][x], "NSEW"))
 				{
 					if (data->player.pos_y != 0 || data->player.pos_x != 0)
-						return (ft_error(ERR_MSG_PARSING, ERR_MSG_PLAYER_COUNT, ERRN_PARSING));
+						ft_exit(data, ERRN_PARSING, ERR_MSG_PARSING, ERR_MSG_PLAYER_COUNT);
 					ft_player_set(&data->player, x, y, map[y][x]);
 				}
 				if (map[y][x] != '1' && ft_cell_check(map, y, x) != SUCCESS)
-					return (ft_error(ERR_MSG_PARSING, ERR_MSG_WALLS, ERRN_PARSING));
+					ft_exit(data, ERRN_PARSING, ERR_MSG_PARSING, ERR_MSG_WALLS);
 			}
 			else if (!ft_isspace(map[y][x]))
-				return (ft_error(ERR_MSG_PARSING, ERR_MSG_INVALID_CHAR, ERRN_PARSING));
+				ft_exit(data, ERRN_PARSING, ERR_MSG_PARSING, ERR_MSG_INVALID_CHAR);
 		}
 	}
-	return (SUCCESS);
 }
 
 // TODO : HOW DO WE HANDLE THE CASE WHERE A TEXTURE INFO IS AFTER THE MAP
@@ -129,14 +127,11 @@ int	ft_parsing(t_cub *data, char **argv, int argc)
 		ft_exit(data, ERRN_PARSING, ERR_MSG_PARSING, ERR_MSG_TEXTURES);
 
 	// FILL MAP
-	if (ft_map_fill(data) != SUCCESS)
-		ft_exit(data, ERRN_PARSING, NULL, NULL);
+	ft_map_fill(data);
 
 	// CHECK MAP
-	if (ft_map_check(data) != SUCCESS) 
-		ft_exit(data, ERRN_PARSING, NULL, NULL);
+	ft_map_check(data);
 
-	data->map.data = data;
 	// RELEASE TMP MALLOCS (SPLITS / GNL / FILE)
 	ft_gc_free_all(&data->gc_tmp);
 	return (SUCCESS);

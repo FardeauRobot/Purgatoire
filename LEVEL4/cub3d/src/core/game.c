@@ -6,63 +6,60 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 21:54:39 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 19:47:39 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 19:13:08 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// FUNCTION USED TO HANDLE KEYBOARD INPUT DURING THE GAME LOOP
-int	ft_keys_handle(int keycode, void *data)
+void	ft_rotate(t_player *player)
 {
-	t_cub *cub;
+	double	old_dir_x;
+	double	rot;
 
-	cub = (t_cub *)data;
-	if (keycode == KEY_ESC)
-	{
-		if (cub->mlx)
-			mlx_loop_end(cub->mlx);
-	}
-	if (keycode == KEY_LEFT)
-	{
-		cub->player.dir_x -= 0.1;
-		cub->player.dir_y += 0.1;
-	}
-	if (keycode == KEY_RIGHT)
-	{
-		cub->player.dir_x += 0.1;
-		cub->player.dir_y -= 0.1;
-	}
-	if (keycode == KEY_W)
-		cub->player.pos_y--;
-	if (keycode == KEY_S)
-		cub->player.pos_y++;
-	if (keycode == KEY_A)
-		cub->player.pos_x--;
-	if (keycode == KEY_D)
-		cub->player.pos_x++;
-	return (SUCCESS);
+	if (player->rotating == NONE)
+		return;
+	if (player->rotating == LEFT)
+		rot = -ROT_SPEED;
+	if (player->rotating == RIGHT)
+		rot = ROT_SPEED;
+	old_dir_x = player->dir_x;
+	player->dir_x = old_dir_x * cos(rot) - player->dir_y * sin(rot);
+	player->dir_y = old_dir_x * sin(rot) + player->dir_y * cos(rot);
 }
 
 // FUNCTION USED TO INITIALIZE MLX, THE MINIMAP AND THE PLAYER MARKER
+void	ft_move_update(void *cub)
+{
+	t_cub	*data;
+
+	data = (t_cub *)cub;
+	if (data->player.rotating != NONE )
+		ft_rotate(&data->player);
+}
+
+int	ft_game_loop(void *cub)
+{
+	ft_move_update(cub);
+	ft_map_render(cub);
+	return (SUCCESS);
+}
+
 void	ft_game_init(t_cub *data)
 {
 	ft_mlx_init(data);
-	data->map.minimap.map = &data->map;
-	data->map.data = data;
 	ft_minimap_init(&data->map);
 	ft_char_init(data);
-	// ft_map_init(data->map.minimap);
-	// ft_minimap_init(data->map.minimap);
-	ft_printf("COUCOU INIT\n");
 }
 
 // FUNCTION USED TO START THE GAME LOOP AFTER PARSING IS DONE
 void	ft_game(t_cub *data)
 {
 	ft_game_init(data);
-	mlx_key_hook(data->win, ft_keys_handle, data);
-	mlx_loop_hook(data->mlx, ft_map_render, data);
+	// mlx_key_hook(data->win, ft_keys_handle, data);
+	mlx_loop_hook(data->mlx, ft_game_loop, data);
+	mlx_hook(data->win, 2, 1L << 0, ft_press_keys, data);
+	mlx_hook(data->win, 3, 1L << 1, ft_release_keys, data);
 	mlx_loop(data->mlx);
 	ft_data_clean(data);
 }

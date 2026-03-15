@@ -6,20 +6,20 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/11 19:36:00 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 19:20:41 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 // FUNCTION USED TO DRAW ONE MINIMAP TILE AT THE GIVEN MAP POSITION
-void	ft_tile_draw(t_tile *tile, int map_x, int map_y)
+void	ft_tile_draw(t_minimap *minimap, t_tile *tile, int map_x, int map_y)
 {
-	mlx_put_image_to_window(tile->minimap->map->data->mlx,
-		tile->minimap->map->data->win,
+	mlx_put_image_to_window(minimap->p_structs->p_cub->mlx,
+		minimap->p_structs->p_cub->win,
 		tile->tile_img.img,
-		tile->minimap->offset_x + (map_x * TILE_SIZE),
-		tile->minimap->offset_y + (map_y * TILE_SIZE));
+		minimap->offset_x + (map_x * TILE_SIZE),
+		minimap->offset_y + (map_y * TILE_SIZE));
 }
 
 // FUNCTION USED TO DRAW THE WHOLE MINIMAP FROM THE MAP GRID
@@ -27,17 +27,19 @@ void	ft_minimap_draw(t_minimap *minimap)
 {
 	int	y;
 	int	x;
+	int	len;
 
 	y = -1;
-	while (++y < minimap->map->height)
+	while (++y < minimap->p_structs->p_map->height)
 	{
 		x = -1;
-		while (++x < minimap->map->width)
+		len = ft_strlen(minimap->p_structs->p_map->map[y]);
+		while (++x < len)
 		{
-			if (ft_ischarset(minimap->map->map[y][x], "0NSEW"))
-				ft_tile_draw(&minimap->tiles[EMPTY], x, y);
-			else if (minimap->map->map[y][x] == '1')
-				ft_tile_draw(&minimap->tiles[WALL], x, y);
+			if (ft_ischarset(minimap->p_structs->p_map->map[y][x], "0NSEW"))
+				ft_tile_draw(minimap, &minimap->tiles[EMPTY], x, y);
+			else if (minimap->p_structs->p_map->map[y][x] == '1')
+				ft_tile_draw(minimap, &minimap->tiles[WALL], x, y);
 		}
 	}
 }
@@ -48,12 +50,12 @@ void	ft_char_draw(t_player *player)
 	int	screen_x;
 	int	screen_y;
 
-	screen_x = player->data->map.minimap.offset_x
+	screen_x = player->p_structs->p_minimap->offset_x
 		+ (int)(player->pos_x * TILE_SIZE) - (player->char_img.width / 2);
-	screen_y = player->data->map.minimap.offset_y
+	screen_y = player->p_structs->p_minimap->offset_y
 		+ (int)(player->pos_y * TILE_SIZE) - (player->char_img.height / 2);
-	mlx_put_image_to_window(player->data->mlx,
-		player->data->win,
+	mlx_put_image_to_window(player->p_structs->p_cub->mlx,
+		player->p_structs->p_cub->win,
 		player->char_img.img,
 		screen_x,
 		screen_y);
@@ -64,14 +66,14 @@ void	ft_orient_draw(t_player *player)
 	int	screen_x;
 	int	screen_y;
 
-	screen_x = player->data->map.minimap.offset_x
+	screen_x = player->p_structs->p_minimap->offset_x
 		+ (int)((player->pos_x + player->dir_x) * TILE_SIZE)
 		- (player->test_view.width / 2);
-	screen_y = player->data->map.minimap.offset_y
+	screen_y = player->p_structs->p_minimap->offset_y
 		+ (int)((player->pos_y + player->dir_y) * TILE_SIZE)
 		- (player->test_view.height / 2);
-	mlx_put_image_to_window(player->data->mlx,
-		player->data->win,
+	mlx_put_image_to_window(player->p_structs->p_cub->mlx,
+		player->p_structs->p_cub->win,
 		player->test_view.img,
 		screen_x,
 		screen_y);

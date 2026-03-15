@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 08:49:47 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 19:37:39 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 19:09:45 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ void	ft_img_init(t_cub *data, t_img *img, int width, int height)
 }
 
 // FUNCTION USED TO INITIALIZE ONE TILE IMAGE WITH THE RIGHT COLOR
-void ft_tiles_init(t_tile *tile, t_minimap *minimap, t_etile content)
+void ft_tiles_init(t_minimap *minimap, t_tile *tile, t_etile content)
 {
-	tile->minimap = minimap;
-	ft_img_init(minimap->map->data, &tile->tile_img, TILE_SIZE, TILE_SIZE);
+	ft_img_init(minimap->p_structs->p_cub, &tile->tile_img, TILE_SIZE, TILE_SIZE);
 	tile->tile_img.color = ft_tile_color_get(content);
 	ft_img_fill(&tile->tile_img, tile->tile_img.color);
 }
@@ -46,9 +45,8 @@ void ft_tiles_init(t_tile *tile, t_minimap *minimap, t_etile content)
 // FUNCTION USED TO INITIALIZE ALL IMAGES NEEDED BY THE MINIMAP
 void	ft_minimap_init(t_map *map)
 {
-	map->minimap.map = map;
-	ft_tiles_init(&map->minimap.tiles[EMPTY], &map->minimap, EMPTY);
-	ft_tiles_init(&map->minimap.tiles[WALL], &map->minimap, WALL);
+	ft_tiles_init(&map->minimap, &map->minimap.tiles[EMPTY], EMPTY);
+	ft_tiles_init(&map->minimap, &map->minimap.tiles[WALL], WALL);
 }
 
 // FUNCTION USED TO INITIALIZE THE PLAYER MARKER IMAGE FOR THE MINIMAP
@@ -57,10 +55,9 @@ void	ft_char_init(t_cub *data)
 	t_player	*character;
 
 	character = &data->player;
-	character->data = data;
+	character->char_img.color = CHAR_COL;
 	ft_img_init(data, &character->char_img, CHAR_SIZE, CHAR_SIZE);
 	ft_img_init(data, &character->test_view, CHAR_SIZE / 2, CHAR_SIZE / 2);
-	character->char_img.color = CHAR_COL;
 	ft_img_fill(&character->char_img, character->char_img.color);
 	ft_img_fill(&character->test_view, character->char_img.color);
 }

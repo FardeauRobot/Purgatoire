@@ -42,7 +42,7 @@ PARSING_FILES	= parsing.c parsing_textures.c parsing_utils.c
 RENDER_FILES	= render_map.c render_utils.c imgs_init.c
 
 # Utility module
-UTILS_FILES		= error.c output.c loading_utils.c vectors.c
+UTILS_FILES		= error.c output.c loading_utils.c vectors.c keys.c
 
 # Assemble all sources
 SRCS =	$(addprefix $(SRCS_PATH)/, $(SKELETON_FILES)) \
@@ -58,7 +58,7 @@ OBJS	= $(SRCS:%.c=$(OBJ_DIR)/%.o)
 CC		= cc
 CFLAGS	= -Wall -Wextra -Werror -g3
 INCS	= -I. -I$(INC_PATH) -I$(LIBFT_DIR) -I$(LIBFT_DIR)/includes -I$(MLX_DIR)
-LFLAGS	= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx -lXext -lX11
+LFLAGS	= -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lm -lmlx -lXext -lX11
 
 # ============================================================
 #                        RULES

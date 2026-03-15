@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 00:00:00 by author            #+#    #+#             */
-/*   Updated: 2026/03/11 17:30:41 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 19:17:33 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,17 @@ int	ft_error(char *context, char *detail, int error)
 
 void	ft_destroy_imgs(t_cub *data)
 {
-	mlx_destroy_image(data->mlx, data->map.minimap.tiles[0].tile_img.img);
-	mlx_destroy_image(data->mlx, data->map.minimap.tiles[1].tile_img.img);
-	mlx_destroy_image(data->mlx, data->player.char_img.img);
+	if (data->mlx)
+	{
+		if (data->map.minimap.tiles[0].tile_img.img)
+			mlx_destroy_image(data->mlx, data->map.minimap.tiles[0].tile_img.img);
+		if (data->map.minimap.tiles[1].tile_img.img)
+			mlx_destroy_image(data->mlx, data->map.minimap.tiles[1].tile_img.img);
+		if (data->player.char_img.img)
+			mlx_destroy_image(data->mlx, data->player.char_img.img);
+		if (data->player.test_view.img)
+			mlx_destroy_image(data->mlx, data->player.test_view.img);
+	}
 }
 
 /*

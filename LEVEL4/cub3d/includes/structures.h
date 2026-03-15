@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 19:30:36 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 19:13:24 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ typedef enum e_orientation
 	NORTH,
 	SOUTH,
 	WEST,
-	EAST
+	EAST,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
 }	t_orientation;
 
 typedef enum e_etile
@@ -44,7 +48,19 @@ typedef enum e_etile
 // RECALL FOR STRUCTURES USED BELOW THEIR CHILDREN
 typedef struct s_map t_map;
 typedef struct s_cub t_cub;
+typedef struct s_player t_player;
+typedef struct s_textures t_textures;
 typedef struct s_minimap t_minimap;
+typedef struct s_p_structs t_p_structs;
+
+typedef struct s_p_structs
+{
+	t_cub		*p_cub;
+	t_map 		*p_map;
+	t_minimap 	*p_minimap;
+	t_player 	*p_player;
+	t_textures	*p_textures;
+}	t_p_structs;
 
 // STRUCTURE USED TO STORE THE DIFFERENT INFOS ABOUT AN IMG
 typedef struct s_img
@@ -83,32 +99,32 @@ typedef struct s_tile
 	t_img	tile_img;
 	int y;
 	int x;
-	t_minimap *minimap;
 }	t_tile;
 
 // STRUCTURE USED TO STORE ALL THE MINIMAP INFOS -> NESTED IN MAP
 typedef struct s_minimap
 {
+	t_p_structs	*p_structs;
 	int		offset_x;
 	int		offset_y;
-	t_map	*map;
 	t_tile	tiles[2];
 }	t_minimap;
 
 // STRUCTURE USED TO STORE ALL THE MAP INFOS
 typedef struct s_map
 {
+	t_p_structs *p_structs;
 	int	    index_map_start;
 	char 	**map;
 	int 	height;
 	int 	width;
 	t_minimap		minimap;
-	t_cub			*data;
 }	t_map;
 
 // STRUCTURE USED TO STORE ALL THE PLAYER INFOS
 typedef struct s_player
 {
+	t_p_structs *p_structs;
 	t_img			char_img;
 	t_img			test_view;
 	double			pos_x;
@@ -117,18 +133,20 @@ typedef struct s_player
 	double			dir_y;
 	double			camera_plane_x;
 	double			camera_plane_y;
+	int				rotating;
 	t_orientation	orient;
-	t_cub			*data;
 }	t_player;
 
 // STRUCTURE USED AS THE MAIN ACCESS POINT
 typedef struct s_cub
 {
+	t_p_structs p_structs;
 	void		    *mlx;
 	void		    *win;
 	char		    **file;
 	int			    fd_map;
 	t_map			map;
+	t_minimap		minimap;
 	t_player		player;
 	t_textures		textures;
 	t_list		    *gc_global;

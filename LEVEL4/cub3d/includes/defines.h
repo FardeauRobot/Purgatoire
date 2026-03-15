@@ -6,7 +6,7 @@
 /*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 18:48:45 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/15 19:10:02 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@
 # define	WALL_TILE_COL 0xC0C0C0
 # define	CHAR_COL 0xFF0000
 
-# define	CHAR_SPEED 0.4
+# define	CHAR_SPEED 0.15
+# define	ROT_SPEED 0.01
 
 /* ============== CORE ============================= */
 // GAME.C
@@ -62,7 +63,7 @@ void	ft_minimap_init(t_map *map);
 void	ft_char_init(t_cub *data);
 
 // RENDER_MAP.C
-void	ft_tile_draw(t_tile *tile, int map_x, int map_y);
+void	ft_tile_draw(t_minimap *minimap, t_tile *tile, int map_x, int map_y);
 
 /* ============== UTILS ============================= */
 // OUTPUT.C
@@ -79,4 +80,7 @@ void	ft_data_clean(t_cub *data);
 // ERROR.C
 void	ft_mlx_init(t_cub *data);
 
+// KEYS.C
+int	ft_release_keys(int keycode, void *cub);
+int	ft_press_keys(int keycode, void *cub);
 #endif
