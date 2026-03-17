@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loading_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:09:34 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/10 22:47:14 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/17 13:14:13 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	ft_mlx_init(t_cub *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_MSG_MLX);
-	data->win = mlx_new_window(data->mlx, WIN_WIDTH, WIN_HEIGHT, WIN_NAME);
+	if (mlx_get_screen_size(data->mlx, &data->screen_width, &data->screen_height))
+		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_MSG_MLX);
+	data->win = mlx_new_window(data->mlx, data->screen_width * DISP_SCALE, data->screen_height * DISP_SCALE, WIN_NAME);
 	if (!data->win)
 		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_MSG_MLX);
 }

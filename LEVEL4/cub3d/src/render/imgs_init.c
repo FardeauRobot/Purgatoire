@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   imgs_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 08:49:47 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/15 19:09:45 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/17 12:40:22 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	ft_char_init(t_cub *data)
 	t_player	*character;
 
 	character = &data->player;
+	character->moving = NONE;
+	character->rotating = NONE;
 	character->char_img.color = CHAR_COL;
 	ft_img_init(data, &character->char_img, CHAR_SIZE, CHAR_SIZE);
 	ft_img_init(data, &character->test_view, CHAR_SIZE / 2, CHAR_SIZE / 2);

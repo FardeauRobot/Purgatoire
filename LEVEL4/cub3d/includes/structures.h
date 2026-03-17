@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/15 19:13:24 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/17 13:09:23 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ typedef enum e_orientation
 	SOUTH,
 	WEST,
 	EAST,
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT,
 }	t_orientation;
 
 typedef enum e_etile
@@ -134,6 +130,7 @@ typedef struct s_player
 	double			camera_plane_x;
 	double			camera_plane_y;
 	int				rotating;
+	int				moving;
 	t_orientation	orient;
 }	t_player;
 
@@ -143,6 +140,8 @@ typedef struct s_cub
 	t_p_structs p_structs;
 	void		    *mlx;
 	void		    *win;
+	int				screen_width;
+	int				screen_height;
 	char		    **file;
 	int			    fd_map;
 	t_map			map;

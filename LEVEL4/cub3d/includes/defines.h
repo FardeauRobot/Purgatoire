@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defines.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/15 19:10:02 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/17 13:14:00 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,25 @@
 
 /* ============== GAME MACROS ============================= */
 
-# define	WIN_WIDTH	1920
-# define	WIN_HEIGHT 1080
+# define	DISP_SCALE 0.75
 # define	WIN_NAME 	"cub3d"
 
 # define	TILE_SIZE 32
 # define	CHAR_SIZE TILE_SIZE / 4
 
+# define	CHAR_SPEED 0.01
+# define	ROT_SPEED 0.01
+
+// BITFLAGS
+# define UP 0b0001	
+# define DOWN 0b0010
+# define LEFT 0b0100
+# define RIGHT 0b1000
+
+/* ============== COLORS ============================= */
 # define	EMPTY_TILE_COL 0xFFFFFF
 # define	WALL_TILE_COL 0xC0C0C0
 # define	CHAR_COL 0xFF0000
-
-# define	CHAR_SPEED 0.15
-# define	ROT_SPEED 0.01
 
 /* ============== CORE ============================= */
 // GAME.C
@@ -81,6 +87,9 @@ void	ft_data_clean(t_cub *data);
 void	ft_mlx_init(t_cub *data);
 
 // KEYS.C
+int	ft_move(t_player *player);
+void	ft_rotate(t_player *player);
 int	ft_release_keys(int keycode, void *cub);
 int	ft_press_keys(int keycode, void *cub);
+
 #endif
