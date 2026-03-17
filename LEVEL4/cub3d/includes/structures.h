@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/17 13:09:23 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:16:54 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ typedef enum e_etile
 	WALL
 }	t_etile;
 
+typedef enum e_switch
+{
+	ON,
+	OFF
+}	t_switch;
 
 /* ============== STRUCTURES =============================== */
 
@@ -103,6 +108,7 @@ typedef struct s_minimap
 	t_p_structs	*p_structs;
 	int		offset_x;
 	int		offset_y;
+	int		display_map;
 	t_tile	tiles[2];
 }	t_minimap;
 

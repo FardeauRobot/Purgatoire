@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/11 11:30:45 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:29:25 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_err
 	ERRN_ARGS,
 	ERRN_TEXTURES,
 	ERRN_PARSING,
+	ERRN_WALL,
 	ERRN_UNKNOWN
 }	t_err;
 

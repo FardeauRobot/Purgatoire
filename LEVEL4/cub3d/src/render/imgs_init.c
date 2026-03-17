@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 08:49:47 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/17 12:40:22 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:40:37 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void ft_tiles_init(t_minimap *minimap, t_tile *tile, t_etile content)
 // FUNCTION USED TO INITIALIZE ALL IMAGES NEEDED BY THE MINIMAP
 void	ft_minimap_init(t_map *map)
 {
+	map->minimap.display_map = OFF;
+	map->minimap.offset_x = map->p_structs->p_cub->screen_width - map->width * TILE_SIZE;
+	map->minimap.offset_y = map->p_structs->p_cub->screen_height / 4 - map->height * TILE_SIZE;
 	ft_tiles_init(&map->minimap, &map->minimap.tiles[EMPTY], EMPTY);
 	ft_tiles_init(&map->minimap, &map->minimap.tiles[WALL], WALL);
 }

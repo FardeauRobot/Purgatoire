@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:09:34 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/17 13:14:13 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:40:26 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	ft_mlx_init(t_cub *data)
 		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_MSG_MLX);
 	if (mlx_get_screen_size(data->mlx, &data->screen_width, &data->screen_height))
 		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_MSG_MLX);
+	data->screen_height *= DISP_SCALE;
+	data->screen_width *= DISP_SCALE;
 	data->win = mlx_new_window(data->mlx, data->screen_width * DISP_SCALE, data->screen_height * DISP_SCALE, WIN_NAME);
 	if (!data->win)
 		ft_exit(data, ERRN_LOAD, ERR_MSG_LOADING, ERR_MSG_MLX);

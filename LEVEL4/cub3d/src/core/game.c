@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 21:54:39 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/17 13:07:49 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 14:18:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_move_update(void *cub)
 int	ft_game_loop(void *cub)
 {
 	ft_move_update(cub);
+	ft_map_render(cub);
 	return (SUCCESS);
 }
 

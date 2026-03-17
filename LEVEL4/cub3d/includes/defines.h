@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/17 13:14:00 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:38:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 /* ============== GAME MACROS ============================= */
 
-# define	DISP_SCALE 0.75
+# define	DISP_SCALE 1
 # define	WIN_NAME 	"cub3d"
 
-# define	TILE_SIZE 32
+# define	TILE_SIZE 16
 # define	CHAR_SIZE TILE_SIZE / 4
 
 # define	CHAR_SPEED 0.01
