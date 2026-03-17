@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/17 15:38:27 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/17 15:44:02 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # define	TILE_SIZE 16
 # define	CHAR_SIZE TILE_SIZE / 4
 
-# define	CHAR_SPEED 0.01
-# define	ROT_SPEED 0.01
+# define	CHAR_SPEED 0.005
+# define	ROT_SPEED 0.005
 
 // BITFLAGS
 # define UP 0b0001	
