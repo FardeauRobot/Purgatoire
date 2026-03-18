@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:44:44 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/17 15:36:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/18 15:54:43 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	ft_char_draw(t_player *player)
 	screen_x = player->p_structs->p_minimap->offset_x
 		+ (int)(player->pos_x * TILE_SIZE)
 		- (player->char_img.width / 2);
-
 	screen_y = player->p_structs->p_minimap->offset_y
 		+ (int)(player->pos_y * TILE_SIZE)
 		- (player->char_img.width / 2);
@@ -82,19 +81,31 @@ void	ft_orient_draw(t_player *player)
 		screen_y);
 }
 
+void	ft_background_draw(t_cub *data)
+{
+	ft_img_fill(data->display.img, EMPTY_TILE_COL);
+}
+
+void	ft_img_draw(t_cub *data)
+{
+	if (data->map.minimap.display_map == OFF)
+	{
+		mlx_clear_window(data->mlx, data->win);
+		return ;
+	}
+	ft_background_draw(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->display.img, data->screen_width, data->screen_height);
+	ft_minimap_draw(&data->map.minimap);
+	ft_char_draw(&data->player);
+	ft_orient_draw(&data->player);
+}
+
 // FUNCTION USED TO RENDER THE MINIMAP AND THE PLAYER MARKER EACH FRAME
 int	ft_map_render(void *cub)
 {
 	t_cub	*data;
 
 	data = (t_cub *)cub;
-	if (data->map.minimap.display_map == OFF)
-	{
-		mlx_clear_window(data->mlx, data->win);
-		return (SUCCESS);
-	}
-	ft_minimap_draw(&data->map.minimap);
-	ft_char_draw(&data->player);
-	ft_orient_draw(&data->player);
+	ft_img_draw(data);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 00:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/17 14:16:54 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/18 13:24:52 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct s_cub
 	t_p_structs p_structs;
 	void		    *mlx;
 	void		    *win;
+	t_img			display;
 	int				screen_width;
 	int				screen_height;
 	char		    **file;

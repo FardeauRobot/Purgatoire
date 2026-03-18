@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 22:23:39 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/10 22:24:05 by fardeau          ###   ########.fr       */
+/*   Updated: 2026/03/18 15:31:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@
 # define KEY_ESC 65307
 # define KEY_SPACE 32
 # define KEY_ENTER 65293
+# define KEY_TAB 65289
 
 #endif

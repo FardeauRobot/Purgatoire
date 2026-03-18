@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/15 18:47:32 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/17 15:46:44 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/18 15:38:48 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ int	ft_press_keys(int keycode, void *cub)
 		data->player.moving |= LEFT;
 	if (keycode == KEY_D)
 		data->player.moving |= RIGHT;
-	// if (keycode == KEY_UP)
-	// 	data->map.minimap.display_map = ON;
 	return (SUCCESS);
 }
 
@@ -107,7 +105,7 @@ int	ft_release_keys(int keycode, void *cub)
 		data->player.moving &= ~RIGHT;
 	if (keycode == KEY_RIGHT || keycode == KEY_LEFT)
 		data->player.rotating = NONE;
-	if (keycode == KEY_UP)
+	if (keycode == KEY_TAB)
 	{
 		if (data->map.minimap.display_map == ON)
 			data->map.minimap.display_map = OFF;
