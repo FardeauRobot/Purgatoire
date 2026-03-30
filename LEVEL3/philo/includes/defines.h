@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:12 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 11:37:20 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/20 17:19:39 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void		ft_start(t_philo *philo);
 int			ft_parsing(t_philo *philo, int argc, char **argv);
 
 // PARSING_UILS.C
+int			ft_strlen(char *str);
+void		ft_bzero(void *ptr, int size);
 int			ft_isnum(char *str);
 int			ft_atoll_safe(char *str, long long *nb);
 
@@ -89,6 +91,10 @@ void		ft_action_print(t_guest *guest);
 int			ft_eat(t_guest *guest);
 int			ft_sleep(t_guest *guest);
 int			ft_think(t_guest *guest);
+
+// ACTIONS.C
+void		ft_fork_giveback(t_guest *guest);
+int			ft_fork_handler(t_guest *guest, t_fork side);
 
 // TIME.C
 long long	ft_think_time(t_guest *guest);
@@ -103,14 +109,13 @@ void		ft_philo_clean(t_philo *philo);
 
 // UTILS.C
 void		ft_status_change(t_guest *guest, t_state status);
+t_state		ft_status_get(t_guest *guest);
 void		ft_meal_update(t_guest *guest);
 long long	ft_meal_read(t_guest *guest);
 int			ft_dead_check(t_philo *philo);
 
 // UTILS/OUTPUT.C
-void		ft_bzero(void *ptr, int size);
 void		ft_putstr_fd(char *str, int fd);
 void		ft_putendl_fd(char *str, int fd);
-void		ft_print_main_philo(t_philo *philo);
 
 #endif

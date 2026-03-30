@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 18:58:49 by fardeau           #+#    #+#             */
-/*   Updated: 2026/03/09 11:38:27 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/09 14:00:21 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,4 @@ void	ft_action_print(t_guest *guest)
 	if (guest->status == THINKING)
 		printf(CYAN"%lld %d %s"RESET, tsp, guest->t_id, STR_THINKING);
 	pthread_mutex_unlock(guest->print);
-}
-
-// TODO : A DELETE
-void	ft_print_main_philo(t_philo *philo)
-{
-	printf("[NB OF GUESTS = %d]\n", philo->nb_philo);
-	printf("[NB OF FORKS = %d]\n", philo->nb_forks);
-	printf("[TIME TO DIE = %ld]\n", (long)philo->time_to_die);
-	printf("[TIME TO EAT = %ld]\n", (long)philo->time_to_eat);
-	printf("[TIME TO SLEEP = %ld]\n", (long)philo->time_to_sleep);
-	printf("[NB OF MEALS = %d]\n", philo->needed_meals);
 }

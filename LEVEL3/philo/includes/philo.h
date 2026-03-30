@@ -6,15 +6,12 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:02:37 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 11:31:48 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:49:35 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
-// TODO : A DELETE
-# include <stdio.h>
 
 /* ============== STANDARD LIBRARIES ======================= */
 # include <pthread.h>
@@ -22,16 +19,11 @@
 # include <unistd.h>
 # include <limits.h>
 # include <sys/time.h>
+# include <stdio.h>
 
 /* ============== PROJECT HEADERS ========================== */
 # include "structures.h"
 # include "defines.h"
 # include "errors.h"
-
-/* ============== CORE ===================================== */
-/* src/core/ — add prototypes here */
-
-/* ============== PARSING ================================== */
-/* src/parsing/ — add prototypes here */
 
 #endif

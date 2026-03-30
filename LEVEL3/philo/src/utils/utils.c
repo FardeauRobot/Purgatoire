@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/07 15:20:20 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 11:13:02 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/20 17:05:47 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,18 @@ void	ft_status_change(t_guest *guest, t_state status)
 {
 	pthread_mutex_lock(&guest->m_status);
 	guest->status = status;
-	pthread_mutex_unlock(&guest->m_status);
 	ft_action_print(guest);
+	pthread_mutex_unlock(&guest->m_status);
+}
+
+t_state	ft_status_get(t_guest *guest)
+{
+	t_state	tmp;
+
+	pthread_mutex_lock(&guest->m_status);
+	tmp = guest->status;
+	pthread_mutex_unlock(&guest->m_status);
+	return (tmp);
 }
 
 void	ft_meal_update(t_guest *guest)

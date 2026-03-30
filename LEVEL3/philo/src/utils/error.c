@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 13:01:49 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 11:16:30 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:47:40 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,6 @@ void	ft_philo_clean(t_philo *philo)
 	pthread_mutex_destroy(&philo->m_is_dead);
 	pthread_mutex_destroy(&philo->m_full);
 	i = -1;
-	while (++i < philo->nb_forks)
+	while (++i < philo->nb_philo)
 		pthread_mutex_destroy(&philo->m_fork[i]);
-	free(philo->m_fork);
-}
-
-void	ft_exit(t_philo *philo, char *context, char *detail, int error)
-{
-	if (philo)
-		ft_philo_clean(philo);
-	ft_error(context, detail, error);
-	exit(EXIT_FAILURE);
 }

@@ -6,25 +6,21 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 14:31:25 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 11:17:58 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/20 17:18:01 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	ft_forks_init(t_philo *philo)
+static int	ft_forks_init(t_philo *philo)
 {
 	int	i;
 
-	philo->m_fork = malloc(sizeof(pthread_mutex_t) * philo->nb_forks);
-	if (!philo->m_fork)
-		ft_exit(philo, ERR_MUTEX, ERR_MSG_MALLOC, ERRN_MALLOC);
 	i = -1;
-	while (++i < philo->nb_forks)
-	{
+	while (++i < philo->nb_philo)
 		if (pthread_mutex_init(&philo->m_fork[i], NULL))
-			ft_exit(philo, ERR_MUTEX, ERR_MSG_MALLOC, ERRN_MALLOC);
-	}
+			break ;
+	return (i);
 }
 
 static int	ft_mutex_init(t_philo *philo)
@@ -37,14 +33,15 @@ static int	ft_mutex_init(t_philo *philo)
 	return (SUCCESS);
 }
 
-static void	ft_philo_fill(t_philo *philo, long long tmp, int i)
+static int	ft_philo_fill(t_philo *philo, long long tmp, int i)
 {
+	if ((i == 2 || i == 3 || i == 4) && tmp < 60)
+		return (ft_error(ERR_PARSING, ERR_MIN_TIME, ERRN_PARSING));
 	if (i == 1)
 	{
 		if (tmp > MAX_GUESTS)
-			ft_exit(NULL, ERR_GUESTS, ERR_MAX_CAP, ERRN_PARSING);
+			return (ft_error(ERR_PARSING, ERR_MAX_CAP, ERRN_PARSING));
 		philo->nb_philo = (int)tmp;
-		philo->nb_forks = (int)tmp;
 	}
 	if (i == 2)
 		philo->time_to_die = (time_t)tmp;
@@ -55,11 +52,12 @@ static void	ft_philo_fill(t_philo *philo, long long tmp, int i)
 	if (i == 5)
 	{
 		if (tmp > MAX_MEALS)
-			ft_exit(NULL, ERR_MEALS, ERR_MAX_MEALS, ERRN_PARSING);
+			return (ft_error(ERR_PARSING, ERR_MAX_MEALS, ERRN_PARSING));
 		philo->needed_meals = (int)tmp;
 	}
 	else
 		philo->needed_meals = 0;
+	return (SUCCESS);
 }
 
 int	ft_parsing(t_philo *philo, int argc, char **argv)
@@ -71,12 +69,14 @@ int	ft_parsing(t_philo *philo, int argc, char **argv)
 		return (ft_error(ERR_MSG_ARGS, EXPECTED_ARGS, ERRN_PARSING));
 	i = 0;
 	if (ft_mutex_init(philo) != SUCCESS)
-		ft_exit(philo, ERR_MUTEX, ERR_INIT, ERRN_MUTEX);
+		return (ft_error(ERR_MUTEX, ERR_INIT, ERRN_MUTEX));
 	while (argv[++i])
 	{
 		tmp = 0;
-		ft_atoll_safe(argv[i], &tmp);
-		ft_philo_fill(philo, tmp, i);
+		if (ft_atoll_safe(argv[i], &tmp) == -1)
+			return (STANDARD_ERROR);
+		if (ft_philo_fill(philo, tmp, i) != SUCCESS)
+			return (STANDARD_ERROR);
 	}
 	ft_forks_init(philo);
 	philo->start_time = ft_get_time(MILLISECONDS);

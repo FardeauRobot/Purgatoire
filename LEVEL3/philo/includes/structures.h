@@ -6,7 +6,7 @@
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 08:27:21 by tibras            #+#    #+#             */
-/*   Updated: 2026/03/09 11:24:14 by tibras           ###   ########.fr       */
+/*   Updated: 2026/03/10 11:01:32 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,19 @@ typedef struct s_guest
 typedef struct s_philo
 {
 	t_guest				guests[MAX_GUESTS];
-	int					nb_philo;
-	int					nb_forks;
-	int					needed_meals;
-	int					full;
-	int					is_dead;
+	pthread_mutex_t		m_fork[MAX_GUESTS];
 	long long			start_time;
+	int					nb_philo;
+	int					needed_meals;
 	time_t				time_to_die;
 	time_t				time_to_eat;
 	time_t				time_to_sleep;
-	pthread_mutex_t		*m_fork;
 	pthread_mutex_t		m_lock_eat;
 	pthread_mutex_t		m_is_dead;
-	pthread_mutex_t		m_print;
+	int					is_dead;
 	pthread_mutex_t		m_full;
+	int					full;
+	pthread_mutex_t		m_print;
 }	t_philo;
 
 #endif
