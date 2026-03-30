@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 14:09:03 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_memory.h"
 
-int	ft_min_int(int a, int b)
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	void	*new_ptr;
+	size_t	len;
+
+	if (!new_size)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	if (!ptr)
+		return (malloc(new_size));
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (old_size < new_size)
+		len = old_size;
+	else
+		len = new_size;
+	ft_memcpy(new_ptr, ptr, len);
+	free(ptr);
+	return (new_ptr);
 }

@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:20 by tibras            #+#    #+#             */
+/*   Updated: 2026/02/20 10:39:29 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_strings.h"
 
-int	ft_min_int(int a, int b)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	int				i;
+	unsigned char	*us1;
+	unsigned char	*us2;
+
+	i = 0;
+	us1 = (unsigned char *)s1;
+	us2 = (unsigned char *)s2;
+	while (us1[i] || us2[i])
+	{
+		if (us1[i] != us2[i])
+			return (us1[i] - us2[i]);
+		i++;
+	}
+	return (0);
 }

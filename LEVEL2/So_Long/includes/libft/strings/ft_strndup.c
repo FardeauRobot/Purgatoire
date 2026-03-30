@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:25 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 13:04:06 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_strings.h"
 
-int	ft_min_int(int a, int b)
+char	*ft_strndup(const char *s, size_t n)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	char	*dup;
+	size_t	len;
+
+	len = ft_strlen(s);
+	if (n < len)
+		len = n;
+	dup = malloc(sizeof(char) * len + 1);
+	if (!dup)
+		return (NULL);
+	dup[len] = '\0';
+	while (len--)
+		dup[len] = s[len];
+	return (dup);
 }

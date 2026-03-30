@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_gc_free_all.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/27 10:00:00 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/27 09:53:53 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_gc.h"
 
-int	ft_min_int(int a, int b)
+void	ft_gc_free_all(t_list **gc_head)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	t_list	*current;
+	t_list	*next;
+
+	current = *gc_head;
+	while (current)
+	{
+		next = current->next;
+		if (current->content)
+			free(current->content);
+		free(current);
+		current = next;
+	}
+	*gc_head = NULL;
 }

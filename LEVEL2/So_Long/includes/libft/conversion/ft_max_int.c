@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_max_int.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/26 12:58:11 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 13:01:22 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_conversion.h"
 
-int	ft_min_int(int a, int b)
+int	ft_max_int(int a, int b)
 {
-	if (a < b)
+	if (a > b)
 		return (a);
 	return (b);
 }

@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:10 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 13:29:19 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_memory.h"
 
-int	ft_min_int(int a, int b)
+void	ft_free_matrix(char ***matrix)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	char	**arr;
+	size_t	i;
+
+	if (!matrix || !*matrix)
+		return ;
+	arr = *matrix;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+	*matrix = NULL;
 }

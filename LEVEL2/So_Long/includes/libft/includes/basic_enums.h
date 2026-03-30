@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   basic_enums.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/02/15 03:38:37 by fardeau           #+#    #+#             */
+/*   Updated: 2026/02/23 10:35:03 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef BASIC_ENUMS_H
+# define BASIC_ENUMS_H
 
-int	ft_min_int(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
+typedef enum e_select {
+	NONE = 0,
+	FIRST = 1,
+	SECOND = 2,
+	BOTH
+}	t_select;
+
+#endif 

@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:35 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/25 22:20:13 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_conversion.h"
 
-int	ft_min_int(int a, int b)
+double	ft_atof(const char *str)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	(void)str;
+	return (0.0);
 }

@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:15 by tibras            #+#    #+#             */
+/*   Updated: 2026/01/26 13:53:49 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_strings.h"
 
-int	ft_min_int(int a, int b)
+char	*ft_strjoin_free(char *s1, char const *s2, t_select option)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	char	*new_str;
+
+	new_str = ft_strjoin(s1, s2);
+	if (option == FIRST || option == BOTH)
+		free(s1);
+	if (option == SECOND || option == BOTH)
+		free((void *)s2);
+	return (new_str);
 }

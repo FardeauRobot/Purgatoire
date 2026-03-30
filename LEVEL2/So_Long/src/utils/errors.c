@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/09 14:10:09 by tibras            #+#    #+#             */
+/*   Updated: 2026/02/24 10:19:36 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "so_long_utils.h"
 
-int	ft_min_int(int a, int b)
+void	ft_printerror(char *msg)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	if (!msg)
+		return ;
+	write(2, msg, ft_strlen(msg));
+}
+
+void	error_exit(t_game *game, char *msg, int err_nb)
+{
+	char	*tmp;
+
+	if (err_nb != 0)
+		ft_printerror("Error\n");
+	tmp = get_next_line(-1);
+	if (tmp)
+		free(tmp);
+	ft_printerror(msg);
+	if (game)
+		ft_clear_game(game);
+	exit(err_nb);
 }

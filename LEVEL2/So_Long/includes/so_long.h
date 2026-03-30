@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2025/12/22 12:12:07 by tibras            #+#    #+#             */
+/*   Updated: 2026/02/19 14:15:41 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef SO_LONG_H
+# define SO_LONG_H
 
-int	ft_min_int(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
+# include "libft.h"
+# include "mlx.h"
+# include "so_long/errors.h"
+# include "so_long/imgs.h"
+# include "so_long/keys.h"
+# include "so_long/so_long_srcs.h"
+# include "so_long/so_long_utils.h"
+# include <fcntl.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
+
+#endif

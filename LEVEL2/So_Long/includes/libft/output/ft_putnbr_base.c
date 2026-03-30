@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/25 22:12:45 by tibras            #+#    #+#             */
+/*   Updated: 2026/02/20 10:39:27 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_min_int(int a, int b)
+void	ft_putnbr_base(int nbr, char *base)
 {
-	if (a < b)
-		return (a);
-	return (b);
+	long	nb;
+	size_t	len_base;
+
+	len_base = ft_strlen(base);
+	if (len_base < 2)
+		return ;
+	nb = (long)nbr;
+	if (nb < 0)
+	{
+		ft_putchar_fd('-', 1);
+		nb *= -1;
+	}
+	if (nb >= (long)len_base)
+		ft_putnbr_base(nb / len_base, base);
+	ft_putchar_fd(base[nb % len_base], 1);
 }

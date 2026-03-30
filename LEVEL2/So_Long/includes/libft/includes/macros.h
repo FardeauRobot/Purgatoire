@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_min_int.c                                       :+:      :+:    :+:   */
+/*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 11:48:57 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/29 17:21:19 by tibras           ###   ########.fr       */
+/*   Created: 2026/01/26 13:37:42 by tibras            #+#    #+#             */
+/*   Updated: 2026/02/23 10:15:40 by tibras           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MACROS_H
+# define MACROS_H
 
-int	ft_min_int(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
+# define SPACES " \a\b\t\n\v\f\r\0"
+
+#endif
