@@ -1,10 +1,10 @@
-NAME     = name 
+NAME     = debug 
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
 
-SRCS     = 
+SRCS     = tests.cpp Account.cpp
 
 OBJS     = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 OBJDIR   = objs
