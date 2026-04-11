@@ -1,0 +1,51 @@
+#include <iostream>
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
+
+PhoneBook::PhoneBook() : m_index(0), m_stored(0) {}
+
+PhoneBook::PhoneBook(const PhoneBook& other) : m_index(other.m_index)
+{
+	for (int i = 0; i < 8; i++)
+		m_Contact[i] = other.m_Contact[i];
+}
+
+PhoneBook& PhoneBook::operator=(const PhoneBook& other) {
+	if (this != &other)
+	{
+		m_index = other.m_index;
+		for (int i = 0; i < 8; i++)
+			m_Contact[i]= other.m_Contact[i];
+	}
+	return (*this);
+}
+
+PhoneBook::~PhoneBook() {}
+
+void	PhoneBook::F_BookPrint() {
+	for (int i = 0; i < m_stored; i++)
+		m_Contact[i].F_PrintContact();
+}
+
+void	PhoneBook::F_AddStored(void) {
+	if (m_stored < 8)
+		m_stored++;
+}
+
+void PhoneBook::F_FillAll(void) {
+	static const char *first[]  = {"Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Hank"};
+	static const char *last[]   = {"Smith", "Jones", "Brown", "White", "Black", "Green", "Hall", "King"};
+	static const char *nick[]   = {"ali", "bobby", "chuck", "dee", "evie", "franky", "gracie", "hanky"};
+	static const char *phone[]  = {"0611111111", "0622222222", "0633333333", "0644444444",
+	                                "0655555555", "0666666666", "0677777777", "0688888888"};
+	static const char *secret[] = {"hates cats", "afraid of dark", "snores loud", "eats paper",
+	                                "talks to plants", "collects spoons", "sleeps standing", "scared of birds"};
+
+	for (int i = 0; i < 8; i++)
+	{
+		m_Contact[i].F_FillContact(first[i], last[i], nick[i], phone[i], secret[i], i);
+	}
+	m_index = 0;
+	m_stored = 8;
+}
+
