@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iomanip>
+#include <cstdlib>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
@@ -49,3 +51,27 @@ void PhoneBook::F_FillAll(void) {
 	m_stored = 8;
 }
 
+void	PhoneBook::F_Search(void) {
+	std::string user_input;
+	int converted_input;
+
+	while (1)
+	{
+		std::cout << "Waiting for user index: ";
+		std::cin >> user_input;
+		converted_input = atoi(user_input.c_str());
+		if (user_input == "EXIT")
+		{
+			std::cout << "Returning to main menu\n";
+			break;
+		}
+		if (converted_input >= 1 && converted_input <= m_stored)
+		{
+			std::cout << std::setw(18) << std::left << "Chosen index: " << converted_input << std::endl;
+			m_Contact[converted_input - 1].F_PrintSearch();
+			break;
+		}
+		else
+			std::cout << "No user existing at index: " << user_input << std::endl;
+	}
+}

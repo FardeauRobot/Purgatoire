@@ -23,7 +23,7 @@ Contact& Contact::operator=(const Contact& other) {
 }
 Contact::~Contact() {}
 
-void	Contact::F_SetupContact(void) {
+void	Contact::F_SetupContact(int index) {
 	std:: cout << "Insert first name :\n";
 	std:: cin >> m_first_name;
 	std:: cout << "Insert last name :\n";
@@ -34,6 +34,8 @@ void	Contact::F_SetupContact(void) {
 	std:: cin >> m_phone_number;
 	std:: cout << "What's your darkest secret ? >.<\n";
 	std:: cin >> m_darkest_secret;
+	m_index = index;
+	std:: cout << "\nUser has been well registered!\n";
 }
 
 void	Contact::F_FillContact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string secret, int index) {
@@ -43,6 +45,15 @@ void	Contact::F_FillContact(std::string first_name, std::string last_name, std::
 	m_phone_number = phone_number;
 	m_darkest_secret = secret;
 	m_index = index + 1;
+}
+
+void	Contact::F_PrintSearch(void) {
+	std::cout	
+				<< std::setw(18) << std::left << "First name: " << m_first_name << std::endl
+				<< std::setw(18) << std::left << "Last name: " << m_last_name << std::endl
+				<< std::setw(18) << std::left << "Nickname: " << m_last_name << std::endl
+				<< std::setw(18) << std::left << "Phone Number: " << m_phone_number << std::endl
+				<< std::setw(18) << std::left << "Darkest secret: " << m_darkest_secret << std::endl;
 }
 
 static std::string F_PrintString(std::string str) {

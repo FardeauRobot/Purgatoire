@@ -21,6 +21,9 @@ class PhoneBook
 		Contact 	*F_GetContact(int index) { return (&m_Contact[index]); }
 		void		F_AddStored(void);
 		void		F_BookPrint(void);
+		void		F_DisplayContact(Contact &chosen_contact);
+		void		F_Search(void);
+
 		void 		F_FillAll(void);
 };
 
