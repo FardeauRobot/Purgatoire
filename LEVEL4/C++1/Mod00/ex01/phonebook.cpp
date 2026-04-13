@@ -5,21 +5,17 @@
 int main (void)
 {
 	PhoneBook 		O_PhoneBook;
-	Contact			*O_Contact;
 	std::string		S_Cmd;
 
-	while (S_Cmd != "EXIT")
+	while (1)
 	{
 		std::cout << "Waiting for the next command : ";
-		std::cin >> S_Cmd;
+		if (!(std::cin >> S_Cmd) || S_Cmd == "EXIT")
+			break;
 		std::cout << std::endl;
 		if (S_Cmd == "ADD")
 		{
-			int index = O_PhoneBook.F_GetIndex();
-			O_Contact =  O_PhoneBook.F_GetContact(index);
-			O_PhoneBook.F_BookSetIndex((index + 1) % 8);
-			O_Contact->F_SetupContact(O_PhoneBook.F_GetIndex());
-			O_PhoneBook.F_AddStored();
+			O_PhoneBook.F_Add();
 			std::cout << std::endl;
 		}
 		else if (S_Cmd == "SEARCH")
@@ -33,6 +29,8 @@ int main (void)
 			O_PhoneBook.F_FillAll();
 			std::cout << std::endl;
 		}
+		else
+			std::cout << "Wrong command: " << S_Cmd << "\n\n";
 	}
 	std::cout << "SEE YA !\n";
 }

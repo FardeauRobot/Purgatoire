@@ -51,7 +51,7 @@ void	Contact::F_PrintSearch(void) {
 	std::cout	
 				<< std::setw(18) << std::left << "First name: " << m_first_name << std::endl
 				<< std::setw(18) << std::left << "Last name: " << m_last_name << std::endl
-				<< std::setw(18) << std::left << "Nickname: " << m_last_name << std::endl
+				<< std::setw(18) << std::left << "Nickname: " << m_nickname << std::endl
 				<< std::setw(18) << std::left << "Phone Number: " << m_phone_number << std::endl
 				<< std::setw(18) << std::left << "Darkest secret: " << m_darkest_secret << std::endl;
 }

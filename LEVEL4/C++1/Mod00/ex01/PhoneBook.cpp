@@ -24,6 +24,25 @@ PhoneBook& PhoneBook::operator=(const PhoneBook& other) {
 
 PhoneBook::~PhoneBook() {}
 
+void		PhoneBook::F_Add(void) {
+			Contact *O_Contact =  &m_Contact[m_index];
+			m_index = ((m_index + 1) % 8);
+			O_Contact->F_SetupContact(m_index);
+			if (m_stored < 8)
+			m_stored++;
+}
+
+int			PhoneBook::F_GetIndex(void) const {
+	return (m_index);
+}
+
+void		PhoneBook::F_BookSetIndex (int newindex) {
+	m_index = newindex;
+}
+
+Contact 	*PhoneBook::F_GetContact(int index) { 
+	return (&m_Contact[index]); 
+}
 void	PhoneBook::F_BookPrint() {
 	for (int i = 0; i < m_stored; i++)
 		m_Contact[i].F_PrintContact();
@@ -58,7 +77,8 @@ void	PhoneBook::F_Search(void) {
 	while (1)
 	{
 		std::cout << "Waiting for user index: ";
-		std::cin >> user_input;
+		if (!(std::cin >> user_input))
+			break;
 		converted_input = atoi(user_input.c_str());
 		if (user_input == "EXIT")
 		{

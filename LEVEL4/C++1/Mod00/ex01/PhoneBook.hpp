@@ -16,13 +16,14 @@ class PhoneBook
 		PhoneBook &operator=(const PhoneBook &other);
 		~PhoneBook(); // DESTRUCTOR
 
-		int 		F_GetIndex() const { return (m_index); };
-		void		F_BookSetIndex (int newindex) {m_index = newindex;};
-		Contact 	*F_GetContact(int index) { return (&m_Contact[index]); }
+		int 		F_GetIndex() const;
+		void		F_BookSetIndex (int newindex);
+		Contact 	*F_GetContact(int index);
 		void		F_AddStored(void);
 		void		F_BookPrint(void);
 		void		F_DisplayContact(Contact &chosen_contact);
 		void		F_Search(void);
+		void		F_Add(void);
 
 		void 		F_FillAll(void);
 };
