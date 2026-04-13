@@ -1,0 +1,43 @@
+NAME     = zombie
+
+CXX      = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
+
+RED      = \033[31m
+GREEN    = \033[32m
+YELLOW   = \033[33m
+CYAN     = \033[36m
+RESET    = \033[0m
+
+
+SRCS     = main.cpp newZombie.cpp zombieHorde.cpp Zombie.cpp
+
+OBJS     = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+OBJDIR   = objs
+DEPS     = $(OBJS:.o=.d)
+
+all: $(NAME)
+
+$(NAME): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+-include $(DEPS)
+
+clean:
+	rm -rf $(OBJDIR)
+
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
+
+test: all
+	./$(NAME)
+
+.PHONY: all clean fclean re
