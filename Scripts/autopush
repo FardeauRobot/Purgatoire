@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+# autopush - watch the current git repo and push on every file save
+# Usage: autopush [options]
+# Options:
+#   -m <message>   use a fixed commit message instead of auto-generated one
+#   -d <minutes>   debounce delay between pushes (default: 1)
+#   -b <branch>    target branch (default: current branch)
+#   -h             show this help
+
+set -e
+
+DEBOUNCE_MIN=1
+FIXED_MSG=""
+BRANCH=""
+
+usage() {
+    echo "Usage: autopush [-m message] [-d minutes] [-b branch]"
+    echo "  -m  fixed commit message (default: auto-generated with timestamp)"
+    echo "  -d  debounce delay in minutes between pushes (default: 1)"
+    echo "  -b  git branch to push to (default: current branch)"
+    exit 0
+}
+
+while getopts "m:d:b:h" opt; do
+    case "$opt" in
+        m) FIXED_MSG="$OPTARG" ;;
+        d) DEBOUNCE_MIN="$OPTARG" ;;
+        b) BRANCH="$OPTARG" ;;
+        h) usage ;;
+        *) usage ;;
+    esac
+done
+
+DEBOUNCE=$((DEBOUNCE_MIN * 60))
+
+# Must be inside a git repo
+if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+    echo "Error: not inside a git repository."
+    exit 1
+fi
+
+# Must have inotifywait
+if ! command -v inotifywait &>/dev/null; then
+    echo "Error: inotifywait not found. Install it with:"
+    echo "  sudo apt install inotify-tools"
+    exit 1
+fi
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+BRANCH="${BRANCH:-$(git symbolic-ref --short HEAD)}"
+
+echo "autopush watching: $REPO_ROOT"
+echo "  branch  : $BRANCH"
+echo "  debounce: ${DEBOUNCE_MIN}min"
+echo "  message : ${FIXED_MSG:-auto}"
+echo "Press Ctrl+C to stop."
+echo ""
+
+do_push() {
+    cd "$REPO_ROOT"
+
+    # Nothing staged or unstaged? Skip.
+    if git diff --quiet && git diff --cached --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+        echo "[$(date '+%H:%M:%S')] No changes to push."
+        return
+    fi
+
+    MSG="${FIXED_MSG:-autopush: $(date '+%Y-%m-%d %H:%M:%S')}"
+
+    git add -A
+    git commit -m "$MSG" && git push origin "$BRANCH" \
+        && echo "[$(date '+%H:%M:%S')] Pushed to $BRANCH: $MSG" \
+        || echo "[$(date '+%H:%M:%S')] Push failed."
+}
+
+# Watch for close_write (save), move, delete — ignore .git directory
+inotifywait -m -r "$REPO_ROOT" \
+    --exclude '/\.git/' \
+    -e close_write -e moved_to -e delete \
+    --format '%T %w%f %e' \
+    --timefmt '%H:%M:%S' \
+    2>/dev/null | while read -r TIME FILE EVENT; do
+
+    echo "[${TIME}] $EVENT: $FILE"
+
+    # Debounce: reset the timer by killing the pending push if any
+    if [ -n "$PENDING_PID" ] && kill -0 "$PENDING_PID" 2>/dev/null; then
+        kill "$PENDING_PID" 2>/dev/null
+    fi
+
+    # Schedule the push after debounce delay
+    ( sleep "$DEBOUNCE"; do_push ) &
+    PENDING_PID=$!
+
+done

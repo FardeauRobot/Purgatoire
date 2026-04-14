@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# note - quick terminal notepad
+# Usage:
+#   note "something to remember"   add a note
+#   note -l                        list all notes
+#   note -d <id>                   delete note by id
+#   note -c                        clear all notes
+#   note -h                        show help
+
+NOTES_FILE="$HOME/.local/share/notes.md"
+mkdir -p "$(dirname "$NOTES_FILE")"
+touch "$NOTES_FILE"
+
+usage() {
+    echo "Usage: note [options] [message]"
+    echo "  note \"message\"   add a note"
+    echo "  note -l          list all notes"
+    echo "  note -d <id>     delete note by id"
+    echo "  note -c          clear all notes"
+    exit 0
+}
+
+add_note() {
+    local msg="$1"
+    local timestamp
+    timestamp="$(date '+%Y-%m-%d %H:%M')"
+    echo "- [$timestamp] $msg" >> "$NOTES_FILE"
+    echo "Note saved: \"$msg\""
+}
+
+list_notes() {
+    if [ ! -s "$NOTES_FILE" ]; then
+        echo "No notes yet. Add one with: note \"your message\""
+        return
+    fi
+
+    echo ""
+    local i=1
+    while IFS= read -r line; do
+        printf "  [%2d] %s\n" "$i" "$line"
+        ((i++))
+    done < "$NOTES_FILE"
+    echo ""
+}
+
+delete_note() {
+    local id="$1"
+    local total
+    total="$(wc -l < "$NOTES_FILE")"
+
+    if ! [[ "$id" =~ ^[0-9]+$ ]] || [ "$id" -lt 1 ] || [ "$id" -gt "$total" ]; then
+        echo "Error: invalid id '$id'. Run 'note -l' to see valid ids."
+        exit 1
+    fi
+
+    local content
+    content="$(sed "${id}d" "$NOTES_FILE")"
+    echo "$content" > "$NOTES_FILE"
+    echo "Note $id deleted."
+}
+
+clear_notes() {
+    read -rp "Clear all notes? [y/N] " confirm
+    if [[ "${confirm,,}" == "y" ]]; then
+        > "$NOTES_FILE"
+        echo "All notes cleared."
+    else
+        echo "Cancelled."
+    fi
+}
+
+# No arguments: show list
+if [ $# -eq 0 ]; then
+    list_notes
+    exit 0
+fi
+
+case "$1" in
+    -l) list_notes ;;
+    -d) shift; delete_note "$1" ;;
+    -c) clear_notes ;;
+    -h) usage ;;
+    -*) echo "Unknown option: $1. Use -h for help."; exit 1 ;;
+    *)  add_note "$*" ;;
+esac
