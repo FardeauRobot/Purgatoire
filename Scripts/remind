@@ -32,7 +32,7 @@ case "$UNIT" in
 esac
 
 REMIND_USER="$(whoami)"
-SEP="$(printf '%0.s=' {1..52})"
+SEP="$(printf '%0.s=' {1..80})"
 
 echo "Reminder set: \"$MESSAGE\" in ${TIME}${UNIT^^}"
 
@@ -40,9 +40,9 @@ echo "Reminder set: \"$MESSAGE\" in ${TIME}${UNIT^^}"
     sleep "$SECONDS_DELAY"
 
     if command -v figlet &>/dev/null; then
-        BIG="$(figlet -f pagga "/!\ $MESSAGE /\!")"
+        BIG="$(figlet -f pagga "[ $MESSAGE ]")"
     else
-        BIG="  /!\ $MESSAGE /\!"
+        BIG="  [ $MESSAGE ]"
     fi
     if command -v lolcat &>/dev/null; then
         BANNER="$(printf '\n%s\n%s\n%s\n' "$SEP" "$BIG" "$SEP" | lolcat --force)"
