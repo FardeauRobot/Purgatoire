@@ -24,12 +24,14 @@ PhoneBook& PhoneBook::operator=(const PhoneBook& other) {
 
 PhoneBook::~PhoneBook() {}
 
-void		PhoneBook::F_Add(void) {
+int		PhoneBook::F_Add(void) {
 			Contact *O_Contact =  &m_Contact[m_index];
 			m_index = ((m_index + 1) % 8);
-			O_Contact->F_SetupContact(m_index);
+			if (O_Contact->F_SetupContact(m_index) != SUCCESS)
+				return (1);
 			if (m_stored < 8)
 			m_stored++;
+			return (0);
 }
 
 int			PhoneBook::F_GetIndex(void) const {
@@ -70,7 +72,7 @@ void PhoneBook::F_FillAll(void) {
 	m_stored = 8;
 }
 
-void	PhoneBook::F_Search(void) {
+int	PhoneBook::F_Search(void) {
 	std::string user_input;
 	int converted_input;
 
@@ -78,7 +80,7 @@ void	PhoneBook::F_Search(void) {
 	{
 		std::cout << "Waiting for user index: ";
 		if (!(std::cin >> user_input))
-			break;
+			return (FAILURE);
 		converted_input = atoi(user_input.c_str());
 		if (user_input == "EXIT")
 		{
@@ -94,4 +96,5 @@ void	PhoneBook::F_Search(void) {
 		else
 			std::cout << "No user existing at index: " << user_input << std::endl;
 	}
+	return (SUCCESS);
 }

@@ -18,8 +18,8 @@ class Contact {
 		Contact& operator=(const Contact& other);
 		~Contact();	// DESTRUCTOR
 
-		void	F_ContactSetIndex(int index) {m_index = index;}
-		void	F_SetupContact(int index);
+		void	F_ContactSetIndex(int index);
+		int		F_SetupContact(int index);
 		void	F_PrintContact(void);
 		void	F_PrintSearch(void);
 		void	F_FillContact();

@@ -15,14 +15,16 @@ int main (void)
 		std::cout << std::endl;
 		if (S_Cmd == "ADD")
 		{
-			O_PhoneBook.F_Add();
 			std::cout << std::endl;
+			if (O_PhoneBook.F_Add() != SUCCESS)
+				break;
 		}
 		else if (S_Cmd == "SEARCH")
 		{
 			O_PhoneBook.F_BookPrint();
-			O_PhoneBook.F_Search();
 			std::cout << std::endl;
+			if (O_PhoneBook.F_Search() != SUCCESS)
+				break;
 		}
 		else if (S_Cmd == "FILL")
 		{

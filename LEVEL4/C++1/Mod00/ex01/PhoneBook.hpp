@@ -3,6 +3,10 @@
 
 #include "Contact.hpp"
 
+#define SUCCESS 0
+
+#define FAILURE 1
+
 class PhoneBook
 {
 	private:
@@ -22,8 +26,8 @@ class PhoneBook
 		void		F_AddStored(void);
 		void		F_BookPrint(void);
 		void		F_DisplayContact(Contact &chosen_contact);
-		void		F_Search(void);
-		void		F_Add(void);
+		int			F_Search(void);
+		int			F_Add(void);
 
 		void 		F_FillAll(void);
 };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include "PhoneBook.hpp"
 #include "Contact.hpp"
 
 Contact::Contact() : m_first_name(""), m_last_name(""), m_nickname(""), m_darkest_secret(""), m_index(0) {}
@@ -23,19 +24,29 @@ Contact& Contact::operator=(const Contact& other) {
 }
 Contact::~Contact() {}
 
-void	Contact::F_SetupContact(int index) {
+void	Contact::F_ContactSetIndex(int index) {
+	m_index = index;
+}
+
+int	Contact::F_SetupContact(int index) {
 	std:: cout << "Insert first name :\n";
-	std:: cin >> m_first_name;
+	if (!(std:: cin >> m_first_name))
+		return (FAILURE);
 	std:: cout << "Insert last name :\n";
-	std:: cin >> m_last_name;
+	if (!(std:: cin >> m_last_name))
+		return (FAILURE);
 	std:: cout << "Insert nickname:\n";
-	std:: cin >> m_nickname;
+	if (!(std:: cin >> m_nickname))
+		return (FAILURE);
 	std:: cout << "Insert phone number:\n";
-	std:: cin >> m_phone_number;
+	if (!(std:: cin >> m_phone_number))
+		return (FAILURE);
 	std:: cout << "What's your darkest secret ? >.<\n";
-	std:: cin >> m_darkest_secret;
+	if (!(std:: cin >> m_darkest_secret))
+		return (FAILURE);
 	m_index = index;
 	std:: cout << "\nUser has been well registered!\n";
+	return (SUCCESS);
 }
 
 void	Contact::F_FillContact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string secret, int index) {
