@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# remind - broadcast a reminder to all your open terminals after a delay
+# Usage: remind <time> <unit> <message...>
+# Units: s (seconds), m (minutes), h (hours)
+# Example: remind 1 h Correction de math
+
+if [ $# -lt 3 ]; then
+    echo "Usage: remind <time> <unit> <message>"
+    echo "  Units: s (seconds), m (minutes), h (hours)"
+    echo "  Example: remind 1 h Correction de math"
+    exit 1
+fi
+
+TIME="$1"
+UNIT="${2,,}"
+shift 2
+MESSAGE="$*"
+
+if ! [[ "$TIME" =~ ^[1-9][0-9]*$ ]]; then
+    echo "Error: time must be a positive integer"
+    exit 1
+fi
+
+case "$UNIT" in
+    s) SECONDS_DELAY=$TIME ;;
+    m) SECONDS_DELAY=$((TIME * 60)) ;;
+    h) SECONDS_DELAY=$((TIME * 3600)) ;;
+    *)
+        echo "Error: unknown unit '$UNIT'. Use s, m, or h."
+        exit 1
+        ;;
+esac
+
+REMIND_USER="$(whoami)"
+SEP="$(printf '%0.s=' {1..52})"
+
+echo "Reminder set: \"$MESSAGE\" in ${TIME}${UNIT^^}"
+
+(
+    sleep "$SECONDS_DELAY"
+
+    if command -v figlet &>/dev/null; then
+        BIG="$(figlet -f pagga "/!\ $MESSAGE /\!")"
+    else
+        BIG="  /!\ $MESSAGE /\!"
+    fi
+    if command -v lolcat &>/dev/null; then
+        BANNER="$(printf '\n%s\n%s\n%s\n' "$SEP" "$BIG" "$SEP" | lolcat --force)"
+    else
+        BANNER=$'\n'"$SEP"$'\n'"$BIG"$'\n'"$SEP"$'\n'
+    fi
+
+    for tty in /dev/pts/*; do
+        [ -c "$tty" ] || continue
+        owner="$(stat -c '%U' "$tty" 2>/dev/null)" || continue
+        if [ "$owner" = "$REMIND_USER" ]; then
+            printf '%s\n' "$BANNER" > "$tty" 2>/dev/null || true
+        fi
+    done
+
+    command -v notify-send &>/dev/null && \
+        notify-send -u critical "Reminder" "$MESSAGE" 2>/dev/null || true
+) &
+
+disown $!
