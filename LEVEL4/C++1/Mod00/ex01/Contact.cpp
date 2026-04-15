@@ -28,24 +28,40 @@ void	Contact::F_ContactSetIndex(int index) {
 	m_index = index;
 }
 
+static std::string F_PrintString(std::string str) {
+	if (str.length() > 10)
+		return (str.substr(0, 9) + ".");
+	return (str);
+}
+
+static int	F_PromptField(std::string& field, const std::string& label) {
+	do {
+		std::cout << std::setw(WIDTH_SETUP) << label;
+		if (!std::getline(std::cin, field) || std::cin.eof())
+			return (FAILURE);
+		if (field.empty())
+			std::cout << IN_EMPTY << std::endl;
+	} while (field.empty());
+	return (SUCCESS);
+}
+
 int	Contact::F_SetupContact(int index) {
-	std:: cout << "Insert first name :\n";
-	if (!(std:: cin >> m_first_name))
+
+	std::cout.flags(std::cout.left);
+
+	if (F_PromptField(m_first_name, IN_FIRSTNAME) == FAILURE)
 		return (FAILURE);
-	std:: cout << "Insert last name :\n";
-	if (!(std:: cin >> m_last_name))
+	if (F_PromptField(m_last_name, IN_LASTNAME) == FAILURE)
 		return (FAILURE);
-	std:: cout << "Insert nickname:\n";
-	if (!(std:: cin >> m_nickname))
+	if (F_PromptField(m_nickname, IN_NICKNAME) == FAILURE)
 		return (FAILURE);
-	std:: cout << "Insert phone number:\n";
-	if (!(std:: cin >> m_phone_number))
+	if (F_PromptField(m_phone_number, IN_PHONE) == FAILURE)
 		return (FAILURE);
-	std:: cout << "What's your darkest secret ? >.<\n";
-	if (!(std:: cin >> m_darkest_secret))
+	if (F_PromptField(m_darkest_secret, IN_SECRET) == FAILURE)
 		return (FAILURE);
+
 	m_index = index;
-	std:: cout << "\nUser has been well registered!\n";
+	std:: cout << REGISTERED << std::endl;
 	return (SUCCESS);
 }
 
@@ -59,27 +75,23 @@ void	Contact::F_FillContact(std::string first_name, std::string last_name, std::
 }
 
 void	Contact::F_PrintSearch(void) {
-	std::cout	
-				<< std::setw(18) << std::left << "First name: " << m_first_name << std::endl
-				<< std::setw(18) << std::left << "Last name: " << m_last_name << std::endl
-				<< std::setw(18) << std::left << "Nickname: " << m_nickname << std::endl
-				<< std::setw(18) << std::left << "Phone Number: " << m_phone_number << std::endl
-				<< std::setw(18) << std::left << "Darkest secret: " << m_darkest_secret << std::endl;
+	std::cout.flags(std::cout.left);
+
+	std::cout	<< std::setw(WIDTH_CHOSEN) << "First name: " << m_first_name << std::endl
+				<< std::setw(WIDTH_CHOSEN) << "Last name: " << m_last_name << std::endl
+				<< std::setw(WIDTH_CHOSEN) << "Nickname: " << m_nickname << std::endl
+				<< std::setw(WIDTH_CHOSEN) << "Phone Number: " << m_phone_number << std::endl
+				<< std::setw(WIDTH_CHOSEN) << "Darkest secret: " << m_darkest_secret << "\n" << std::endl;
 }
 
-static std::string F_PrintString(std::string str) {
-	if (str.length() > 10)
-		return (str.substr(0, 9) + ".");
-	return (str);
-}
 
 void	Contact::F_PrintContact(void) {
+	std::cout.flags(std::cout.right);
 	char c = '|';
 
-	std::cout	<< c << std::setw(10) << std::right << m_index 
-				<< c << std::setw(10) << std::right << F_PrintString(m_first_name)
-				<< c << std::setw(10) << std::right << F_PrintString(m_last_name)
-				<< c << std::setw(10) << std::right << F_PrintString(m_nickname)
+	std::cout	<< c << std::setw(WIDTH_INDEX) << m_index 
+				<< c << std::setw(WIDTH_INDEX) << F_PrintString(m_first_name)
+				<< c << std::setw(WIDTH_INDEX) << F_PrintString(m_last_name)
+				<< c << std::setw(WIDTH_INDEX) << F_PrintString(m_nickname)
 				<< c << std::endl;
-	// std::cout << m_index << c << m_first_name << c << m_last_name << c<< m_nickname << std::endl;
 }

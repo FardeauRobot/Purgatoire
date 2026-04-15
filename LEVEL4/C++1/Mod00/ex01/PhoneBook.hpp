@@ -4,7 +4,6 @@
 #include "Contact.hpp"
 
 #define SUCCESS 0
-
 #define FAILURE 1
 
 class PhoneBook

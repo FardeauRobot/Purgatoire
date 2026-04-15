@@ -78,23 +78,24 @@ int	PhoneBook::F_Search(void) {
 
 	while (1)
 	{
-		std::cout << "Waiting for user index: ";
-		if (!(std::cin >> user_input))
+		std::cout << CHOSE_INDEX;
+		if (!std::getline(std::cin, user_input) || std::cin.eof())
 			return (FAILURE);
+		std::cout << std::endl;
 		converted_input = atoi(user_input.c_str());
 		if (user_input == "EXIT")
 		{
-			std::cout << "Returning to main menu\n";
+			std::cout << MENU << std::endl;
 			break;
 		}
 		if (converted_input >= 1 && converted_input <= m_stored)
 		{
-			std::cout << std::setw(18) << std::left << "Chosen index: " << converted_input << std::endl;
+			std::cout << std::setw(WIDTH_CHOSEN) << "CONTACT NUMBER [" << converted_input << "]\n" << std::endl;
 			m_Contact[converted_input - 1].F_PrintSearch();
 			break;
 		}
 		else
-			std::cout << "No user existing at index: " << user_input << std::endl;
+			std::cout << NO_USER << user_input << "\n" << std::endl;
 	}
 	return (SUCCESS);
 }

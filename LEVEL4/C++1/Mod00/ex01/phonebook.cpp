@@ -9,13 +9,14 @@ int main (void)
 
 	while (1)
 	{
-		std::cout << "Waiting for the next command : ";
-		if (!(std::cin >> S_Cmd) || S_Cmd == "EXIT")
+		std::cout << IN_COMMAND;
+		if (!std::getline(std::cin, S_Cmd) || std::cin.eof())
 			break;
 		std::cout << std::endl;
+		if (S_Cmd == "EXIT")
+			break;
 		if (S_Cmd == "ADD")
 		{
-			std::cout << std::endl;
 			if (O_PhoneBook.F_Add() != SUCCESS)
 				break;
 		}
@@ -29,10 +30,10 @@ int main (void)
 		else if (S_Cmd == "FILL")
 		{
 			O_PhoneBook.F_FillAll();
-			std::cout << std::endl;
+			std::cout << "Filled all the phonebook !\n" << std::endl;
 		}
 		else
-			std::cout << "Wrong command: " << S_Cmd << "\n\n";
+			std::cout << ERR_CMD << S_Cmd << "\n" << std::endl;
 	}
-	std::cout << "SEE YA !\n";
+	std::cout << "\nSEE YA !";
 }
