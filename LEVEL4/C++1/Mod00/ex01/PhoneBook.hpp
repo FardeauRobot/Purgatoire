@@ -13,21 +13,20 @@ class PhoneBook
 		int m_index;
 		int m_stored;
 
+		int 		F_GetIndex() const;
+		void		F_BookSetIndex (int newindex);
+		Contact 	*F_GetContact(int index) ;
+		void		F_AddStored(void);
+
 	public:
 		PhoneBook();					   // DEFAULT CONSTRUCTOR
 		PhoneBook(const PhoneBook &other); // COPY CONSTRUCTOR
 		PhoneBook &operator=(const PhoneBook &other);
 		~PhoneBook(); // DESTRUCTOR
 
-		int 		F_GetIndex() const;
-		void		F_BookSetIndex (int newindex);
-		Contact 	*F_GetContact(int index);
-		void		F_AddStored(void);
 		void		F_BookPrint(void);
-		void		F_DisplayContact(Contact &chosen_contact);
 		int			F_Search(void);
 		int			F_Add(void);
-
 		void 		F_FillAll(void);
 };
 

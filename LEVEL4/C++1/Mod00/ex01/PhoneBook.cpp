@@ -48,6 +48,8 @@ Contact 	*PhoneBook::F_GetContact(int index) {
 void	PhoneBook::F_BookPrint() {
 	for (int i = 0; i < m_stored; i++)
 		m_Contact[i].F_PrintContact();
+	if (m_stored == 0)
+		std::cout << EMPTY_SEARCH << std::endl;
 }
 
 void	PhoneBook::F_AddStored(void) {
