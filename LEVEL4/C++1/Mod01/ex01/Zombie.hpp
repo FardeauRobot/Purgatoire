@@ -7,10 +7,14 @@ class Zombie
 {
 	private:
 		std::string m_name;
+
 	public:
 		Zombie(void);
-		Zombie(std::string name) ;
-		~Zombie() ;
+		Zombie(std::string name);
+		Zombie(const Zombie &src);
+		~Zombie();
+
+		Zombie &operator=(const Zombie &other);
 
 		void	F_SetName(std::string name);
 		std::string	F_GetName(void);

@@ -3,8 +3,11 @@
 
 int main () {
 	Zombie *test = newZombie("Tim");
-	test->announce();
-	delete test;
+	if (test)
+	{
+		test->announce();
+		delete test;
+	}
 	randomChump("Gneeee");
 	randomChump("Gnaaaaa");
 }

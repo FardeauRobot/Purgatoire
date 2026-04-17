@@ -15,6 +15,16 @@ Zombie::Zombie(std::string name) {
 	std::cout << BOLD_CYAN << m_name << " has been created.\n" << RESET;
 }
 
+Zombie::Zombie(const Zombie &src) {
+	*this = src;
+}
+
+Zombie &Zombie::operator=(const Zombie &other) {
+	if (this != &other)
+		m_name = other.m_name;
+	return (*this);
+}
+
 void	Zombie::F_SetName(std::string name) {
 	m_name = name;
 }
