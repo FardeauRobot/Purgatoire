@@ -4,7 +4,7 @@ CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
 
-SRCS     = main.cpp
+SRCS     = main.cpp Sed.cpp
 
 OBJS     = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 OBJDIR   = objs
