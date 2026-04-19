@@ -1,4 +1,5 @@
 #include "Sed.hpp"
+#include "Errors.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -16,6 +17,11 @@ int main (int argc, char **argv)
 
     // INITALIZING IN/OUTPUT
     std::ifstream infile(O_Content.F_GetInfile().c_str());
+    if (!infile)
+        F_ErrExit("Error opening infile");
     std::ofstream outfile(O_Content.F_GetOutfile().c_str());
+    if (!outfile)
+        F_ErrExit("Error opening outfile");
 
+    
 }
