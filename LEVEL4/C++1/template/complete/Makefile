@@ -15,7 +15,7 @@ UTILS_PATH = $(SRCDIR)/utils
 # ============== SRC-FILES ===================
 SKELETON_FILES = main.cpp
 CORE_FILES     =
-UTILS_FILES    = errors.cpp
+UTILS_FILES    = Errors.cpp
 
 SRCS = $(addprefix $(SRCDIR)/, $(SKELETON_FILES)) \
        $(addprefix $(CORE_PATH)/, $(CORE_FILES)) \
