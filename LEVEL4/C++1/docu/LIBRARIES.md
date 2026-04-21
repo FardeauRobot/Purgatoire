@@ -1,4 +1,4 @@
-# LIBRARIES.md
+# `<iostream>` and `<iomanip>` — Library Reference
 
 This document summarizes the main user-facing API from the C++ standard headers `<iostream>` and `<iomanip>`, with practical examples for each feature.
 
@@ -9,7 +9,7 @@ Note:
 
 ---
 
-## 1) `<iostream>`
+## 1. `<iostream>`
 
 `<iostream>` provides stream classes, stream state management, and standard stream objects.
 
@@ -469,7 +469,7 @@ int main() {
 
 ---
 
-## 2) `<iomanip>`
+## 2. `<iomanip>`
 
 `<iomanip>` provides parameterized manipulators for formatting.
 
@@ -751,7 +751,7 @@ int main() {
 
 ---
 
-## 3) Combining manipulators — practical patterns
+## 3. Combining manipulators — practical patterns
 
 ### Formatted table output
 
@@ -822,7 +822,7 @@ int main() {
 
 ---
 
-## 4) Important distinctions
+## 4. Important distinctions
 
 - `<iostream>` gives you stream objects/classes and core stream operations.
 - `<iomanip>` gives you formatting manipulators (especially parameterized ones: `setw`, `setprecision`, `setfill`, `setbase`, `put_time`, `put_money`).

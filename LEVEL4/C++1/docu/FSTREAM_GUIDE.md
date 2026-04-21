@@ -1,4 +1,4 @@
-# The `<fstream>` Library in C++
+# The `<fstream>` Library — Complete Guide
 
 The `<fstream>` header provides file stream classes for reading from and writing to files. It builds on top of `<iostream>`.
 

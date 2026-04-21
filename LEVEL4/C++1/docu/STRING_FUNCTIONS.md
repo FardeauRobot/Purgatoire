@@ -1,4 +1,4 @@
-# `std::string` — Reference
+# `std::string` — Complete Reference
 
 `std::string` lives in `<string>` and is a `typedef` for `std::basic_string<char>`. Everything below is C++98 unless marked **(C++11)**.
 

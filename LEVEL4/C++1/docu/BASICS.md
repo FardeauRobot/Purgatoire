@@ -1,4 +1,4 @@
-# BASICS.md — Understanding C++
+# C++ Basics — From C to C++
 
 Written for someone who knows C and is starting the 42 CPP modules.
 
@@ -57,6 +57,8 @@ This is not just syntax sugar. The object is **responsible for itself**.
 |---|---|
 | **Performance** | As fast as C. No runtime, no GC, no VM. |
 | **Zero-cost abstractions** | Classes, templates, inline functions compile away. |
+| **RAII** | Resources (memory, files, locks) are tied to object lifetime — they clean up automatically. |
+| **RAII** | Resources (memory, files, locks) are tied to object lifetime — they clean up automatically. |
 | **RAII** | Resources (memory, files, locks) are tied to object lifetime — they clean up automatically. |
 | **Compatibility with C** | You can call any C library directly. |
 | **Expressiveness** | Operator overloading, references, templates let you write very natural code. |

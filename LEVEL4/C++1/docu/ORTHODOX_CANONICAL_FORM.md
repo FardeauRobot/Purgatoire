@@ -1,4 +1,4 @@
-# The Orthodox Canonical Form (OCF) in C++
+# The Orthodox Canonical Form (OCF) — Complete Guide
 
 ## Table of Contents
 1. [What is the Orthodox Canonical Form?](#what-is-the-orthodox-canonical-form)

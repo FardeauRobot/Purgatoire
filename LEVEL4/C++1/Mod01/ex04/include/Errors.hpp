@@ -16,7 +16,7 @@ int  F_ErrMsg(const std::string& msg);
 // --- Log a warning to stderr (non-fatal) ---
 void F_WarnMsg(const std::string& msg);
 
-// --- Log an error and exit immediately (unrecoverable) ---
+// --- Throw a std::runtime_error (unwinds stack, calls destructors) ---
 void F_ErrExit(const std::string& msg);
 
 #endif

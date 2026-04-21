@@ -1,4 +1,4 @@
-# C++ Module 00 — Complete Learning Guide
+# C++ Module 00 — Learning Guide
 
 > This document is your reference sheet for CPP Module 00.
 > Read it actively — don't just scan it. When something clicks, close it and try to rebuild it from memory.

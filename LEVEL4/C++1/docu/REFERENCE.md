@@ -1,4 +1,4 @@
-# C++ References — Full Guide
+# C++ References — Complete Guide
 
 ## 1. What is a reference?
 

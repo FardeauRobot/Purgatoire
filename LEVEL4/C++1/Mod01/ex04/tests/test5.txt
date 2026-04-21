@@ -1,0 +1,6 @@
+
+empty lines above and below
+
+pattern at start: hello there
+there: pattern at end
+pattern pattern pattern on one line

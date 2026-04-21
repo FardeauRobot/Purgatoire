@@ -1,7 +1,7 @@
 #include "utils/errors.hpp"
 #include "utils/colors.hpp"
 #include <iostream>
-#include <cstdlib>
+#include <stdexcept>
 
 int F_ErrMsg(const std::string& msg)
 {
@@ -16,6 +16,5 @@ void F_WarnMsg(const std::string& msg)
 
 void F_ErrExit(const std::string& msg)
 {
-    std::cerr << BOLD_RED << "Fatal: " << RESET << msg << std::endl;
-    std::exit(FAILURE);
+    throw std::runtime_error(std::string(BOLD_RED) + "Fatal: " + RESET + msg);
 }
