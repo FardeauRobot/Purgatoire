@@ -1,4 +1,4 @@
-# CPP Module 01 — Recap & Tips
+# C++ Module 01 — Learning Guide
 
 **Module theme:** *Memory allocation, pointers to members, references, and switch statements.*
 

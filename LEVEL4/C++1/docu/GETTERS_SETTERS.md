@@ -1,4 +1,4 @@
-# Getters and Setters in C++
+# Getters and Setters in C++ — Complete Guide
 
 ## What are they?
 

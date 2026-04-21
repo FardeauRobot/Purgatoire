@@ -2,26 +2,33 @@
 #include "Errors.hpp"
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
-    if (argc != 4)
-    {
-        std::cerr << "Error format : ./sed file to_replace replace_by" << std::endl;
-        return (1);
-    }
+	try
+	{
+		if (argc != 4)
+			F_ErrExit("Usage: ./sed <file> <to_replace> <replace_by>");
 
-    Sed O_Content(argv[1], argv[2], argv[3]);
-    // JUST CHECKING THE CONTENT
-    O_Content.F_SedContentPrint();
+		Sed sed(argv[1], argv[2], argv[3]);
 
-    // INITALIZING IN/OUTPUT
-    std::ifstream infile(O_Content.F_GetInfile().c_str());
-    if (!infile)
-        F_ErrExit("Error opening infile");
-    std::ofstream outfile(O_Content.F_GetOutfile().c_str());
-    if (!outfile)
-        F_ErrExit("Error opening outfile");
+		std::ifstream infile(sed.F_GetInfile().c_str());
+		if (!infile)
+			F_ErrExit("Cannot open infile: " + sed.F_GetInfile());
 
-    
+		std::ofstream outfile(sed.F_GetOutfile().c_str(), std::ios::trunc);
+		if (!outfile)
+			F_ErrExit("Cannot open outfile: " + sed.F_GetOutfile());
+
+		std::string line;
+		while (std::getline(infile, line))
+			outfile << sed.F_ReplaceAll(line) << '\n';
+	}
+	catch (const std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return (FAILURE);
+	}
+	return (SUCCESS);
 }
