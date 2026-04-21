@@ -1,0 +1,42 @@
+#!/bin/bash
+
+TEMPLATE_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+usage() {
+    echo "Usage: cppinit <basic|complete> <project_name>"
+    exit 1
+}
+
+if [ "$#" -ne 2 ]; then
+    usage
+fi
+
+VARIANT="$1"
+NAME="$2"
+
+case "$VARIANT" in
+    basic|complete) ;;
+    *) usage ;;
+esac
+
+SOURCE="$TEMPLATE_DIR/$VARIANT"
+TARGET="$(pwd)/$NAME"
+
+if [ ! -d "$SOURCE" ]; then
+    echo "Error: template '$VARIANT' not found at $SOURCE"
+    exit 1
+fi
+
+if [ -d "$TARGET" ]; then
+    echo "Error: '$TARGET' already exists."
+    exit 1
+fi
+
+cp -r "$SOURCE" "$TARGET"
+
+# Replace placeholder in all project files
+find "$TARGET" -type f | while read -r file; do
+    sed -i "s/PROJECT_NAME/$NAME/g" "$file"
+done
+
+echo "Project '$NAME' ($VARIANT) created at $TARGET"
