@@ -1,0 +1,20 @@
+#include <iostream>
+#include "Zombie.hpp"
+#include "colors.hpp"
+
+Zombie::~Zombie() {
+	std::cout << BOLD_RED << m_name << " has been destroyed.\n" << RESET;
+}
+
+Zombie::Zombie(std::string name) {
+	m_name = name;
+	std::cout << BOLD_CYAN << m_name << " has been created.\n" << RESET;
+}
+
+void	Zombie::F_SetName(std::string name) {
+	m_name = name;
+}
+
+void Zombie::announce(void) {
+	std::cout << BOLD << m_name << RESET << ITALIC << ": BraiiiiiiinnnzzzZ...\n";
+}
