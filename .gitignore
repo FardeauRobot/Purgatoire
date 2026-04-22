@@ -1,3 +1,31 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Build outputs (42)
 *.o
 *.a
 *.d
+*.dSYM/
+
+# Project binaries — rebuild, don't commit
+LEVEL1/PRINTF/libftprintf.a
+LEVEL2/PushSwap/push_swap
+LEVEL2/PushSwap/checker_linux
+LEVEL2/PushSwap/visualizer
+LEVEL2/Pipex/pipex
+LEVEL2/So_Long/so_long
+LEVEL3/philo/philo
+LEVEL3/minishell/minishell
+LEVEL4/cub3d/cub3d
+LEVEL4/C++1/**/a.out
+LEVEL4/C++1/**/*.out
+
+# Test artefacts
+LEVEL2/Pipex/outfile
+LEVEL2/Pipex/wc
