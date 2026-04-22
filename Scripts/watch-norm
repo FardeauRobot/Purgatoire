@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# watch_norminette.sh - Rainbominette: watch-like wrapper to run norminette repeatedly with rainbow output
+# watch-norm - Rainbominette: watch-like wrapper to run norminette repeatedly with rainbow output
 # Usage: Rainbominette [-n interval] [-L] [path]
 # Examples:
 #   Rainbominette            # run norminette on current directory every 2s

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# clone_libft.sh - Clone libft_official into includes/libft and detach it from git
-# Usage: clone_libft.sh
+# libft-clone - Clone libft_official into includes/libft and detach it from git
+# Usage: libft-clone
 # Clones https://github.com/FardeauRobot/libft_official.git into ./includes/libft
 # then removes the .git directory so the folder is a plain, unlinked copy.
 

@@ -2,7 +2,7 @@
 # ************************************************************************** #
 #                                                                            #
 #                                                        :::      ::::::::   #
-#   git_commit_ascend.sh                               :+:      :+:    :+:   #
+#   ascend                               :+:      :+:    :+:   #
 #                                                    +:+ +:+         +:+     #
 #   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        #
 #                                                +#+#+#+#+#+   +#+           #
@@ -11,8 +11,8 @@
 #                                                                            #
 # ************************************************************************** #
 #
-# git_commit_ascend.sh - Add, commit and push in one divine command
-# Usage: git_commit_ascend.sh "commit message"
+# ascend - Add, commit and push in one divine command
+# Usage: ascend "commit message"
 # Ascend thy works to the eternal repository
 
 set -e
@@ -26,11 +26,11 @@ NC='\033[0m'
 
 show_usage() {
 	echo -e "${BLUE}=== Git Commit & Ascend ===${NC}"
-	echo -e "${YELLOW}Usage: git_commit_ascend.sh \"commit message\"${NC}"
+	echo -e "${YELLOW}Usage: ascend \"commit message\"${NC}"
 	echo -e "${CYAN}Examples:${NC}"
-	echo -e "  git_commit_ascend.sh \"Fixed the sorting algorithm\""
-	echo -e "  git_commit_ascend.sh \"Added new divine feature\""
-	echo -e "  git_commit_ascend.sh \"Updated sacred documentation\""
+	echo -e "  ascend \"Fixed the sorting algorithm\""
+	echo -e "  ascend \"Added new divine feature\""
+	echo -e "  ascend \"Updated sacred documentation\""
 }
 
 if [ ! -d .git ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
-# execc - Compile C file with ft_putchar.c from Labo directory
-# Usage: execc <filename.c>
+# runc - Compile C file with ft_putchar.c from Labo directory
+# Usage: runc <filename.c>
 
 # Colors for output
 RED='\033[0;31m'
@@ -16,11 +16,11 @@ FT_PUTCHAR_PATH="$HOME/Desktop/Labo/ft_putchar.c"
 # Function to show usage
 show_usage() {
     echo -e "${BLUE}=== ExecC - C Compiler with ft_putchar ===${NC}"
-    echo -e "${YELLOW}Usage: execc <filename.c> [output_name]${NC}"
+    echo -e "${YELLOW}Usage: runc <filename.c> [output_name]${NC}"
     echo -e "${CYAN}Examples:${NC}"
-    echo -e "  execc main.c"
-    echo -e "  execc test.c my_program"
-    echo -e "  execc ex00/ft_print_alphabet.c"
+    echo -e "  runc main.c"
+    echo -e "  runc test.c my_program"
+    echo -e "  runc ex00/ft_print_alphabet.c"
 }
 
 # Check if filename is provided

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# AddLibft.sh - build libft.a from ~/Desktop/Purgatoire/LIBFT and copy entire folder to includes directory
-# Usage: AddLibft [make-target]
+# libft-add - build libft.a from ~/Desktop/Purgatoire/LIBFT and copy entire folder to includes directory
+# Usage: libft-add [make-target]
 # By default runs `make -C LIBFT_DIR all`. Pass an optional make target (e.g., re) to override.
 
 set -euo pipefail
@@ -29,7 +29,7 @@ fi
 
 info "Building libft in $LIBFT_DIR (target: $MAKE_TARGET)"
 if ! make -C "$LIBFT_DIR" "$MAKE_TARGET"; then
-  err "make failed. Please fix build errors before running AddLibft."
+  err "make failed. Please fix build errors before running libft-add."
   exit 1
 fi
 
@@ -60,4 +60,4 @@ find "$LIBFT_DIR" -type f \( -name "*.c" -o -name "*.h" -o -name "*.md" -o -name
 info "Contents copied to includes directory:"
 ls -la "$DEST_DIR" 2>/dev/null || true
 
-info "AddLibft completed successfully."
+info "libft-add completed successfully."

@@ -2,7 +2,7 @@
 # ************************************************************************** #
 #                                                                            #
 #                                                        :::      ::::::::   #
-#   transcribe_to_github.sh                            :+:      :+:    :+:   #
+#   gh-transcribe                            :+:      :+:    :+:   #
 #                                                    +:+ +:+         +:+     #
 #   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        #
 #                                                +#+#+#+#+#+   +#+           #
@@ -11,8 +11,8 @@
 #                                                                            #
 # ************************************************************************** #
 #
-# transcribe_to_github.sh - Transcribe project to personal GitHub
-# Usage: transcribe_to_github.sh
+# gh-transcribe - Transcribe project to personal GitHub
+# Usage: gh-transcribe
 # Copy thy works to the eternal repository
 
 set -e

@@ -2,7 +2,7 @@
 # ************************************************************************** #
 #                                                                            #
 #                                                        :::      ::::::::   #
-#   compile_with_putchar.sh                            :+:      :+:    :+:   #
+#   cc-putchar                            :+:      :+:    :+:   #
 #                                                    +:+ +:+         +:+     #
 #   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        #
 #                                                +#+#+#+#+#+   +#+           #
@@ -11,8 +11,8 @@
 #                                                                            #
 # ************************************************************************** #
 #
-# compile_with_putchar.sh - Compile with ft_putchar from Labo
-# Usage: compile_with_putchar.sh <filename.c> [output_name]
+# cc-putchar - Compile with ft_putchar from Labo
+# Usage: cc-putchar <filename.c> [output_name]
 # For the Piscine exercises that require ft_putchar
 
 set -euo pipefail
@@ -28,11 +28,11 @@ NC='\033[0m'
 
 show_usage() {
 	echo -e "${BLUE}=== Compile with ft_putchar ===${NC}"
-	echo -e "${YELLOW}Usage: compile_with_putchar.sh <filename.c> [output_name]${NC}"
+	echo -e "${YELLOW}Usage: cc-putchar <filename.c> [output_name]${NC}"
 	echo -e "${CYAN}Examples:${NC}"
-	echo -e "  compile_with_putchar.sh main.c"
-	echo -e "  compile_with_putchar.sh test.c my_program"
-	echo -e "  compile_with_putchar.sh ex00/ft_print_alphabet.c"
+	echo -e "  cc-putchar main.c"
+	echo -e "  cc-putchar test.c my_program"
+	echo -e "  cc-putchar ex00/ft_print_alphabet.c"
 }
 
 if [ -z "${1:-}" ]; then
