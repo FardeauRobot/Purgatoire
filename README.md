@@ -106,9 +106,10 @@ Sacred incantations gathered along the way — git workflows, compile helpers, t
 Highlights:
 
 - `autopush` — debounced file-watch → auto `git add/commit/push`
+- `solopush` — one-shot `git add/commit/push` with a message
 - `remind` — timed broadcast to every open terminal (in pagga + lolcat)
 - `note` — tiny terminal notepad backed by `~/.local/share/notes.md`
-- `watch_norminette.sh` — rainbow-coloured norminette on save
+- `watch-norm` — rainbow-coloured norminette on a loop
 
 ---
 
