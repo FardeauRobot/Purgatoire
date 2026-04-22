@@ -2,7 +2,7 @@
 # ************************************************************************** #
 #                                                                            #
 #                                                        :::      ::::::::   #
-#   divine_compile.sh                                  :+:      :+:    :+:   #
+#   cc-divine                                  :+:      :+:    :+:   #
 #                                                    +:+ +:+         +:+     #
 #   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        #
 #                                                +#+#+#+#+#+   +#+           #
@@ -11,8 +11,8 @@
 #                                                                            #
 # ************************************************************************** #
 #
-# divine_compile.sh - Compile C files with sacred flags
-# Usage: divine_compile.sh [-b BUFFER] [-o output] <files...>
+# cc-divine - Compile C files with sacred flags
+# Usage: cc-divine [-b BUFFER] [-o output] <files...>
 # The divine compiler speaks with -Wall -Wextra -Werror
 
 set -euo pipefail
@@ -25,15 +25,15 @@ usage() {
 	cat <<EOF
 Divine Compile - Compile thy C files with holy flags
 
-Usage: divine_compile.sh [-b BUFFER] [-o output] <files...>
+Usage: cc-divine [-b BUFFER] [-o output] <files...>
 	-b BUFFER   set BUFFER_SIZE macro (overrides CC_BUFFER)
 	-o output   name of produced executable (default: a.out)
 	-h          show this divine wisdom
 
 Examples:
-	divine_compile.sh -b 100 main.c
-	divine_compile.sh -o sacred_test prog.c utils.c
-	CC_BUFFER=32 divine_compile.sh main.c
+	cc-divine -b 100 main.c
+	cc-divine -o sacred_test prog.c utils.c
+	CC_BUFFER=32 cc-divine main.c
 EOF
 }
 

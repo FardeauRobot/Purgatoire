@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# cppinit - bootstrap a new C++ project from a template
+# Usage: cppinit <basic|complete> <project_name>
+#   basic     : single src/ + include/ layout
+#   complete : src/core + src/utils layout with more scaffolding
+# Templates live in $REPO_ROOT/templates/cpp/<variant>.
+
+set -e
+
+usage() {
+    echo "Usage: cppinit <basic|complete> <project_name>"
+    exit 1
+}
+
+[ "$#" -eq 2 ] || usage
+
+VARIANT="$1"
+NAME="$2"
+
+case "$VARIANT" in
+    basic|complete) ;;
+    *) usage ;;
+esac
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+SOURCE="$REPO_ROOT/templates/cpp/$VARIANT"
+TARGET="$(pwd)/$NAME"
+
+if [ ! -d "$SOURCE" ]; then
+    echo "cppinit: template '$VARIANT' not found at $SOURCE" >&2
+    exit 1
+fi
+
+if [ -e "$TARGET" ]; then
+    echo "cppinit: '$TARGET' already exists" >&2
+    exit 1
+fi
+
+cp -r "$SOURCE" "$TARGET"
+
+find "$TARGET" -type f -exec sed -i "s/PROJECT_NAME/$NAME/g" {} +
+
+echo "✓ $VARIANT project '$NAME' created at $TARGET"

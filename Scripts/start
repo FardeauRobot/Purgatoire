@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# start.sh - Open a terminal with 3 tabs: Spotizer, Spotify Web, and Intra
-# Usage: start.sh
+# start - Open a terminal with 3 tabs: Spotizer, Spotify Web, and Intra
+# Usage: start
 
 # Tab 1: cd into Spotizer repo and launch the visualizer
 # Tab 2: Open Spotify on web

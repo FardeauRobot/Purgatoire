@@ -2,7 +2,7 @@
 # ************************************************************************** #
 #                                                                            #
 #                                                        :::      ::::::::   #
-#   forge_libft.sh                                     :+:      :+:    :+:   #
+#   libft-forge                                     :+:      :+:    :+:   #
 #                                                    +:+ +:+         +:+     #
 #   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        #
 #                                                +#+#+#+#+#+   +#+           #
@@ -11,8 +11,8 @@
 #                                                                            #
 # ************************************************************************** #
 #
-# forge_libft.sh - Forge the sacred libft library and copy to includes
-# Usage: forge_libft.sh [make-target]
+# libft-forge - Forge the sacred libft library and copy to includes
+# Usage: libft-forge [make-target]
 # The Foundation Stone must be built before thy trials begin
 
 set -euo pipefail

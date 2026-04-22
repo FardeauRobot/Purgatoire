@@ -2,7 +2,7 @@
 # ************************************************************************** #
 #                                                                            #
 #                                                        :::      ::::::::   #
-#   open_subject.sh                                    :+:      :+:    :+:   #
+#   open-subject                                    :+:      :+:    :+:   #
 #                                                    +:+ +:+         +:+     #
 #   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        #
 #                                                +#+#+#+#+#+   +#+           #
@@ -11,8 +11,8 @@
 #                                                                            #
 # ************************************************************************** #
 #
-# open_subject.sh - Open PDF subject files quickly
-# Usage: open_subject.sh <filename>
+# open-subject - Open PDF subject files quickly
+# Usage: open-subject <filename>
 # Read the sacred texts of thy trials
 
 set -euo pipefail
@@ -26,8 +26,8 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 if [ -z "${1:-}" ]; then
-	echo -e "${RED}Usage: open_subject.sh <filename>${NC}"
-	echo -e "${YELLOW}Example: open_subject.sh Libft${NC}"
+	echo -e "${RED}Usage: open-subject <filename>${NC}"
+	echo -e "${YELLOW}Example: open-subject Libft${NC}"
 	echo ""
 	echo -e "${BLUE}📜 Available sacred texts:${NC}"
 	if [ -d "$SUBJECTS_PATH" ]; then
