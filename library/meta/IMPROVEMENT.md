@@ -236,7 +236,7 @@ What scares you most from the list? Write it down, then spend a weekend rebuildi
 ## 🏛️ Long-term investments
 
 ### 24. **Dotfiles repo, not project scripts**
-`remind`, `note`, `autopush`, `watch_norminette` are personal workflow tools, not 42 project code. Split them into a separate `dotfiles` or `bin` repo symlinked to `~/.local/bin`. Keeps Purgatoire focused on course work.
+`remind`, `note`, `autopush`, `watch-norm` are personal workflow tools, not 42 project code. Split them into a separate `dotfiles` or `bin` repo symlinked to `~/.local/bin`. Keeps Purgatoire focused on course work.
 
 ### 25. **Architecture diagrams for big projects**
 For minishell and cub3d, one Mermaid diagram in the README beats 500 words. Example for minishell:
