@@ -479,3 +479,107 @@ public:
 ---
 
 **TL;DR**: The Orthodox Canonical Form is the C++98 discipline of always defining the four lifecycle functions explicitly so that object creation, copying, assignment, and destruction are never left to the compiler's silent defaults. It prevents resource leaks, double frees, and dangling pointers in any class that owns resources — and makes intent crystal clear in classes that don't.
+
+---
+
+## Hardware view — what the four members compile to
+
+### Default ctor (no trace, primitive members)
+
+```cpp
+class Fixed { int raw; };
+Fixed::Fixed() : raw(0) {}
+```
+
+Compiles to (x86-64):
+
+```asm
+Fixed::Fixed():
+    mov  dword [rdi], 0       ; this->raw = 0
+    ret
+```
+
+Three instructions. One store and a return. With `-O2` plus
+inlining at the call site, the ctor may disappear entirely if the
+caller's stack slot is already zero-initialised.
+
+### Copy ctor on a primitives-only class
+
+```cpp
+Fixed::Fixed(Fixed const& src) : raw(src.raw) {}
+```
+
+```asm
+Fixed::Fixed(Fixed const&):
+    mov  eax, [rsi]           ; load other.raw
+    mov  [rdi], eax           ; this->raw = other.raw
+    ret
+```
+
+One 4-byte load, one 4-byte store. For a class with a `std::string`
+member, add an allocation for the heap buffer — tens of nanoseconds
+vs ~1 cycle for the primitives-only case.
+
+### Copy assignment with self-assignment guard
+
+```cpp
+Fixed& operator=(Fixed const& o) {
+    if (this != &o) raw = o.raw;
+    return *this;
+}
+```
+
+```asm
+Fixed::operator=(Fixed const&):
+    cmp  rdi, rsi             ; this vs &other
+    je   .skip
+    mov  eax, [rsi]
+    mov  [rdi], eax
+.skip:
+    mov  rax, rdi             ; return *this
+    ret
+```
+
+The guard is two instructions (`cmp` + `je`). For primitives, it
+costs one branch. For resource-owning classes, the guard prevents
+`delete old; this = old;` — which would be catastrophic.
+
+### Destructor for a resource-owning class
+
+```cpp
+class Dog { Brain* brain; };
+Dog::~Dog() { delete brain; }
+```
+
+`delete p` includes an implicit null check — `delete NULL;` is a
+defined no-op. That's why you can `delete` a member without
+pre-checking for null.
+
+### Copy elision — when the copy ctor is silently skipped
+
+```cpp
+Fixed make() { return Fixed(42); }
+Fixed f = make();
+```
+
+With any modern compiler, **only one** `Fixed` is constructed. The
+compiler applies **return value optimisation (RVO)**: constructs
+`Fixed(42)` directly into `f`'s storage, skipping the copy ctor.
+Your copy ctor's trace print **will not fire** even though the
+language "conceptually" made a copy.
+
+Rule of thumb: never count on a specific number of copy-ctor prints
+in code that passes or returns by value. Moulinette usually tests
+**explicit copies** (`Foo b(a);`, not `Foo b = make();`) to avoid
+RVO ambiguity — but if your output has one fewer "copy ctor called"
+than you expected, RVO is probably the reason.
+
+### Vtable pointer and OCF
+
+Any class with `virtual` methods has a vptr as its (usually) first
+member. The compiler-generated copy ctor / copy-assign **does not**
+copy the vptr from the source — each ctor sets the vptr to the
+class's own vtable. That's why object slicing works: copying a
+`Dog` into an `Animal` slot leaves the destination's vptr pointing
+at `Animal`'s vtable, not `Dog`'s, so subsequent virtual calls
+dispatch as `Animal`.

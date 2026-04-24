@@ -63,12 +63,17 @@ Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when s
 |---|---|
 | [`BASICS.md`](cpp/fundamentals/BASICS.md) | Core syntax, compilation unit, namespaces. |
 | [`REFERENCE.md`](cpp/fundamentals/REFERENCE.md) | References vs pointers, lvalue semantics. |
+| [`MEMORY.md`](cpp/fundamentals/MEMORY.md) | Stack vs heap, `new`/`delete`, `new[]`/`delete[]`, RAII, lifetime, valgrind. |
+| [`CMATH.md`](cpp/fundamentals/CMATH.md) | `<cmath>` — powers, roots, trig, rounding; what's in C++98 vs C++11. |
 
 ### `cpp/modules/` — *per-module walkthrough*
 | File | Topic |
 |---|---|
 | [`CPP00.md`](cpp/modules/CPP00.md) | Module 00 — namespaces, classes, stdio. |
 | [`CPP01.md`](cpp/modules/CPP01.md) | Module 01 — memory, references, file I/O. |
+| [`CPP02.md`](cpp/modules/CPP02.md) | Module 02 — OCF, operator overloading, fixed-point. |
+| [`CPP03.md`](cpp/modules/CPP03.md) | Module 03 — inheritance, ctor/dtor chains, the diamond. |
+| [`CPP04.md`](cpp/modules/CPP04.md) | Module 04 — virtual dispatch, abstract classes, interfaces. |
 | [`WALKTHROUGH.md`](cpp/modules/WALKTHROUGH.md) | End-to-end CPP walkthrough. |
 
 ### `cpp/oop/` — *object orientation*

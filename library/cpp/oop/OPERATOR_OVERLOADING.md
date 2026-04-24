@@ -399,3 +399,114 @@ The right order to build them:
 - **`operator,`** looks harmless and is a bottomless trap. Don't overload it.
 - **Conversion operators + ctor** can create ambiguity: `Fixed(int)` and `operator int() const` means `a + 1` has two valid interpretations. Mark constructors `explicit` when they're not meant to convert silently.
 - **`operator[]` returning by value** makes `a[0] = 42` silently fail (you'd be assigning to a temporary). Always return by reference.
+
+---
+
+## 16. Hardware view — what overloaded operators compile to
+
+### `operator+` on a primitive-like class
+
+```cpp
+Fixed Fixed::operator+(Fixed const& rhs) const {
+    Fixed r;
+    r.setRawBits(m_raw + rhs.m_raw);
+    return r;
+}
+```
+
+Compiles (with RVO) to roughly:
+
+```asm
+Fixed::operator+(Fixed const&):
+    mov  eax, [rdi]           ; this->raw
+    add  eax, [rsi]           ; + rhs.raw
+    mov  [rdx], eax           ; store into the caller's return slot
+    ret
+```
+
+`rdx` here is the "return-by-value" slot the caller pre-allocated.
+No temporary `Fixed` object gets constructed and then copied —
+RVO builds it in place. That's why the copy ctor's trace print
+**doesn't fire** when you write `Fixed c = a + b;`.
+
+### `operator*` with the Q8 shift
+
+```cpp
+Fixed Fixed::operator*(Fixed const& rhs) const {
+    Fixed r;
+    r.setRawBits((m_raw * rhs.m_raw) >> 8);
+    return r;
+}
+```
+
+```asm
+Fixed::operator*(Fixed const&):
+    mov  eax, [rdi]
+    imul eax, [rsi]           ; signed multiply
+    sar  eax, 8               ; arithmetic shift right
+    mov  [rdx], eax
+    ret
+```
+
+One `imul`, one `sar`. On modern x86, `imul` is 3 cycles, `sar` is
+1 cycle. The full fixed-point multiply is ~5 cycles. Compare to a
+floating-point multiply (`mulss`): also ~5 cycles, but with
+20-cycle stalls on denormals/NaN handling. Fixed-point wins when
+you're operating on integer pipelines.
+
+### `operator<<` for stream insertion
+
+```cpp
+std::ostream& operator<<(std::ostream& os, Fixed const& f) {
+    os << f.toFloat();
+    return os;
+}
+```
+
+Compiles to a call to `std::ostream::operator<<(float)`, preceded
+by the `Fixed::toFloat()` body (typically inlined). The stream
+operator is **not** virtual — resolution happens at compile time
+based on the `float` argument type. That's why stream extensibility
+"just works": add a new `operator<<` overload for your type, the
+compiler finds it via argument-dependent lookup.
+
+### Pre-increment vs post-increment — the cost difference
+
+```cpp
+Fixed& operator++();      // pre
+Fixed  operator++(int);   // post
+```
+
+Pre-increment: **one store** (`++m_raw`), return `*this`. One load
+(the ref return) at the call site.
+
+Post-increment: **one copy ctor** (the pre-snapshot), **one store**
+(`++m_raw`), **one destructor** on the temporary after the caller
+reads it. Three operations vs one.
+
+For a `Fixed` (one `int`), the copy is free and the difference
+vanishes. For a class with a `std::string` member, the copy is an
+allocation. **Rule: prefer `++i` over `i++` when you don't need the
+old value.** Pre-increment loops are a tiny, free win on any
+object that allocates in its copy ctor.
+
+### Comparison operators — the fast path
+
+```cpp
+bool operator<(Fixed const& rhs) const { return m_raw < rhs.m_raw; }
+```
+
+```asm
+Fixed::operator<(Fixed const&):
+    mov  eax, [rdi]
+    cmp  eax, [rsi]
+    setl al
+    ret
+```
+
+Three instructions. Branch-free. Modern CPUs execute this in 1
+cycle. Comparisons on `Fixed` are as fast as on raw `int`.
+
+Comparing `float`s requires `ucomiss` + a branch on the status
+flags, plus NaN handling — slower and full of corner cases.
+Another reason fixed-point wins for hot comparison code.

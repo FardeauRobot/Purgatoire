@@ -351,3 +351,72 @@ By the end, you've seen: virtual functions, vtables' effect, abstract classes, i
 - **Multiple inheritance of concrete classes is a minefield.** Interfaces (pure-virtual-only) are fine.
 - **`dynamic_cast` requires a polymorphic base** (at least one virtual). See [CASTS.md](CASTS.md).
 - **Static vs dynamic confusion.** `Animal* a = new Dog; typeid(*a) == typeid(Dog)` is true; `typeid(a) == typeid(Animal*)` is also true. `*a` is dynamic; `a` is static.
+
+---
+
+## 14. Hardware view — what the CPU actually does
+
+### A virtual call, in x86-64 pseudo-assembly
+
+`a->makeSound()` where `a` is an `Animal*`:
+
+```asm
+mov  rax, [a]            ; load the vptr (first 8 bytes of the object)
+mov  rax, [rax + 0]      ; load slot 0 of the vtable (makeSound)
+mov  rdi, a              ; pass `this` as arg 0
+call rax                 ; indirect call through the loaded pointer
+```
+
+Two dependent memory loads, then an indirect call. Compare to a
+non-virtual call, which is a single direct `call <symbol>`.
+
+### Branch prediction
+
+Modern CPUs have an **indirect branch predictor** that caches the
+target of recent indirect calls. When `a` usually points to the
+same concrete type (monomorphic call site), the predictor hits
+and the call is almost free — 1-2 cycles plus the loads. When the
+call site sees many different types (megamorphic), the predictor
+misses and you eat a 10-20 cycle pipeline flush per miss.
+
+This is why devirtualisation (compiler proving the concrete type
+at compile time) is a big optimisation target. In your 42 code,
+assume virtual calls cost ~5 cycles and move on.
+
+### Cache impact
+
+The vptr is typically the first 8 bytes of the object. Accessing
+any member also pulls in the vptr (same cache line). So the first
+vtable load is usually L1-hot. The vtable itself is shared across
+all instances — one cache line per class vtable, also usually hot.
+
+### The vtable's location in the binary
+
+Vtables live in `.rodata` (read-only data section). Each vtable
+contains the addresses of the class's virtual methods, plus RTTI
+info (used by `dynamic_cast` and `typeid`). The linker deduplicates
+vtables across translation units via "one definition rule" + weak
+symbols.
+
+`objdump -d -s -j .rodata ./program | grep -A 8 "vtable for Dog"`
+shows it if you're curious.
+
+### What `dynamic_cast<Dog*>(animal_ptr)` actually does
+
+1. Loads the vptr.
+2. Walks to the RTTI info attached to the vtable.
+3. Compares the RTTI type to `Dog`'s RTTI.
+4. If match (directly or via base chain), returns the adjusted
+   pointer. If not, returns `NULL`.
+
+Step 3 is a **string compare** on type names in many ABIs (Itanium
+C++ ABI). It's slow — microseconds for a deep hierarchy. Only use
+`dynamic_cast` when you actually need run-time type discrimination.
+
+### The pure-virtual stub
+
+A pure virtual function in the vtable points to `__cxa_pure_virtual`
+on Itanium ABI. If somehow invoked (e.g. calling a virtual from a
+base ctor before the derived is alive), it calls `std::terminate`
+— the program aborts. That's the runtime enforcement of
+abstractness, beyond the compile-time "can't instantiate" check.

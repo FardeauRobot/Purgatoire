@@ -429,3 +429,135 @@ This is where inheritance pays off: you write code that manipulates `Animal*` an
 - **Calling a virtual function from a constructor or destructor** does NOT dispatch to the derived — during those, the object isn't fully a `Derived` yet (or isn't anymore). You get the base's version.
 - **Private inheritance is not "is-a"** — it's "implemented-in-terms-of". Outside code cannot upcast `Derived*` to `Base*`.
 - **Inherited default constructors are implicitly generated** but not inherited-with-arguments. You have to write each overload explicitly in the derived class.
+
+---
+
+## 16. Hardware view — what the CPU actually does
+
+### Single inheritance — base subobject at offset 0
+
+```
+class Animal { std::string type; };            // 32 bytes
+class Dog : public Animal { Brain* brain; };   // 32 + 8 = 40 bytes
+
+Dog layout:
+┌──────────────────────────┐ offset 0
+│  Animal::type            │   (std::string, 32 bytes)
+├──────────────────────────┤ offset 32
+│  Dog::brain              │   (Brain*, 8 bytes)
+└──────────────────────────┘ total 40 bytes
+```
+
+`Animal* a = &dog;` compiles to zero machine instructions — the
+base subobject starts at offset 0, so the `Animal*` and `Dog*` are
+the same address. Upcast is free.
+
+### With a virtual method — the vptr takes the front
+
+```
+class Animal { virtual void makeSound(); std::string type; };
+class Dog : public Animal { Brain* brain; };
+
+Dog layout:
+┌──────────────────────────┐ offset 0
+│  vptr → Dog's vtable     │   (8 bytes)
+├──────────────────────────┤ offset 8
+│  Animal::type            │   (32 bytes)
+├──────────────────────────┤ offset 40
+│  Dog::brain              │   (8 bytes)
+└──────────────────────────┘ total 48 bytes
+```
+
+The vptr is now the first member. Still, `Dog*` and `Animal*` point
+to the same address.
+
+### Multiple inheritance — second base at non-zero offset
+
+```
+class A { int a_data; };       // 4 bytes
+class B { int b_data; };       // 4 bytes
+class C : public A, public B {};
+
+C layout:
+┌──────────────────────────┐ offset 0
+│  A::a_data               │   (4 bytes)
+├──────────────────────────┤ offset 4
+│  B::b_data               │   (4 bytes)
+└──────────────────────────┘
+```
+
+`A* p_a = &c;` → same address as `&c`, no adjustment.
+`B* p_b = &c;` → address is `&c + 4`, one `lea` instruction.
+
+### Virtual inheritance — the cost
+
+The diamond `class D : virtual public A` adds a **virtual base
+table pointer** (vbptr) to each class that inherits virtually:
+
+```
+class A { int a_data; };
+class B : virtual public A {};
+class C : virtual public A {};
+class D : public B, public C {};
+
+D layout (conceptually):
+┌──────────────────────────┐
+│  B's vbptr               │   (offset to A's subobject)
+├──────────────────────────┤
+│  B members               │
+├──────────────────────────┤
+│  C's vbptr               │
+├──────────────────────────┤
+│  C members               │
+├──────────────────────────┤
+│  D members               │
+├──────────────────────────┤
+│  A::a_data (shared)      │   ← one copy
+└──────────────────────────┘
+```
+
+Accessing `A::a_data` from inside `B` or `C` requires reading the
+vbptr first: *"where is the shared A subobject?"*. One extra
+indirection compared to non-virtual inheritance. The cost is small
+(one L1 load usually), but it's why the standard doesn't make
+`virtual` the default.
+
+### Construction order in assembly
+
+For `Dog d("Rex");`:
+
+```asm
+; 1. reserve storage (stack)
+sub  rsp, 48
+
+; 2. construct Animal subobject
+lea  rdi, [rsp]                  ; this = &d (Animal view)
+mov  rsi, "Rex"
+call Animal::Animal
+
+; 3. set vptr to Dog's vtable (compiler emitted automatically)
+lea  rax, [rip + vtable_for_Dog + 16]
+mov  [rsp], rax
+
+; 4. construct Dog-specific members
+lea  rdi, [rsp + 40]             ; &d.brain
+; ... new Brain(), store pointer ...
+
+; 5. run Dog ctor body (e.g. print trace)
+; ...
+```
+
+Step 3 is why virtual calls during `Animal::Animal` dispatch to
+`Animal` — the vptr isn't yet switched to `Dog`'s. Between step 2
+and step 3, the "type" of the object changes at runtime.
+
+### Padding and alignment
+
+The compiler pads members to satisfy alignment requirements.
+`Dog { char c; Brain* brain; }` is **16 bytes**, not 9: the
+`Brain*` requires 8-byte alignment, so the compiler inserts 7
+bytes of padding after `c`.
+
+Rule of thumb: **order members large-to-small** to minimise
+padding. It doesn't matter for correctness but matters for cache
+packing in hot code.
