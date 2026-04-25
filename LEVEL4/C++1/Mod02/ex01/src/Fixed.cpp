@@ -1,10 +1,25 @@
 #include "Fixed.hpp"
 #include "colors.hpp"
 #include <iostream>
+#include <cmath>
 
 Fixed::Fixed() {
     std::cout << BOLD_GREEN << "Default constructor called" << std::endl;
     m_raw = 0;
+}
+
+Fixed::Fixed(const int value)
+{
+    std::cout << BOLD_GREEN << "Int constructor called" << std::endl;
+    m_raw = value << m_fract_bits;
+    std::cout << BOLD_WHITE << "RAW VALUE =" << m_raw << std::endl;
+}
+
+Fixed::Fixed(const float value);
+{
+    std::cout << BOLD_GREEN << "float constructor called" << std::endl;
+    m_raw = std::roundf(value * (1 << m_fract_bits));
+    std::cout << BOLD_WHITE << "RAW VALUE =" << m_raw << std::endl;
 }
 
 Fixed::Fixed(const Fixed &src) {
@@ -31,4 +46,12 @@ int     Fixed::getRawBits(void) const {
 
 void    Fixed::setRawBits(int const raw) {
     m_raw = raw;
+}
+
+float toFloat(void) {
+    return (m_raw / (float)(1 <<8));
+}
+
+int toInt(void) {
+    return (m_raw << 8);
 }
