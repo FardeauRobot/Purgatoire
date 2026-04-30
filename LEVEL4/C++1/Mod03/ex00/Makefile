@@ -8,19 +8,10 @@ INCLUDES = -I include
 SRCDIR   = src
 OBJDIR   = objs
 
-# ============== SUB-DIRECTORIES ===================
-CORE_PATH  = $(SRCDIR)/core
-UTILS_PATH = $(SRCDIR)/utils
-
 # ============== SRC-FILES ===================
-SKELETON_FILES = main.cpp
-CORE_FILES     =
-UTILS_FILES    = errors.cpp utils.cpp
+SRC_FILES = main.cpp Errors.cpp ClapTrap.cpp
 
-SRCS = $(addprefix $(SRCDIR)/, $(SKELETON_FILES)) \
-       $(addprefix $(CORE_PATH)/, $(CORE_FILES)) \
-       $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
-
+SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
@@ -46,7 +37,4 @@ fclean: clean
 
 re: fclean all
 
-test: all
-	./$(NAME)
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stdexcept>
 #include "errors.hpp"
-#include "utils.hpp"
 
 int main(int argc, char **argv)
 {

@@ -39,6 +39,10 @@ fi
 
 cp -r "$SOURCE" "$TARGET"
 
-find "$TARGET" -type f -exec sed -i "s/PROJECT_NAME/$NAME/g" {} +
+if sed --version >/dev/null 2>&1; then
+    find "$TARGET" -type f -exec sed -i "s/PROJECT_NAME/$NAME/g" {} +
+else
+    find "$TARGET" -type f -exec sed -i '' "s/PROJECT_NAME/$NAME/g" {} +
+fi
 
 echo "✓ $VARIANT project '$NAME' created at $TARGET"

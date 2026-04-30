@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdexcept>
 #include "utils/errors.hpp"
+#include "utils/utils.hpp"
 
 int main(int argc, char **argv)
 {

@@ -1,6 +1,8 @@
 #ifndef COLORS_HPP
 # define COLORS_HPP
 
+std::ostream& endofline(std::ostream& os);
+
 // Regular colors
 # define BLACK          "\033[30m"
 # define RED            "\033[31m"

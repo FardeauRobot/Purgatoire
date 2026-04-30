@@ -9,7 +9,7 @@ SRCDIR   = src
 OBJDIR   = objs
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp Errors.cpp
+SRC_FILES = main.cpp errors.cpp utils.cpp
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)
