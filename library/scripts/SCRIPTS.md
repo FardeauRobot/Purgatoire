@@ -198,17 +198,21 @@ If `includes/libft/` already exists, prompts before replacing it. Use this when 
 ## cppinit
 
 Bootstrap a new C++ project from one of the templates under `templates/cpp/`.
+Aliased as `ADDtempCPP` (and `ADDTempCPP`) in `~/.zshrc`.
 
 ```
-cppinit <basic|complete> <project_name>
+cppinit <project_name> <class_name> <exec_name> <basic|complete|minimal>
 ```
 
-| Variant    | Layout                                           |
-|------------|--------------------------------------------------|
-| `basic`    | `src/` + `include/`                              |
-| `complete` | `src/core/`, `src/utils/`, more scaffolding      |
+| Variant    | Layout                                                                  |
+|------------|-------------------------------------------------------------------------|
+| `minimal`  | flat: `<class>.{cpp,hpp}`, `utils.{cpp,hpp}`, `Makefile` (no errors)    |
+| `basic`    | `src/` + `include/`, with errors + utils                                |
+| `complete` | `src/core/`, `src/utils/`, more scaffolding                             |
 
-Creates the project in the current directory.
+The project folder takes `<project_name>`, the OCF class is named `<class_name>`,
+and the Makefile builds an executable named `<exec_name>`. Created in the
+current directory.
 
 ---
 

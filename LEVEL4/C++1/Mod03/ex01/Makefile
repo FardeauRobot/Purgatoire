@@ -1,4 +1,4 @@
-NAME     = ex00
+NAME     = ex01
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
@@ -9,7 +9,7 @@ SRCDIR   = src
 OBJDIR   = objs
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp errors.cpp ClapTrap.cpp
+SRC_FILES = main.cpp errors.cpp ClapTrap.cpp ScavTrap.cpp
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)

@@ -1,18 +1,13 @@
-NAME     = ex00
+NAME     = claptrap
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
-INCLUDES = -I include
-
-# ============== DIRECTORIES ===================
-SRCDIR   = src
-OBJDIR   = objs
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp errors.cpp ClapTrap.cpp
+SRC_FILES = main.cpp ClapTrap.cpp utils.cpp
 
-SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))
-OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)
+OBJDIR   = objs
+OBJS = $(SRC_FILES:%.cpp=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
 all: $(NAME)
@@ -21,8 +16,7 @@ $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)

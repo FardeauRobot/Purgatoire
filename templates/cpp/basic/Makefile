@@ -1,4 +1,4 @@
-NAME     = PROJECT_NAME
+NAME     = EXEC_NAME
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
@@ -9,7 +9,7 @@ SRCDIR   = src
 OBJDIR   = objs
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp errors.cpp utils.cpp
+SRC_FILES = main.cpp errors.cpp utils.cpp CLASS_NAME.cpp
 
 SRCS = $(addprefix $(SRCDIR)/, $(SRC_FILES))
 OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)

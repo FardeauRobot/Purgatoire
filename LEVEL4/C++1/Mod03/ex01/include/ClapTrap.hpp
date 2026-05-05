@@ -4,14 +4,13 @@
 #include <string>
 
 class ClapTrap {
-    private:
+    protected:
         std::string m_name;
         int m_hp;
         int m_energy;
         int m_atk;
 
     public:
-        ClapTrap(void);
         ClapTrap(std::string name);
         ClapTrap(const ClapTrap &src);
         ClapTrap& operator= (const ClapTrap &other);

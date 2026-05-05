@@ -1,5 +1,7 @@
-#ifndef COLORS_HPP
-# define COLORS_HPP
+#ifndef UTILS_HPP
+# define UTILS_HPP
+
+#include <iostream>
 
 std::ostream& endofline(std::ostream& os);
 

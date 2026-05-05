@@ -1,9 +1,5 @@
-#ifndef UTILS_HPP
-# define UTILS_HPP
-
-#include <iostream>
-
-std::ostream& endofline(std::ostream& os);
+#ifndef COLORS_HPP
+# define COLORS_HPP
 
 // Regular colors
 # define BLACK          "\033[30m"

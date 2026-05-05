@@ -3,12 +3,8 @@
 #include "ClapTrap.hpp"
 #include "colors.hpp"
 
-ClapTrap::ClapTrap(void) {
-    std::cout << BOLD_CYAN << "Default constructor called" << RESET << std::endl;
-}
-
 ClapTrap::ClapTrap(std::string name): m_name(name), m_hp(10), m_energy(10), m_atk(0) {
-    std::cout << BOLD_CYAN << "Name constructor called" << RESET << std::endl;
+    std::cout << BOLD_CYAN << "Default constructor called" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &src) {
@@ -19,7 +15,12 @@ ClapTrap::ClapTrap(const ClapTrap &src) {
 ClapTrap& ClapTrap::operator= (const ClapTrap &other) {
     std::cout << BOLD_BLUE << "Copy assignment constructor called" << RESET << std::endl;
     if (this != &other)
+    {
         m_name = other.m_name;
+        m_atk = other.m_atk;
+        m_energy = other.m_energy;
+        m_hp = other.m_hp;
+    }
     return (*this);
 }
 
