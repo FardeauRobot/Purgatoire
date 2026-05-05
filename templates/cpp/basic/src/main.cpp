@@ -1,6 +1,8 @@
 #include <iostream>
 #include <stdexcept>
 #include "errors.hpp"
+#include "utils.hpp"
+#include "CLASS_NAME.hpp"
 
 int main(int argc, char **argv)
 {
@@ -10,7 +12,7 @@ int main(int argc, char **argv)
         if (argc < 1)
             return (F_ErrMsg("invalid invocation"));
 
-        std::cout << "PROJECT_NAME: hello world" << std::endl;
+        CLASS_NAME instance("PROJECT_NAME");
     }
     catch (const std::exception &e)
     {

@@ -1,4 +1,4 @@
-NAME     = PROJECT_NAME
+NAME     = EXEC_NAME
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
@@ -14,8 +14,8 @@ UTILS_PATH = $(SRCDIR)/utils
 
 # ============== SRC-FILES ===================
 SKELETON_FILES = main.cpp
-CORE_FILES     =
-UTILS_FILES    = Errors.cpp
+CORE_FILES     = CLASS_NAME.cpp
+UTILS_FILES    = errors.cpp utils.cpp
 
 SRCS = $(addprefix $(SRCDIR)/, $(SKELETON_FILES)) \
        $(addprefix $(CORE_PATH)/, $(CORE_FILES)) \

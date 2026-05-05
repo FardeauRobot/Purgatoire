@@ -1,5 +1,5 @@
 #include "utils/errors.hpp"
-#include "utils/colors.hpp"
+#include "utils/utils.hpp"
 #include <iostream>
 #include <stdexcept>
 

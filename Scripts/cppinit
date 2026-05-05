@@ -1,31 +1,34 @@
 #!/usr/bin/env bash
 # cppinit - bootstrap a new C++ project from a template
-# Usage: cppinit <basic|complete> <project_name>
-#   basic     : single src/ + include/ layout
-#   complete : src/core + src/utils layout with more scaffolding
+# Usage: cppinit <project_name> <class_name> <exec_name> <basic|complete|minimal>
+#   minimal  : flat layout, just the class + utils
+#   basic    : src/ + include/ layout with errors + utils
+#   complete : src/core, src/utils, with errors + utils
 # Templates live in $REPO_ROOT/templates/cpp/<variant>.
 
 set -e
 
 usage() {
-    echo "Usage: cppinit <basic|complete> <project_name>"
+    echo "Usage: cppinit <project_name> <class_name> <exec_name> <basic|complete|minimal>"
     exit 1
 }
 
-[ "$#" -eq 2 ] || usage
+[ "$#" -eq 4 ] || usage
 
-VARIANT="$1"
-NAME="$2"
+PROJECT="$1"
+CLASS="$2"
+EXEC="$3"
+VARIANT="$4"
 
 case "$VARIANT" in
-    basic|complete) ;;
+    basic|complete|minimal) ;;
     *) usage ;;
 esac
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SOURCE="$REPO_ROOT/templates/cpp/$VARIANT"
-TARGET="$(pwd)/$NAME"
+TARGET="$(pwd)/$PROJECT"
 
 if [ ! -d "$SOURCE" ]; then
     echo "cppinit: template '$VARIANT' not found at $SOURCE" >&2
@@ -39,6 +42,28 @@ fi
 
 cp -r "$SOURCE" "$TARGET"
 
-find "$TARGET" -type f -exec sed -i "s/PROJECT_NAME/$NAME/g" {} +
+CLASS_UPPER="$(printf '%s' "$CLASS" | tr '[:lower:]' '[:upper:]')"
 
-echo "✓ $VARIANT project '$NAME' created at $TARGET"
+# GNU sed wants `-i`, BSD sed wants `-i ''`.
+if sed --version >/dev/null 2>&1; then
+    sed_inplace() { sed -i "$@"; }
+else
+    sed_inplace() { sed -i '' "$@"; }
+fi
+
+# Order matters: replace the include guard token first so `CLASS_NAME_HPP`
+# becomes `<UPPER>_HPP`, then collapse the remaining `CLASS_NAME` tokens.
+while IFS= read -r -d '' f; do
+    sed_inplace "s/CLASS_NAME_HPP/${CLASS_UPPER}_HPP/g" "$f"
+    sed_inplace "s/CLASS_NAME/$CLASS/g" "$f"
+    sed_inplace "s/PROJECT_NAME/$PROJECT/g" "$f"
+    sed_inplace "s/EXEC_NAME/$EXEC/g" "$f"
+done < <(find "$TARGET" -type f -print0)
+
+# Rename any file or directory whose name contains CLASS_NAME.
+while IFS= read -r -d '' p; do
+    np="${p//CLASS_NAME/$CLASS}"
+    [ "$p" != "$np" ] && mv "$p" "$np"
+done < <(find "$TARGET" -depth -name "*CLASS_NAME*" -print0)
+
+echo "✓ $VARIANT project '$PROJECT' (class $CLASS, exec $EXEC) created at $TARGET"
