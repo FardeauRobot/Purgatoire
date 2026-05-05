@@ -216,6 +216,31 @@ current directory.
 
 ---
 
+## ADDClass
+
+Scaffold a C++ class (`.hpp` + `.cpp`) with the OCF skeleton (default ctor, name ctor, copy ctor, copy assignment, dtor).
+
+```
+ADDClass <ClassName>
+```
+
+**Layout detection**
+- If both `./include` and `./src` exist in the current directory → header goes in `include/`, source goes in `src/`
+- Otherwise → both files are written at the current directory root
+
+**Examples**
+```bash
+ADDClass Animal       # in a project with include/ + src/  → include/Animal.hpp, src/Animal.cpp
+ADDClass ScavTrap     # in a flat folder                   → ./ScavTrap.hpp, ./ScavTrap.cpp
+```
+
+**What it does**
+- Generates the include guard from the class name (uppercase + `_HPP`)
+- Writes a stock OCF skeleton with a single `std::string m_name` member as a starting point
+- Refuses to overwrite an existing `.hpp` or `.cpp`
+
+---
+
 ## watch-norm
 
 Run `norminette` repeatedly on a path, with rainbow output if `lolcat` is available. Think `watch` for the Norm.

@@ -31,7 +31,7 @@ library/
 
 | File | Purpose |
 |---|---|
-| [`scripts/SCRIPTS.md`](scripts/SCRIPTS.md) | Catalogue of personal CLI tools (`autopush`, `solopush`, `remind`, `note`, `watch-norm`, …). |
+| [`scripts/SCRIPTS.md`](scripts/SCRIPTS.md) | Catalogue of personal CLI tools (`autopush`, `solopush`, `remind`, `note`, `ADDClass`, `watch-norm`, …). |
 
 ---
 

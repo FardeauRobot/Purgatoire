@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# ADDClass - scaffold a C++ class (.hpp + .cpp) with the OCF skeleton.
+# Usage: ADDClass <ClassName>
+#
+# If both ./include and ./src exist, the header goes into include/ and the
+# source goes into src/. Otherwise, both files land at the current directory.
+
+set -e
+
+usage() {
+    echo "Usage: ADDClass <ClassName>"
+    exit 1
+}
+
+[ "$#" -eq 1 ] || usage
+
+CLASS="$1"
+CLASS_UPPER="$(printf '%s' "$CLASS" | tr '[:lower:]' '[:upper:]')"
+
+if [ -d "./include" ] && [ -d "./src" ]; then
+    HPP_DIR="./include"
+    CPP_DIR="./src"
+    LAYOUT="include/ + src/"
+else
+    HPP_DIR="."
+    CPP_DIR="."
+    LAYOUT="flat"
+fi
+
+HPP_PATH="$HPP_DIR/$CLASS.hpp"
+CPP_PATH="$CPP_DIR/$CLASS.cpp"
+
+if [ -e "$HPP_PATH" ]; then
+    echo "ADDClass: '$HPP_PATH' already exists" >&2
+    exit 1
+fi
+if [ -e "$CPP_PATH" ]; then
+    echo "ADDClass: '$CPP_PATH' already exists" >&2
+    exit 1
+fi
+
+cat > "$HPP_PATH" <<EOF
+#ifndef ${CLASS_UPPER}_HPP
+# define ${CLASS_UPPER}_HPP
+
+#include <string>
+
+class ${CLASS} {
+    private:
+        std::string m_name;
+
+    public:
+        ${CLASS}(void);
+        ${CLASS}(std::string name);
+        ${CLASS}(const ${CLASS} &src);
+        ${CLASS}& operator= (const ${CLASS} &other);
+        ~${CLASS}();
+};
+
+#endif
+EOF
+
+cat > "$CPP_PATH" <<EOF
+#include <iostream>
+#include "${CLASS}.hpp"
+
+${CLASS}::${CLASS}(void) {
+    std::cout << "Default constructor called" << std::endl;
+}
+
+${CLASS}::${CLASS}(std::string name): m_name(name) {
+    std::cout << "Name constructor called" << std::endl;
+}
+
+${CLASS}::${CLASS}(const ${CLASS} &src) {
+    std::cout << "Copy constructor called" << std::endl;
+    *this = src;
+}
+
+${CLASS}& ${CLASS}::operator= (const ${CLASS} &other) {
+    std::cout << "Copy assignment operator called" << std::endl;
+    if (this != &other)
+        m_name = other.m_name;
+    return (*this);
+}
+
+${CLASS}::~${CLASS}() {
+    std::cout << "Destructor called" << std::endl;
+}
+EOF
+
+echo "✓ class '$CLASS' created ($LAYOUT)"
+echo "  $HPP_PATH"
+echo "  $CPP_PATH"
