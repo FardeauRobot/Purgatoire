@@ -4,7 +4,7 @@
 #include "utils.hpp"
 
 DiamondTrap::DiamondTrap(void): ClapTrap("_clap_name") {
-	std::cout << "DiamondTrap Default constructor called" << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Default constructor called" << RESET << std::endl;
 	m_name = "";
 	m_hp = FragTrap::m_hp;
 	m_energy = ScavTrap::m_energy;
@@ -12,7 +12,7 @@ DiamondTrap::DiamondTrap(void): ClapTrap("_clap_name") {
 }
 
 DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name") {
-	std::cout << "DiamondTrap Name constructor called" << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Name constructor called" << RESET << std::endl;
 	m_name = name;
 	m_hp = FragTrap::m_hp;
 	m_energy = ScavTrap::m_energy;
@@ -20,12 +20,12 @@ DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name") {
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap &src) : ClapTrap(src), ScavTrap(src), FragTrap(src) {
-	std::cout << "DiamondTrap Copy constructor called" << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Copy constructor called" << RESET << std::endl;
 	*this = src;
 }
 
 DiamondTrap& DiamondTrap::operator= (const DiamondTrap &other) {
-	std::cout << "DiamondTrap Copy assignment operator called" << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Copy assignment operator called" << RESET << std::endl;
 	if (this != &other)
 	{
 		ClapTrap::operator=(other);
@@ -38,7 +38,7 @@ DiamondTrap& DiamondTrap::operator= (const DiamondTrap &other) {
 }
 
 DiamondTrap::~DiamondTrap() {
-	std::cout << "DiamondTrap Destructor called" << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Destructor called" << RESET << std::endl;
 }
 
 void	DiamondTrap::attack(const std::string &target) {

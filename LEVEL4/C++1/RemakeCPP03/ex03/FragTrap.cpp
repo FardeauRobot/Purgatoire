@@ -3,26 +3,26 @@
 #include "FragTrap.hpp"
 
 FragTrap::FragTrap(void): ClapTrap() {
-    std::cout << BOLD_GREEN <<  "FragTrap Default constructor called" << endofline;
+    std::cout << BLUE << "FragTrap Default constructor called" << RESET << endofline;
     m_hp = 100;
     m_energy = 100;
     m_atk = 30;
 }
 
 FragTrap::FragTrap(std::string name): ClapTrap(name) {
-    std::cout << BOLD_GREEN <<  "FragTrap Name constructor called" << endofline;
+    std::cout << BLUE << "FragTrap Name constructor called" << RESET << endofline;
     m_hp = 100;
     m_energy = 100;
     m_atk = 30;
 }
 
 FragTrap::FragTrap(const FragTrap &src) {
-    std::cout << BOLD_GREEN <<  "FragTrap Copy constructor called" << endofline;
+    std::cout << BLUE << "FragTrap Copy constructor called" << RESET << endofline;
     *this = src;
 }
 
 FragTrap& FragTrap::operator= (const FragTrap &other) {
-    std::cout << BOLD_GREEN <<  "FragTrap Copy assignement operator called" << endofline;
+    std::cout << BLUE << "FragTrap Copy assignement operator called" << RESET << endofline;
     if (this != &other)
     {
         m_name = other.m_name;
@@ -34,7 +34,7 @@ FragTrap& FragTrap::operator= (const FragTrap &other) {
 }
 
 FragTrap::~FragTrap() {
-    std::cout << BOLD_MAGENTA <<  "FragTrap destructor called" << endofline;
+    std::cout << BLUE << "FragTrap destructor called" << RESET << endofline;
 }
 
 void FragTrap::attack(const std::string &target) {

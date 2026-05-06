@@ -3,7 +3,7 @@
 #include "utils.hpp"
 
 ScavTrap::ScavTrap(void) : ClapTrap() {
-    std::cout << BOLD_GREEN << "ScavTrap Default constructor called" << endofline;
+    std::cout << CYAN << "ScavTrap Default constructor called" << RESET << endofline;
     m_hp = 100;
     m_energy = 50;
     m_atk = 20;
@@ -11,7 +11,7 @@ ScavTrap::ScavTrap(void) : ClapTrap() {
 }
 
 ScavTrap::ScavTrap(std::string name): ClapTrap(name) {
-    std::cout << BOLD_GREEN << "ScavTrap Name constructor called" << endofline;
+    std::cout << CYAN << "ScavTrap Name constructor called" << RESET << endofline;
     m_hp = 100;
     m_energy = 50;
     m_atk = 20;
@@ -19,12 +19,12 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name) {
 }
 
 ScavTrap::ScavTrap(const ScavTrap &src) {
-    std::cout << BOLD_GREEN << "ScavTrap Copy constructor called" << endofline;
+    std::cout << CYAN << "ScavTrap Copy constructor called" << RESET << endofline;
     *this = src;
 }
 
 ScavTrap& ScavTrap::operator= (const ScavTrap &other) {
-    std::cout << BOLD_GREEN << "ScavTrap Copy assignment operator called" << endofline;
+    std::cout << CYAN << "ScavTrap Copy assignment operator called" << RESET << endofline;
     if (this != &other)
     {
         m_name = other.m_name;
@@ -37,7 +37,7 @@ ScavTrap& ScavTrap::operator= (const ScavTrap &other) {
 }
 
 ScavTrap::~ScavTrap() {
-    std::cout << BOLD_MAGENTA << "ScavTrap Destructor called" << std::endl;
+    std::cout << CYAN << "ScavTrap Destructor called" << RESET << std::endl;
 }
 
 void    ScavTrap::guardGate(void) {

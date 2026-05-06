@@ -9,9 +9,6 @@ int main(void) {
     // FragTrap coucou1("Le Passé");
     DiamondTrap testdiam1("Le Gueux");
     DiamondTrap testdiam2;
-    ClapTrap testclap1("A");
-    ScavTrap testscav1("C");
-    FragTrap testfrag1("C");
     DiamondTrap testdiam3 = testdiam1;
 
 
