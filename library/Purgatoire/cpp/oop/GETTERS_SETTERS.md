@@ -1,5 +1,7 @@
 # Getters and Setters in C++ — Complete Guide
 
+> **Keyword zoom-ins:** [`PUBLIC/PRIVATE/PROTECTED`](../keywords/PUBLIC_PRIVATE_PROTECTED.md) · [`CONST`](../keywords/CONST.md)
+
 ## What are they?
 
 In C, you access struct members directly:

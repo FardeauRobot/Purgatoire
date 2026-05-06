@@ -1,5 +1,7 @@
 # Error Management in C++ — Complete Guide
 
+> **Keyword zoom-in:** [`TRY/CATCH/THROW`](../keywords/TRY_CATCH_THROW.md)
+
 A complete guide to failing well in C++ — return codes, stream state, and the full exception machinery — including a reference of every standard exception class you'll meet.
 
 ## Table of Contents

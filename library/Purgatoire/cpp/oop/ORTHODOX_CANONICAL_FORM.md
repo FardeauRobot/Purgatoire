@@ -1,5 +1,7 @@
 # The Orthodox Canonical Form (OCF) — Complete Guide
 
+> **Keyword zoom-ins:** [`OPERATOR`](../keywords/OPERATOR.md) · [`THIS`](../keywords/THIS.md) · [`EXPLICIT`](../keywords/EXPLICIT.md) · [`CONST`](../keywords/CONST.md) · [`NEW`](../keywords/NEW.md) · [`DELETE`](../keywords/DELETE.md)
+
 ## Table of Contents
 1. [What is the Orthodox Canonical Form?](#what-is-the-orthodox-canonical-form)
 2. [Why does it exist?](#why-does-it-exist)

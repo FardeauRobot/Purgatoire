@@ -1,5 +1,7 @@
 # The Four C++ Casts — Complete Guide
 
+> **Keyword zoom-ins:** [`TYPEID`](../keywords/TYPEID.md) · [`CONST`](../keywords/CONST.md) · [`EXPLICIT`](../keywords/EXPLICIT.md)
+
 C inherits a single, brutal cast: `(int)x`. It will do *anything* you ask — strip const, reinterpret bits, downcast a pointer — with no way for the reader or the compiler to know *which* of those things you meant.
 
 C++ replaces it with **four explicit casts**, each narrowing what you can do. The rule at 42 is: **never use C-style casts in C++ code.** Always pick the right named cast.

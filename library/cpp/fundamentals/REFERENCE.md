@@ -1,5 +1,7 @@
 # C++ References — Complete Guide
 
+> **Keyword zoom-ins:** [`CONST`](../keywords/CONST.md) · [`THIS`](../keywords/THIS.md)
+
 ## 1. What is a reference?
 
 A **reference** is an *alias* for an existing variable. Once bound, the reference and the original refer to the same memory location — they are literally the same object under two different names.

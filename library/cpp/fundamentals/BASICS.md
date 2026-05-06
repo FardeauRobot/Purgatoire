@@ -2,6 +2,8 @@
 
 Written for someone who knows C and is starting the 42 CPP modules.
 
+> **Keyword zoom-ins:** [`CLASS`](../keywords/CLASS.md) · [`STRUCT`](../keywords/STRUCT.md) · [`PUBLIC/PRIVATE/PROTECTED`](../keywords/PUBLIC_PRIVATE_PROTECTED.md) · [`CONST`](../keywords/CONST.md) · [`STATIC`](../keywords/STATIC.md) · [`THIS`](../keywords/THIS.md) · [`NAMESPACE`](../keywords/NAMESPACE.md) · [`NEW`](../keywords/NEW.md) · [`DELETE`](../keywords/DELETE.md). Full keyword index: [`keywords/INDEX.md`](../keywords/INDEX.md).
+
 ---
 
 ## 1. What is C++ and why does it exist?

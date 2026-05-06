@@ -1,5 +1,7 @@
 # `<iostream>` and `<iomanip>` — Library Reference
 
+> **Keyword zoom-ins:** [`BOOL`](../keywords/BOOL.md) (for `std::boolalpha`) · [`OPERATOR`](../keywords/OPERATOR.md) (for `<<`/`>>`)
+
 This document summarizes the main user-facing API from the C++ standard headers `<iostream>` and `<iomanip>`, with practical examples for each feature.
 
 Note:

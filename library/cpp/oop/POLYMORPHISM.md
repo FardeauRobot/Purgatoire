@@ -1,5 +1,7 @@
 # Polymorphism & Virtual Functions — Complete Guide
 
+> **Keyword zoom-ins:** [`VIRTUAL`](../keywords/VIRTUAL.md) · [`TYPEID`](../keywords/TYPEID.md)
+
 Polymorphism means **"one interface, many behaviors."** You write code that manipulates `Animal*` — and at runtime it calls `Dog::makeSound()` if the actual object is a `Dog`, `Cat::makeSound()` if it's a `Cat`. The same call site produces different results depending on the real type behind the base pointer.
 
 ```cpp

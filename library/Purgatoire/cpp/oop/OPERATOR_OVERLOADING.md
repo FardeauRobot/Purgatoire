@@ -1,5 +1,7 @@
 # Operator Overloading — Complete Guide
 
+> **Keyword zoom-ins:** [`OPERATOR`](../keywords/OPERATOR.md) · [`FRIEND`](../keywords/FRIEND.md) · [`EXPLICIT`](../keywords/EXPLICIT.md)
+
 Operator overloading lets you give built-in operators (`+`, `==`, `<<`, `[]`, …) a meaning when applied to your class.
 
 ```cpp

@@ -1,5 +1,7 @@
 # Templates — Complete Guide
 
+> **Keyword zoom-ins:** [`TEMPLATE`](../keywords/TEMPLATE.md) · [`TYPENAME`](../keywords/TYPENAME.md)
+
 Templates are C++'s answer to: "how do I write code that works for any type, without giving up type-safety?"
 
 ```cpp

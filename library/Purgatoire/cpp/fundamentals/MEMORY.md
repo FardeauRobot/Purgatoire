@@ -8,6 +8,8 @@ Written with 42 Mod 01 as the anchor, but applies to every module
 that owns a resource. If you confuse `new` with `new[]`, or leak
 through a non-virtual destructor, the fix starts here.
 
+> **Keyword zoom-ins:** [`NEW`](../keywords/NEW.md) · [`DELETE`](../keywords/DELETE.md) · [`STATIC`](../keywords/STATIC.md) · [`SIZEOF`](../keywords/SIZEOF.md)
+
 ---
 
 ## Table of Contents

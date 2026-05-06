@@ -58,6 +58,8 @@ library/
 
 Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when studying.
 
+> **Need a single keyword (`const`, `virtual`, `template`, …)?** Jump to [`cpp/keywords/INDEX.md`](cpp/keywords/INDEX.md) — one focused page per C++98 keyword, with implementation and hardware notes.
+
 ### `cpp/fundamentals/` — *the base layer*
 | File | Topic |
 |---|---|
@@ -99,6 +101,16 @@ Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when s
 | [`OPEN.md`](cpp/io-errors/OPEN.md) | File opening flags and modes. |
 | [`STRING_FUNCTIONS.md`](cpp/io-errors/STRING_FUNCTIONS.md) | `std::string` API cheat sheet. |
 | [`ERROR_MANAGEMENT.md`](cpp/io-errors/ERROR_MANAGEMENT.md) | Exceptions, `try`/`catch`, noexcept. |
+
+### `cpp/keywords/` — *one .md per C++98 keyword*
+Detailed per-keyword pages: language meaning, compiler/linker implementation, hardware behavior, ASCII diagrams, tips & tricks, common errors. Hub: [`keywords/INDEX.md`](cpp/keywords/INDEX.md).
+
+| Group | Files |
+|---|---|
+| Storage & qualifiers | [`CONST`](cpp/keywords/CONST.md) · [`STATIC`](cpp/keywords/STATIC.md) · [`VOLATILE`](cpp/keywords/VOLATILE.md) · [`MUTABLE`](cpp/keywords/MUTABLE.md) · [`EXPLICIT`](cpp/keywords/EXPLICIT.md) · [`INLINE`](cpp/keywords/INLINE.md) · [`EXTERN`](cpp/keywords/EXTERN.md) |
+| OOP | [`CLASS`](cpp/keywords/CLASS.md) · [`STRUCT`](cpp/keywords/STRUCT.md) · [`PUBLIC/PRIVATE/PROTECTED`](cpp/keywords/PUBLIC_PRIVATE_PROTECTED.md) · [`THIS`](cpp/keywords/THIS.md) · [`FRIEND`](cpp/keywords/FRIEND.md) · [`VIRTUAL`](cpp/keywords/VIRTUAL.md) · [`OPERATOR`](cpp/keywords/OPERATOR.md) |
+| Memory · templates · scope | [`NEW`](cpp/keywords/NEW.md) · [`DELETE`](cpp/keywords/DELETE.md) · [`TEMPLATE`](cpp/keywords/TEMPLATE.md) · [`TYPENAME`](cpp/keywords/TYPENAME.md) · [`NAMESPACE`](cpp/keywords/NAMESPACE.md) · [`TYPEDEF`](cpp/keywords/TYPEDEF.md) · [`USING`](cpp/keywords/USING.md) · [`ENUM`](cpp/keywords/ENUM.md) |
+| Exceptions & types | [`TRY/CATCH/THROW`](cpp/keywords/TRY_CATCH_THROW.md) · [`SIZEOF`](cpp/keywords/SIZEOF.md) · [`TYPEID`](cpp/keywords/TYPEID.md) · [`VOID`](cpp/keywords/VOID.md) · [`BOOL`](cpp/keywords/BOOL.md) |
 
 ### `cpp/tooling/` — *build & link*
 | File | Topic |

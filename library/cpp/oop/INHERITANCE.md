@@ -1,5 +1,7 @@
 # Inheritance in C++ — Complete Guide
 
+> **Keyword zoom-ins:** [`PUBLIC/PRIVATE/PROTECTED`](../keywords/PUBLIC_PRIVATE_PROTECTED.md) · [`VIRTUAL`](../keywords/VIRTUAL.md) · [`USING`](../keywords/USING.md)
+
 Inheritance lets you express an **"is-a"** relationship between types. A `Dog` is-a `Animal`. A `ScavTrap` is-a `ClapTrap`. The derived class automatically gets the members of the base — plus the ability to add or override its own.
 
 ```cpp

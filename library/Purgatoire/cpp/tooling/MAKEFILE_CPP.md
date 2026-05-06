@@ -1,5 +1,7 @@
 # Makefiles for C++ — Complete Guide
 
+> **Keyword zoom-ins:** [`INLINE`](../keywords/INLINE.md) · [`EXTERN`](../keywords/EXTERN.md) · [`STATIC`](../keywords/STATIC.md)
+
 The 42 CPP modules all expect the same Makefile shape: a binary target, `clean`, `fclean`, `re`, strict flags, and no relinking when nothing changed. This guide shows the pattern, explains each piece, and covers the quirks that come up when compiling C++ (templates, dependency tracking, and header bookkeeping).
 
 ---
