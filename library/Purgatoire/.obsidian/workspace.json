@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "3a6239c996de7c42",
+        "id": "4fdda34fb7682aa7",
         "type": "tabs",
         "children": [
           {
-            "id": "da06cab37e08ef3e",
+            "id": "07071a5079077248",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cpp/LEXIQUE.md",
+                "file": "cpp/keywords/VIRTUAL.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "LEXIQUE"
+              "title": "VIRTUAL"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "e70442dee4badb9b",
@@ -180,19 +181,16 @@
       "bases:Create new base": false
     }
   },
-  "active": "da06cab37e08ef3e",
+  "active": "07071a5079077248",
   "lastOpenFiles": [
     "cpp/fundamentals/CONTRACTS.md",
     "cpp/LEXIQUE.md",
-    "cpp/oop/POLYMORPHISM.md",
-    "cpp/keywords/VIRTUAL.md",
-    "INDEX.md",
-    "Untitled 1.base",
     "Untitled.base",
-    "cpp/modules/CPP04.md",
+    "Untitled 1.base",
     "cpp/keywords/CLASS.md",
     "cpp/keywords/INDEX.md",
     "cpp/keywords/VOID.md",
+    "cpp/keywords/VIRTUAL.md",
     "cpp/keywords/NEW.md",
     "cpp/keywords/ENUM.md",
     "cpp/keywords/CONST.md",
@@ -210,6 +208,9 @@
     "cpp/keywords/TYPEDEF.md",
     "cpp/keywords/TEMPLATE.md",
     "cpp/keywords/THIS.md",
+    "cpp/keywords/SIZEOF.md",
+    "cpp/keywords/PUBLIC_PRIVATE_PROTECTED.md",
+    "cpp/keywords/OPERATOR.md",
     "cpp/keywords",
     "projects/LEVEL2",
     "projects/LEVEL3",
