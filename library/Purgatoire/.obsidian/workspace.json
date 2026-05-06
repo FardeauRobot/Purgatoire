@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "cpp/modules/CPP03.md",
+                "file": "cpp/keywords/ENUM.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CPP03"
+              "title": "ENUM"
             }
           }
         ]
@@ -182,18 +182,24 @@
   },
   "active": "a6bb65c6b6087754",
   "lastOpenFiles": [
+    "cpp/keywords/VIRTUAL.md",
+    "cpp/keywords/CONST.md",
+    "cpp/keywords/BOOL.md",
+    "cpp/modules/CPP00.md",
+    "cpp/modules/WALKTHROUGH.md",
+    "cpp/keywords/CLASS.md",
+    "cpp/keywords/STATIC.md",
+    "cpp/keywords/STRUCT.md",
+    "cpp/keywords/TRY_CATCH_THROW.md",
+    "cpp/modules/CPP03.md",
     "cpp/keywords/VOLATILE.md",
     "cpp/keywords/VOID.md",
-    "cpp/keywords/VIRTUAL.md",
     "cpp/keywords/USING.md",
     "cpp/keywords/TYPENAME.md",
     "cpp/keywords/TYPEID.md",
-    "cpp/keywords/TRY_CATCH_THROW.md",
     "cpp/keywords/TYPEDEF.md",
     "cpp/keywords/TEMPLATE.md",
     "cpp/keywords/THIS.md",
-    "cpp/keywords/STRUCT.md",
-    "cpp/keywords/STATIC.md",
     "cpp/keywords/SIZEOF.md",
     "cpp/keywords/PUBLIC_PRIVATE_PROTECTED.md",
     "cpp/keywords/OPERATOR.md",
@@ -202,12 +208,6 @@
     "cpp/keywords/MUTABLE.md",
     "cpp/keywords/INLINE.md",
     "cpp/keywords/INDEX.md",
-    "cpp/keywords/FRIEND.md",
-    "cpp/keywords/EXTERN.md",
-    "cpp/keywords/EXPLICIT.md",
-    "cpp/keywords/ENUM.md",
-    "cpp/keywords/DELETE.md",
-    "cpp/keywords/CONST.md",
     "cpp/keywords",
     "projects/LEVEL2",
     "projects/LEVEL3",
