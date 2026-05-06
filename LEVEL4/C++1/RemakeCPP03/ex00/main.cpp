@@ -2,7 +2,14 @@
 
 int main(void) {
     ClapTrap e;
-    ClapTrap a("ex00");
-    ClapTrap b(a);
+    ClapTrap a("default");
+    ClapTrap b("La vie");
+
+    for (int i = 0; i < 11; i++)
+    {
+        a.takeDamage(1000);
+        b.attack("Fardeau");
+        e.beRepaired(8000);
+    }
     return 0;
 }

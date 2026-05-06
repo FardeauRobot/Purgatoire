@@ -1,6 +1,9 @@
 # OS
 .DS_Store
 Thumbs.db
+.obsidian/workspace.json
+.obsidian/workspace-cache
+.trash/
 
 # Editors
 .vscode/

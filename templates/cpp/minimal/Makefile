@@ -1,7 +1,7 @@
 NAME     = EXEC_NAME
 
 CXX      = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
+CXXFLAGS = -Wall -Wextra -Werror -Wswitch -std=c++98 -MMD -MP
 
 # ============== SRC-FILES ===================
 SRC_FILES = main.cpp CLASS_NAME.cpp utils.cpp
