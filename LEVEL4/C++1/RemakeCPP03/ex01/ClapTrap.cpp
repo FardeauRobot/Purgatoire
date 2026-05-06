@@ -3,20 +3,20 @@
 #include "utils.hpp"
 
 ClapTrap::ClapTrap(void): m_hp(10), m_energy(10), m_atk(0) {
-    std::cout << BOLD_CYAN << "ClapTrap Default constructor called" << RESET << std::endl;
+    std::cout << GREEN << "ClapTrap Default constructor called" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(std::string name): m_name(name), m_hp(10), m_energy(10), m_atk(0) {
-    std::cout << BOLD_CYAN << "ClapTrap Name constructor called" << RESET << std::endl;
+    std::cout << GREEN << "ClapTrap Name constructor called" << RESET << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap &src) {
-    std::cout << BOLD_BLUE << "ClapTrap Copy constructor called" << RESET << std::endl;
+    std::cout << GREEN << "ClapTrap Copy constructor called" << RESET << std::endl;
     *this = src;
 }
 
 ClapTrap& ClapTrap::operator= (const ClapTrap &other) {
-    std::cout << BOLD_BLUE << "ClapTrap Copy assignment operator called" << RESET << std::endl;
+    std::cout << GREEN << "ClapTrap Copy assignment operator called" << RESET << std::endl;
     if (this != &other)
     {
         m_name = other.m_name;
@@ -28,7 +28,7 @@ ClapTrap& ClapTrap::operator= (const ClapTrap &other) {
 }
 
 ClapTrap::~ClapTrap() {
-    std::cout << BOLD_RED << "ClapTrap Destructor called" << RESET << std::endl;
+    std::cout << GREEN << "ClapTrap Destructor called" << RESET << std::endl;
 }
 
 void ClapTrap::attack(const std::string &target) {
