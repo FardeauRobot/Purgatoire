@@ -32,7 +32,7 @@ ClapTrap::~ClapTrap() {
 }
 
 void ClapTrap::attack(const std::string &target) {
-    if (m_energy == 0)
+    // if (m_energy == 0)
         std::cout << RED << "ClapTrap " << m_name << " Can't attack because energy's too low" << endofline;
     else if (m_hp == 0)
         std::cout << RED << "ClapTrap " << m_name << " Can't attack because it's dead" << endofline;
