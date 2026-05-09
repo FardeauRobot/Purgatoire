@@ -632,14 +632,14 @@ std::cout << &x << " == " << &r;   // same address
 
 **When to use what:**
 
-| Need | Use |
-|---|---|
-| Must exist, single target for its lifetime | Reference |
-| May not exist, or must be reseated | Pointer |
-| Modify caller's variable in a function | `T&` parameter |
-| Pass large object cheaply, read-only | `const T&` parameter |
-| Return `*this` from `operator=`, `operator<<`, etc. | Reference |
-| Store "one of many" (container element, array) | Pointer |
+| Need                                                | Use                  |
+| --------------------------------------------------- | -------------------- |
+| Must exist, single target for its lifetime          | Reference            |
+| May not exist, or must be reseated                  | Pointer              |
+| Modify caller's variable in a function              | `T&` parameter       |
+| Pass large object cheaply, read-only                | `const T&` parameter |
+| Return `*this` from `operator=`, `operator<<`, etc. | Reference            |
+| Store "one of many" (container element, array)      | Pointer              |
 
 ### How a reference is implemented
 

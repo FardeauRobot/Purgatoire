@@ -24,6 +24,7 @@ library/
 | File | Purpose |
 |---|---|
 | [`meta/IMPROVEMENT.md`](meta/IMPROVEMENT.md) | Living checklist of repo upgrades — quick wins → long-term craftsmanship. |
+| [`meta/CLAUDE_CODE_MANUAL.md`](meta/CLAUDE_CODE_MANUAL.md) | Short manual for using Claude Code efficiently — setup, prompts, slash commands, 42-piscine tips. |
 
 ---
 

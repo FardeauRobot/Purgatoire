@@ -1,4 +1,4 @@
-# `delete` — Run The Destructor **And** Release The Memory
+=# `delete` — Run The Destructor **And** Release The Memory
 
 > **TL;DR.** `delete` is the inverse of `new`: it runs the destructor (running invariants down to nothing) and then returns the memory to the allocator. The matching form (`delete` vs `delete[]`) must be correct, otherwise you get undefined behavior — usually a crash, sometimes silent corruption.
 

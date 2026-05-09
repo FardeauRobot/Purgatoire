@@ -1,4 +1,4 @@
-# `sizeof` — A Compile-Time Question About Type Layout
+%%  %%# `sizeof` — A Compile-Time Question About Type Layout
 
 > **TL;DR.** `sizeof(expr)` returns the number of bytes that an object of `expr`'s type occupies in memory. It is a **compile-time** operator (the expression is not evaluated, only its type), and the result is a `std::size_t` (an unsigned integer type wide enough to address the largest object on the platform).
 
@@ -15,7 +15,7 @@ sizeof  myVar;           // legal; rare
 sizeof(arr) / sizeof(arr[0]);   // common idiom: number of array elements
 ```
 
-The result type is `std::size_t` (an unsigned integer in `<cstddef>` or any standard header).
+- [ ] The result type is `std::size_t` (an unsigned integer in `<cstddef>` or any standard header).
 
 ---
 
