@@ -59,6 +59,8 @@ library/
 
 Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when studying.
 
+> **🌟 Start here:** [`cpp/PHILOSOPHY.md`](cpp/PHILOSOPHY.md) — the 5 pillars of C++ and the mindset for writing efficient, correct code. Re-read before each new module.
+
 > **Need a single keyword (`const`, `virtual`, `template`, …)?** Jump to [`cpp/keywords/INDEX.md`](cpp/keywords/INDEX.md) — one focused page per C++98 keyword, with implementation and hardware notes.
 
 ### `cpp/fundamentals/` — *the base layer*
