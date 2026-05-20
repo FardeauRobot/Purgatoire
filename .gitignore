@@ -1,9 +1,8 @@
 # OS
 .DS_Store
 Thumbs.db
-.obsidian/workspace.json
-/library/Purgatoire/.obsidian/workspace.json
-.obsidian/workspace-cache
+**/.obsidian/workspace.json
+**/.obsidian/workspace-cache
 .trash/
 
 # Editors

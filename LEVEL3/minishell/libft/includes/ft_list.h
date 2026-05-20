@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tibras <tibras@student.42.fr>              +#+  +:+       +#+        */
+/*   By: fardeau <fardeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 12:00:00 by tibras            #+#    #+#             */
-/*   Updated: 2025/12/19 12:00:00 by tibras           ###   ########.fr       */
+/*   Updated: 2026/05/11 10:39:41 by fardeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 typedef struct s_list
 {
 	void			*content;
-	int				index;
+	// int				index;
 	struct s_list	*next;
-	struct s_list	*previous;
+	// struct s_list	*previous;
 }	t_list;
 
 // List creation and basic operations

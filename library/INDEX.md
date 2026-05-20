@@ -14,7 +14,8 @@ library/
 ├── meta/             # repo-wide notes
 ├── scripts/          # workflow tooling docs
 ├── projects/         # per-project READMEs and TODO lists
-└── cpp/              # C++ study notes, sorted by theme
+├── cpp/              # C++ study notes, sorted by theme
+└── netpractice/      # NetPractice project — networking support
 ```
 
 ---
@@ -24,6 +25,7 @@ library/
 | File | Purpose |
 |---|---|
 | [`meta/IMPROVEMENT.md`](meta/IMPROVEMENT.md) | Living checklist of repo upgrades — quick wins → long-term craftsmanship. |
+| [`meta/CLAUDE_CODE_MANUAL.md`](meta/CLAUDE_CODE_MANUAL.md) | Short manual for using Claude Code efficiently — setup, prompts, slash commands, 42-piscine tips. |
 
 ---
 
@@ -58,6 +60,8 @@ library/
 
 Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when studying.
 
+> **🌟 Start here:** [`cpp/PHILOSOPHY.md`](cpp/PHILOSOPHY.md) — the 5 pillars of C++ and the mindset for writing efficient, correct code. Re-read before each new module.
+
 > **Need a single keyword (`const`, `virtual`, `template`, …)?** Jump to [`cpp/keywords/INDEX.md`](cpp/keywords/INDEX.md) — one focused page per C++98 keyword, with implementation and hardware notes.
 
 ### `cpp/fundamentals/` — *the base layer*
@@ -91,8 +95,25 @@ Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when s
 | File | Topic |
 |---|---|
 | [`TEMPLATES.md`](cpp/advanced/TEMPLATES.md) | Function + class templates, specialisation. |
-| [`STL.md`](cpp/advanced/STL.md) | Containers, iterators, algorithms. |
+| [`STL.md`](cpp/advanced/STL.md) | High-level overview — containers, iterators, algorithms. Hub linking into `containers/`. |
 | [`CASTS.md`](cpp/advanced/CASTS.md) | `static_cast`, `dynamic_cast`, `const_cast`, `reinterpret_cast`. |
+| [`MEMBER_FUNCTION_POINTERS.md`](cpp/advanced/MEMBER_FUNCTION_POINTERS.md) | `.*` / `->*`, dispatch tables, the Harl pattern. |
+
+### `cpp/containers/` — *one .md per STL container*
+Deep-dive notes for every C++98 STL container. Each page: mental model + ASCII diagram + full API + complexity table + iterator invalidation + efficiency tips + worked example. Hub: [`containers/INDEX.md`](cpp/containers/INDEX.md).
+
+| File | Container — one-line |
+|---|---|
+| [`VECTOR.md`](cpp/containers/VECTOR.md) | `std::vector` — dynamic contiguous array, the default. |
+| [`LIST.md`](cpp/containers/LIST.md) | `std::list` — doubly-linked list, O(1) splice, stable iterators. |
+| [`DEQUE.md`](cpp/containers/DEQUE.md) | `std::deque` — block-list, O(1) at both ends + random access. |
+| [`STACK.md`](cpp/containers/STACK.md) | `std::stack` — LIFO adapter; `pop()` is `void`. |
+| [`QUEUE.md`](cpp/containers/QUEUE.md) | `std::queue` — FIFO adapter; vector backing forbidden. |
+| [`PRIORITY_QUEUE.md`](cpp/containers/PRIORITY_QUEUE.md) | `std::priority_queue` — binary max-heap on a vector. |
+| [`SET.md`](cpp/containers/SET.md) | `std::set` — sorted unique keys, red-black tree. |
+| [`MULTISET.md`](cpp/containers/MULTISET.md) | `std::multiset` — like set but duplicates allowed. |
+| [`MAP.md`](cpp/containers/MAP.md) | `std::map` — sorted `K → V`; `m[k]` inserts on miss. |
+| [`MULTIMAP.md`](cpp/containers/MULTIMAP.md) | `std::multimap` — like map but duplicate keys; no `operator[]`. |
 
 ### `cpp/io-errors/` — *streams & failure*
 | File | Topic |
@@ -117,6 +138,23 @@ Detailed per-keyword pages: language meaning, compiler/linker implementation, ha
 |---|---|
 | [`MAKEFILE_CPP.md`](cpp/tooling/MAKEFILE_CPP.md) | C++ Makefile recipes, `-Wall -Wextra -Werror -std=c++98`. |
 | [`LIBRARIES.md`](cpp/tooling/LIBRARIES.md) | Static vs shared libraries, linking order. |
+
+---
+
+## 🌐 NetPractice
+
+Everything needed to validate the 42 NetPractice project — IP fundamentals, masks, subnetting, routing, per-level strategy, and an evaluation cheatsheet. Hub: [`netpractice/INDEX.md`](netpractice/INDEX.md).
+
+| File | Topic |
+|---|---|
+| [`INDEX.md`](netpractice/INDEX.md) | Reading order, validation checklist, mental model. |
+| [`01_FOUNDATIONS.md`](netpractice/01_FOUNDATIONS.md) | IPv4 addresses, classes, CIDR, mask table. |
+| [`02_BINARY_AND_MASKS.md`](netpractice/02_BINARY_AND_MASKS.md) | Decimal↔binary, the AND operation, block sizes. |
+| [`03_SUBNETTING.md`](netpractice/03_SUBNETTING.md) | Network/broadcast/usable range, VLSM, /30 links. |
+| [`04_ROUTING.md`](netpractice/04_ROUTING.md) | Routing tables, default route, longest-prefix match. |
+| [`05_LEVEL_GUIDE.md`](netpractice/05_LEVEL_GUIDE.md) | What each of the 10 levels teaches — strategy, not answers. |
+| [`06_TROUBLESHOOTING.md`](netpractice/06_TROUBLESHOOTING.md) | Decision tree for diagnosing a red network. |
+| [`07_EVAL_CHEATSHEET.md`](netpractice/07_EVAL_CHEATSHEET.md) | One-page reference for evaluation defense. |
 
 ---
 

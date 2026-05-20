@@ -67,9 +67,11 @@ Three families:
 
 | Family | Examples | Access by |
 |---|---|---|
-| **Sequence** | `vector`, `list`, `deque`, `string` | Position (index, iterator) |
-| **Container adapter** | `stack`, `queue`, `priority_queue` | Restricted operations on a sequence |
-| **Associative** | `set`, `map`, `multiset`, `multimap` | Key |
+| **Sequence** | [`vector`](../containers/VECTOR.md), [`list`](../containers/LIST.md), [`deque`](../containers/DEQUE.md), [`string`](../io-errors/STRING_FUNCTIONS.md) | Position (index, iterator) |
+| **Container adapter** | [`stack`](../containers/STACK.md), [`queue`](../containers/QUEUE.md), [`priority_queue`](../containers/PRIORITY_QUEUE.md) | Restricted operations on a sequence |
+| **Associative** | [`set`](../containers/SET.md), [`map`](../containers/MAP.md), [`multiset`](../containers/MULTISET.md), [`multimap`](../containers/MULTIMAP.md) | Key |
+
+> **Need depth?** This page is the high-level overview. Each container above links to a dedicated deep-dive in [`cpp/containers/`](../containers/INDEX.md) — full API, complexity table, iterator invalidation rules, efficiency tips, and worked examples per container.
 
 All of them require:
 ```cpp
