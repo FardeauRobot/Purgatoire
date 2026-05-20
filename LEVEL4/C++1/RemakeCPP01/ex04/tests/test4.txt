@@ -1,0 +1,3 @@
+Delete this word from the sentence
+This word should disappear
+Keep this but remove word here

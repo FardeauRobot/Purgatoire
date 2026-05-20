@@ -43,6 +43,12 @@ One file per keyword (or tightly-related group), each focused on **what it does,
 | [`USING.md`](USING.md) | Three jobs: bring-name-in, bring-namespace-in, re-expose-inherited. |
 | [`ENUM.md`](ENUM.md) | Named integer constants. C++98 vs `enum class` (C++11+). |
 
+## 🔀 Control flow
+
+| Keyword | What it controls |
+|---|---|
+| [`SWITCH.md`](SWITCH.md) | Multi-way branching, fall-through, jump tables, `-Wswitch` on enums. |
+
 ## 🛡️ Exceptions & types
 
 | Keyword | What it controls |

@@ -16,6 +16,7 @@ class Zombie {
 
         void announce(void);
         void F_SetName(std::string name);
+        std::string F_GetName(void) const;
 };
 
 Zombie*	newZombie(std::string name);

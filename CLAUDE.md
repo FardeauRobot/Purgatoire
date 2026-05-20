@@ -80,13 +80,11 @@ When teaching me something, prefer:
 
 ---
 
-## Knowledge library — parallel copies
+## Knowledge library
 
-I maintain **two parallel copies** of the library:
-- `library/` (canonical)
-- `library/Purgatoire/` (mirror — historical artifact, kept in sync)
-
-When you edit a file in one, **edit the matching file in the other** in the same turn. Same applies to `library/INDEX.md` ↔ `library/Purgatoire/INDEX.md`.
+`library/` is my **Obsidian vault** — a single source of truth, no mirror. Every `.md`
+note lives there, organized by topic (`cpp/`, `netpractice/`, `projects/`, etc.).
+Edit notes in place; there is no second copy to keep in sync.
 
 ---
 

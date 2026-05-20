@@ -7,12 +7,12 @@ int main(void) {
     a.announce();
     b.announce();
 
-    Zombie *p_zombie;
-    p_zombie = newZombie("Test");
+    Zombie *p_zombie = newZombie("Test Heap");
     p_zombie->announce();
-    delete p_zombie;
+
 
     randomChump("Test le 2");
 
+    delete p_zombie;
     return 0;
 }
