@@ -141,6 +141,31 @@ Detailed per-keyword pages: language meaning, compiler/linker implementation, ha
 | [`MAKEFILE_CPP.md`](cpp/tooling/MAKEFILE_CPP.md) | C++ Makefile recipes, `-Wall -Wextra -Werror -std=c++98`. |
 | [`LIBRARIES.md`](cpp/tooling/LIBRARIES.md) | Static vs shared libraries, linking order. |
 
+### `cpp/webserv/` — *HTTP & the webserv project*
+Practitioner-level HTTP, plus a faithful mapping of the 42 webserv subject. Read in order; numbered files build on each other. Hub: [`webserv/INDEX.md`](cpp/webserv/INDEX.md).
+
+| # | File | Topic |
+|---|---|---|
+| 1 | [`01_FUNDAMENTALS.md`](cpp/webserv/01_FUNDAMENTALS.md) | What HTTP is — text over TCP, stateless, request-response. Where it sits in the stack. |
+| 2 | [`02_MESSAGE_ANATOMY.md`](cpp/webserv/02_MESSAGE_ANATOMY.md) | The four parts of every HTTP message; request vs response. |
+| 3 | [`03_METHODS.md`](cpp/webserv/03_METHODS.md) | GET / POST / DELETE / etc. + safety, idempotency, cacheability. |
+| 4 | [`04_STATUS_CODES.md`](cpp/webserv/04_STATUS_CODES.md) | The five families, the ~15 codes that matter, decision tree. |
+| 5 | [`05_HEADERS.md`](cpp/webserv/05_HEADERS.md) | Catalogue of the headers that matter, grouped by family. |
+| 6 | [`06_FRAMING.md`](cpp/webserv/06_FRAMING.md) | **The most important file.** `Content-Length` vs `Transfer-Encoding: chunked`. |
+| 7 | [`07_CONNECTION.md`](cpp/webserv/07_CONNECTION.md) | Keep-alive, the single-poll() rule, `errno` forbidden after read/write. |
+| 8 | [`08_URLS.md`](cpp/webserv/08_URLS.md) | URI anatomy, percent-encoding, query strings, path traversal. |
+| 9 | [`09_CONTENT_NEGOTIATION.md`](cpp/webserv/09_CONTENT_NEGOTIATION.md) | MIME types, `Content-Type`, multipart uploads. |
+| 10 | [`10_REDIRECTS.md`](cpp/webserv/10_REDIRECTS.md) | The 3xx family — 301 vs 302 vs 303/307/308. |
+| 11 | [`11_CACHING.md`](cpp/webserv/11_CACHING.md) | `Cache-Control`, `ETag`, conditional GET, `304 Not Modified`. |
+| 12 | [`12_COOKIES_SESSIONS.md`](cpp/webserv/12_COOKIES_SESSIONS.md) | `Set-Cookie` / `Cookie`, sessions. Bonus only for webserv. |
+| 13 | [`13_HTTPS_TLS.md`](cpp/webserv/13_HTTPS_TLS.md) | Overview only — out of scope for webserv. |
+| 14 | [`14_CGI.md`](cpp/webserv/14_CGI.md) | Fork+exec+pipes+env. Heaviest topic. Mandatory in webserv. |
+| 15 | [`15_TOOLS.md`](cpp/webserv/15_TOOLS.md) | `curl -v`, `nc`, browser devtools, NGINX, `wrk`, `valgrind`. |
+| 16 | [`16_TINY_SERVER_LAB.md`](cpp/webserv/16_TINY_SERVER_LAB.md) | Build a ~70-line C++98 HTTP server. Run it before tackling webserv. |
+| 17 | [`17_WEBSERV_SUBJECT.md`](cpp/webserv/17_WEBSERV_SUBJECT.md) | The 42 subject distilled and mapped to this library. |
+| — | [`OVERVIEW.md`](cpp/webserv/OVERVIEW.md) | **Single-page execution plan** — what to build, in what order, when you're done. Pin to wall. |
+| — | [`GLOSSARY.md`](cpp/webserv/GLOSSARY.md) | A→Z lookup for every term used across the folder. |
+
 ---
 
 ## 🌐 NetPractice

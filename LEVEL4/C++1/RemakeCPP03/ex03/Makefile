@@ -1,7 +1,7 @@
 NAME     = diamondtrap 
 
 CXX      = c++
-CXXFLAGS = -Wall -Wextra -Werror -Wno-shadow -std=c++98 -MMD -MP
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD -MP
 
 # ============== SRC-FILES ===================
 SRC_FILES = main.cpp FragTrap.cpp DiamondTrap.cpp ClapTrap.cpp ScavTrap.cpp utils.cpp 

@@ -1,13 +1,14 @@
 #include <iostream>
 #include "DiamondTrap.hpp"
 #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 #include "utils.hpp"
 
 DiamondTrap::DiamondTrap(void): ClapTrap("_clap_name") {
 	std::cout << MAGENTA << "DiamondTrap Default constructor called" << RESET << std::endl;
 	m_name = "";
 	m_hp = FragTrap::m_hp;
-	m_energy = ScavTrap::m_energy;
+	m_energy = 50;
 	m_atk = FragTrap::m_atk;
 }
 
@@ -15,7 +16,7 @@ DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name") {
 	std::cout << MAGENTA << "DiamondTrap Name constructor called" << RESET << std::endl;
 	m_name = name;
 	m_hp = FragTrap::m_hp;
-	m_energy = ScavTrap::m_energy;
+	m_energy = 50;
 	m_atk = FragTrap::m_atk;
 }
 
@@ -42,10 +43,15 @@ DiamondTrap::~DiamondTrap() {
 }
 
 void	DiamondTrap::attack(const std::string &target) {
-	FragTrap::attack(target);
+	ScavTrap::attack(target);
 }
 
 void	DiamondTrap::whoAmI() {
 	std::cout	<< BOLD_YELLOW << "This diamond trap comes from " << ClapTrap::m_name <<
 				" and is named " << m_name << endofline;
+}
+
+
+int	DiamondTrap::getEnergy(void) const {
+	return (m_energy);
 }

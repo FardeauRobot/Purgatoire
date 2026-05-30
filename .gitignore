@@ -28,6 +28,13 @@ LEVEL3/minishell/minishell
 LEVEL4/cub3d/cub3d
 LEVEL4/C++1/**/a.out
 LEVEL4/C++1/**/*.out
+LEVEL4/C++1/RemakeCPP02/ex00/fixed00
+LEVEL4/C++1/RemakeCPP02/ex01/fixed01
+LEVEL4/C++1/RemakeCPP02/ex02/fixed02
+LEVEL4/C++1/RemakeCPP03/ex00/claptrap
+LEVEL4/C++1/RemakeCPP03/ex01/scavtrap
+LEVEL4/C++1/RemakeCPP03/ex02/fragtrap
+LEVEL4/C++1/RemakeCPP03/ex03/diamondtrap
 
 # Test artefacts
 LEVEL2/Pipex/outfile
