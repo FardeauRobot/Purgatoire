@@ -187,12 +187,14 @@ You can have two member functions with the same name and parameters that differ 
 class Buffer {
     char _data[1024];
 public:
-    char&       operator[](std::size_t i)       { return _data[i]; }   // mutable access
-    const char& operator[](std::size_t i) const { return _data[i]; }   // read-only access
-};
+    char&       operator[](std::size_t i) { return _data[i]; }   //mutable access
+    
+    const char& operator[](std::size_t i) const { return _data[i]; } //read-only};
+
 
 Buffer       b;
 const Buffer cb;
+
 b[0] = 'x';        // calls non-const overload — OK
 char c = cb[0];    // calls const overload — OK
 cb[0] = 'x';       // ERROR — const overload returns const char&

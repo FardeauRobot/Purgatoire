@@ -26,6 +26,7 @@ library/
 |---|---|
 | [`meta/IMPROVEMENT.md`](meta/IMPROVEMENT.md) | Living checklist of repo upgrades — quick wins → long-term craftsmanship. |
 | [`meta/CLAUDE_CODE_MANUAL.md`](meta/CLAUDE_CODE_MANUAL.md) | Short manual for using Claude Code efficiently — setup, prompts, slash commands, 42-piscine tips. |
+| [`meta/FLAGS.md`](meta/FLAGS.md) | Compiler flags catalogue — tiered by usefulness for the C++ piscine, with rationale & trade-offs. |
 
 ---
 
@@ -96,6 +97,7 @@ Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when s
 |---|---|
 | [`TEMPLATES.md`](cpp/advanced/TEMPLATES.md) | Function + class templates, specialisation. |
 | [`STL.md`](cpp/advanced/STL.md) | High-level overview — containers, iterators, algorithms. Hub linking into `containers/`. |
+| [`ALGORITHMS.md`](cpp/advanced/ALGORITHMS.md) | Exhaustive function reference — every container member + the full `<algorithm>`/`<numeric>`/`<functional>` catalogue, C++98-annotated. |
 | [`CASTS.md`](cpp/advanced/CASTS.md) | `static_cast`, `dynamic_cast`, `const_cast`, `reinterpret_cast`. |
 | [`MEMBER_FUNCTION_POINTERS.md`](cpp/advanced/MEMBER_FUNCTION_POINTERS.md) | `.*` / `->*`, dispatch tables, the Harl pattern. |
 

@@ -1,39 +1,25 @@
-NAME     = EXEC_NAME
+NAME     = fixed02
 
 CXX      = c++
-CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
-           -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast \
-           -std=c++98 -MMD -MP
+CXXFLAGS = -Wall -Wextra -Werror -Wswitch -std=c++98 -MMD -MP
 LDFLAGS  =
-INCLUDES = -I include
-
-# ============== DIRECTORIES ===================
-SRCDIR   = src
-OBJDIR   = objs
-
-# ============== SUB-DIRECTORIES ===================
-CORE_PATH  = $(SRCDIR)/core
-UTILS_PATH = $(SRCDIR)/utils
 
 # ============== SRC-FILES ===================
-SKELETON_FILES = main.cpp
-CORE_FILES     = CLASS_NAME.cpp
-UTILS_FILES    = errors.cpp utils.cpp
+SRC_FILES = main.cpp Fixed.cpp utils.cpp
 
-SRCS = $(addprefix $(SRCDIR)/, $(SKELETON_FILES)) \
-       $(addprefix $(CORE_PATH)/, $(CORE_FILES)) \
-       $(addprefix $(UTILS_PATH)/, $(UTILS_FILES))
-
-OBJS = $(SRCS:%.cpp=$(OBJDIR)/%.o)
+OBJDIR   = objs
+OBJS = $(SRC_FILES:%.cpp=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
-# ============== DEBUG / SANITIZER FLAGS =======
-# -g3 -O0  : full debug info, no optimisation -> readable backtraces
+# ============== DEBUG / SANITIZER FLAGS =====
+# -g3      : maximum debug info (var names, macros)
+# -O0      : no optimisation -> stack frames stay where you'd expect them
 DEBUG_FLAGS = -g3 -O0
 
-# AddressSanitizer  : heap-use-after-free, double-free, OOB, leaks (linux+mac).
-# UBSanitizer       : signed overflow, null deref, bad casts, ...
-# -fno-omit-frame-pointer : keep stack traces accurate.
+# AddressSanitizer (ASan) catches: heap-use-after-free, double-free,
+# heap-buffer-overflow, stack-use-after-return, leaks (Linux + recent macOS).
+# UndefinedBehaviorSanitizer (UBSan): signed overflow, null deref, bad casts.
+# -fno-omit-frame-pointer : keeps stack traces readable.
 ASAN_FLAGS  = -fsanitize=address  -fno-omit-frame-pointer
 UBSAN_FLAGS = -fsanitize=undefined -fno-omit-frame-pointer
 
@@ -43,8 +29,7 @@ $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 $(OBJDIR)/%.o: %.cpp | $(OBJDIR)
-	@mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
@@ -59,18 +44,18 @@ fclean: clean
 
 re: fclean all
 
-test: all
-	./$(NAME)
-
-# ============== MEMORY-CHECK TARGETS ==========
+# ============== MEMORY-CHECK TARGETS ========
+# `make debug` -> rebuild with -g3 -O0 so leaks/valgrind backtraces are useful
 debug: CXXFLAGS += $(DEBUG_FLAGS)
 debug: re
 
+# `make asan`  -> rebuild with AddressSanitizer + UBSan
 asan: CXXFLAGS += $(DEBUG_FLAGS) $(ASAN_FLAGS) $(UBSAN_FLAGS)
 asan: LDFLAGS  += $(ASAN_FLAGS) $(UBSAN_FLAGS)
 asan: re
-	@echo "→ run ./$(NAME); ASan reports at exit"
+	@echo "→ run ./$(NAME) directly; ASan reports at exit"
 
+# `make leaks` -> rebuild with -g, then auto-pick leaks (mac) or valgrind (linux)
 leaks: debug
 	@if [ "$$(uname)" = "Darwin" ]; then \
 		echo "🔎 macOS: leaks --atExit"; \
@@ -81,10 +66,10 @@ leaks: debug
 		         --track-origins=yes --error-exitcode=1 ./$(NAME); \
 	fi
 
-# ============== WATCH MODE ====================
+# ============== WATCH MODE ==================
 # `make watch` -> rebuild automatically on every source change.
 # Requires fswatch:   macOS: brew install fswatch   Linux: apt-get install fswatch
-WATCH_PATHS = $(SRCDIR) include
+WATCH_PATHS = $(SRC_FILES) $(wildcard *.hpp)
 
 watch:
 	@command -v fswatch >/dev/null 2>&1 || { \
@@ -94,7 +79,7 @@ watch:
 	@if $(MAKE) --no-print-directory all; then \
 		echo "── run ──"; ./$(NAME); \
 	fi
-	@echo "👀 watching $(WATCH_PATHS) — Ctrl-C to stop"
+	@echo "👀 watching $(words $(WATCH_PATHS)) files — Ctrl-C to stop"
 	@fswatch -o $(WATCH_PATHS) | while read -r _; do \
 		clear; \
 		printf '↻ %s — rebuilding\n' "$$(date +%H:%M:%S)"; \
@@ -109,10 +94,9 @@ help:
 	@echo "  make re         rebuild from scratch"
 	@echo "  make clean      remove objects"
 	@echo "  make fclean     remove objects + binary"
-	@echo "  make test       build then run"
 	@echo "  make debug      rebuild with -g3 -O0"
 	@echo "  make asan       rebuild with AddressSanitizer + UBSan"
 	@echo "  make leaks      rebuild with -g, run leaks (mac) / valgrind (linux)"
 	@echo "  make watch      auto-rebuild on source change (needs fswatch)"
 
-.PHONY: all clean fclean re test debug asan leaks watch help
+.PHONY: all clean fclean re debug asan leaks watch help
