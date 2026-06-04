@@ -16,7 +16,7 @@ FragTrap::FragTrap(std::string name): ClapTrap(name) {
     m_atk = 30;
 }
 
-FragTrap::FragTrap(const FragTrap &src) {
+FragTrap::FragTrap(const FragTrap &src) : ClapTrap(src) {
     std::cout << BLUE << "FragTrap Copy constructor called" << RESET << endofline;
     *this = src;
 }
