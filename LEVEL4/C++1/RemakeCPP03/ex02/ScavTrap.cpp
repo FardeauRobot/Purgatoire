@@ -18,7 +18,7 @@ ScavTrap::ScavTrap(std::string name): ClapTrap(name) {
     m_guarding = false;
 }
 
-ScavTrap::ScavTrap(const ScavTrap &src) {
+ScavTrap::ScavTrap(const ScavTrap &src) : ClapTrap(src) {
     std::cout << CYAN << "ScavTrap Copy constructor called" << RESET << endofline;
     *this = src;
 }
