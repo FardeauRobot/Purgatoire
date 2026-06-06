@@ -34,9 +34,12 @@ If you've never written a server before, read these in order. Each builds on the
 | 15 | [`15_TOOLS.md`](15_TOOLS.md) | Your daily toolkit: `curl -v`, `nc`, browser devtools, `wireshark`, `httpbin`. |
 | 16 | [`16_TINY_SERVER_LAB.md`](16_TINY_SERVER_LAB.md) | **Build the dumbest possible HTTP server in ~50 lines of C++**. Single connection, one request, fixed response. Demystifies the whole protocol. |
 | 17 | [`17_WEBSERV_SUBJECT.md`](17_WEBSERV_SUBJECT.md) | What the 42 webserv subject **actually demands**: nginx-style config, multiplexed I/O via `poll`/`select`/`kqueue`, CGI, error pages, the whole feature list. |
+| 18 | [`18_SOCKETS_AND_FDS.md`](18_SOCKETS_AND_FDS.md) | The OS layer beneath HTTP: file descriptors, socket lifecycle, TCP as a stream, per-client fd isolation, and the `poll()` event loop. |
 
 Quick reference: [`GLOSSARY.md`](GLOSSARY.md).
+**Practical tips & debug tools:** [`TIPS.md`](TIPS.md) — tools, logging habits, development order, and common traps.
 **Single-page execution plan:** [`OVERVIEW.md`](OVERVIEW.md) — pin this to your wall.
+**Syscall reference:** [`functions/INDEX.md`](functions/INDEX.md) — every allowed function explained at the kernel level, with webserv-specific examples.
 
 ---
 

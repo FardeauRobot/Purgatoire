@@ -51,15 +51,15 @@ That sentence is the entire project. Everything below is decomposition.
 
 You're roughly writing these classes. Names are suggestive; pick your own.
 
-| Module | Responsibility | Heavy uses |
-|---|---|---|
-| **`ConfigParser`** | Read & validate the config file → in-memory `Config` tree | string parsing |
-| **`Server`** | Owns the poll loop, listening sockets, connection list, CGI list | `poll`, `socket`, `bind`, `listen`, `accept`, `fcntl` |
-| **`Connection`** | Per-client state machine: read → parse → dispatch → write | `recv`, `send`, the parser |
-| **`RequestParser`** | Bytes → structured `Request` (method, target, headers, body); resumable | `std::string` manipulation, chunked decoder |
-| **`Router`** | Match a `Request` against `Config` → pick the right `Handler` | longest-prefix matching |
-| **`Handlers`** | StaticFile, DirectoryListing, FileUpload, FileDelete, Redirect, CGI, ErrorPage | `stat`, `open`, `read`, `opendir`, `readdir`, etc. |
-| **`CGIRunner`** | Fork + execve + pipe management; integrates fds into the server's poll set | `fork`, `pipe`, `dup2`, `execve`, `waitpid`, `kill` |
+| Module              | Responsibility                                                                 | Heavy uses                                            |
+| ------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------- |
+| **`ConfigParser`**  | Read & validate the config file → in-memory `Config` tree                      | string parsing                                        |
+| **`Server`**        | Owns the poll loop, listening sockets, connection list, CGI list               | `poll`, `socket`, `bind`, `listen`, `accept`, `fcntl` |
+| **`Connection`**    | Per-client state machine: read → parse → dispatch → write                      | `recv`, `send`, the parser                            |
+| **`RequestParser`** | Bytes → structured `Request` (method, target, headers, body); resumable        | `std::string` manipulation, chunked decoder           |
+| **`Router`**        | Match a `Request` against `Config` → pick the right `Handler`                  | longest-prefix matching                               |
+| **`Handlers`**      | StaticFile, DirectoryListing, FileUpload, FileDelete, Redirect, CGI, ErrorPage | `stat`, `open`, `read`, `opendir`, `readdir`, etc.    |
+| **`CGIRunner`**     | Fork + execve + pipe management; integrates fds into the server's poll set     | `fork`, `pipe`, `dup2`, `execve`, `waitpid`, `kill`   |
 
 → See [`16_TINY_SERVER_LAB.md`](16_TINY_SERVER_LAB.md) for the socket plumbing; [`14_CGI.md`](14_CGI.md) for the CGI dance; [`06_FRAMING.md`](06_FRAMING.md) for the parser's hardest part.
 
@@ -96,17 +96,17 @@ You're roughly writing these classes. Names are suggestive; pick your own.
 
 The subject is strict on a small set of rules. Any violation = grade 0:
 
-| Rule | Where covered |
-|---|---|
-| Server must never crash, ever (including OOM) | architecture-wide; design for resilience |
-| Compile with `-Wall -Wextra -Werror` under `-std=c++98` | [`meta/FLAGS.md`](../../meta/FLAGS.md) |
-| Only the allowed external functions | [17](17_WEBSERV_SUBJECT.md) §Allowed functions |
-| **Every** socket/pipe read/write goes through `poll()` first | [07](07_CONNECTION.md) |
-| **Single** `poll()` — not one per connection, not one per port | [07](07_CONNECTION.md) |
-| **Never** check `errno` after `read`/`recv`/`write`/`send` | [07](07_CONNECTION.md) |
-| `fork()` only for CGI | [14](14_CGI.md) |
-| On macOS: `fcntl()` only with `F_SETFL`, `O_NONBLOCK`, `FD_CLOEXEC` | [07](07_CONNECTION.md) |
-| README with the 4 required sections, in English | [17](17_WEBSERV_SUBJECT.md) §README |
+| Rule                                                                | Where covered                                  |
+| ------------------------------------------------------------------- | ---------------------------------------------- |
+| Server must never crash, ever (including OOM)                       | architecture-wide; design for resilience       |
+| Compile with `-Wall -Wextra -Werror` under `-std=c++98`             | [`meta/FLAGS.md`](../../meta/FLAGS.md)         |
+| Only the allowed external functions                                 | [17](17_WEBSERV_SUBJECT.md) §Allowed functions |
+| **Every** socket/pipe read/write goes through `poll()` first        | [07](07_CONNECTION.md)                         |
+| **Single** `poll()` — not one per connection, not one per port      | [07](07_CONNECTION.md)                         |
+| **Never** check `errno` after `read`/`recv`/`write`/`send`          | [07](07_CONNECTION.md)                         |
+| `fork()` only for CGI                                               | [14](14_CGI.md)                                |
+| On macOS: `fcntl()` only with `F_SETFL`, `O_NONBLOCK`, `FD_CLOEXEC` | [07](07_CONNECTION.md)                         |
+| README with the 4 required sections, in English                     | [17](17_WEBSERV_SUBJECT.md) §README            |
 
 `grep -n 'errno' src/*.cpp` should return nothing near read/write/recv/send call sites. Do this audit before submitting.
 

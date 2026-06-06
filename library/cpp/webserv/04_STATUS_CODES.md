@@ -36,11 +36,11 @@ The HTTP spec lists ~60 codes. Webserv needs maybe 15. Here's the shortlist:
 
 See [file 10](10_REDIRECTS.md) for the full table.
 
-| Code | Reason | When |
-|---|---|---|
-| **`301 Moved Permanently`** | Resource is now at the URL in `Location:`. Browsers will update bookmarks, search engines will replace the index entry. | Config file's `redirect` rule, when permanent. |
-| **`302 Found`** | Temporary redirect. Client should re-request at the new URL but not memorise the move. | Most `redirect` config rules. (`303` and `307` are more precise — see file 10.) |
-| **`304 Not Modified`** | "Your cached copy is still valid." No body. | When implementing caching ([file 11](11_CACHING.md)). Not required by webserv. |
+| Code                        | Reason                                                                                                                  | When                                                                            |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| **`301 Moved Permanently`** | Resource is now at the URL in `Location:`. Browsers will update bookmarks, search engines will replace the index entry. | Config file's `redirect` rule, when permanent.                                  |
+| **`302 Found`**             | Temporary redirect. Client should re-request at the new URL but not memorise the move.                                  | Most `redirect` config rules. (`303` and `307` are more precise — see file 10.) |
+| **`304 Not Modified`**      | "Your cached copy is still valid." No body.                                                                             | When implementing caching ([file 11](11_CACHING.md)). Not required by webserv.  |
 
 ### 4xx — client error
 

@@ -1,40 +1,46 @@
-NAME     = WebServ
+SERVER   = WebServ
+CLIENT   = WebServ-client
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
            -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast \
-           -std=c++98 -MMD -MP
+           -std=c++98 -MMD -MP \
+           -I server -I utils -I client
 LDFLAGS  =
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp Server.cpp utils.cpp
+SERVER_SRC = \
+    server/main.cpp \
+    server/Server.cpp \
+    utils/utils.cpp
 
-OBJDIR   = objs
-OBJS = $(SRC_FILES:%.cpp=$(OBJDIR)/%.o)
-DEPS = $(OBJS:.o=.d)
+CLIENT_SRC = \
+    client/main.cpp \
+    client/Client.cpp \
+    utils/utils.cpp
+
+OBJDIR     = objs
+SERVER_OBJ = $(patsubst %.cpp,$(OBJDIR)/%.o,$(SERVER_SRC))
+CLIENT_OBJ = $(patsubst %.cpp,$(OBJDIR)/%.o,$(CLIENT_SRC))
+DEPS       = $(SERVER_OBJ:.o=.d) $(CLIENT_OBJ:.o=.d)
 
 # ============== DEBUG / SANITIZER FLAGS =====
-# -g3      : maximum debug info (var names, macros)
-# -O0      : no optimisation -> stack frames stay where you'd expect them
 DEBUG_FLAGS = -g3 -O0
-
-# AddressSanitizer (ASan) catches: heap-use-after-free, double-free,
-# heap-buffer-overflow, stack-use-after-return, leaks (Linux + recent macOS).
-# UndefinedBehaviorSanitizer (UBSan): signed overflow, null deref, bad casts.
-# -fno-omit-frame-pointer : keeps stack traces readable.
-ASAN_FLAGS  = -fsanitize=address  -fno-omit-frame-pointer
+ASAN_FLAGS  = -fsanitize=address   -fno-omit-frame-pointer
 UBSAN_FLAGS = -fsanitize=undefined -fno-omit-frame-pointer
 
-all: $(NAME)
+all: server client
 
-$(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
-
-$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
+# mkdir -p creates the per-subdir bucket on demand
+$(OBJDIR)/%.o: %.cpp
+	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJDIR):
-	mkdir -p $(OBJDIR)
+server: $(SERVER_OBJ)
+	$(CXX) $(CXXFLAGS) $^ -o $(SERVER) $(LDFLAGS)
+
+client: $(CLIENT_OBJ)
+	$(CXX) $(CXXFLAGS) $^ -o $(CLIENT) $(LDFLAGS)
 
 -include $(DEPS)
 
@@ -42,63 +48,68 @@ clean:
 	rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(SERVER) $(CLIENT)
 
 re: fclean all
 
 # ============== MEMORY-CHECK TARGETS ========
-# `make debug` -> rebuild with -g3 -O0 so leaks/valgrind backtraces are useful
 debug: CXXFLAGS += $(DEBUG_FLAGS)
 debug: re
 
-# `make asan`  -> rebuild with AddressSanitizer + UBSan
 asan: CXXFLAGS += $(DEBUG_FLAGS) $(ASAN_FLAGS) $(UBSAN_FLAGS)
 asan: LDFLAGS  += $(ASAN_FLAGS) $(UBSAN_FLAGS)
 asan: re
-	@echo "→ run ./$(NAME) directly; ASan reports at exit"
+	@echo "→ run ./$(SERVER) or ./$(CLIENT) directly; ASan reports at exit"
 
-# `make leaks` -> rebuild with -g, then auto-pick leaks (mac) or valgrind (linux)
 leaks: debug
 	@if [ "$$(uname)" = "Darwin" ]; then \
-		echo "🔎 macOS: leaks --atExit"; \
-		MallocStackLogging=1 leaks --atExit -- ./$(NAME); \
+		echo "macOS: leaks --atExit — $(SERVER)"; \
+		MallocStackLogging=1 leaks --atExit -- ./$(SERVER); \
 	else \
-		echo "🔎 Linux: valgrind --leak-check=full"; \
+		echo "Linux: valgrind --leak-check=full — $(SERVER)"; \
 		valgrind --leak-check=full --show-leak-kinds=all \
-		         --track-origins=yes --error-exitcode=1 ./$(NAME); \
+		         --track-origins=yes --error-exitcode=1 ./$(SERVER); \
 	fi
 
 # ============== WATCH MODE ==================
-# `make watch` -> rebuild automatically on every source change.
-# Requires fswatch:   macOS: brew install fswatch   Linux: apt-get install fswatch
-WATCH_PATHS = $(SRC_FILES) $(wildcard *.hpp)
-
-watch:
+watch-server:
 	@command -v fswatch >/dev/null 2>&1 || { \
 		echo "fswatch not found — install with: brew install fswatch"; \
 		exit 1; \
 	}
-	@if $(MAKE) --no-print-directory all; then \
-		echo "── run ──"; ./$(NAME); \
-	fi
-	@echo "👀 watching $(words $(WATCH_PATHS)) files — Ctrl-C to stop"
-	@fswatch -o $(WATCH_PATHS) | while read -r _; do \
+	@$(MAKE) --no-print-directory server && echo "── run ──" && ./$(SERVER); true
+	@echo "watching server files — Ctrl-C to stop"
+	@fswatch -o $(SERVER_SRC) $(wildcard server/*.hpp) $(wildcard utils/*.hpp) | while read -r _; do \
 		clear; \
 		printf '↻ %s — rebuilding\n' "$$(date +%H:%M:%S)"; \
-		if $(MAKE) --no-print-directory all; then \
-			echo "── run ──"; ./$(NAME); \
-		fi; \
+		$(MAKE) --no-print-directory server && echo "── run ──" && ./$(SERVER); true; \
+	done
+
+watch-client:
+	@command -v fswatch >/dev/null 2>&1 || { \
+		echo "fswatch not found — install with: brew install fswatch"; \
+		exit 1; \
+	}
+	@$(MAKE) --no-print-directory client && echo "── run ──" && ./$(CLIENT); true
+	@echo "watching client files — Ctrl-C to stop"
+	@fswatch -o $(CLIENT_SRC) $(wildcard client/*.hpp) $(wildcard utils/*.hpp) | while read -r _; do \
+		clear; \
+		printf '↻ %s — rebuilding\n' "$$(date +%H:%M:%S)"; \
+		$(MAKE) --no-print-directory client && echo "── run ──" && ./$(CLIENT); true; \
 	done
 
 help:
 	@echo "Targets:"
-	@echo "  make            build $(NAME)"
-	@echo "  make re         rebuild from scratch"
-	@echo "  make clean      remove objects"
-	@echo "  make fclean     remove objects + binary"
-	@echo "  make debug      rebuild with -g3 -O0"
-	@echo "  make asan       rebuild with AddressSanitizer + UBSan"
-	@echo "  make leaks      rebuild with -g, run leaks (mac) / valgrind (linux)"
-	@echo "  make watch      auto-rebuild on source change (needs fswatch)"
+	@echo "  make               build both $(SERVER) and $(CLIENT)"
+	@echo "  make server        build $(SERVER) only"
+	@echo "  make client        build $(CLIENT) only"
+	@echo "  make re            rebuild both from scratch"
+	@echo "  make clean         remove objects"
+	@echo "  make fclean        remove objects + binaries"
+	@echo "  make debug         rebuild with -g3 -O0"
+	@echo "  make asan          rebuild with AddressSanitizer + UBSan"
+	@echo "  make leaks         rebuild debug, then run leaks (mac) / valgrind (linux)"
+	@echo "  make watch-server  auto-rebuild server on change (needs fswatch)"
+	@echo "  make watch-client  auto-rebuild client on change (needs fswatch)"
 
-.PHONY: all clean fclean re debug asan leaks watch help
+.PHONY: all server client clean fclean re debug asan leaks watch-server watch-client help
