@@ -187,9 +187,7 @@ bind(listen_fd, (struct sockaddr*)&addr, sizeof(addr));
 
 **Under the hood:** `bind()` adds an entry to the kernel's socket-to-port table. After this, incoming SYN packets to this port will be routed to this socket. The socket is still in `BOUND` state — not yet accepting. No TCP handshakes happen yet.
 
-**Common errors:**
-- `EADDRINUSE`: port already in use (and `SO_REUSEADDR` wasn't set, or another process is using it).
-- `EACCES`: port below 1024 requires root. Use ports ≥ 1024 in webserv.
+**Common errors:** `EADDRINUSE` (port in use / `TIME_WAIT` without `SO_REUSEADDR`), `EACCES` (port < 1024 needs root). Full failure table — including the silent-wrong-port and missing-`memset` traps — in [`../18_SOCKETS_AND_FDS.md`](../18_SOCKETS_AND_FDS.md#why-bind-fails).
 
 ---
 
@@ -332,28 +330,9 @@ int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 // Returns: 0 on success, -1 on error
 ```
 
-**What it does:** retrieves the local address (IP + port) that a socket is bound to. Used when the OS assigned the port (bind to port 0) and you need to know what it picked.
+**What it does:** retrieves the local address (IP + port) that a socket is bound to. In webserv its main use is populating the CGI `SERVER_NAME` / `SERVER_PORT` env vars — call it on the **client fd**, not the listen fd, so you get the concrete interface the request arrived on (the listen fd reads back `0.0.0.0` when bound to `INADDR_ANY`).
 
-**Parameters:**
-- `sockfd` — any bound or connected socket fd; use the client fd (not the listen fd) to get the specific interface the connection arrived on
-- `addr` — output: pointer to a `struct sockaddr_in` (cast to `struct sockaddr *`); the kernel fills it with the socket's local IP and port
-- `addrlen` — in/out: set to `sizeof(struct sockaddr_in)` before calling; updated by the kernel to the actual size written into `addr`
-
-**In webserv:** useful for populating CGI environment variables:
-
-```cpp
-// CGI requires SERVER_NAME and SERVER_PORT env vars
-struct sockaddr_in local_addr;
-socklen_t len = sizeof(local_addr);
-getsockname(client_fd, (struct sockaddr*)&local_addr, &len);
-
-char server_ip[INET_ADDRSTRLEN];
-inet_ntop(AF_INET, &local_addr.sin_addr, server_ip, sizeof(server_ip));
-int server_port = ntohs(local_addr.sin_port);
-
-setenv("SERVER_NAME", server_ip, 1);     // or hostname if available
-setenv("SERVER_PORT", itoa(server_port), 1);
-```
+→ Parameters and the full CGI env-var example live with the other address-reading calls in [`04_ADDRESS_CONVERSION.md`](04_ADDRESS_CONVERSION.md#getsockname--find-what-address-a-socket-is-bound-to).
 
 ---
 

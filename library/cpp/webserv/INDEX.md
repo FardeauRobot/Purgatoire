@@ -36,10 +36,60 @@ If you've never written a server before, read these in order. Each builds on the
 | 17 | [`17_WEBSERV_SUBJECT.md`](17_WEBSERV_SUBJECT.md) | What the 42 webserv subject **actually demands**: nginx-style config, multiplexed I/O via `poll`/`select`/`kqueue`, CGI, error pages, the whole feature list. |
 | 18 | [`18_SOCKETS_AND_FDS.md`](18_SOCKETS_AND_FDS.md) | The OS layer beneath HTTP: file descriptors, socket lifecycle, TCP as a stream, per-client fd isolation, and the `poll()` event loop. |
 
+Already building? Jump to the [**By implementation part**](#-by-implementation-part) view below — the same files regrouped by the module you're working on.
+
 Quick reference: [`GLOSSARY.md`](GLOSSARY.md).
 **Practical tips & debug tools:** [`TIPS.md`](TIPS.md) — tools, logging habits, development order, and common traps.
 **Single-page execution plan:** [`OVERVIEW.md`](OVERVIEW.md) — pin this to your wall.
 **Syscall reference:** [`functions/INDEX.md`](functions/INDEX.md) — every allowed function explained at the kernel level, with webserv-specific examples.
+
+---
+
+## 🧩 By implementation part
+
+The table above is the **learning** order (protocol first). This is the **building** order — the same files regrouped by the part of `webserv` you're working on. When you're knee-deep in one module, start here.
+
+### Server handling — sockets, the event loop, connections
+The OS layer and the non-blocking core. Everything that moves bytes before HTTP starts.
+
+- [`18_SOCKETS_AND_FDS.md`](18_SOCKETS_AND_FDS.md) — fds, the socket lifecycle, TCP-as-a-stream, the poll loop *(the mental model)*
+- [`16_TINY_SERVER_LAB.md`](16_TINY_SERVER_LAB.md) — the smallest server that works; build this first
+- [`07_CONNECTION.md`](07_CONNECTION.md) — keep-alive, single-`poll()`, the errno-forbidden rule
+- [`functions/01_SOCKET_LIFECYCLE.md`](functions/01_SOCKET_LIFECYCLE.md) — `socket`/`bind`/`listen`/`accept`/`setsockopt`
+- [`functions/02_IO_MULTIPLEXING.md`](functions/02_IO_MULTIPLEXING.md) — `poll`/`select`/`kqueue`/`fcntl`
+- [`functions/03_DATA_TRANSFER.md`](functions/03_DATA_TRANSFER.md) — `read`/`write`/`send`/`recv`, short reads & writes
+
+### HTTP parsing — raw bytes → structured request, structured response → bytes
+- [`02_MESSAGE_ANATOMY.md`](02_MESSAGE_ANATOMY.md) — the four parts of every message
+- [`05_HEADERS.md`](05_HEADERS.md) — the headers that matter, by family
+- [`06_FRAMING.md`](06_FRAMING.md) — **where a body ends:** `Content-Length` vs chunked *(the hardest part)*
+- [`03_METHODS.md`](03_METHODS.md) — GET/POST/DELETE semantics, safety, idempotency
+- [`04_STATUS_CODES.md`](04_STATUS_CODES.md) — picking the right code
+
+### Routing & static serving — match a request, resolve a path, send a file
+- [`08_URLS.md`](08_URLS.md) — URI anatomy, percent-encoding, query strings
+- [`09_CONTENT_NEGOTIATION.md`](09_CONTENT_NEGOTIATION.md) — MIME types, `Content-Type`
+- [`10_REDIRECTS.md`](10_REDIRECTS.md) — the `3xx` family for per-route `return`
+- [`11_CACHING.md`](11_CACHING.md) — `ETag`, `304` *(optional, but cheap wins)*
+- [`functions/06_FILESYSTEM.md`](functions/06_FILESYSTEM.md) — `stat`/`open`/`opendir`/`readdir` for files & autoindex
+
+### CGI — delegate a request to an external program
+- [`14_CGI.md`](14_CGI.md) — the env/stdin/stdout contract, end to end
+- [`functions/05_PROCESS_AND_CGI.md`](functions/05_PROCESS_AND_CGI.md) — `fork`/`execve`/`pipe`/`dup2`/`waitpid`
+- [`functions/04_ADDRESS_CONVERSION.md`](functions/04_ADDRESS_CONVERSION.md) — `getsockname`/`ntohs` for `SERVER_NAME`/`SERVER_PORT`
+
+### Config — read & validate the `.conf`
+- [`17_WEBSERV_SUBJECT.md`](17_WEBSERV_SUBJECT.md) §Configuration — the nginx-style directives you must support
+- [`TIPS.md`](TIPS.md) §Config file — what to get right before writing the parser
+
+### Cross-cutting references — reach for these from any part
+- [`libraries/INDEX.md`](libraries/INDEX.md) — **header reference:** what each `#include` gives you (the *what*)
+- [`functions/INDEX.md`](functions/INDEX.md) — **function reference:** how each call behaves at the kernel level (the *how*)
+- [`functions/07_ERRORS.md`](functions/07_ERRORS.md) — `strerror`/`gai_strerror`/`errno` discipline
+- [`15_TOOLS.md`](15_TOOLS.md) + [`TIPS.md`](TIPS.md) — debugging toolkit and habits
+- [`GLOSSARY.md`](GLOSSARY.md) — A→Z lookup
+
+> **The three reference tiers:** `libraries/` answers *"what does this header expose?"*, `functions/` answers *"how does this call behave?"*, and the conceptual files (`18`, `16`, the protocol docs) answer *"why does it fit together this way?"*. When two of them mention the same thing, the deeper one owns the full explanation and the others link to it.
 
 ---
 

@@ -2,14 +2,15 @@
 # define CLIENT_HPP
 
 #include <sys/socket.h>
+#include <netinet/in.h>
 #include <string>
 
 class Client {
     protected:
         std::string m_name;
         int m_sockfd;
-        sockaddr m_addr;
-        socklen_t addrlen;
+        sockaddr_in m_addr;
+        socklen_t m_addrlen;
 
     public:
         Client(void);
@@ -18,7 +19,9 @@ class Client {
         Client& operator= (const Client &other);
         ~Client();
 
-        bool	tryConnect(void) const ;
+        bool	tryConnect(void) ;
+        bool    setParameters(int domain, int s_addr, int port);
+        void	sendMessage(std::string message);
 };
 
 #endif
