@@ -61,7 +61,7 @@ The most architecturally important section:
 | Must serve a fully static website | [08_URLS](08_URLS.md) + [09_CONTENT_NEGOTIATION](09_CONTENT_NEGOTIATION.md) |
 | Clients must be able to upload files | [09_CONTENT_NEGOTIATION](09_CONTENT_NEGOTIATION.md) — multipart/form-data |
 | At minimum: `GET`, `POST`, `DELETE` methods | [03_METHODS](03_METHODS.md) |
-| Must be stress-tested for resilience | [15_TOOLS](15_TOOLS.md) — `ab` / `wrk` |
+| Must be stress-tested for resilience | [TESTS](TESTS.md) — `ab` / `siege`, availability & leak checks |
 | Must be able to listen on multiple `interface:port` pairs | configuration file |
 
 ### macOS-specific

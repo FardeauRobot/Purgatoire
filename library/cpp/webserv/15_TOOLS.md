@@ -240,6 +240,8 @@ These hammer your server. Things you want to see:
 
 Install: `brew install httpd` for `ab` (it comes with Apache); `brew install wrk` for wrk.
 
+→ **Full reference:** [`TESTS.md`](TESTS.md) — `ab` and `siege` in depth: every flag, how to read the output, the availability/leak/fd checks the eval actually runs.
+
 ---
 
 ## `valgrind` and AddressSanitizer

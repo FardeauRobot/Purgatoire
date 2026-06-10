@@ -40,6 +40,7 @@ Already building? Jump to the [**By implementation part**](#-by-implementation-p
 
 Quick reference: [`GLOSSARY.md`](GLOSSARY.md).
 **Practical tips & debug tools:** [`TIPS.md`](TIPS.md) — tools, logging habits, development order, and common traps.
+**Load & stress testing:** [`TESTS.md`](TESTS.md) — `ab` & `siege` in depth, and the availability/leak/fd checks the eval runs under load.
 **Single-page execution plan:** [`OVERVIEW.md`](OVERVIEW.md) — pin this to your wall.
 **Syscall reference:** [`functions/INDEX.md`](functions/INDEX.md) — every allowed function explained at the kernel level, with webserv-specific examples.
 
@@ -57,6 +58,7 @@ The OS layer and the non-blocking core. Everything that moves bytes before HTTP 
 - [`07_CONNECTION.md`](07_CONNECTION.md) — keep-alive, single-`poll()`, the errno-forbidden rule
 - [`functions/01_SOCKET_LIFECYCLE.md`](functions/01_SOCKET_LIFECYCLE.md) — `socket`/`bind`/`listen`/`accept`/`setsockopt`
 - [`functions/02_IO_MULTIPLEXING.md`](functions/02_IO_MULTIPLEXING.md) — `poll`/`select`/`kqueue`/`fcntl`
+- [`POLL_DEEP_DIVE.md`](../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md) — **deep dive:** the `poll()` loop line by line — kernel-side mechanics, the dynamic pollfd array + backlog, teardown *(sandbox note, companion to `functions/02`)*
 - [`functions/03_DATA_TRANSFER.md`](functions/03_DATA_TRANSFER.md) — `read`/`write`/`send`/`recv`, short reads & writes
 
 ### HTTP parsing — raw bytes → structured request, structured response → bytes

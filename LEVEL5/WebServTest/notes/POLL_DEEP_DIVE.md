@@ -63,6 +63,21 @@ This is why `poll()` doesn't burn CPU: your process is literally not running whi
 
 ---
 
+## poll() observes — it never touches your data
+
+`poll()` is **purely informational**. It reads no bytes, sends no bytes, accepts no connections, closes nothing. Every socket and pipe is in the exact same state before and after the call. It answers one question — *"which of these fds are ready?"* — and stops there.
+
+Think of it as the **lookout** on a ship. It shouts *"fd 4 has cargo waiting, fd 5 has room to load!"* — but it never touches the cargo. You're the one who then walks over and does the `recv()` / `send()` / `accept()`.
+
+The only two things poll() "changes":
+
+1. **It writes the `revents` fields.** That's its output channel — it has to put the answer somewhere, and that somewhere is `revents`. It never touches your `fd` or `events`, only `revents`. So it mutates *its own report*, not your sockets.
+2. **It consumes time.** It parks your process until something is ready (or the timeout fires). That's a side effect on your program's *flow*, not on any fd.
+
+The clean one-liner: **poll() observes the fds and reports readiness; it never performs I/O.** Every real action happens in *your* code, afterward, in response to the report.
+
+---
+
 ## struct pollfd — the form you fill out
 
 ```c
@@ -142,6 +157,63 @@ This means you don't have to drain the entire buffer in one go. `poll()` will ke
 
 ---
 
+## How many pollfds? Listen sockets, clients, and the backlog
+
+A common misconception: that you decide the array size up front. You don't. **The array is dynamic** — it starts tiny and grows and shrinks while the loop runs.
+
+Two-and-a-bit kinds of fds live in it:
+
+| Kind | How many | Added | Removed |
+|---|---|---|---|
+| **Listen sockets** | One per unique `host:port` in the config | Once, before the loop | Never (until shutdown) |
+| **Client connections** | However many are connected *right now* | After each `accept()` | When the client disconnects |
+| **CGI pipes** (later) | One or two per running CGI | When you fork | When the CGI finishes |
+
+Before the loop you create pollfds for the **listen sockets only**. Config listens on `:8080` and `:9090`? You start with **2**. Everything else gets appended on the fly.
+
+### Listen sockets: count by host:port, not by server block
+
+"How many listen sockets" = the number of **distinct `host:port` pairs**, *not* the number of `server` blocks. Two `server` blocks both listening on `:8080` (different `server_name`s — virtual hosts) **share one socket**; you tell them apart later by reading the `Host:` header. Dedupe by `host:port`, or the second `bind()` fails with `EADDRINUSE`.
+
+So the real startup order is:
+
+```
+parse .conf
+    ↓
+collect the SET of unique host:port pairs
+    ↓
+for each:  socket() → setsockopt(SO_REUSEADDR) → bind() → listen()
+    ↓
+push one pollfd (events = POLLIN) per listen socket
+    ↓
+enter the poll loop
+```
+
+### "What if a client connects mid-loop and there's no pollfd for it?"
+
+It can't lock you out, because there are **two separate queues**:
+
+- **The kernel's accept queue (the `backlog`).** That's the second argument to `listen(fd, backlog)` — a kernel-side queue of connections that finished the TCP handshake but you haven't `accept()`ed yet. A client that knocks while you're busy elsewhere **waits here**. It is not lost, and it has nothing to do with your pollfd array.
+- **Your pollfd array.** A client only enters this *after* you `accept()` it off the backlog.
+
+```
+         kernel side                        your side
+   ┌────────────────────┐            ┌────────────────────┐
+   │   backlog queue    │  accept()  │   pollfd vector    │
+   │  (sized by the     │  ───────►  │  (grows via        │
+   │   2nd arg to       │            │   push_back)       │
+   │   listen())        │            │                    │
+   └────────────────────┘            └────────────────────┘
+            ▲
+   incoming SYNs wait here     one entry per accepted client
+```
+
+So under load: clients pile into the kernel backlog → your listen socket shows `POLLIN` → you `accept()` them one at a time → each accepted one gets a fresh pollfd appended. The only thing the backlog caps is how many *un-accepted* connections can wait at once; if it overflows (you're catastrophically slow to accept), the kernel refuses *new* SYNs. Nothing about *your* array sizing causes that.
+
+**You never pre-size for clients.** The listen socket is precisely the mechanism that lets you discover and admit them, one at a time.
+
+---
+
 ## The loop — four steps
 
 ```cpp
@@ -198,7 +270,7 @@ while (g_running)
             // process buf...
         }
 
-        if (fds[i].revents & (POLLHUP | POLLERR)) {
+        if (fds[i].revents & (POLLHUP | POLLERR)) {  // POLLNVAL needs different handling — see "Tearing down a dead fd"
             close(fds[i].fd);
             fds.erase(fds.begin() + i);
             continue;
@@ -282,6 +354,33 @@ if (offset == response.size()) {
 ```
 
 `POLLOUT` is not "I want to write now." It's "tell me when writing won't block, because I have data queued."
+
+---
+
+## Tearing down a dead fd: POLLHUP, POLLERR, POLLNVAL
+
+All three mean "this fd is finished" — close it (mostly) and drop its pollfd. But two details bite people.
+
+| Flag | Meaning | `close()` it? |
+|---|---|---|
+| `POLLHUP` | Peer hung up — client disconnected, pipe's other end gone | **Yes**, then erase |
+| `POLLERR` | Error condition on the fd | **Yes**, then erase |
+| `POLLNVAL` | The fd isn't a valid open fd | **No** — see below |
+
+**The POLLNVAL exception — do not `close()` it.** It means the integer in that pollfd isn't an open fd: usually a bookkeeping bug where you closed it somewhere but forgot to erase the entry. Either it's already closed, or — worse — the kernel has recycled that number for a *different* fd, and `close()`ing it would kill an unrelated connection. For `POLLNVAL`: just erase the entry (and fix the bug that let a stale fd linger). For `POLLHUP`/`POLLERR`: `close()` first, *then* erase.
+
+**POLLHUP can arrive *with* unread data.** When a client sends a full request and immediately closes its write end, you can get `POLLHUP` **and `POLLIN` set at once** — a complete request still sitting in your read buffer. Bail on `POLLHUP` instantly and you throw away a request you could have answered. So read first, *then* honor the hangup:
+
+```cpp
+if (revents & POLLIN) {
+    // drain: recv() everything available
+}
+if (revents & (POLLERR | POLLHUP | POLLNVAL)) {
+    // now tear down: close (skip for POLLNVAL) + erase + destroy Connection
+}
+```
+
+Whatever you erase, tear down the **associated state** too — the `Connection` object, its buffers, any CGI you spawned. The pollfd is just the array entry; the connection is the object behind it.
 
 ---
 
