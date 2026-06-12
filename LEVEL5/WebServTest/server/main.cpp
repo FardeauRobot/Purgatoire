@@ -222,7 +222,6 @@ int main(void) {
 					if (n > 0) {
 						cout << "MESSAGE FROM FD" << poll_fds[i].fd << " = " << buffer << endl;
 						memset(buffer, 0, STD_BUFFER);
-
 					} else if ( n == 0) {
 						cout << "LOST THE CLIENT AT FD " << poll_fds[i].fd << endl;
 						poll_fds.erase(poll_fds.begin() + i);
