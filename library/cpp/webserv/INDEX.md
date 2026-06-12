@@ -35,6 +35,7 @@ If you've never written a server before, read these in order. Each builds on the
 | 16 | [`16_TINY_SERVER_LAB.md`](16_TINY_SERVER_LAB.md) | **Build the dumbest possible HTTP server in ~50 lines of C++**. Single connection, one request, fixed response. Demystifies the whole protocol. |
 | 17 | [`17_WEBSERV_SUBJECT.md`](17_WEBSERV_SUBJECT.md) | What the 42 webserv subject **actually demands**: nginx-style config, multiplexed I/O via `poll`/`select`/`kqueue`, CGI, error pages, the whole feature list. |
 | 18 | [`18_SOCKETS_AND_FDS.md`](18_SOCKETS_AND_FDS.md) | The OS layer beneath HTTP: file descriptors, socket lifecycle, TCP as a stream, per-client fd isolation, and the `poll()` event loop. |
+| 19 | [`19_CONFIGURATION.md`](19_CONFIGURATION.md) | A copy-able NGINX-style config: the minimal one that boots, a realistic annotated one, how a request resolves against it, and C++98 parsing notes. |
 
 Already building? Jump to the [**By implementation part**](#-by-implementation-part) view below — the same files regrouped by the module you're working on.
 
@@ -81,6 +82,7 @@ The OS layer and the non-blocking core. Everything that moves bytes before HTTP 
 - [`functions/04_ADDRESS_CONVERSION.md`](functions/04_ADDRESS_CONVERSION.md) — `getsockname`/`ntohs` for `SERVER_NAME`/`SERVER_PORT`
 
 ### Config — read & validate the `.conf`
+- [`19_CONFIGURATION.md`](19_CONFIGURATION.md) — **a working annotated config to copy from**, plus request-resolution walkthrough and C++98 parsing notes
 - [`17_WEBSERV_SUBJECT.md`](17_WEBSERV_SUBJECT.md) §Configuration — the nginx-style directives you must support
 - [`TIPS.md`](TIPS.md) §Config file — what to get right before writing the parser
 
