@@ -1,3 +1,31 @@
+## POUR LE FICHIER DE CONFIG
+
+ON PARCOURT LE FICHIER DE CONFIG LIGNE PAR LIGNE : 
+
+1 - Traiter l'aspecte général :
+CONFIG DU SERVEUR
+	socket
+	server_name
+	client max body size
+
+	error_pages
+
+LOCATIONS :
+	root
+	methods
+	index (used when the URL requested maps to a directory)
+	autoindex (generates a list of the files in the folder, with links to each one and sent as a HTTP response) 
+	upload_dir (where POSTed file bodies get written)
+	client max body size (over_ride the cap for this location) (max_body_size has to be in each sub_class)
+	cgi (use other languages)
+
+
+2 - REQUETES :
+
+3 - REPONSES
+
+
+
 Penser a partir des classes. On est plus en C. Regarde le main, trouve comment changer de vision afin de psasser de l'imperatif a l'oop. 
 Prendre en compte le fait de developper les classes avant de coder. Tu vas devoir tout changer sinon. 
 Decomposer en sous probleme, creeer des classes pour resoudre ce sous probleme et faire remonter le tout.
@@ -8,7 +36,7 @@ Commencer par le parsing du config. A partir de la, loader tous les sockets qui 
 Choix du container : Vector / Map / Queue ?
 
 Fonctions utilisees :	socket -> Créer un fd au niveau de la page des fd (géré par le kernel)
-			setsockopt -> Associe les options au socket_fd (
+			setsockopt -> Associe les options au socket_fd
 			bind
 			listen
 			accept
@@ -36,3 +64,5 @@ Initialiser la connection avec connect
 5 : Réponse du serveur qui confirme qu'il ecoute
 
 6 : Requete du client vers le serveur avec ce qu'il veut recuperer .
+
+COMPARER PAR RAPPORT AU FONCTIONNEMENT DE BASE DE NGINX SUR LES PATHS DES PAGES D'ERREUR : Données implicitement ou refus de lancer le serveur ? 

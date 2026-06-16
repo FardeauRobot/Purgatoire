@@ -5,13 +5,16 @@ CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
            -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast \
            -std=c++98 -MMD -MP \
-           -I server -I utils -I client
+           -I server  -I client -I utils
+
 LDFLAGS  =
 
 # ============== SRC-FILES ===================
 SERVER_SRC = \
     server/main.cpp \
     server/Server.cpp \
+    server/Location.cpp \
+    server/Socket.cpp \
     utils/utils.cpp
 
 CLIENT_SRC = \

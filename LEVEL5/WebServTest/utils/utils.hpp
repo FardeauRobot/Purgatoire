@@ -57,4 +57,85 @@ std::ostream& endofline(std::ostream& os);
 // Reset
 # define RESET           "\033[0m"
 
+// ====== MACROS ======
+
+#define PORT 8080
+#define BACK_LOG 128
+#define TIMEOUT 1000
+
+#define STD_BUFFER 4096
+
+// ====== ENUMS =======
+// STATUS CODES
+enum e_codes {
+
+	// SUCCESS
+	OK = 200, // The default success. `GET` worked, body contains the resource.
+	CREATED = 201, // Resource was created. Should include a `Location:` header pointing to the new resource.
+	NO_CONTENT = 204, // Success but no body. Headers still terminate with `\r\n\r\n`, but no bytes after.
+
+	// REDIRECTION
+	/*
+		Originally (HTTP/1.0), 301 and 302 were defined as preserving the method. In practice, **browsers broke that rule** for 302 (and sometimes 301): if you POST and get a 302, browsers will follow with a GET. This was nonsensical but became de-facto behaviour.
+
+		HTTP/1.1 ratified the practical reality by adding:
+		- **303** — "follow with GET, always" (codifies the broken-302 behaviour)
+		- **307** — "follow with the same method, always" (codifies the original 302 spec)
+		- **308** — "follow with the same method, always, and remember it" (permanent 307)
+
+		**Modern recommendation:**
+		- Want permanent redirect, method-preserving? → **`308`**
+		- Want temporary redirect, method-preserving? → **`307`**
+		- Want to force a GET after a POST? → **`303`**
+		- Want a permanent redirect for a GET-only resource (typical for site moves)? → **`301`** still works
+
+		For webserv's config-driven redirects, `301` and `302` are almost always sufficient. The config might look like:
+
+		```nginx-ish
+		location /old-path {
+			return 301 /new-path;
+		}	
+	*/
+	MOVED_PERMANENTLY = 301, // This URL is gone forever; use the new one from now on	
+	FOUND = 302, // This URL is temporarily elsewhere; come back here for the original
+	SEE_OTHER = 303, // Use the new URL with `GET`, regardless of original method
+	TEMPORARY_REDIRECT = 307, // Like 302 but explicitly preserves the method
+	PERMANENT_REDIRECT = 308, //Like 301 but explicitly preserves the method  
+
+	// CLIENT ERROR
+	BAD_REQUEST = 400,
+	FORBIDDEN = 403,
+	NOT_FOUND = 404,
+	METHOD_NOT_ALLOWD = 405,
+	REQUEST_TIMEOUT = 408,
+	LENGTH_REQUIRED = 411,
+	PAYLOAD_TOO_LARGE = 413,
+	URI_TOO_LONG = 414,
+	UNSUPPORTED_MEDIA_TYPE = 415,
+	REQUEST_HEADER_TOO_LARGE = 431,
+
+	// SERVER ERROR
+	INTERNAL_SERV_ERROR = 500,
+	NOT_IMPLEMENTED = 501,
+	BAD_GATEWAY = 502,
+	SERVICE_UNAVAILABLE = 503,
+	GATEWAY_TIMEOUT = 504,
+	VERSION_NOT_SUPPORTED = 505
+} ;
+
+// METHODS
+enum e_methods {
+	GET,
+	HEAD,
+	POST,
+	PUT,
+	DELETE,
+	PATCH,
+	OPTIONS,
+	CONNECT,
+	TRACE
+};
+
+
+
 #endif

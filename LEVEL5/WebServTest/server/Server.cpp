@@ -1,6 +1,7 @@
 #include "Server.hpp"
 #include "utils.hpp"
 #include <iostream>
+#include <cstring>
 
 Server::Server(void) {
 	std::cout << BOLD_CYAN << "Server Default constructor called" << RESET << std::endl;
