@@ -26,11 +26,11 @@ The HTTP spec lists ~60 codes. Webserv needs maybe 15. Here's the shortlist:
 
 ### 2xx — success
 
-| Code | Reason | When |
-|---|---|---|
-| **`200 OK`** | The default success. `GET` worked, body contains the resource. | Most successful responses. |
-| **`201 Created`** | Resource was created. Should include a `Location:` header pointing to the new resource. | After a successful `POST` that creates something. |
-| **`204 No Content`** | Success but no body. Headers still terminate with `\r\n\r\n`, but no bytes after. | `DELETE` that succeeded; `PUT` that updated. |
+| Code                 | Reason                                                                                  | When                                              |
+| -------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| **`200 OK`**         | The default success. `GET` worked, body contains the resource.                          | Most successful responses.                        |
+| **`201 Created`**    | Resource was created. Should include a `Location:` header pointing to the new resource. | After a successful `POST` that creates something. |
+| **`204 No Content`** | Success but no body. Headers still terminate with `\r\n\r\n`, but no bytes after.       | `DELETE` that succeeded; `PUT` that updated.      |
 
 ### 3xx — redirection
 

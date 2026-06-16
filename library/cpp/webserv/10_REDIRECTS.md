@@ -27,13 +27,13 @@ The `Location:` URL can be **absolute** (`https://example.com/new`) or **relativ
 
 ## The five codes
 
-| Code | Meaning | Permanent? | Method-preserving? | When to use |
-|---|---|---|---|---|
-| **`301 Moved Permanently`** | This URL is gone forever; use the new one from now on | Yes | ⚠️ kinda (see below) | Site reorgs, switching to a canonical URL |
-| **`302 Found`** | This URL is temporarily elsewhere; come back here for the original | No | ⚠️ kinda | Generic temporary redirect; historical default |
-| **`303 See Other`** | Use the new URL with `GET`, regardless of original method | No | No, **forces GET** | Post-Redirect-Get pattern after a form submission |
-| **`307 Temporary Redirect`** | Like 302 but explicitly preserves the method | No | Yes | Modern replacement for 302 |
-| **`308 Permanent Redirect`** | Like 301 but explicitly preserves the method | Yes | Yes | Modern replacement for 301 |
+| Code                         | Meaning                                                            | Permanent? | Method-preserving?   | When to use                                       |
+| ---------------------------- | ------------------------------------------------------------------ | ---------- | -------------------- | ------------------------------------------------- |
+| **`301 Moved Permanently`**  | This URL is gone forever; use the new one from now on	             | Yes        | ⚠️ kinda (see below) | Site reorgs, switching to a canonical URL         |
+| **`302 Found`**              | This URL is temporarily elsewhere; come back here for the original | No         | ⚠️ kinda             | Generic temporary redirect; historical default    |
+| **`303 See Other`**          | Use the new URL with `GET`, regardless of original method          | No         | No, **forces GET**   | Post-Redirect-Get pattern after a form submission |
+| **`307 Temporary Redirect`** | Like 302 but explicitly preserves the method                       | No         | Yes                  | Modern replacement for 302                        |
+| **`308 Permanent Redirect`** | Like 301 but explicitly preserves the method                       | Yes        | Yes                  | Modern replacement for 301                        |
 
 ### The "method-preserving" gotcha
 

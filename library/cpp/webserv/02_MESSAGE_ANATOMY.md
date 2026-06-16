@@ -104,10 +104,10 @@ Example:
 HTTP/1.1 404 Not Found\r\n
 ```
 
-| Field | Notes |
-|---|---|
-| `HTTP-version` | Same as request — `HTTP/1.1` is what you should send. |
-| `status-code` | 3-digit number. See [file 04](04_STATUS_CODES.md). |
+| Field           | Notes                                                                                                                                                                                          |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `HTTP-version`  | Same as request — `HTTP/1.1` is what you should send.                                                                                                                                          |
+| `status-code`   | 3-digit number. See [file 04](04_STATUS_CODES.md).                                                                                                                                             |
 | `reason-phrase` | Human-readable text. Clients should ignore the exact wording, but include a sensible one. The standard reasons (`OK`, `Not Found`, `Internal Server Error`, …) are conventional, not enforced. |
 
 ### Headers, blank line, body

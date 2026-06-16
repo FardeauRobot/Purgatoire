@@ -36,6 +36,7 @@ If you've never written a server before, read these in order. Each builds on the
 | 17 | [`17_WEBSERV_SUBJECT.md`](17_WEBSERV_SUBJECT.md) | What the 42 webserv subject **actually demands**: nginx-style config, multiplexed I/O via `poll`/`select`/`kqueue`, CGI, error pages, the whole feature list. |
 | 18 | [`18_SOCKETS_AND_FDS.md`](18_SOCKETS_AND_FDS.md) | The OS layer beneath HTTP: file descriptors, socket lifecycle, TCP as a stream, per-client fd isolation, and the `poll()` event loop. |
 | 19 | [`19_CONFIGURATION.md`](19_CONFIGURATION.md) | A copy-able NGINX-style config: the minimal one that boots, a realistic annotated one, how a request resolves against it, and C++98 parsing notes. |
+| 20 | [`20_HTTP.md`](20_HTTP.md) | **The HTTP hub.** One-screen overview + map to `01`–`12`, the cross-cutting design notes (stateless vs open connection; parse→dispatch→respond), and version handling (1.0 vs 1.1: the enum + three behaviour forks). |
 
 Already building? Jump to the [**By implementation part**](#-by-implementation-part) view below — the same files regrouped by the module you're working on.
 
@@ -66,6 +67,7 @@ The OS layer and the non-blocking core. Everything that moves bytes before HTTP 
 - [`02_MESSAGE_ANATOMY.md`](02_MESSAGE_ANATOMY.md) — the four parts of every message
 - [`05_HEADERS.md`](05_HEADERS.md) — the headers that matter, by family
 - [`06_FRAMING.md`](06_FRAMING.md) — **where a body ends:** `Content-Length` vs chunked *(the hardest part)*
+- [`20_HTTP.md`](20_HTTP.md) §4 — handling 1.0 vs 1.1: the version enum and its three behaviour forks
 - [`03_METHODS.md`](03_METHODS.md) — GET/POST/DELETE semantics, safety, idempotency
 - [`04_STATUS_CODES.md`](04_STATUS_CODES.md) — picking the right code
 
