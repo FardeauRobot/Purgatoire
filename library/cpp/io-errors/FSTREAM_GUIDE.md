@@ -42,14 +42,14 @@ The same pattern exists for `ofstream` and `fstream` (with their own default mod
 
 ## Open Modes (`std::ios_base::openmode`)
 
-| Flag          | Meaning                                                      |
-|---------------|--------------------------------------------------------------|
-| `ios::in`     | Open for reading                                             |
-| `ios::out`    | Open for writing                                             |
-| `ios::app`    | Append — all writes go to end of file                        |
-| `ios::ate`    | Seek to end of file immediately after opening                |
-| `ios::trunc`  | Discard file contents if it exists                           |
-| `ios::binary` | Open in binary mode (no text translation)                    |
+| Flag          | Meaning                                       |
+| ------------- | --------------------------------------------- |
+| `ios::in`     | Open for reading                              |
+| `ios::out`    | Open for writing                              |
+| `ios::app`    | Append — all writes go to end of file         |
+| `ios::ate`    | Seek to end of file immediately after opening |
+| `ios::trunc`  | Discard file contents if it exists            |
+| `ios::binary` | Open in binary mode (no text translation)     |
 
 Combine with bitwise OR: `std::ios::in | std::ios::binary`
 

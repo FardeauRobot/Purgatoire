@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\": {\"hookEventName\": \"UserPromptSubmit\", \"additionalContext\": \"Memory: check MEMORY.md for relevant context before responding. At end of turn, save any new learnings, preferences, or project state changes to memory files.\"}}'",
+            "statusMessage": "Loading memory..."
+          }
+        ]
+      }
+    ]
+  }
+}

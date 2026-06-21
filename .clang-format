@@ -1,0 +1,7 @@
+# Matches the editor setting: real tabs, 4 columns wide.
+# clangd searches upward from each file, so this covers the whole repo.
+BasedOnStyle: LLVM
+UseTab: ForIndentation
+IndentWidth: 4
+TabWidth: 4
+ColumnLimit: 0

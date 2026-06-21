@@ -1,7 +1,9 @@
 NAME     = EXEC_NAME
 
 CXX      = c++
-CXXFLAGS = -Wall -Wextra -Werror -Wswitch -std=c++98 -MMD -MP
+CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
+           -Wpedantic -Wshadow -Wnon-virtual-dtor -Wold-style-cast \
+           -std=c++98 -MMD -MP
 LDFLAGS  =
 INCLUDES = -I include
 
@@ -79,6 +81,28 @@ leaks: debug
 		         --track-origins=yes --error-exitcode=1 ./$(NAME); \
 	fi
 
+# ============== WATCH MODE ====================
+# `make watch` -> rebuild automatically on every source change.
+# Requires fswatch:   macOS: brew install fswatch   Linux: apt-get install fswatch
+WATCH_PATHS = $(SRCDIR) include
+
+watch:
+	@command -v fswatch >/dev/null 2>&1 || { \
+		echo "fswatch not found — install with: brew install fswatch"; \
+		exit 1; \
+	}
+	@if $(MAKE) --no-print-directory all; then \
+		echo "── run ──"; ./$(NAME); \
+	fi
+	@echo "👀 watching $(WATCH_PATHS) — Ctrl-C to stop"
+	@fswatch -o $(WATCH_PATHS) | while read -r _; do \
+		clear; \
+		printf '↻ %s — rebuilding\n' "$$(date +%H:%M:%S)"; \
+		if $(MAKE) --no-print-directory all; then \
+			echo "── run ──"; ./$(NAME); \
+		fi; \
+	done
+
 help:
 	@echo "Targets:"
 	@echo "  make            build $(NAME)"
@@ -89,5 +113,6 @@ help:
 	@echo "  make debug      rebuild with -g3 -O0"
 	@echo "  make asan       rebuild with AddressSanitizer + UBSan"
 	@echo "  make leaks      rebuild with -g, run leaks (mac) / valgrind (linux)"
+	@echo "  make watch      auto-rebuild on source change (needs fswatch)"
 
-.PHONY: all clean fclean re test debug asan leaks help
+.PHONY: all clean fclean re test debug asan leaks watch help

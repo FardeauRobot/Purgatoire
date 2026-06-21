@@ -43,7 +43,7 @@ it->second = 99;        // OK
 std::map<std::string, int> a;                              // empty
 
 // From a range of pairs (one allocation per element)
-std::pair<std::string, int> seed[] = {
+std::pair<%% std %%::string, int> seed[] = {
     std::make_pair("apple", 3),
     std::make_pair("banana", 7)
 };

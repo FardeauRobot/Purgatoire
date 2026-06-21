@@ -109,9 +109,10 @@ std::ostream& operator<<(std::ostream& os, Fixed const& f) {
 
 ### Tips
 - **Order-of-operations trap on the float ctor.** Apply `roundf`
-  *before* casting to `int`, not after. `static_cast<int>(roundf(f
-  * 256))` is right. `roundf(static_cast<int>(f * 256))` rounds
-  the already-truncated value — a no-op.
+  *before* casting to `int`, not after. The right form is
+  `static_cast<int>(roundf(f * 256))`. Writing
+  `roundf(static_cast<int>(f * 256))` rounds the already-truncated
+  value — a no-op.
 - **`std::cout` prints floats to 6 significant digits by default.**
   `Fixed(3.14f)` stored as raw `804` prints as `3.14062` — that's
   Q8 resolution, not a bug.

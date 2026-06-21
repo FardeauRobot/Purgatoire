@@ -66,7 +66,7 @@ Compound:     +=  -=  *=  /=  %=  &=  |=  ^=  <<= >>=
 Increment:    ++  --
 Subscript:    []
 Call:         ()
-Member:       ->  ->*
+	Member:       ->  ->*
 Assignment:   =
 Address:      &                (rarely a good idea to touch)
 Stream:       <<  >>           (shift, reused for I/O)
@@ -135,7 +135,7 @@ A non-member `operator+` can't see private fields directly. Two fixes:
 Memorize these once; you'll write them a hundred times.
 
 ```cpp
-// Binary arithmetic — returns new value, both sides const
+// Binary arithmetic — returns new valual e, both sides const
 T   operator+(const T& lhs, const T& rhs);
 
 // Compound assignment — modifies *this, returns *this by reference

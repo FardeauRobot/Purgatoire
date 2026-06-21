@@ -1,23 +1,34 @@
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
+#include <iostream>
 
 int main(void) {
-    ClapTrap a("La Vie");
-    ScavTrap test1("Le Futur");
-    FragTrap coucou1("Le Passé");
+    std::cout << "\n=== FragTrap construction + OCF ===" << std::endl;
+    FragTrap f("Fragger");
+    FragTrap copy(f);
+    FragTrap assign("Temp");
+    assign = f;
 
-    coucou1.highFivesGuys();
+    std::cout << "\n=== FragTrap normal actions (hp=100 energy=100 atk=30) ===" << std::endl;
+    f.highFivesGuys();      // FragTrap-specific
+    f.attack("Target");     // energy: 100 -> 99  (BLUE: FragTrap::attack)
+    f.takeDamage(50);       // hp: 100 -> 50      (GREEN: ClapTrap::takeDamage, not overridden)
+    f.beRepaired(20);       // hp: 50 -> 70       (GREEN: ClapTrap::beRepaired, not overridden)
 
-    // for (int i = 0; i < 11; i++)
-    // {
-    //     test2.guardGate();
-    //     test2.beRepaired(1000);
-    //     test2.takeDamage(1000);
-    //     test2.attack("Fardeau");
-    //     a.takeDamage(1000);
-    //     b.attack("Fardeau");
-    //     e.beRepaired(8000);
-    // }
+    std::cout << "\n=== HP = 0: attack blocked, takeDamage shows 'already dead' ===" << std::endl;
+    FragTrap dead("Doomed");
+    dead.takeDamage(100);
+    dead.attack("Target");
+    dead.beRepaired(50);    // ClapTrap::beRepaired checks hp too: blocked
+    dead.takeDamage(1);
+
+    std::cout << "\n=== Energy = 0: attack and repair blocked (ClapTrap, 10 energy) ===" << std::endl;
+    ClapTrap c("Clappy");
+    for (int i = 0; i < 10; i++)
+        c.attack("Target");
+    c.attack("Target");
+    c.beRepaired(10);
+
     return 0;
 }

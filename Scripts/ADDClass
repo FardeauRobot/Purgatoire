@@ -47,10 +47,9 @@ cat > "$HPP_PATH" <<EOF
 
 class ${CLASS} {
     private:
-        std::string m_name;
+        std::string _name;
 
     public:
-        ${CLASS}(void);
         ${CLASS}(std::string name);
         ${CLASS}(const ${CLASS} &src);
         ${CLASS}& operator= (const ${CLASS} &other);
@@ -63,29 +62,26 @@ EOF
 cat > "$CPP_PATH" <<EOF
 #include <iostream>
 #include "${CLASS}.hpp"
+#include "utils.hpp"
 
-${CLASS}::${CLASS}(void) {
-    std::cout << "Default constructor called" << std::endl;
-}
-
-${CLASS}::${CLASS}(std::string name): m_name(name) {
-    std::cout << "Name constructor called" << std::endl;
+${CLASS}::${CLASS}(std::string name): _name(name) {
+    std::cout << BOLD_CYAN << "${CLASS} Name constructor called" << endofline;
 }
 
 ${CLASS}::${CLASS}(const ${CLASS} &src) {
-    std::cout << "Copy constructor called" << std::endl;
+    std::cout << BOLD_BLUE << "${CLASS} Copy constructor called" << endofline;
     *this = src;
 }
 
 ${CLASS}& ${CLASS}::operator= (const ${CLASS} &other) {
-    std::cout << "Copy assignment operator called" << std::endl;
+    std::cout << BOLD_BLUE << "${CLASS} Copy assignment operator called" << endofline;
     if (this != &other)
-        m_name = other.m_name;
+        _name = other._name;
     return (*this);
 }
 
 ${CLASS}::~${CLASS}() {
-    std::cout << "Destructor called" << std::endl;
+    std::cout << BOLD_RED << "${CLASS} Destructor called" << endofline;
 }
 EOF
 

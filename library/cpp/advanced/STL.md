@@ -335,6 +335,8 @@ Algorithms specify which category they need. `std::sort` needs random-access; th
 
 `#include <algorithm>` and `#include <numeric>`. The algorithms take iterator ranges `[first, last)` — `last` is one past the end, same as `end()`.
 
+> **Need the complete list?** This is the shortlist. The **exhaustive** C++98 catalogue — every `<algorithm>` grouped by job, plus `<numeric>`, `<functional>`, and a cross-container member-function matrix — is in [`ALGORITHMS.md`](ALGORITHMS.md).
+
 ### The ones you'll actually use
 
 | Algorithm | What it does |
