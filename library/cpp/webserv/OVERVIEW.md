@@ -69,22 +69,22 @@ You're roughly writing these classes. Names are suggestive; pick your own.
 
 **Linear, not parallel.** Each step should be a single commit-sized chunk. Resist the temptation to interleave.
 
-| # | Step | Files to read first | Done when |
-|---|---|---|---|
-| 1 | **Tiny server** (~70 lines, blocking, single client) | [16](16_TINY_SERVER_LAB.md) | `curl http://localhost:8080/` returns a fixed HTML response |
-| 2 | **Convert to `poll()`** — one client still, but driven by poll | [07](07_CONNECTION.md) | Same result as step 1, but `poll()` mediates every read/write |
-| 3 | **Multiple concurrent clients** — add per-client `Connection` state | [02](02_MESSAGE_ANATOMY.md), [07](07_CONNECTION.md) | Two `curl`s in parallel get served independently |
-| 4 | **Request parser** — turn raw bytes into structured `Request` | [02](02_MESSAGE_ANATOMY.md), [05](05_HEADERS.md), [06](06_FRAMING.md) | `Request{method, target, headers, body}` for both simple and `Content-Length` requests |
-| 5 | **Config parser** — read & validate `webserv.conf` | [17](17_WEBSERV_SUBJECT.md) §Configuration | `./webserv config.conf` starts; bad config rejected cleanly |
-| 6 | **Multi-port listening** — bind to every `listen` directive in the config | [17](17_WEBSERV_SUBJECT.md) | Different ports serve different content |
-| 7 | **Static file serving** — match route, resolve path, send file with right MIME | [04](04_STATUS_CODES.md), [08](08_URLS.md), [09](09_CONTENT_NEGOTIATION.md) | Browser loads a multi-file static site (HTML, CSS, JS, images) |
-| 8 | **Default + configured error pages** — 404, 403, 405, 500 with bodies | [04](04_STATUS_CODES.md) | All error paths return a body; config can override per-code |
-| 9 | **POST + multipart uploads** — write client files into the configured upload dir | [03](03_METHODS.md), [09](09_CONTENT_NEGOTIATION.md) | Browser form with `<input type="file">` uploads successfully |
-| 10 | **DELETE** — `unlink(2)` files under permitted routes | [03](03_METHODS.md) | `curl -X DELETE` removes the file; 204 / 404 / 403 as appropriate |
-| 11 | **Redirects** — per-route `return 301/302 <url>` | [10](10_REDIRECTS.md) | `curl -L` follows the chain to the destination |
-| 12 | **Chunked request bodies** — decode `Transfer-Encoding: chunked` | [06](06_FRAMING.md) | A `curl --data-binary @file -H "Transfer-Encoding: chunked"` upload works |
-| 13 | **CGI** — fork + exec + pipes + env + un-chunk | [14](14_CGI.md) | A `.py` or `.php` script runs; GET query string + POST body both reach it; output flows back |
-| 14 | **Keep-alive + idle timeout + stress test** | [07](07_CONNECTION.md), [15](15_TOOLS.md) | `wrk -t4 -c100 -d30s` doesn't crash, leak, or hang; idle sockets close after N seconds |
+| #   | Step                                                                             | Files to read first                                                         | Done when                                                                                    |
+| --- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 1   | **Tiny server** (~70 lines, blocking, single client)                             | [16](16_TINY_SERVER_LAB.md)                                                 | `curl http://localhost:8080/` returns a fixed HTML response                                  |
+| 2   | **Convert to `poll()`** — one client still, but driven by poll                   | [07](07_CONNECTION.md)                                                      | Same result as step 1, but `poll()` mediates every read/write                                |
+| 3   | **Multiple concurrent clients** — add per-client `Connection` state              | [02](02_MESSAGE_ANATOMY.md), [07](07_CONNECTION.md)                         | Two `curl`s in parallel get served independently                                             |
+| 4   | **Request parser** — turn raw bytes into structured `Request`                    | [02](02_MESSAGE_ANATOMY.md), [05](05_HEADERS.md), [06](06_FRAMING.md)       | `Request{method, target, headers, body}` for both simple and `Content-Length` requests       |
+| 5   | **Config parser** — read & validate `webserv.conf`                               | [17](17_WEBSERV_SUBJECT.md) §Configuration                                  | `./webserv config.conf` starts; bad config rejected cleanly                                  |
+| 6   | **Multi-port listening** — bind to every `listen` directive in the config        | [17](17_WEBSERV_SUBJECT.md)                                                 | Different ports serve different content                                                      |
+| 7   | **Static file serving** — match route, resolve path, send file with right MIME   | [04](04_STATUS_CODES.md), [08](08_URLS.md), [09](09_CONTENT_NEGOTIATION.md) | Browser loads a multi-file static site (HTML, CSS, JS, images)                               |
+| 8   | **Default + configured error pages** — 404, 403, 405, 500 with bodies            | [04](04_STATUS_CODES.md)                                                    | All error paths return a body; config can override per-code                                  |
+| 9   | **POST + multipart uploads** — write client files into the configured upload dir | [03](03_METHODS.md), [09](09_CONTENT_NEGOTIATION.md)                        | Browser form with `<input type="file">` uploads successfully                                 |
+| 10  | **DELETE** — `unlink(2)` files under permitted routes                            | [03](03_METHODS.md)                                                         | `curl -X DELETE` removes the file; 204 / 404 / 403 as appropriate                            |
+| 11  | **Redirects** — per-route `return 301/302 <url>`                                 | [10](10_REDIRECTS.md)                                                       | `curl -L` follows the chain to the destination                                               |
+| 12  | **Chunked request bodies** — decode `Transfer-Encoding: chunked`                 | [06](06_FRAMING.md)                                                         | A `curl --data-binary @file -H "Transfer-Encoding: chunked"` upload works                    |
+| 13  | **CGI** — fork + exec + pipes + env + un-chunk                                   | [14](14_CGI.md)                                                             | A `.py` or `.php` script runs; GET query string + POST body both reach it; output flows back |
+| 14  | **Keep-alive + idle timeout + stress test**                                      | [07](07_CONNECTION.md), [15](15_TOOLS.md)                                   | `wrk -t4 -c100 -d30s` doesn't crash, leak, or hang; idle sockets close after N seconds       |
 
 **Bonus (only after 1–14 are watertight):**
 - 15. Cookies + simple session example → [12](12_COOKIES_SESSIONS.md)

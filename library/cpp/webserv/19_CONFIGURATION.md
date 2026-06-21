@@ -42,7 +42,7 @@ server {
     # --- Top-level: bind targets ---
     listen 0.0.0.0:8080;          # one server block can listen on
     listen 127.0.0.1:8081;        # several interface:port pairs
-    server_name example.com;      # optional: only matters if you do virtual hosts
+    server_name example.com;      # optional: only matters if you do virtual hosts3
 
     # --- Top-level: limits & error pages (apply to every location) ---
     client_max_body_size 10M;     # reject bodies bigger than this -> 413

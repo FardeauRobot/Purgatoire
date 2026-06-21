@@ -1,4 +1,4 @@
-# `std::set` — Sorted Unique Keys
+q# `std::set` — Sorted Unique Keys
 
 > **TL;DR.** `std::set<T>` is a **sorted, key-only** associative container. Implementation: a **red-black tree**. Every operation (insert, erase, find) is O(log n). Iterators are **bidirectional, stable, and walk the tree in sorted order**. Keys are *immutable* through iterators — modifying a key in place would break the sort invariant. For small N or write-once-read-many workloads, a sorted `vector` + `lower_bound` often beats `set`.
 

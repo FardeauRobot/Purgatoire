@@ -7,7 +7,6 @@ CONFIG DU SERVEUR
 	socket
 	server_name
 	client max body size
-
 	error_pages
 
 LOCATIONS :
@@ -19,11 +18,15 @@ LOCATIONS :
 	client max body size (over_ride the cap for this location) (max_body_size has to be in each sub_class)
 	cgi (use other languages)
 
+GERER PAR ACTION :
 
-2 - REQUETES :
+	HEADERS : 
+		General : Date (Date: Sun, 30 May 2026 14:23:11 GMT || %a, %d %b %Y %H:%M:%S GMT ), Connection (close / keep-alive)
+		On request : Host (if virrtual host), User ()
 
-3 - REPONSES
+	BODIES : 
 
+	
 
 
 Penser a partir des classes. On est plus en C. Regarde le main, trouve comment changer de vision afin de psasser de l'imperatif a l'oop. 

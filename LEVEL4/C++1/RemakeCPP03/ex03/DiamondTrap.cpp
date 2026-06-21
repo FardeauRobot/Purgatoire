@@ -5,7 +5,7 @@
 #include "utils.hpp"
 
 DiamondTrap::DiamondTrap(void): ClapTrap("_clap_name") {
-	std::cout << MAGENTA << "DiamondTrap Default constructor called" << RESET << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Default constructor called" << endofline;
 	m_name = "";
 	m_hp = FragTrap::m_hp;
 	m_energy = 50;
@@ -13,7 +13,7 @@ DiamondTrap::DiamondTrap(void): ClapTrap("_clap_name") {
 }
 
 DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name") {
-	std::cout << MAGENTA << "DiamondTrap Name constructor called" << RESET << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Name constructor called" << endofline;
 	m_name = name;
 	m_hp = FragTrap::m_hp;
 	m_energy = 50;
@@ -21,12 +21,12 @@ DiamondTrap::DiamondTrap(std::string name): ClapTrap(name + "_clap_name") {
 }
 
 DiamondTrap::DiamondTrap(const DiamondTrap &src) : ClapTrap(src), ScavTrap(src), FragTrap(src) {
-	std::cout << MAGENTA << "DiamondTrap Copy constructor called" << RESET << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Copy constructor called" << endofline;
 	*this = src;
 }
 
 DiamondTrap& DiamondTrap::operator= (const DiamondTrap &other) {
-	std::cout << MAGENTA << "DiamondTrap Copy assignment operator called" << RESET << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Copy assignment operator called" << endofline;
 	if (this != &other)
 	{
 		ClapTrap::operator=(other);
@@ -39,7 +39,7 @@ DiamondTrap& DiamondTrap::operator= (const DiamondTrap &other) {
 }
 
 DiamondTrap::~DiamondTrap() {
-	std::cout << MAGENTA << "DiamondTrap Destructor called" << RESET << std::endl;
+	std::cout << MAGENTA << "DiamondTrap Destructor called" << endofline;
 }
 
 void	DiamondTrap::attack(const std::string &target) {
@@ -47,7 +47,7 @@ void	DiamondTrap::attack(const std::string &target) {
 }
 
 void	DiamondTrap::whoAmI() {
-	std::cout	<< BOLD_YELLOW << "This diamond trap comes from " << ClapTrap::m_name <<
+	std::cout << MAGENTA << "This diamond trap comes from " << ClapTrap::m_name <<
 				" and is named " << m_name << endofline;
 }
 

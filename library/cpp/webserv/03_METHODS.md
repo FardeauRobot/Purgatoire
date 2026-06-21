@@ -8,17 +8,17 @@ The first token of every request line. HTTP defines a handful of methods; webser
 
 ## The methods at a glance
 
-| Method | Meaning | Safe | Idempotent | Cacheable | Webserv |
-|---|---|---|---|---|---|
-| `GET` | Fetch a representation of a resource | ✅ | ✅ | ✅ | **mandatory** |
-| `HEAD` | Like `GET` but no body in response | ✅ | ✅ | ✅ | optional, easy |
-| `POST` | Submit data — server decides what to do with it | ❌ | ❌ | ⚠️ rare | **mandatory** |
-| `PUT` | Replace the resource at a given URL | ❌ | ✅ | ❌ | not required |
-| `DELETE` | Remove the resource at a given URL | ❌ | ✅ | ❌ | **mandatory** |
-| `PATCH` | Partial modification | ❌ | ❌ | ❌ | not required |
-| `OPTIONS` | Ask what methods are allowed | ✅ | ✅ | ❌ | not required |
-| `CONNECT` | Tunnel TCP through a proxy | ❌ | ❌ | ❌ | ignore |
-| `TRACE` | Echo the request back | ✅ | ✅ | ❌ | ignore |
+| Method    | Meaning                                         | Safe | Idempotent | Cacheable | Webserv        |
+| --------- | ----------------------------------------------- | ---- | ---------- | --------- | -------------- |
+| `GET`     | Fetch a representation of a resource            | ✅    | ✅          | ✅         | **mandatory**  |
+| `HEAD`    | Like `GET` but no body in response              | ✅    | ✅          | ✅         | optional, easy |
+| `POST`    | Submit data — server decides what to do with it | ❌    | ❌          | ⚠️ rare   | **mandatory**  |
+| `PUT`     | Replace the resource at a given URL             | ❌    | ✅          | ❌         | not required   |
+| `DELETE`  | Remove the resource at a given URL              | ❌    | ✅          | ❌         | **mandatory**  |
+| `PATCH`   | Partial modification                            | ❌    | ❌          | ❌         | not required   |
+| `OPTIONS` | Ask what methods are allowed                    | ✅    | ✅          | ❌         | not required   |
+| `CONNECT` | Tunnel TCP through a proxy                      | ❌    | ❌          | ❌         | ignore         |
+| `TRACE`   | Echo the request back                           | ✅    | ✅          | ❌         | ignore         |
 
 Three vocabulary words you need to understand the table:
 

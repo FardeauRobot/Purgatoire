@@ -126,12 +126,12 @@ After erasing, adjust your loop index — the element at position `i` is now the
 
 ## `poll()` vs `select()` vs `epoll()`
 
-| | `poll()` | `select()` | `epoll()` |
-|---|---|---|---|
-| fd limit | unlimited | 1024 (FD_SETSIZE) | unlimited |
-| API | array of structs | three fd_sets | separate create/ctl/wait |
-| performance | O(n) scan | O(n) scan | O(1) per event |
-| portability | POSIX | POSIX | Linux only |
+|             | `poll()`         | `select()`        | `epoll()`                |
+| ----------- | ---------------- | ----------------- | ------------------------ |
+| fd limit    | unlimited        | 1024 (FD_SETSIZE) | unlimited                |
+| API         | array of structs | three fd_sets     | separate create/ctl/wait |
+| performance | O(n) scan        | O(n) scan         | O(1) per event           |
+| portability | POSIX            | POSIX             | Linux only               |
 
 For the 42 webserv project, `poll()` is the right choice — portable, no fd limit, straightforward. `epoll()` is only worth it at thousands of simultaneous connections.
 

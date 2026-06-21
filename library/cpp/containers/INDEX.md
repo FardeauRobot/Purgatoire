@@ -10,11 +10,11 @@ Deep-dive notes for every C++98 STL container. Use this as the entry point; for 
 
 ### Sequence containers — *position-indexed storage*
 
-| Container | File | One-line | Default? |
-|---|---|---|---|
-| `std::vector<T>` | [`VECTOR.md`](VECTOR.md) | Dynamic contiguous array. The default. `realloc`-style growth, O(1) random access. | ✅ |
-| `std::list<T>` | [`LIST.md`](LIST.md) | Doubly-linked list of heap nodes. O(1) splice, stable iterators, no random access. | |
-| `std::deque<T>` | [`DEQUE.md`](DEQUE.md) | Block-list — O(1) at both ends *and* random access. References stable across push. | |
+| Container        | File                     | One-line                                                                           | Default? |
+| ---------------- | ------------------------ | ---------------------------------------------------------------------------------- | -------- |
+| `std::vector<T>` | [`VECTOR.md`](VECTOR.md) | Dynamic contiguous array. The default. `realloc`-style growth, O(1) random access. | ✅        |
+| `std::list<T>`   | [`LIST.md`](LIST.md)     | Doubly-linked list of heap nodes. O(1) splice, stable iterators, no random access. |          |
+| `std::deque<T>`  | [`DEQUE.md`](DEQUE.md)   | Block-list — O(1) at both ends *and* random access. References stable across push. |          |
 
 `std::string` (technically a sequence container) lives at [`../io-errors/STRING_FUNCTIONS.md`](../io-errors/STRING_FUNCTIONS.md).
 

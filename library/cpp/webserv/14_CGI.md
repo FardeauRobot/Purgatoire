@@ -46,33 +46,33 @@ When you `execve` the CGI program, you set environment variables. The CGI spec d
 
 ### Request meta
 
-| Variable | Value |
-|---|---|
-| `REQUEST_METHOD` | `GET`, `POST`, `DELETE`, etc. |
-| `SERVER_PROTOCOL` | `HTTP/1.1` |
-| `SERVER_NAME` | The hostname (from `Host:` header or config) |
-| `SERVER_PORT` | The port the request came in on |
-| `GATEWAY_INTERFACE` | `CGI/1.1` |
-| `SERVER_SOFTWARE` | Your server's identifier (`webserv/1.0`) |
-| `REMOTE_ADDR` | Client IP (from `accept()`'s `sockaddr`) |
-| `REMOTE_PORT` | Client port (same) |
+| Variable            | Value                                        |
+| ------------------- | -------------------------------------------- |
+| `REQUEST_METHOD`    | `GET`, `POST`, `DELETE`, etc.                |
+| `SERVER_PROTOCOL`   | `HTTP/1.1`                                   |
+| `SERVER_NAME`       | The hostname (from `Host:` header or config) |
+| `SERVER_PORT`       | The port the request came in on              |
+| `GATEWAY_INTERFACE` | `CGI/1.1`                                    |
+| `SERVER_SOFTWARE`   | Your server's identifier (`webserv/1.0`)     |
+| `REMOTE_ADDR`       | Client IP (from `accept()`'s `sockaddr`)     |
+| `REMOTE_PORT`       | Client port (same)                           |
 
 ### URL parsing
 
-| Variable | Value |
-|---|---|
-| `SCRIPT_NAME` | The portion of the URL path that maps to the CGI script (e.g. `/scripts/hello.php`) |
+| Variable          | Value                                                                                        |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| `SCRIPT_NAME`     | The portion of the URL path that maps to the CGI script (e.g. `/scripts/hello.php`)          |
 | `SCRIPT_FILENAME` | The full filesystem path to the script (e.g. `/var/www/scripts/hello.php`) — used by php-cgi |
-| `PATH_INFO` | Extra path after the script name (e.g. for `/hello.php/foo/bar`, `PATH_INFO=/foo/bar`) |
-| `PATH_TRANSLATED` | `PATH_INFO` joined with the document root |
-| `QUERY_STRING` | Everything after `?` in the URL, **un-decoded** (the CGI does its own decoding) |
+| `PATH_INFO`       | Extra path after the script name (e.g. for `/hello.php/foo/bar`, `PATH_INFO=/foo/bar`)       |
+| `PATH_TRANSLATED` | `PATH_INFO` joined with the document root                                                    |
+| `QUERY_STRING`    | Everything after `?` in the URL, **un-decoded** (the CGI does its own decoding)              |
 
 ### Body
 
-| Variable | Value |
-|---|---|
-| `CONTENT_LENGTH` | Decimal string of body byte count (only for POST/PUT) |
-| `CONTENT_TYPE` | Body's MIME type from the request's `Content-Type` header |
+| Variable         | Value                                                     |
+| ---------------- | --------------------------------------------------------- |
+| `CONTENT_LENGTH` | Decimal string of body byte count (only for POST/PUT)     |
+| `CONTENT_TYPE`   | Body's MIME type from the request's `Content-Type` header |
 
 ### Echoed headers
 
@@ -137,11 +137,11 @@ Your server must:
 
 ### Special CGI-only headers
 
-| Header | Server behaviour |
-|---|---|
-| `Status: <code> <reason>` | Use this in your response's start line; do not pass as a header. |
+| Header                                         | Server behaviour                                                                                                                |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `Status: <code> <reason>`                      | Use this in your response's start line; do not pass as a header.                                                                |
 | `Location: <url>` (relative starting with `/`) | The server should redirect internally — fetch the new URL and serve that. **Or** treat as an external redirect (302) — simpler. |
-| `Location: <absolute URL>` | Treat as a 302 redirect. |
+| `Location: <absolute URL>`                     | Treat as a 302 redirect.                                                                                                        |
 
 ### Framing the CGI's body
 

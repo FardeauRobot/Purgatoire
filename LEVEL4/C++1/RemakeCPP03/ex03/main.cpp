@@ -1,37 +1,39 @@
-#include <iostream>
 #include "ClapTrap.hpp"
 #include "ScavTrap.hpp"
 #include "FragTrap.hpp"
 #include "DiamondTrap.hpp"
+#include <iostream>
 
 int main(void) {
-    DiamondTrap testdiam1("Le Gueux");
-    std::cout << std::endl;
+    std::cout << "\n=== DiamondTrap construction + OCF ===" << std::endl;
+    DiamondTrap d("Diam");
+    DiamondTrap copy(d);
+    DiamondTrap assign("Temp");
+    assign = d;
 
-    std::cout << "ENERGY DIAM1 : " << testdiam1.getEnergy() << std::endl;
+    std::cout << "\n=== whoAmI ===" << std::endl;
+    d.whoAmI();
 
-    DiamondTrap testdiam2;
-    std::cout << std::endl;
+    std::cout << "\n=== Normal actions (hp=100 energy=50 atk=30) ===" << std::endl;
+    d.attack("Target");     // DiamondTrap -> ScavTrap::attack  (CYAN)
+    d.takeDamage(40);       // ScavTrap::takeDamage             (CYAN)
+    d.beRepaired(20);       // ScavTrap::beRepaired             (CYAN)
+    d.guardGate();          // ScavTrap::guardGate              (CYAN)
+    d.guardGate();
+    d.highFivesGuys();      // FragTrap::highFivesGuys          (BLUE)
 
-    DiamondTrap testdiam3 = testdiam1;
-    std::cout << std::endl;
+    std::cout << "\n=== HP = 0: attack blocked, takeDamage shows 'already dead' ===" << std::endl;
+    DiamondTrap dead("Doomed");
+    dead.takeDamage(100);
+    dead.attack("Target");
+    dead.takeDamage(1);
 
-    // coucou1.highFivesGuys();
-    testdiam1.attack("Fardeau");
-    // testdiam1.beRepaired(5999);
-    testdiam1.whoAmI();
-    std::cout << std::endl;
-
-    testdiam2.attack("Fardeau");
-    testdiam2.beRepaired(5999);
-    testdiam2.whoAmI();
-    std::cout << std::endl;
-
-    testdiam3.attack("Fardeau");
-    testdiam3.beRepaired(5999);
-    testdiam3.whoAmI();
-
-    std::cout << std::endl;
+    std::cout << "\n=== Energy = 0: attack and repair blocked (ClapTrap, 10 energy) ===" << std::endl;
+    ClapTrap c("Clappy");
+    for (int i = 0; i < 10; i++)
+        c.attack("Target");
+    c.attack("Target");
+    c.beRepaired(10);
 
     return 0;
 }
