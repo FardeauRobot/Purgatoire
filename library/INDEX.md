@@ -71,6 +71,7 @@ Sorted by theme, not by module. Cross-reference with `LEVEL4/C++1/ModXX/` when s
 | [`BASICS.md`](cpp/fundamentals/BASICS.md) | Core syntax, compilation unit, namespaces. |
 | [`REFERENCE.md`](cpp/fundamentals/REFERENCE.md) | References vs pointers, lvalue semantics. |
 | [`MEMORY.md`](cpp/fundamentals/MEMORY.md) | Stack vs heap, `new`/`delete`, `new[]`/`delete[]`, RAII, lifetime, valgrind. |
+| [`ALLOCATION_FAILURE.md`](cpp/fundamentals/ALLOCATION_FAILURE.md) | When `new` fails — `bad_alloc` vs NULL, abort vs segfault, why C/C++ differ, `operator new` internals & overriding. |
 | [`CMATH.md`](cpp/fundamentals/CMATH.md) | `<cmath>` — powers, roots, trig, rounding; what's in C++98 vs C++11. |
 
 ### `cpp/modules/` — *per-module walkthrough*

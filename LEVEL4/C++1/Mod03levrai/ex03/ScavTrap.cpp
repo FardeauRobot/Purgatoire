@@ -5,9 +5,9 @@
 #include "ClapTrap.hpp"
 
 ScavTrap::ScavTrap(std::string name): ClapTrap(name), _protect(false) {
-    _hp = 100;
-    _energy = 50;
-    _atk = 20;
+    _hp = _base_hp;
+    _energy = _base_energy;
+    _atk = _base_atk;
     std::cout << BOLD_CYAN << "ScavTrap Name constructor called" << endofline;
 }
 

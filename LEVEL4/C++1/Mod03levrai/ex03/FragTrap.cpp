@@ -4,9 +4,9 @@
 #include "utils.hpp"
 
 FragTrap::FragTrap(std::string name): ClapTrap(name) {
-    _hp = 100;
-    _energy = 100;
-    _atk = 30;
+    _hp = _base_hp;
+    _energy = _base_energy;
+    _atk = _base_atk;
     std::cout << BOLD_CYAN << "FragTrap Name constructor called" << endofline;
 }
 

@@ -11,7 +11,7 @@ int main(void) {
     // FragTrap e("Number 3");
 
     DiamondTrap f("Diamond");
-    DiamondTrap g(f);
+    // DiamondTrap g(f);
 
     std::string target = "Fardeau";
 
@@ -28,6 +28,7 @@ int main(void) {
     f.whoAmI();
     f.guardGate();
     f.highFivesGuys();
+    f.printStats();
 
     for (int i = 0; i < 5; i++) {
         // a.attack(target);
@@ -54,9 +55,9 @@ int main(void) {
         f.beRepaired(10);
         f.takeDamage(5);
 
-        g.attack(target);
-        g.beRepaired(10);
-        g.takeDamage(5);
+        // g.attack(target);
+        // g.beRepaired(10);
+        // g.takeDamage(5);
     }
 
     return 0;

@@ -24,6 +24,25 @@ If you've never touched IP networking before, read these in order. Each builds o
 
 ---
 
+## 🧩 Per-level worked notes
+
+Concrete walkthroughs of each level I solve, in [`levels/`](levels/). One file per exercise — the layout and lessons are stable, the exact numbers are my instance.
+
+| Level | Note | Teaches |
+|---|---|---|
+| 1 | [`levels/LEVEL_01.md`](levels/LEVEL_01.md) | Two hosts on a wire; mask width decides which octets must match. |
+| 2 | [`levels/LEVEL_02.md`](levels/LEVEL_02.md) | Two isolated host pairs: legal-mask rule + don't sit on the broadcast. |
+| 3 | [`levels/LEVEL_03.md`](levels/LEVEL_03.md) | Three hosts on one switch: switch is transparent → all share one subnet. |
+| 4 | [`levels/LEVEL_04.md`](levels/LEVEL_04.md) | First router; a router is a host with many feet — only wire the connected one. |
+| 5 | [`levels/LEVEL_05.md`](levels/LEVEL_05.md) | First routing: default route, gateway must be on the host's own subnet. |
+| 6 | [`levels/LEVEL_06.md`](levels/LEVEL_06.md) | Reaching the Internet — default route + the **return route** trap. |
+| 7 | [`levels/LEVEL_07.md`](levels/LEVEL_07.md) | Two routers in series: carve one block into non-overlapping subnets. |
+| 8 | [`levels/LEVEL_08.md`](levels/LEVEL_08.md) | Capstone (method): mask mismatches, local gateways, return paths. |
+| 9 | [`levels/LEVEL_09.md`](levels/LEVEL_09.md) | Capstone (method): switch + 2 routers + Internet, longest-prefix match. |
+| 10 | [`levels/LEVEL_10.md`](levels/LEVEL_10.md) | Capstone (method): read the mostly-locked routing table, conform to it. |
+
+---
+
 ## ✅ Validation checklist
 
 You're ready to evaluate when you can:
