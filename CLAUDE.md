@@ -59,7 +59,7 @@ Git submodule at `libft/`. Build with `cd libft && make`. Link with `-L./libft -
 ## Style preferences
 
 ### Orthodox Canonical Form
-Every non-trivial C++ class needs the **four canonical members**: default ctor, copy ctor, copy-assign operator, destructor. When you generate a class, list and implement all four — easy to forget the assignment operator. Reference: `library/cpp/oop/ORTHODOX_CANONICAL_FORM.md`.
+Every non-trivial C++ class needs the **four canonical members**: default ctor, copy ctor, copy-assign operator, destructor. When you generate a class, list and implement all four — easy to forget the assignment operator. Reference: `library/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md`.
 
 ### Naming
 - Classes: `PascalCase` (e.g. `ScavTrap`)
@@ -112,9 +112,9 @@ Edit notes in place; there is no second copy to keep in sync.
 
 | Need | Where |
 |---|---|
-| C++ keyword reference | `library/cpp/keywords/INDEX.md` |
-| OCF / OOP patterns | `library/cpp/oop/` |
-| Per-module walkthrough | `library/cpp/modules/CPP0X.md` |
+| C++ keyword reference | `library/cpp/lexique/INDEX.md` |
+| OCF / OOP patterns | `library/cpp/notions/oop/` |
+| Per-module walkthrough | `library/cpp/projets/modules/CPP0X.md` |
 | Personal scripts | `library/scripts/SCRIPTS.md` |
 | Claude Code manual | `library/meta/CLAUDE_CODE_MANUAL.md` |
 | Repo improvement list | `library/meta/IMPROVEMENT.md` |

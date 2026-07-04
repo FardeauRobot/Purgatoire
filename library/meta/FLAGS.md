@@ -57,13 +57,13 @@ Silent under `-Wall -Wextra`. Loud under `-Wshadow`.
 **Catches:** a class with virtual functions but a non-virtual destructor.
 **Why critical from CPP03 onward:** If you `delete basePtr;` and the destructor isn't virtual, the derived-class destructor is **skipped**. That means: leaked members, unreleased resources, and a valgrind report you'll spend an hour debugging.
 **Cost:** None in well-formed inheritance trees.
-**Cross-reference:** [`cpp/oop/INHERITANCE.md`](../cpp/oop/INHERITANCE.md), [`cpp/oop/POLYMORPHISM.md`](../cpp/oop/POLYMORPHISM.md).
+**Cross-reference:** [`cpp/oop/INHERITANCE.md`](../cpp/notions/oop/INHERITANCE.md), [`cpp/oop/POLYMORPHISM.md`](../cpp/notions/oop/POLYMORPHISM.md).
 
 ### `-Wold-style-cast`
 **Catches:** any C-style cast `(T)x` instead of the C++ alternatives (`static_cast`, `const_cast`, `reinterpret_cast`, `dynamic_cast`).
 **Why useful:** The subject explicitly wants you to use C++ casts. C-style casts are dangerous because they silently combine all four cast operations — `(T*)p` will happily reinterpret a pointer as a different type when you meant a polite upcast.
 **Cost:** Forces you to spell out intent at every cast. Which is the point.
-**Cross-reference:** [`cpp/advanced/CASTS.md`](../cpp/advanced/CASTS.md).
+**Cross-reference:** [`cpp/advanced/CASTS.md`](../cpp/lexique/CASTS.md).
 
 ---
 
@@ -154,6 +154,6 @@ Use this pattern any time you wonder *"what would `-Wxxx` catch?"* — write the
 ## 🔗 Related
 
 - [`meta/IMPROVEMENT.md`](IMPROVEMENT.md) — repo-wide upgrade checklist (template polish, missing notes).
-- [`cpp/tooling/MAKEFILE_CPP.md`](../cpp/tooling/MAKEFILE_CPP.md) — full Makefile recipe walkthrough.
-- [`cpp/advanced/CASTS.md`](../cpp/advanced/CASTS.md) — why `-Wold-style-cast` matters in detail.
-- [`cpp/oop/INHERITANCE.md`](../cpp/oop/INHERITANCE.md) / [`POLYMORPHISM.md`](../cpp/oop/POLYMORPHISM.md) — why `-Wnon-virtual-dtor` matters from CPP03 onward.
+- [`cpp/tooling/MAKEFILE_CPP.md`](../cpp/notions/tooling/MAKEFILE_CPP.md) — full Makefile recipe walkthrough.
+- [`cpp/advanced/CASTS.md`](../cpp/lexique/CASTS.md) — why `-Wold-style-cast` matters in detail.
+- [`cpp/oop/INHERITANCE.md`](../cpp/notions/oop/INHERITANCE.md) / [`POLYMORPHISM.md`](../cpp/notions/oop/POLYMORPHISM.md) — why `-Wnon-virtual-dtor` matters from CPP03 onward.

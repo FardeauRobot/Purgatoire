@@ -21,6 +21,7 @@ If you've never touched IP networking before, read these in order. Each builds o
 | 5 | [`05_LEVEL_GUIDE.md`](05_LEVEL_GUIDE.md) | What each of the 10 levels is testing. Methodology, **not** answers — answers change per student. |
 | 6 | [`06_TROUBLESHOOTING.md`](06_TROUBLESHOOTING.md) | Decision tree: "the network is red, what now?" Step-by-step diagnostic. |
 | 7 | [`07_EVAL_CHEATSHEET.md`](07_EVAL_CHEATSHEET.md) | The one-pager you skim 15 minutes before evaluation defense. |
+| 8 | [`08_FIELD_MANUAL.md`](08_FIELD_MANUAL.md) | **Solve & defend** — the merge of 06 + 07, reorganized around *doing* a level: compute → place → route → trace → defend. The page to keep open while solving. |
 
 ---
 

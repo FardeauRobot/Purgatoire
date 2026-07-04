@@ -84,7 +84,7 @@ Files, screenshots, valgrind logs — drop them straight into the prompt. Claude
 - Ask *"explain WHY this is C++98-compatible"* to lock in the constraint.
 - Norm violations? Paste norminette output — Claude fixes them faster than describing them.
 - Memory bugs? Run with `valgrind --leak-check=full` and paste output.
-- Use your library notes as context: *"read `library/cpp/oop/GETTERS_SETTERS.md` and apply that style here"*.
+- Use your library notes as context: *"read `library/cpp/notions/oop/GETTERS_SETTERS.md` and apply that style here"*.
 - For canonical form (orthodox canonical four), ask Claude to **list all four members and verify each is implemented** — easy to forget the assignment operator.
 
 ---

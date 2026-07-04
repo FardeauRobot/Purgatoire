@@ -144,13 +144,77 @@ If you've genuinely walked the five questions and nothing is wrong, try these:
 
 ## 8. Defensive habits
 
-A few habits that prevent bugs before they happen:
+A few habits that prevent bugs before they happen. Each one comes with a worked example.
 
-- **Always write the subnet first**, then pick the IP. Not the other way around.
-- **Never leave a default gateway field blank** if the level expects routing across subnets.
-- **Sketch the topology** before changing anything. The visual UI is too small to keep in your head.
-- **Pick host IPs from the middle of the range.** It leaves room and avoids accidentally landing on network/broadcast.
-- **Use `.1` for gateways consistently** (or `.254` — pick one and stick with it). Reduces "where's the gateway?" cognitive load.
+### Always write the subnet first, then pick the IP
+
+Decide the network and mask *before* you touch the host octet. If you pick the IP first you end up bending the mask to fit it, which is how overlaps and off-by-one blocks sneak in.
+
+```
+  ❌ IP-first:   "I'll type 192.168.1.130 ... now what mask makes that legal?"
+                 → you reverse-engineer the mask, guess /25, and hope.
+
+  ✅ subnet-first: subnet = 192.168.1.0/25  → range .1–.126, broadcast .127
+                   now pick a host inside it → 192.168.1.60   ✅ provably valid
+```
+
+The subnet defines the range; the IP just has to sit inside it. Reverse that order and you're validating blind.
+
+### Never leave a default gateway field blank if the level expects routing across subnets
+
+A host with no gateway can talk to its own LAN and nothing else. The moment a level asks two different subnets to reach each other, an empty gateway field is a guaranteed red.
+
+```
+  Host A: 10.0.1.10 /24   gateway: (blank)     ← wants to reach 10.0.2.0/24
+                                                 → frame for a remote LAN has
+                                                   nowhere to go. Red.
+
+  Fix →   gateway: 10.0.1.1   (the router's interface on A's own LAN)
+```
+
+Blank is only correct when everything the host needs is on its own wire (a single-subnet level).
+
+### Sketch the topology before changing anything
+
+Redraw the wires, subnets, and routers on paper first. The in-browser diagram is too cramped to hold in your head, and asymmetric-routing bugs (see §5) are invisible until you can see both directions at once.
+
+```
+   [Host A]──┐                       ┌──[Host B]
+             ├─[R1]───────[R2]───────┤
+   10.0.1.0/24   .1     ?     .1   10.0.2.0/24
+                    └── what subnet
+                        is THIS wire? ──┘
+```
+
+The inter-router link is the wire people forget — sketching it forces you to give it its own subnet instead of leaving it implicit.
+
+### Pick host IPs from the middle of the range
+
+The two failure addresses of any subnet are the network address (host bits all 0) and the broadcast (host bits all 1). Landing on either is an instant reject. Picking from the middle keeps you far from both edges.
+
+```
+  Subnet 172.16.5.0/24  →  network .0, broadcast .255, usable .1–.254
+
+  .0    ❌ network address    — not assignable
+  .1    ⚠️  legal but often the gateway; easy to collide with it
+  .130  ✅ middle of the range — no edge, no gateway clash
+  .255  ❌ broadcast          — not assignable
+```
+
+Middle IPs also survive a mask change better: if the level later forces a `/25`, `.130` is still a valid host in `172.16.5.128/25`, whereas `.1` might now be stranded in the wrong half.
+
+### Use `.1` for gateways consistently (or `.254` — pick one and stick with it)
+
+Give every router interface the same host number across every LAN. Then "where's the gateway?" is never a question — it's always `.1` (or always `.254`). Mixing conventions is how you point a host at a gateway that isn't there.
+
+```
+  10.0.1.0/24  → gateway 10.0.1.1
+  10.0.2.0/24  → gateway 10.0.2.1
+  10.0.3.0/24  → gateway 10.0.3.1
+                          ↑ always .1 — muscle memory, zero lookup
+```
+
+If you commit to `.254` instead, the same logic applies (`10.0.1.254`, `10.0.2.254`, …) — the point is *one* convention, not which one.
 
 ---
 

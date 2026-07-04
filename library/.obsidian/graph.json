@@ -1,30 +1,22 @@
 {
-  "collapse-filter": true,
+  "collapse-filter": false,
   "search": "",
   "showTags": false,
   "showAttachments": false,
   "hideUnresolved": false,
   "showOrphans": true,
   "collapse-color-groups": true,
-  "colorGroups": [
-    {
-      "query": "path:cpp/modules  ",
-      "color": {
-        "a": 1,
-        "rgb": 14701138
-      }
-    }
-  ],
-  "collapse-display": true,
-  "showArrow": false,
+  "colorGroups": [],
+  "collapse-display": false,
+  "showArrow": true,
   "textFadeMultiplier": 0,
-  "nodeSizeMultiplier": 1,
-  "lineSizeMultiplier": 1,
+  "nodeSizeMultiplier": 1.64592447916667,
+  "lineSizeMultiplier": 2.17803385416667,
   "collapse-forces": false,
-  "centerStrength": 0.502083333333333,
-  "repelStrength": 2.80381944444444,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
   "linkStrength": 1,
-  "linkDistance": 461,
-  "scale": 0.7584919618605225,
+  "linkDistance": 250,
+  "scale": 2.553286842895046,
   "close": false
 }
