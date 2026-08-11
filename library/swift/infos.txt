@@ -1,0 +1,10 @@
+I see that swift is a well payed language. I want to know why : 
+-	Is it because it's widely spread ?
+- 	Not that much developpers ?
+-	Interesting jobs ?
+
+I also want to know :
+-	What's  the philosophy of swift
+-	What's the history of swift and why was it created
+-	Have a preview of what can be done with swift
+-	A basic library and see if it's compatible with my mentality

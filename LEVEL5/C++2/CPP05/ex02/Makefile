@@ -1,4 +1,4 @@
-NAME     = bureaucrat
+NAME     = 28b28c
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
@@ -7,7 +7,9 @@ CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
 LDFLAGS  =
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp Bureaucrat.cpp utils.cpp
+SRC_FILES = main.cpp Bureaucrat.cpp AForm.cpp \
+            ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp \
+            utils.cpp
 
 OBJDIR   = objs
 OBJS = $(SRC_FILES:%.cpp=$(OBJDIR)/%.o)
@@ -40,6 +42,8 @@ $(OBJDIR):
 
 clean:
 	rm -rf $(OBJDIR)
+	rm -f *_shrubbery
+	rm -f ../tests/*_shruberry
 
 fclean: clean
 	rm -f $(NAME)
@@ -69,21 +73,44 @@ leaks: debug
 	fi
 
 # ============== TEST-CASE TARGETS ===========
-# main.cpp guards its error blocks with `#if TOO_LOW == 1` / `#if TOO_HIGH == 1`.
-# The macro is injected here with -D, so each target compiles a different main.
+# main.cpp splits its demo into six blocks, each behind `#if <MACRO> == 1`, and
+# each macro defaults to 1 — so a plain `make` already builds everything.
+# A single-part target therefore has to switch the other five OFF, and every
+# macro must be named exactly once: clang rejects a repeated -D on the command
+# line (-Wmacro-redefined), which -Werror turns into a build failure.
 # `re` is mandatory: make only compares timestamps, it has no idea CXXFLAGS
 # changed, so without a forced rebuild you'd re-run the previous binary.
-toolow: CXXFLAGS += -DTOO_LOW=1
+full: CXXFLAGS += -DTEST=1 -DSHRUBBERY=1 -DROBOTOMY=1 -DPARDON=1 -DTOO_LOW=1 -DTOO_HIGH=1
+full: re
+	@echo "── run (FULL) ──"; ./$(NAME)
+
+base: CXXFLAGS += -DTEST=1 -DSHRUBBERY=0 -DROBOTOMY=0 -DPARDON=0 -DTOO_LOW=0 -DTOO_HIGH=0
+base: re
+	@echo "── run (OCF / BUREAUCRAT / SIGN) ──"; ./$(NAME)
+
+shrubbery: CXXFLAGS += -DTEST=0 -DSHRUBBERY=1 -DROBOTOMY=0 -DPARDON=0 -DTOO_LOW=0 -DTOO_HIGH=0
+shrubbery: re
+	@echo "── run (SHRUBBERY) ──"; ./$(NAME)
+
+robotomy: CXXFLAGS += -DTEST=0 -DSHRUBBERY=0 -DROBOTOMY=1 -DPARDON=0 -DTOO_LOW=0 -DTOO_HIGH=0
+robotomy: re
+	@echo "── run (ROBOTOMY) ──"; ./$(NAME)
+
+pardon: CXXFLAGS += -DTEST=0 -DSHRUBBERY=0 -DROBOTOMY=0 -DPARDON=1 -DTOO_LOW=0 -DTOO_HIGH=0
+pardon: re
+	@echo "── run (PARDON) ──"; ./$(NAME)
+
+toolow: CXXFLAGS += -DTEST=0 -DSHRUBBERY=0 -DROBOTOMY=0 -DPARDON=0 -DTOO_LOW=1 -DTOO_HIGH=0
 toolow: re
 	@echo "── run (TOO_LOW) ──"; ./$(NAME)
 
-toohigh: CXXFLAGS += -DTOO_HIGH=1
+toohigh: CXXFLAGS += -DTEST=0 -DSHRUBBERY=0 -DROBOTOMY=0 -DPARDON=0 -DTOO_LOW=0 -DTOO_HIGH=1
 toohigh: re
 	@echo "── run (TOO_HIGH) ──"; ./$(NAME)
 
-tests: CXXFLAGS += -DTOO_LOW=1 -DTOO_HIGH=1
-tests: re
-	@echo "── run (ALL CASES) ──"; ./$(NAME)
+# kept as aliases: both used to mean "everything", `full` is now the real target
+tests: full
+test: full
 
 # ============== WATCH MODE ==================
 # `make watch` -> rebuild automatically on every source change.
@@ -117,8 +144,13 @@ help:
 	@echo "  make asan       rebuild with AddressSanitizer + UBSan"
 	@echo "  make leaks      rebuild with -g, run leaks (mac) / valgrind (linux)"
 	@echo "  make watch      auto-rebuild on source change (needs fswatch)"
-	@echo "  make toolow     build+run with -DTOO_LOW=1  (GradeTooLow cases)"
-	@echo "  make toohigh    build+run with -DTOO_HIGH=1 (GradeTooHigh cases)"
-	@echo "  make tests      build+run with every case enabled"
+	@echo "  make full       build+run every block (alias: tests, test)"
+	@echo "  make base       build+run OCF / Bureaucrat / sign only"
+	@echo "  make shrubbery  build+run the ShrubberyCreationForm block only"
+	@echo "  make robotomy   build+run the RobotomyRequestForm block only"
+	@echo "  make pardon     build+run the PresidentialPardonForm block only"
+	@echo "  make toolow     build+run the GradeTooLow cases only"
+	@echo "  make toohigh    build+run the GradeTooHigh cases only"
 
-.PHONY: all clean fclean re debug asan leaks watch help toolow toohigh tests
+.PHONY: all clean fclean re debug asan leaks watch help \
+        full base shrubbery robotomy pardon toolow toohigh tests test

@@ -21,9 +21,50 @@ continuous class chain built up across the four exercises:
 - **ex02** — abstract `AForm` + concrete forms (re-encounter with abstract classes).
 - **ex03** — `Intern` that builds forms by name (clean-dispatch, no `if/else` ladder).
 
-Current state: only `ex00/` exists and `Bureaucrat` is still a **stub** — it has just
-`_name` and the four OCF members; `_grade`, the accessors, `increment/decrementGrade`,
-the exception classes, and `operator<<` are not implemented yet.
+Current state: `ex00/`, `ex01/` and `ex02/` are **complete** — all build warning-free under
+the strict flag set and report zero leaks. `ex03/` does not exist yet.
+
+- **ex00** — `Bureaucrat` fully implemented (attributes, accessors,
+  `increment/decrementGrade`, both nested exceptions, `operator<<`).
+- **ex01** — `Form` (const `_name`, `bool _signed`, const `_gradeToSign`,
+  const `_gradeToExecute`), its two nested exceptions, getters, `beSigned()`,
+  `Bureaucrat::signForm()`, `operator<<`. Note `_gradeToExecute` is stored, bounds-checked
+  and printed but **never read** in ex01 — nothing executes a form until `AForm::execute()`
+  in ex02.
+- **ex02** — abstract `AForm` (`executeAction() const = 0`, protected) plus the three
+  concrete forms. `execute()` is public, non-virtual, does the *signed* then *grade* checks
+  and only then calls `executeAction()` — the second of the two techniques the eval grid
+  explicitly allows. `AForm` has a virtual destructor, so `delete` through an `AForm*`
+  destroys the derived part too. `AForm`'s own bound exceptions are unreachable in ex02
+  (the concrete forms hardcode their grades); only a subclass passing bad constants would
+  fire them.
+
+## Conventions established in ex01 (carry into ex02/ex03)
+
+**Const members drive the OCF.** `Form` has three `const` members, so the copy constructor
+*must* initialize everything in its init list (`*this = src` in the body cannot compile),
+and `operator=` can only assign `_signed`. After `a = b`, `a` keeps its own name and both
+grades. Same shape as `Bureaucrat::operator=`, which only assigns `_grade`. `AForm` in ex02
+inherits this constraint — expect to explain it at defense.
+
+**Forward-declare across the Bureaucrat/Form boundary.** `Form::beSigned(const Bureaucrat&)`
+and `Bureaucrat::signForm(Form&)` make the two headers mutually dependent. Both headers
+use `class X;` and put the real `#include` in their `.cpp`; reference parameters need only
+the name, not the definition. Without this you get a circular include with a misleading
+error message.
+
+**Exceptions carry a finished message.** The nested exception constructors take the full
+`what()` string rather than building it from a name, so each throw site can say something
+accurate — the constructor reports an out-of-bounds *form* grade, `beSigned` reports an
+insufficient *bureaucrat* grade.
+
+**Who prints what.** `beSigned()` decides and throws; `signForm()` catches and prints
+either `X signed Y` or `X couldn't sign Y because <reason>`. Keep the decision and the
+reporting in separate methods.
+
+The bound messages describe the *numeric* range: a grade above 150 is "too low, must be
+at most 150", a grade below 1 is "too high, must be at least 1". (They used to be inverted;
+fixed across `Bureaucrat`, `Form` and `AForm` in all three exercises.)
 
 ## Per-exercise convention
 
@@ -39,14 +80,32 @@ construction/destruction order by eye. Keep new classes consistent with it.
 ## Build & verify (run inside an `exNN/` directory)
 
 ```
-make            # build the binary (ex00 target is `bureaucrat`)
+make            # build the binary (ex00 target is `bureaucrat`, ex01 is `form`)
 make re         # rebuild from scratch
 make debug      # rebuild with -g3 -O0
 make asan       # rebuild with AddressSanitizer + UBSan, then run ./binary
-make leaks      # -g build, then valgrind --leak-check=full (this is a Linux/Fedora box)
+make leaks      # -g build, then `leaks --atExit` on macOS / valgrind on Linux
 make watch      # auto-rebuild + run on source change (needs fswatch)
+make toolow     # build+run with -DTOO_LOW=1
+make toohigh    # build+run with -DTOO_HIGH=1
+make tests      # build+run with every case enabled
 make help       # list all targets
 ```
+
+In **ex00 / ex01** the `toolow` / `toohigh` / `tests` targets are cosmetic: `main.cpp`
+guards the macros with `#ifndef TOO_LOW / # define TOO_LOW 1` and the targets only ever
+set a macro to `1`, so both blocks compile in unconditionally and all three targets print
+the same thing.
+
+**ex02 does isolate its cases.** `main.cpp` there is split into six independent blocks
+(`TEST`, `SHRUBBERY`, `ROBOTOMY`, `PARDON`, `TOO_LOW`, `TOO_HIGH`), each in its own
+`{ }` scope so it is self-contained, and each target names **all six** macros — the one it
+wants at `1`, the other five at `0`. Naming each macro exactly once is mandatory, not
+tidiness: a repeated `-DFOO=0 -DFOO=1` on the command line is `-Wmacro-redefined`, which
+`-Werror` turns into a build failure. Targets: `make base`, `shrubbery`, `robotomy`,
+`pardon`, `toolow`, `toohigh`, and `make full` for everything (`tests` / `test` are
+aliases of `full`). `ShrubberyCreationForm` writes `<target>_shrubbery` into the cwd, so
+ex02's `clean` also does `rm -f *_shrubbery`.
 
 There is no test framework — verification is running the binary, eyeballing the OCF
 traces, and confirming `make leaks` reports zero leaks before declaring an exercise done.

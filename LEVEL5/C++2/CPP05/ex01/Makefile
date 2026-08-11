@@ -1,4 +1,4 @@
-NAME     = bureaucrat
+NAME     = form
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
@@ -7,7 +7,7 @@ CXXFLAGS = -Wall -Wextra -Werror -Wswitch \
 LDFLAGS  =
 
 # ============== SRC-FILES ===================
-SRC_FILES = main.cpp Bureaucrat.cpp utils.cpp
+SRC_FILES = main.cpp Bureaucrat.cpp Form.cpp utils.cpp
 
 OBJDIR   = objs
 OBJS = $(SRC_FILES:%.cpp=$(OBJDIR)/%.o)
@@ -73,11 +73,11 @@ leaks: debug
 # The macro is injected here with -D, so each target compiles a different main.
 # `re` is mandatory: make only compares timestamps, it has no idea CXXFLAGS
 # changed, so without a forced rebuild you'd re-run the previous binary.
-toolow: CXXFLAGS += -DTOO_LOW=1
+toolow: CXXFLAGS += -DTOO_LOW=1 -DTOO_HIGH=0
 toolow: re
 	@echo "── run (TOO_LOW) ──"; ./$(NAME)
 
-toohigh: CXXFLAGS += -DTOO_HIGH=1
+toohigh: CXXFLAGS += -DTOO_LOW=0 -DTOO_HIGH=1
 toohigh: re
 	@echo "── run (TOO_HIGH) ──"; ./$(NAME)
 
