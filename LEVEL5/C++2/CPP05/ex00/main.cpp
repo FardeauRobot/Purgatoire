@@ -1,37 +1,63 @@
 #include "Bureaucrat.hpp"
 #include "utils.hpp"
-#include <iostream>
+
+#ifndef TOO_LOW
+# define TOO_LOW 1
+#endif
+
+#ifndef TOO_HIGH
+# define TOO_HIGH 1
+#endif
 
 int main(void) {
-	try {
-#if TOO_HIGH == 1
-		Bureaucrat a("Bureaucrat A", 0);
-		std::cout << BOLD_YELLOW << a << endofline;
-#endif
+    Bureaucrat def;
+    Bureaucrat tom("Tom", 42);
+    Bureaucrat copy(tom);
 
-#if TOO_HIGH == 2
-		Bureaucrat a("Bureaucrat A", 1);
-		std::cout << BOLD_YELLOW << a << endofline;
-		a.gradeIncrease();
-#endif
+    std::cout << "Default constructor " << def << endofline;
+    def = tom;
+    std::cout << "Assignment operator " << def << endofline;
+    std::cout << "Copy constructor " << copy << endofline;
+    std::cout <<  tom << endofline;
+    tom.incrementGrade();
+    std::cout << tom << endofline;
+    tom.decrementGrade();
+    std::cout << tom << endofline;
 
 #if TOO_LOW == 1
-		Bureaucrat c("Bureaucrat C", 151);
-		std::cout << BOLD_YELLOW << c << endofline;
+    std::cout << BOLD_GREEN << "=== TOO LOW === " << endofline;
+    try {
+        Bureaucrat b("Bob", 151);
+        std::cout << b << endofline;
+    } catch (std::exception &e) {
+        std::cerr << BOLD_WHITE << e.what() << endofline;
+    }
+
+    try {
+        Bureaucrat c("Carl", 150);
+        std::cout << c << endofline;
+        c.decrementGrade();
+    } catch (std::exception &e) {
+        std::cerr << BOLD_WHITE << e.what() << endofline;
+    }
 #endif
 
-#if TOO_LOW == 2
-		Bureaucrat c("Bureaucrat C", 150);
-		std::cout << BOLD_YELLOW << c << endofline;
-		c.gradeDecrease();
+#if TOO_HIGH == 1
+    std::cout << BOLD_GREEN << "=== TOO HIGH === " << endofline;
+    try {
+        Bureaucrat d("Dan", 0);
+        std::cout << d << endofline;
+    } catch (std::exception &e) {
+        std::cerr << BOLD_WHITE << e.what() << endofline;
+    }
+
+    try {
+        Bureaucrat ev("Eve", 1);
+        std::cout << ev << endofline;
+        ev.incrementGrade();
+    } catch (std::exception &e) {
+        std::cerr << BOLD_WHITE << e.what() << endofline;
+    }
 #endif
-
-
-		Bureaucrat b("Bureaucrat B", 1);
-		std::cout << BOLD_YELLOW << b << endofline;
-
-	} catch (std::exception &e) {
-		std::cout << BOLD_RED << e.what() << endofline;
-	}
-	return 0;
+    return (0);
 }

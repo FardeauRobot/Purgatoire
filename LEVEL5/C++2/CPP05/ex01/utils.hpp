@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+
 std::ostream& endofline(std::ostream& os);
 
 // Regular colors

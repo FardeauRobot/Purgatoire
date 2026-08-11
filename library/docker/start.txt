@@ -1,0 +1,19 @@
+Hey,
+I need to do the Inception Project for School 42, subject located in Documents/INCEPTION.pdf
+
+Give me a complete documentation of Docker, what's its philosophy, which problems did it solve, how to use it, how to test it on both mac and linux.
+
+Also answer those questions : 
+Any required additions will be explicitly listed below.
+• A Project description section must also explain the use of Docker and the sources
+included in the project. It must indicate the main design choices, as well as a
+comparison between:
+◦ Virtual Machines vs Docker
+◦ Secrets vs Environment Variables
+◦ Docker Network vs Host Network
+◦ Docker Volumes vs Bind Mounts
+
+Also create an artifact that we will update as the project goes on. 
+Give me a checklist of what has to be learned, in which order to avoid confusion, matching my method of thinking.
+
+If you have any tips / useful infos, don't hesitate to share as well thanks :D

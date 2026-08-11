@@ -1,0 +1,702 @@
+<title>Inception — Build Console</title>
+
+<style>
+  /* ── Tokens: bare :root carries the COMPLETE light palette ───────────── */
+  :root {
+    --ground:      #F4F6F5;
+    --surface:     #FFFFFF;
+    --surface-alt: #EDF1F0;
+    --line:        #D2DBD9;
+    --line-strong: #A9B7B4;
+
+    --ink:         #0F1A1D;
+    --ink-mid:     #435054;
+    --ink-soft:    #6B7A7D;
+
+    --accent:      #0B6E78;
+    --accent-soft: #E0EFF0;
+    --accent-ink:  #075159;
+
+    --ok:          #3B7538;
+    --ok-soft:     #E4EFE1;
+    --active:      #9A6206;
+    --active-soft: #F7EDDA;
+    --stop:        #9C3626;
+    --stop-soft:   #F6E3DF;
+
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+
+    --r: 3px;
+    --shadow: 0 1px 2px rgba(15,26,29,.06), 0 4px 12px rgba(15,26,29,.04);
+  }
+
+  /* System-dark (no stamp) — explicit light choice still wins */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #0C1417;
+      --surface:     #131F23;
+      --surface-alt: #18262B;
+      --line:        #26383D;
+      --line-strong: #3B5257;
+
+      --ink:         #E4ECEB;
+      --ink-mid:     #A3B3B4;
+      --ink-soft:    #74878A;
+
+      --accent:      #4BB3BC;
+      --accent-soft: #12333A;
+      --accent-ink:  #7ED0D7;
+
+      --ok:          #7BB672;
+      --ok-soft:     #17301A;
+      --active:      #D9A445;
+      --active-soft: #33270D;
+      --stop:        #D87565;
+      --stop-soft:   #351B16;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.25);
+    }
+  }
+
+  /* Explicit dark choice beats a light OS */
+  :root[data-theme="dark"] {
+    --ground:      #0C1417;
+    --surface:     #131F23;
+    --surface-alt: #18262B;
+    --line:        #26383D;
+    --line-strong: #3B5257;
+
+    --ink:         #E4ECEB;
+    --ink-mid:     #A3B3B4;
+    --ink-soft:    #74878A;
+
+    --accent:      #4BB3BC;
+    --accent-soft: #12333A;
+    --accent-ink:  #7ED0D7;
+
+    --ok:          #7BB672;
+    --ok-soft:     #17301A;
+    --active:      #D9A445;
+    --active-soft: #33270D;
+    --stop:        #D87565;
+    --stop-soft:   #351B16;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+  }
+
+  /* ── Masthead ─────────────────────────────────────────────────────────── */
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-bottom: 26px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(38px, 7vw, 62px);
+    font-weight: 600;
+    letter-spacing: -.035em;
+    line-height: .95;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .lede {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--ink-mid);
+    font-size: 16px;
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow: hidden;
+  }
+  .fact { background: var(--surface); padding: 11px 14px; }
+  .fact dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 0 0 3px;
+  }
+  .fact dd {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    word-break: break-word;
+  }
+
+  /* ── Meter ────────────────────────────────────────────────────────────── */
+  .meter-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px 20px;
+  }
+  .meter-pct {
+    font-family: var(--mono);
+    font-size: 42px;
+    font-weight: 600;
+    letter-spacing: -.04em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+  }
+  .meter-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .06em;
+    color: var(--ink-soft);
+  }
+  .meter-track {
+    flex: 1 1 260px;
+    height: 8px;
+    min-width: 200px;
+    background: var(--surface-alt);
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .meter-fill { transition: none; }
+  }
+
+  /* ── Sections ─────────────────────────────────────────────────────────── */
+  section { display: flex; flex-direction: column; gap: 16px; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line-strong);
+    padding-bottom: 8px;
+  }
+  .sec-head h2 {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--ink);
+  }
+  .sec-note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ── Architecture ─────────────────────────────────────────────────────── */
+  .schematic {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 18px;
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+  .schematic svg { display: block; min-width: 620px; width: 100%; height: auto; }
+
+  .svg-box    { fill: var(--surface-alt); stroke: var(--ink-mid); stroke-width: 1.5; }
+  .svg-edge   { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+  .svg-edge-h { fill: none; stroke: var(--accent); stroke-width: 2; }
+  .svg-zone   { fill: none; stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 4 4; }
+  .svg-label  { fill: var(--ink); font-family: var(--mono); font-size: 13px; font-weight: 600; }
+  .svg-sub    { fill: var(--ink-soft); font-family: var(--mono); font-size: 10.5px; }
+  .svg-port   { fill: var(--ink-mid); font-family: var(--mono); font-size: 11px; }
+  .svg-zonelab{ fill: var(--ink-soft); font-family: var(--mono); font-size: 10px; letter-spacing: .12em; }
+  .svg-arrow  { fill: var(--line-strong); }
+  .svg-arrow-h{ fill: var(--accent); }
+
+  /* ── Phases ───────────────────────────────────────────────────────────── */
+  .phases { display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+  .phase {
+    display: grid;
+    grid-template-columns: 46px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    background: var(--surface);
+    padding: 13px 16px;
+  }
+  .phase-n {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+    padding-top: 2px;
+    letter-spacing: .04em;
+  }
+  .phase-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .phase-name { font-weight: 600; font-size: 14.5px; }
+  .phase-gate { font-size: 13px; color: var(--ink-soft); }
+  .phase-gate b { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 99px;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    align-self: center;
+  }
+  .chip.done    { background: var(--ok-soft);     color: var(--ok);     border-color: var(--ok); }
+  .chip.active  { background: var(--active-soft); color: var(--active); border-color: var(--active); }
+  .chip.todo    { background: var(--surface-alt); color: var(--ink-soft); border-color: var(--line-strong); }
+
+  /* ── Compliance ───────────────────────────────────────────────────────── */
+  .rule-group { display: flex; flex-direction: column; gap: 8px; }
+  .rule-group > h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 6px 0 0;
+    font-weight: 600;
+  }
+  .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+  .rule { background: var(--surface); }
+  .rule label {
+    display: grid;
+    grid-template-columns: 20px 42px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 10px 14px;
+    cursor: pointer;
+  }
+  .rule label:hover { background: var(--surface-alt); }
+  .rule input { position: absolute; opacity: 0; pointer-events: none; }
+  .tick {
+    width: 17px; height: 17px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--r);
+    display: grid; place-items: center;
+    margin-top: 3px;
+    background: var(--surface);
+    flex: none;
+  }
+  .tick::after {
+    content: "";
+    width: 9px; height: 5px;
+    border-left: 2px solid var(--surface);
+    border-bottom: 2px solid var(--surface);
+    transform: rotate(-45deg) translate(1px, -1px);
+    opacity: 0;
+  }
+  .rule input:checked + .tick { background: var(--ok); border-color: var(--ok); }
+  .rule input:checked + .tick::after { opacity: 1; }
+  .rule input:focus-visible + .tick { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .rule input:checked ~ .rule-text { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: var(--line-strong); }
+  .rule-code {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    padding-top: 3px;
+    letter-spacing: .04em;
+  }
+  .rule-text { font-size: 14px; line-height: 1.45; }
+  code {
+    font-family: var(--mono);
+    font-size: .88em;
+    background: var(--surface-alt);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  .phase-gate code { background: none; padding: 0; }
+
+  /* ── Commands ─────────────────────────────────────────────────────────── */
+  .cmds {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    overflow-x: auto;
+    box-shadow: var(--shadow);
+  }
+  .cmds table { border-collapse: collapse; width: 100%; min-width: 540px; }
+  .cmds th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-alt);
+  }
+  .cmds td { padding: 9px 16px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 14px; }
+  .cmds tr:last-child td { border-bottom: none; }
+  .cmds td.c { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; color: var(--accent-ink); }
+
+  .warn {
+    border-left: 3px solid var(--stop);
+    background: var(--stop-soft);
+    padding: 11px 15px;
+    border-radius: 0 var(--r) var(--r) 0;
+    font-size: 14px;
+  }
+  .warn b { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--stop); display: block; margin-bottom: 3px; }
+
+  /* ── Footer ───────────────────────────────────────────────────────────── */
+  footer {
+    border-top: 1px solid var(--line-strong);
+    padding-top: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  footer code { font-family: var(--mono); font-size: .9em; }
+  .reset {
+    align-self: flex-start;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-soft);
+    padding: 5px 11px;
+    border-radius: var(--r);
+    cursor: pointer;
+  }
+  .reset:hover { border-color: var(--stop); color: var(--stop); }
+  .reset:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (max-width: 560px) {
+    .phase { grid-template-columns: 32px 1fr; }
+    .phase .chip { grid-column: 2; justify-self: start; }
+    .rule label { grid-template-columns: 20px 1fr; }
+    .rule-code { grid-row: 1; grid-column: 2; padding-top: 0; }
+    .rule-text { grid-column: 2; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">42 · Level 5 · System Administration</p>
+    <h1>Inception</h1>
+    <p class="lede">Three services, three containers, one private network, two persistent volumes — and one door in. This console tracks what's learned, what's built, and what the subject still demands.</p>
+
+    <dl class="facts">
+      <div class="fact"><dt>Location</dt><dd>LEVEL5/Inception/</dd></div>
+      <div class="fact"><dt>Base image</dt><dd>Alpine · N-1</dd></div>
+      <div class="fact"><dt>Domain</dt><dd>&lt;login&gt;.42.fr</dd></div>
+      <div class="fact"><dt>Entry</dt><dd>443 · TLS 1.2/1.3</dd></div>
+      <div class="fact"><dt>Volumes</dt><dd>/home/&lt;login&gt;/data</dd></div>
+      <div class="fact"><dt>Study library</dt><dd>15 pages ✓</dd></div>
+    </dl>
+  </header>
+
+  <div class="meter-block">
+    <span class="meter-pct" id="pct">0%</span>
+    <span class="meter-label" id="meter-text">0 of 0 requirements verified</span>
+    <span class="meter-track"><span class="meter-fill" id="fill"></span></span>
+  </div>
+
+  <!-- ── Architecture ──────────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Architecture</h2>
+      <p class="sec-note">Only one arrow crosses the host boundary.</p>
+    </div>
+
+    <div class="schematic">
+      <svg viewBox="0 0 900 400" role="img" aria-label="Inception architecture: the internet reaches nginx on port 443; nginx reaches WordPress with php-fpm on port 9000; WordPress reaches MariaDB on port 3306. All three sit on one Docker bridge network inside the host VM. MariaDB writes to a database volume and WordPress writes to a site-files volume, which nginx also reads. Both volumes are backed by /home/login/data.">
+        <defs>
+          <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 z" class="svg-arrow"/>
+          </marker>
+          <marker id="ahh" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 z" class="svg-arrow-h"/>
+          </marker>
+        </defs>
+
+        <!-- WWW -->
+        <text x="800" y="26" class="svg-label" text-anchor="middle">WWW</text>
+        <line x1="800" y1="38" x2="800" y2="86" class="svg-edge-h" marker-end="url(#ahh)"/>
+        <text x="812" y="66" class="svg-port">443 · TLS</text>
+
+        <!-- Host boundary -->
+        <rect x="20" y="86" width="860" height="292" rx="4" class="svg-zone"/>
+        <text x="34" y="106" class="svg-zonelab">HOST — VIRTUAL MACHINE</text>
+
+        <!-- Docker network -->
+        <rect x="44" y="120" width="812" height="120" rx="4" class="svg-zone"/>
+        <text x="58" y="139" class="svg-zonelab">DOCKER NETWORK — BRIDGE</text>
+
+        <!-- containers -->
+        <rect x="70" y="150" width="180" height="72" rx="3" class="svg-box"/>
+        <text x="160" y="182" class="svg-label" text-anchor="middle">mariadb</text>
+        <text x="160" y="200" class="svg-sub" text-anchor="middle">no nginx</text>
+
+        <rect x="360" y="150" width="180" height="72" rx="3" class="svg-box"/>
+        <text x="450" y="180" class="svg-label" text-anchor="middle">wordpress</text>
+        <text x="450" y="198" class="svg-sub" text-anchor="middle">+ php-fpm · no nginx</text>
+
+        <rect x="650" y="150" width="180" height="72" rx="3" class="svg-box"/>
+        <text x="740" y="182" class="svg-label" text-anchor="middle">nginx</text>
+        <text x="740" y="200" class="svg-sub" text-anchor="middle">sole entrypoint</text>
+
+        <!-- internal links -->
+        <line x1="250" y1="186" x2="352" y2="186" class="svg-edge" marker-end="url(#ah)"/>
+        <line x1="360" y1="186" x2="258" y2="186" class="svg-edge" marker-end="url(#ah)"/>
+        <text x="301" y="176" class="svg-port" text-anchor="middle">3306</text>
+
+        <line x1="540" y1="186" x2="642" y2="186" class="svg-edge" marker-end="url(#ah)"/>
+        <line x1="650" y1="186" x2="548" y2="186" class="svg-edge" marker-end="url(#ah)"/>
+        <text x="595" y="176" class="svg-port" text-anchor="middle">9000</text>
+
+        <!-- volumes -->
+        <ellipse cx="160" cy="292" rx="66" ry="11" class="svg-box"/>
+        <path d="M94,292 v40 a66,11 0 0 0 132,0 v-40" class="svg-box"/>
+        <text x="160" y="322" class="svg-label" text-anchor="middle">db</text>
+
+        <ellipse cx="450" cy="292" rx="66" ry="11" class="svg-box"/>
+        <path d="M384,292 v40 a66,11 0 0 0 132,0 v-40" class="svg-box"/>
+        <text x="450" y="322" class="svg-label" text-anchor="middle">wordpress</text>
+
+        <line x1="160" y1="222" x2="160" y2="276" class="svg-edge" marker-end="url(#ah)"/>
+        <line x1="450" y1="222" x2="450" y2="276" class="svg-edge" marker-end="url(#ah)"/>
+
+        <!-- nginx reads the wordpress volume -->
+        <path d="M740,222 L740,258 L530,258 L500,276" class="svg-edge" marker-end="url(#ah)"/>
+        <text x="640" y="252" class="svg-sub" text-anchor="middle">reads static files</text>
+
+        <text x="305" y="366" class="svg-zonelab" text-anchor="middle">BOTH NAMED VOLUMES BACKED BY /home/&lt;login&gt;/data</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ── Phases ────────────────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Learning &amp; build phases</h2>
+      <p class="sec-note">Each gate is answered out loud, without notes.</p>
+    </div>
+
+    <div class="phases">
+      <div class="phase"><span class="phase-n">00</span><span class="phase-body"><span class="phase-name">Get a container running</span><span class="phase-gate"><b>Gate</b> — What did you connect to, and where did those files come from?</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">01</span><span class="phase-body"><span class="phase-name">The model: a container is a process</span><span class="phase-gate"><b>Gate</b> — Why 50ms to start, when a VM takes 30 seconds?</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">02</span><span class="phase-body"><span class="phase-name">Images and the Dockerfile</span><span class="phase-gate"><b>Gate</b> — Which layers rebuilt after your edit, and why exactly those?</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">03</span><span class="phase-body"><span class="phase-name">PID 1 — why containers die</span><span class="phase-gate"><b>Gate</b> — Why is <code>tail -f</code> a bad fix rather than just an ugly one?</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">04</span><span class="phase-body"><span class="phase-name">Networking</span><span class="phase-gate"><b>Gate</b> — Nothing maps the name to an IP. What resolved it?</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">05</span><span class="phase-body"><span class="phase-name">Storage</span><span class="phase-gate"><b>Gate</b> — Named volumes required, data in <code>/home/&lt;login&gt;/data</code>. Not a contradiction — why?</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">06</span><span class="phase-body"><span class="phase-name">Compose</span><span class="phase-gate"><b>Gate</b> — Map every block back to a <code>docker run</code> flag.</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">07</span><span class="phase-body"><span class="phase-name">Secrets and environment</span><span class="phase-gate"><b>Gate</b> — Trace one password from disk to the running process.</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">08</span><span class="phase-body"><span class="phase-name">Build Inception, bottom-up</span><span class="phase-gate"><b>Gate</b> — Each service restarts clean from scratch, untouched by hand.</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">09</span><span class="phase-body"><span class="phase-name">Harden against the subject</span><span class="phase-gate"><b>Gate</b> — Every box below ticked by running something, not by recalling it.</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">10</span><span class="phase-body"><span class="phase-name">The graded documentation</span><span class="phase-gate"><b>Gate</b> — A stranger starts the project using only USER_DOC.md.</span></span><span class="chip todo">Not started</span></div>
+      <div class="phase"><span class="phase-n">11</span><span class="phase-body"><span class="phase-name">Defense prep</span><span class="phase-gate"><b>Gate</b> — Any line, any file: "what happens if I delete this?"</span></span><span class="chip todo">Not started</span></div>
+    </div>
+  </section>
+
+  <!-- ── Compliance ────────────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Subject compliance</h2>
+      <p class="sec-note">Codes match <code>10_INCEPTION.md</code>. Ticks save in this browser.</p>
+    </div>
+
+    <div class="rule-group">
+      <h3>Structure</h3>
+      <ul class="rules">
+        <li class="rule"><label><input type="checkbox" data-k="S1"><span class="tick"></span><span class="rule-code">S1</span><span class="rule-text">The whole project runs in a virtual machine</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="S2"><span class="tick"></span><span class="rule-code">S2</span><span class="rule-text">All configuration lives in <code>srcs/</code></span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="S3"><span class="tick"></span><span class="rule-code">S3</span><span class="rule-text">A <code>Makefile</code> at the project root builds everything via compose</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="S4"><span class="tick"></span><span class="rule-code">S4</span><span class="rule-text">One Dockerfile per service, written by you</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="S5"><span class="tick"></span><span class="rule-code">S5</span><span class="rule-text">Each image name matches its service name</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="S6"><span class="tick"></span><span class="rule-code">S6</span><span class="rule-text">Each service runs in its own dedicated container</span></label></li>
+      </ul>
+    </div>
+
+    <div class="rule-group">
+      <h3>Images</h3>
+      <ul class="rules">
+        <li class="rule"><label><input type="checkbox" data-k="I1"><span class="tick"></span><span class="rule-code">I1</span><span class="rule-text">Base image is the penultimate stable Alpine — looked up, not guessed</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="I2"><span class="tick"></span><span class="rule-code">I2</span><span class="rule-text">No <code>latest</code> tag anywhere</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="I3"><span class="tick"></span><span class="rule-code">I3</span><span class="rule-text">All images built locally — nothing pulled ready-made</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="I4"><span class="tick"></span><span class="rule-code">I4</span><span class="rule-text">No password in any Dockerfile — not <code>ENV</code>, not <code>ARG</code></span></label></li>
+      </ul>
+    </div>
+
+    <div class="rule-group">
+      <h3>Services</h3>
+      <ul class="rules">
+        <li class="rule"><label><input type="checkbox" data-k="V1"><span class="tick"></span><span class="rule-code">V1</span><span class="rule-text">TLS 1.2/1.3 only — <code>-tls1_1</code> verified to fail</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="V2"><span class="tick"></span><span class="rule-code">V2</span><span class="rule-text">WordPress + php-fpm configured, without nginx</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="V3"><span class="tick"></span><span class="rule-code">V3</span><span class="rule-text">MariaDB alone, without nginx</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="V4"><span class="tick"></span><span class="rule-code">V4</span><span class="rule-text">nginx is the only entrypoint, on port 443 only</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="V5"><span class="tick"></span><span class="rule-code">V5</span><span class="rule-text">Every container restarts on crash</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="V6"><span class="tick"></span><span class="rule-code">V6</span><span class="rule-text">Two WordPress users exist, one an administrator</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="V7"><span class="tick"></span><span class="rule-code">V7</span><span class="rule-text">Admin username contains no form of <code>admin</code></span></label></li>
+      </ul>
+    </div>
+
+    <div class="rule-group">
+      <h3>Storage &amp; network</h3>
+      <ul class="rules">
+        <li class="rule"><label><input type="checkbox" data-k="N1"><span class="tick"></span><span class="rule-code">N1</span><span class="rule-text">A volume holds the WordPress database</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="N2"><span class="tick"></span><span class="rule-code">N2</span><span class="rule-text">A second volume holds the site files</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="N3"><span class="tick"></span><span class="rule-code">N3</span><span class="rule-text">Both are named volumes — no short-form bind mounts in services</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="N4"><span class="tick"></span><span class="rule-code">N4</span><span class="rule-text">Data verified in <code>/home/&lt;login&gt;/data</code> — on Linux, not the Mac</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="N5"><span class="tick"></span><span class="rule-code">N5</span><span class="rule-text">The <code>networks</code> line is present in compose</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="N6"><span class="tick"></span><span class="rule-code">N6</span><span class="rule-text">No <code>network: host</code>, no <code>--link</code>, no <code>links:</code></span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="N7"><span class="tick"></span><span class="rule-code">N7</span><span class="rule-text"><code>&lt;login&gt;.42.fr</code> resolves to the local IP</span></label></li>
+      </ul>
+    </div>
+
+    <div class="rule-group">
+      <h3>Runtime hygiene</h3>
+      <ul class="rules">
+        <li class="rule"><label><input type="checkbox" data-k="R1"><span class="tick"></span><span class="rule-code">R1</span><span class="rule-text">No container started with an infinite loop — CMD, ENTRYPOINT, or script</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="R2"><span class="tick"></span><span class="rule-code">R2</span><span class="rule-text">No <code>tail -f</code>, <code>sleep infinity</code>, <code>while true</code>, or <code>bash</code> as entrypoint</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="R3"><span class="tick"></span><span class="rule-code">R3</span><span class="rule-text">Environment variables used, stored in a <code>.env</code> file</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="R4"><span class="tick"></span><span class="rule-code">R4</span><span class="rule-text">Docker secrets hold every credential</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="R5"><span class="tick"></span><span class="rule-code">R5</span><span class="rule-text">No credential anywhere in git — including history</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="R6"><span class="tick"></span><span class="rule-code">R6</span><span class="rule-text">Entrypoints are idempotent — second <code>up</code> works as well as the first</span></label></li>
+      </ul>
+    </div>
+
+    <div class="rule-group">
+      <h3>Graded documentation</h3>
+      <ul class="rules">
+        <li class="rule"><label><input type="checkbox" data-k="D1"><span class="tick"></span><span class="rule-code">D1</span><span class="rule-text"><code>README.md</code> — italic first line, Description, Instructions, Resources with AI usage, Project description with the four comparisons</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="D2"><span class="tick"></span><span class="rule-code">D2</span><span class="rule-text"><code>USER_DOC.md</code> — services, start/stop, site and admin panel, credentials, health check</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="D3"><span class="tick"></span><span class="rule-code">D3</span><span class="rule-text"><code>DEV_DOC.md</code> — setup from scratch, build via Makefile, container and volume commands, data persistence</span></label></li>
+        <li class="rule"><label><input type="checkbox" data-k="D4"><span class="tick"></span><span class="rule-code">D4</span><span class="rule-text">AI-usage log kept current as the project progresses</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Verification ──────────────────────────────────────────────────── -->
+  <section>
+    <div class="sec-head">
+      <h2>Verification commands</h2>
+      <p class="sec-note">Run these — don't recall them.</p>
+    </div>
+
+    <div class="cmds">
+      <table>
+        <thead><tr><th>Command</th><th>Proves</th></tr></thead>
+        <tbody>
+          <tr><td class="c">make fclean &amp;&amp; make</td><td>Builds from nothing — no hidden local state</td></tr>
+          <tr><td class="c">docker compose ps</td><td>Three up, none restarting</td></tr>
+          <tr><td class="c">curl -k https://&lt;login&gt;.42.fr</td><td>WordPress served over TLS on 443</td></tr>
+          <tr><td class="c">openssl s_client -connect …:443 -tls1_1</td><td>Must <em>fail</em> — rule V1</td></tr>
+          <tr><td class="c">ls -la /home/&lt;login&gt;/data/*</td><td>Volume data on the host — rule N4</td></tr>
+          <tr><td class="c">docker compose down &amp;&amp; docker compose up -d</td><td>Persistence, and an idempotent entrypoint</td></tr>
+          <tr><td class="c">sudo reboot</td><td>Restart policy survives a host reboot</td></tr>
+          <tr><td class="c">curl telnet://localhost:3306</td><td>Must fail — MariaDB is not exposed</td></tr>
+          <tr><td class="c">docker compose exec wordpress nc -zv mariadb 3306</td><td>Must succeed — reachable inside the network</td></tr>
+          <tr><td class="c">grep -rnE "latest|tail -f|while true" srcs/</td><td>Nothing — rules I2, R1, R2</td></tr>
+          <tr><td class="c">git log -p | grep -iE 'password|secret'</td><td>Nothing — rule R5</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="warn"><b>Before every "it's done"</b>Rebuild from truly clean — <code>docker compose down -v --rmi all</code> — then bring it up. Anything that only works because of state already on your machine will fail on the evaluator's, by definition.</p>
+  </section>
+
+  <footer>
+    <p style="margin:0">Study library: <code>library/docker/</code> — 15 pages, roadmap at <code>00_ROADMAP.md</code>, subject rules at <code>10_INCEPTION.md</code>, defense one-pager at <code>13_DEFENSE.md</code>.</p>
+    <p style="margin:0">Ticks are stored in this browser only. Phase chips are updated as the project advances.</p>
+    <button class="reset" id="reset" type="button">Clear all ticks</button>
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var KEY = "inception-compliance-v1";
+    var boxes = Array.prototype.slice.call(document.querySelectorAll(".rule input"));
+    var fill = document.getElementById("fill");
+    var pct = document.getElementById("pct");
+    var meterText = document.getElementById("meter-text");
+
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { saved = {}; }
+
+    function paint() {
+      var done = boxes.filter(function (b) { return b.checked; }).length;
+      var total = boxes.length;
+      var p = total ? Math.round((done / total) * 100) : 0;
+      fill.style.width = p + "%";
+      pct.textContent = p + "%";
+      meterText.textContent = done + " of " + total + " requirements verified";
+    }
+
+    boxes.forEach(function (b) {
+      if (saved[b.dataset.k]) { b.checked = true; }
+      b.addEventListener("change", function () {
+        saved[b.dataset.k] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        paint();
+      });
+    });
+
+    document.getElementById("reset").addEventListener("click", function () {
+      boxes.forEach(function (b) { b.checked = false; });
+      saved = {};
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      paint();
+    });
+
+    paint();
+  })();
+</script>

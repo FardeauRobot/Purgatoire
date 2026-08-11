@@ -1,85 +1,190 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
-
-#include "AForm.hpp"
 #include "Bureaucrat.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
+#include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include "utils.hpp"
 
-static void title(const std::string &text) {
-    std::cout << BOLD_MAGENTA << "\n=== " << text << " ===" << endofline;
-}
+#ifndef TOO_LOW
+# define TOO_LOW 1
+#endif
+
+#ifndef TOO_HIGH
+# define TOO_HIGH 1
+#endif
+
+#ifndef TEST
+# define TEST  1
+#endif
+
+#ifndef SHRUBBERY
+# define SHRUBBERY 1
+#endif
+
+#ifndef ROBOTOMY
+# define ROBOTOMY 1
+#endif
+
+#ifndef PARDON
+# define PARDON 1
+#endif
 
 int main(void) {
+
     std::srand(static_cast<unsigned int>(std::time(NULL)));
 
-    title("An unsigned form cannot be executed");
+#if TEST == 1
     {
-        Bureaucrat boss("Zaphod", 1);
-        ShrubberyCreationForm garden("home");
+        std::cout << BOLD_GREEN << "=== ORTHODOX CANONICAL FORM ===" << endofline;
+        ShrubberyCreationForm def;
+        ShrubberyCreationForm garden("Garden");
+        ShrubberyCreationForm copy(garden);
 
-        boss.executeForm(garden);
-    }
+        std::cout << "Default constructor " << def << endofline;
+        std::cout << "Target constructor  " << garden << endofline;
+        std::cout << "Copy constructor    " << copy << endofline;
 
-    title("A signed form still needs the exec grade");
-    {
-        Bureaucrat clerk("Milton", 140);
-        ShrubberyCreationForm garden("home");
+        std::cout << BOLD_GREEN << "=== BUREAUCRAT ===" << endofline;
+        Bureaucrat boss("Boss", 3);
+        std::cout << boss << endofline;
+        boss.incrementGrade();
+        std::cout << boss << endofline;
+        boss.decrementGrade();
+        std::cout << boss << endofline;
 
-        clerk.signForm(garden);
-        clerk.executeForm(garden);
-    }
-
-    title("Sign then execute for real");
-    {
-        Bureaucrat boss("Zaphod", 1);
-        ShrubberyCreationForm garden("home");
-
+        std::cout << BOLD_GREEN << "=== SIGN OK ===" << endofline;
         boss.signForm(garden);
-        boss.executeForm(garden);
-        std::cout << BOLD_YELLOW << "check the file ./home_shrubbery" << endofline;
-    }
+        std::cout << garden << endofline;
 
-    title("Robotomy: 50% success, run it a few times");
-    {
-        Bureaucrat boss("Zaphod", 1);
+        // only _signed crosses the assignment: the three const members stay put
+        def = garden;
+        std::cout << "Assignment operator " << def << endofline;
 
-        for (int i = 0; i < 4; i++) {
-            RobotomyRequestForm request("Bender");
-            boss.signForm(request);
-            boss.executeForm(request);
+        std::cout << BOLD_GREEN << "=== SIGN REFUSED ===" << endofline;
+        Bureaucrat intern("Intern", 150);
+        RobotomyRequestForm audit("Audit");
+        intern.signForm(audit);
+        std::cout << audit << endofline;
+
+        std::cout << BOLD_GREEN << "=== beSigned THROWS ===" << endofline;
+        try {
+            audit.beSigned(intern);
+        } catch (std::exception &e) {
+            std::cerr << BOLD_WHITE << intern.getName() << ": " << e.what() << endofline;
         }
-    }
 
-    title("Presidential pardon");
+        std::cout << BOLD_GREEN << "=== POLYMORPHIC DELETE ===" << endofline;
+        AForm* poly = new PresidentialPardonForm("Poly");
+        delete poly;
+    }
+#endif
+
+#if SHRUBBERY == 1
     {
-        Bureaucrat boss("Zaphod", 1);
-        Bureaucrat clerk("Milton", 24);
+        std::cout << BOLD_GREEN << "=== SHRUBBERY CREATION FORM (145 / 137) ===" << endofline;
+        ShrubberyCreationForm garden("Garden");
+        Bureaucrat gardener("Gardener", 137);
+        Bureaucrat trainee("Trainee", 140);
+        std::cout << garden << endofline;
+
+        std::cout << BOLD_YELLOW << "-- execute before signing --" << endofline;
+        gardener.executeForm(garden);
+
+        std::cout << BOLD_YELLOW << "-- sign --" << endofline;
+        gardener.signForm(garden);
+
+        std::cout << BOLD_YELLOW << "-- execute with grade 140 (too low) --" << endofline;
+        trainee.executeForm(garden);
+
+        std::cout << BOLD_YELLOW << "-- execute with grade 137 (exact bound) --" << endofline;
+        gardener.executeForm(garden);
+    }
+#endif
+
+#if ROBOTOMY == 1
+    {
+        std::cout << BOLD_GREEN << "=== ROBOTOMY REQUEST FORM (72 / 45) ===" << endofline;
+        RobotomyRequestForm robot("Bender");
+        Bureaucrat surgeon("Surgeon", 45);
+        Bureaucrat nurse("Nurse", 50);
+        std::cout << robot << endofline;
+
+        std::cout << BOLD_YELLOW << "-- execute before signing --" << endofline;
+        surgeon.executeForm(robot);
+
+        std::cout << BOLD_YELLOW << "-- sign --" << endofline;
+        nurse.signForm(robot);
+
+        std::cout << BOLD_YELLOW << "-- execute with grade 50 (too low) --" << endofline;
+        nurse.executeForm(robot);
+
+        std::cout << BOLD_YELLOW << "-- execute with grade 45 (exact bound), twice --" << endofline;
+        surgeon.executeForm(robot);
+        surgeon.executeForm(robot);
+    }
+#endif
+
+#if PARDON == 1
+    {
+        std::cout << BOLD_GREEN << "=== PRESIDENTIAL PARDON FORM (25 / 5) ===" << endofline;
         PresidentialPardonForm pardon("Arthur Dent");
+        Bureaucrat president("President", 5);
+        Bureaucrat aide("Aide", 10);
+        std::cout << pardon << endofline;
 
-        clerk.signForm(pardon);
-        clerk.executeForm(pardon);
-        boss.executeForm(pardon);
+        std::cout << BOLD_YELLOW << "-- execute before signing --" << endofline;
+        president.executeForm(pardon);
+
+        std::cout << BOLD_YELLOW << "-- sign --" << endofline;
+        aide.signForm(pardon);
+
+        std::cout << BOLD_YELLOW << "-- execute with grade 10 (too low) --" << endofline;
+        aide.executeForm(pardon);
+
+        std::cout << BOLD_YELLOW << "-- execute with grade 5 (exact bound) --" << endofline;
+        president.executeForm(pardon);
     }
+#endif
 
-    title("Polymorphism: the same AForm& drives different actions");
+#if TOO_LOW == 1
     {
-        Bureaucrat boss("Zaphod", 1);
-        RobotomyRequestForm request("Marvin");
-        PresidentialPardonForm pardon("Ford Prefect");
-        AForm *forms[2];
+        std::cout << BOLD_GREEN << "=== TOO LOW ===" << endofline;
+        try {
+            Bureaucrat b("Bob", 151);
+            std::cout << b << endofline;
+        } catch (std::exception &e) {
+            std::cerr << BOLD_WHITE << e.what() << endofline;
+        }
 
-        forms[0] = &request;
-        forms[1] = &pardon;
-        for (int i = 0; i < 2; i++) {
-            std::cout << BOLD_YELLOW << *forms[i] << endofline;
-            boss.signForm(*forms[i]);
-            boss.executeForm(*forms[i]);
+        try {
+            Bureaucrat c("Carl", 150);
+            c.decrementGrade();
+        } catch (std::exception &e) {
+            std::cerr << BOLD_WHITE << e.what() << endofline;
         }
     }
+#endif
 
-    return 0;
+#if TOO_HIGH == 1
+    {
+        std::cout << BOLD_GREEN << "=== TOO HIGH ===" << endofline;
+        try {
+            Bureaucrat d("Dan", 0);
+            std::cout << d << endofline;
+        } catch (std::exception &e) {
+            std::cerr << BOLD_WHITE << e.what() << endofline;
+        }
+
+        try {
+            Bureaucrat ev("Eve", 1);
+            ev.incrementGrade();
+        } catch (std::exception &e) {
+            std::cerr << BOLD_WHITE << e.what() << endofline;
+        }
+    }
+#endif
+    return (0);
 }

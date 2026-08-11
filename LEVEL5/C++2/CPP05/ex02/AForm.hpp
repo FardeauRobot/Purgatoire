@@ -1,59 +1,70 @@
 #ifndef AFORM_HPP
 # define AFORM_HPP
 
+#include <string>
 #include <exception>
 #include <iostream>
-#include <string>
 
-#include "Bureaucrat.hpp"
+class Bureaucrat;
 
 class AForm {
-    private:
-        const std::string _name;
-        bool        _signed;
-        const int   _signGrade;
-        const int   _execGrade;
-
     protected:
-        // The actual work of a concrete form. Called by execute() only once
-        // the signature and grade requirements have been verified.
-        virtual void executeAction() const = 0;
+        const std::string   _name;
+        bool                _signed;
+        const int           _gradeToSign;
+        const int           _gradeToExecute;
+
+        virtual void        executeAction() const = 0;
 
     public:
+
+        // ~TORS
         AForm();
-        AForm(std::string name, int signGrade, int execGrade);
+        AForm(std::string name, int gradeToSign, int gradeToExecute);
         AForm(const AForm &src);
         AForm& operator= (const AForm &other);
         virtual ~AForm();
 
+        // GETTERS / SETTERS
+        std::string getName() const;
+        bool        getSigned() const;
+        int         getGradeToSign() const;
+        int         getGradeToExecute() const;
+
         // METHODS
-        void beSigned(const Bureaucrat &bureaucrat);
-        void execute(const Bureaucrat &executor) const;
+        void            beSigned(const Bureaucrat &bureaucrat);
+        void            execute(const Bureaucrat &executor) const;
 
         // EXCEPTIONS
         class GradeTooHighException : public std::exception {
-            public:
-                const char *what() const throw();
-        };
+            private:
+                std::string _msg;
 
+            public:
+                GradeTooHighException(const std::string &msg);
+                virtual ~GradeTooHighException() throw() ;
+                virtual const char * what () const throw ();
+        };
         class GradeTooLowException : public std::exception {
-            public:
-                const char *what() const throw();
-        };
+            private:
+                std::string _msg;
 
+            public:
+                GradeTooLowException(const std::string &msg);
+                virtual ~GradeTooLowException() throw() ;
+                virtual const char * what () const throw ();
+        };
         class FormNotSignedException : public std::exception {
-            public:
-                const char *what() const throw();
-        };
+            private:
+                std::string _msg;
 
-        // GETTERS
-        std::string getName() const;
-        bool        getSigned() const;
-        int         getSignGrade() const;
-        int         getExecGrade() const;
+            public:
+                FormNotSignedException(const std::string &msg);
+                virtual ~FormNotSignedException() throw() ;
+                virtual const char * what () const throw ();
+        };
 };
 
-// FREE
-std::ostream &operator<<(std::ostream &out, const AForm &form);
+std::ostream& operator<< (std::ostream& os, AForm const& form);
 
 #endif

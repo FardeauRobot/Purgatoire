@@ -88,6 +88,30 @@ Everything needed to validate the 42 NetPractice project — IP fundamentals, ma
 
 ---
 
+## 🐳 Docker & Inception
+
+Everything needed to build and defend the 42 Inception project — Docker philosophy, the kernel mechanics underneath, Dockerfiles and PID 1, networking, volumes, compose, secrets, and the subject rule by rule. Hub: [`docker/INDEX.md`](docker/INDEX.md).
+
+| File | Topic |
+|---|---|
+| [`INDEX.md`](docker/INDEX.md) | Reading order, mental model, ready-to-defend checklist. |
+| [`00_ROADMAP.md`](docker/00_ROADMAP.md) | **Start here** — phased learning checklist with a gate at each step. |
+| [`01_PHILOSOPHY.md`](docker/01_PHILOSOPHY.md) | Why Docker exists, what it solved, what it didn't. Alpine vs Debian. |
+| [`02_UNDER_THE_HOOD.md`](docker/02_UNDER_THE_HOOD.md) | Namespaces, cgroups, overlay layers. Why macOS runs a hidden Linux VM. |
+| [`03_IMAGES_AND_DOCKERFILES.md`](docker/03_IMAGES_AND_DOCKERFILES.md) | Layers, build cache, every instruction — and PID 1. |
+| [`04_CONTAINERS.md`](docker/04_CONTAINERS.md) | Lifecycle, CLI verbs, restart policies, readiness vs `depends_on`. |
+| [`05_NETWORKING.md`](docker/05_NETWORKING.md) | Bridge networks, embedded DNS, published ports, why `host` is banned. |
+| [`06_STORAGE.md`](docker/06_STORAGE.md) | Volumes vs bind mounts, and the `driver_opts` pattern Inception forces. |
+| [`07_COMPOSE.md`](docker/07_COMPOSE.md) | `docker-compose.yml` field by field, and the Makefile that drives it. |
+| [`08_SECRETS_AND_ENV.md`](docker/08_SECRETS_AND_ENV.md) | `.env` vs secrets, `/run/secrets`, git hygiene before the first password. |
+| [`09_MAC_AND_LINUX.md`](docker/09_MAC_AND_LINUX.md) | Install and test on both, from zero. Where the platforms diverge. |
+| [`10_INCEPTION.md`](docker/10_INCEPTION.md) | The subject distilled — every rule, the directory tree, the graded docs. |
+| [`11_COMPARISONS.md`](docker/11_COMPARISONS.md) | The four README comparisons, written to be defended out loud. |
+| [`12_TROUBLESHOOTING.md`](docker/12_TROUBLESHOOTING.md) | Symptom → diagnosis decision tree. |
+| [`13_DEFENSE.md`](docker/13_DEFENSE.md) | The one-pager for 15 minutes before evaluation. |
+
+---
+
 ## 📝 Adding a new note
 
 1. Choose the right folder — or open a new one if a theme doesn't fit.

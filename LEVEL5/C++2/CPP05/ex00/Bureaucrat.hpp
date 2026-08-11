@@ -1,50 +1,53 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-#include <exception>
 #include <string>
-
-#ifndef TOO_LOW
-# define TOO_LOW 2
-#endif 
-
-#ifndef TOO_HIGH
-# define TOO_HIGH 0
-#endif 
+#include <exception>
+#include <iostream>
 
 class Bureaucrat {
     private:
         const std::string _name;
-        int         _grade;
+        int _grade;
 
     public:
+
+        // ~TORS
         Bureaucrat();
         Bureaucrat(std::string name, int grade);
         Bureaucrat(const Bureaucrat &src);
         Bureaucrat& operator= (const Bureaucrat &other);
         ~Bureaucrat();
 
+        // GETTERS / SETTERS
+        std::string getName() const;
+        int getGrade() const;
+
         // METHODS
-        void gradeIncrease();
-        void gradeDecrease();
-    
+        void    incrementGrade();
+        void    decrementGrade();
+        
         // EXCEPTIONS
         class GradeTooHighException : public std::exception {
-            public:
-                const char *what() const throw();
-        };
+            private: 
+                std::string _msg;
 
-        class GradeTooLowException : public std::exception {
             public:
-                const char *what() const throw();
+                GradeTooHighException(const std::string &name);
+                virtual ~GradeTooHighException() throw() ;
+                virtual const char * what () const throw ();
         };
-    
-        // GETTERS
-        int getGrade() const;
-        std::string getName() const;
+        class GradeTooLowException : public std::exception {
+            private: 
+                std::string _msg;
+
+            public:
+                GradeTooLowException(const std::string &name);
+                virtual ~GradeTooLowException() throw() ;
+                virtual const char * what () const throw ();
+        };
 };
 
-// FREE
-std::ostream &operator<<(std::ostream &out, const Bureaucrat &bureaucrat);
+std::ostream& operator<< (std::ostream& os, Bureaucrat const& bureaucrat);
 
 #endif

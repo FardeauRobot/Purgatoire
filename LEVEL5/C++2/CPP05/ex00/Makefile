@@ -68,6 +68,23 @@ leaks: debug
 		         --track-origins=yes --error-exitcode=1 ./$(NAME); \
 	fi
 
+# ============== TEST-CASE TARGETS ===========
+# main.cpp guards its error blocks with `#if TOO_LOW == 1` / `#if TOO_HIGH == 1`.
+# The macro is injected here with -D, so each target compiles a different main.
+# `re` is mandatory: make only compares timestamps, it has no idea CXXFLAGS
+# changed, so without a forced rebuild you'd re-run the previous binary.
+toolow: CXXFLAGS += -DTOO_LOW=1
+toolow: re
+	@echo "── run (TOO_LOW) ──"; ./$(NAME)
+
+toohigh: CXXFLAGS += -DTOO_HIGH=1
+toohigh: re
+	@echo "── run (TOO_HIGH) ──"; ./$(NAME)
+
+tests: CXXFLAGS += -DTOO_LOW=1 -DTOO_HIGH=1
+tests: re
+	@echo "── run (ALL CASES) ──"; ./$(NAME)
+
 # ============== WATCH MODE ==================
 # `make watch` -> rebuild automatically on every source change.
 # Requires fswatch:   macOS: brew install fswatch   Linux: apt-get install fswatch
@@ -100,5 +117,8 @@ help:
 	@echo "  make asan       rebuild with AddressSanitizer + UBSan"
 	@echo "  make leaks      rebuild with -g, run leaks (mac) / valgrind (linux)"
 	@echo "  make watch      auto-rebuild on source change (needs fswatch)"
+	@echo "  make toolow     build+run with -DTOO_LOW=1  (GradeTooLow cases)"
+	@echo "  make toohigh    build+run with -DTOO_HIGH=1 (GradeTooHigh cases)"
+	@echo "  make tests      build+run with every case enabled"
 
-.PHONY: all clean fclean re debug asan leaks watch help
+.PHONY: all clean fclean re debug asan leaks watch help toolow toohigh tests

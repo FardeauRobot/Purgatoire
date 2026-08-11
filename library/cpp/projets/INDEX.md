@@ -4,7 +4,7 @@ One folder per 42 project. These files follow the *subjects*: exercise by exerci
 
 ---
 
-## 🎓 CPP Modules (LEVEL4 — C++ piscine)
+## 🎓 CPP Modules (LEVEL4–5 — C++ piscine)
 
 | Module | File | What it teaches |
 |---|---|---|
@@ -13,6 +13,7 @@ One folder per 42 project. These files follow the *subjects*: exercise by exerci
 | CPP02 | [`modules/CPP02.md`](modules/CPP02.md) | OCF, operator overloading, fixed-point arithmetic. |
 | CPP03 | [`modules/CPP03.md`](modules/CPP03.md) | Inheritance, ctor/dtor chains, the ClapTrap family. |
 | CPP04 | [`modules/CPP04.md`](modules/CPP04.md) | Virtual dispatch, abstract classes, deep copy. |
+| CPP05 | [`modules/CPP05.md`](modules/CPP05.md) | Exceptions (`throw`/`try`/`catch`), the Bureaucrat/Form/Intern chain. |
 | — | [`modules/WALKTHROUGH.md`](modules/WALKTHROUGH.md) | End-to-end CPP walkthrough, all modules chained. |
 | — | [`modules/roundf_behavior.md`](modules/roundf_behavior.md) | CPP02 side-note: `roundf` edge cases. |
 

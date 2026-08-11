@@ -1,34 +1,31 @@
 #include <iostream>
-
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 #include "utils.hpp"
 
-// ~TORS
-Form::Form(): _name("Default"), _signed(false), _signGrade(75), _execGrade(75) {
-    std::cout << BOLD_CYAN << "Form Default constructor called" << endofline;
+Form::Form(): _name("Default"), _signed(false), _gradeToSign(150), _gradeToExecute(150) {
+    std::cout << BOLD_MAGENTA << "Form Default constructor called" << endofline;
 }
 
-Form::Form(std::string name, int signGrade, int execGrade):
-    _name(name), _signed(false), _signGrade(signGrade), _execGrade(execGrade) {
+Form::Form(std::string name, int gradeToSign, int gradeToExecute)
+    : _name(name), _signed(false), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute) {
     std::cout << BOLD_CYAN << "Form Name constructor called" << endofline;
-    if (_signGrade < 1 || _execGrade < 1)
-        throw GradeTooHighException();
-    else if (_signGrade > 150 || _execGrade > 150)
-        throw GradeTooLowException();
+    if (_gradeToSign > 150 || _gradeToExecute > 150)
+        throw GradeTooLowException(_name + "'s required grade is too low, must be at most 150.");
+    else if (_gradeToSign < 1 || _gradeToExecute < 1)
+        throw GradeTooHighException(_name + "'s required grade is too high, must be at least 1.");
 }
 
-Form::Form(const Form &src):
-    _name(src._name), _signed(src._signed),
-    _signGrade(src._signGrade), _execGrade(src._execGrade) {
+Form::Form(const Form &src)
+    : _name(src._name), _signed(src._signed),
+      _gradeToSign(src._gradeToSign), _gradeToExecute(src._gradeToExecute) {
     std::cout << BOLD_BLUE << "Form Copy constructor called" << endofline;
 }
 
 Form& Form::operator= (const Form &other) {
     std::cout << BOLD_BLUE << "Form Copy assignment operator called" << endofline;
-    if (this != &other) {
-        // _name, _signGrade and _execGrade are const: only the status can change
+    if (this != &other)
         _signed = other._signed;
-    }
     return (*this);
 }
 
@@ -36,33 +33,32 @@ Form::~Form() {
     std::cout << BOLD_RED << "Form Destructor called" << endofline;
 }
 
-// METHODS
-void Form::beSigned(const Bureaucrat &bureaucrat) {
-    if (bureaucrat.getGrade() > _signGrade)
-        throw GradeTooLowException();
-    _signed = true;
+std::string Form::getName() const { return (_name);}
+bool        Form::getSigned() const { return (_signed);}
+int         Form::getGradeToSign() const { return (_gradeToSign);}
+int         Form::getGradeToExecute() const { return (_gradeToExecute);}
+
+Form::GradeTooHighException::GradeTooHighException(const std::string &msg) : _msg (msg) {}
+Form::GradeTooHighException::~GradeTooHighException() throw() {}
+
+const char * Form::GradeTooHighException::what() const throw () {return (_msg.c_str());}
+
+Form::GradeTooLowException::GradeTooLowException(const std::string &msg) : _msg (msg) {}
+Form::GradeTooLowException::~GradeTooLowException() throw() {}
+
+const char * Form::GradeTooLowException::what() const throw () {return (_msg.c_str());}
+
+void    Form::beSigned(const Bureaucrat &bureaucrat) {
+    if (bureaucrat.getGrade() <= _gradeToSign)
+        _signed = true;
+    else 
+        throw GradeTooLowException("grade too low to sign");
 }
 
-// EXCEPTIONS
-const char* Form::GradeTooHighException::what() const throw() {
-    return "Form: grade too high";
-}
-
-const char* Form::GradeTooLowException::what() const throw() {
-    return "Form: grade too low";
-}
-
-// GETTERS
-std::string Form::getName() const { return (_name); }
-bool        Form::getSigned() const { return (_signed); }
-int         Form::getSignGrade() const { return (_signGrade); }
-int         Form::getExecGrade() const { return (_execGrade); }
-
-// FREE
-std::ostream &operator<<(std::ostream &out, const Form &form) {
-    out << "Form " << form.getName()
-        << " [" << (form.getSigned() ? "signed" : "unsigned") << "]"
-        << ", sign grade " << form.getSignGrade()
-        << ", exec grade " << form.getExecGrade();
-    return (out);
+std::ostream& operator<< (std::ostream& os, Form const& form) {
+    os << BOLD_CYAN << form.getName() << RESET << ", form "
+       << (form.getSigned() ? BOLD_GREEN "signed" : BOLD_RED "unsigned") << RESET
+       << ", grade " << BOLD_YELLOW << form.getGradeToSign() << RESET << " to sign, grade "
+       << BOLD_YELLOW << form.getGradeToExecute() << RESET << " to execute";
+    return (os);
 }
