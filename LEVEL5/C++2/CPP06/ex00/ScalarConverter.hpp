@@ -5,13 +5,13 @@
 
 class ScalarConverter {
     private:
-        std::string _name;
-        ScalarConverter(std::string name);
+        ScalarConverter();
         ScalarConverter(const ScalarConverter &src);
-        ScalarConverter& operator= (const ScalarConverter &other);
+        ScalarConverter &operator= (const ScalarConverter &other);
         ~ScalarConverter();
 
     public:
+        static void convert(const std::string &literal);
 };
 
 #endif
