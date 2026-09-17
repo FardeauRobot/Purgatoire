@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Back Track King Viewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Back Track King <span>local replay</span></h1>
+    <div class="controls">
+      <select id="replay">
+        <option value="../simulator/out/replay-l1.json">League 1 — connect</option>
+        <option value="../simulator/out/replay-l2.json">League 2 — disrupt</option>
+        <option value="../simulator/out/replay-l3.json" selected>League 3 — full game</option>
+        <option value="../simulator/out/replay-self.json">Self-play</option>
+      </select>
+      <button id="load" title="Reload the replay from disk">Load</button>
+      <span class="sep"></span>
+      <button id="first" title="First turn">⏮</button>
+      <button id="prev" title="Previous turn (←)">◀</button>
+      <button id="play" title="Play / pause (space)">▶</button>
+      <button id="next" title="Next turn (→)">▶︎|</button>
+      <button id="last" title="Last turn">⏭</button>
+      <select id="speed">
+        <option value="800">slow</option>
+        <option value="350" selected>normal</option>
+        <option value="120">fast</option>
+      </select>
+      <input id="scrub" type="range" min="0" max="0" value="0">
+      <span id="turn" class="turn">–</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="board">
+      <div class="scorebar">
+        <div class="p p0"><span class="dot"></span><span id="name0">P0</span><b id="score0">0</b></div>
+        <div id="result" class="result"></div>
+        <div class="p p1"><b id="score1">0</b><span id="name1">P1</span><span class="dot"></span></div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="map"></canvas>
+        <div id="tip" class="tip" hidden></div>
+      </div>
+      <div class="legend">
+        <span><i class="sw plains"></i>plains 1</span>
+        <span><i class="sw river"></i>river 2</span>
+        <span><i class="sw mountain"></i>mountain 3</span>
+        <span><i class="sw ink"></i>inked</span>
+        <span><i class="sw t0"></i>P0 track</span>
+        <span><i class="sw t1"></i>P1 track</span>
+        <span><i class="sw t2"></i>neutral</span>
+        <label><input id="showRegions" type="checkbox" checked> region ids</label>
+        <label><input id="showPaths" type="checkbox" checked> active paths</label>
+      </div>
+    </section>
+
+    <aside>
+      <div class="panel">
+        <h2>Commands</h2>
+        <div class="cmd p0"><span class="tag">P0</span><code id="cmd0"></code><em id="ms0"></em></div>
+        <div class="cmd p1"><span class="tag">P1</span><code id="cmd1"></code><em id="ms1"></em></div>
+        <div id="msgs" class="msgs"></div>
+      </div>
+      <div class="panel">
+        <h2>Connections <small>click to highlight</small></h2>
+        <table id="conns"></table>
+      </div>
+      <div class="panel">
+        <h2>Referee log</h2>
+        <pre id="log"></pre>
+      </div>
+      <div class="panel">
+        <h2>stderr P0</h2>
+        <pre id="err0"></pre>
+      </div>
+      <div class="panel">
+        <h2>stderr P1</h2>
+        <pre id="err1"></pre>
+      </div>
+    </aside>
+  </main>
+  <script src="viewer.js"></script>
+</body>
+</html>
