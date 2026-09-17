@@ -1,17 +1,14 @@
 #include "ScalarConverter.hpp"
 
+#include <cstddef>
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
 #include <climits>
 #include <cctype>
-
-// ============================================================================
-//  ORTHODOX CANONICAL FORM
-//  ScalarConverter only exists to host the static convert() method: it holds
-//  no data and must never be instantiated, copied or assigned. The four
-//  members are therefore private and left empty on purpose.
-// ============================================================================
+#include <string>
+#include <type_traits>
+#include "utils.hpp"
 
 ScalarConverter::ScalarConverter() {}
 
@@ -23,10 +20,6 @@ ScalarConverter &ScalarConverter::operator= (const ScalarConverter &other) {
 }
 
 ScalarConverter::~ScalarConverter() {}
-
-// ============================================================================
-//  INTERNAL HELPERS  (file-local, not part of the public interface)
-// ============================================================================
 
 enum LiteralType {
     TYPE_CHAR,
@@ -55,7 +48,40 @@ enum LiteralType {
 //    - a lone "." , "-" , "f" , "42." , "42f" ... are all TYPE_INVALID
 // ----------------------------------------------------------------------------
 static LiteralType detectType(const std::string &literal) {
-    (void)literal;              // <- remove once you use the parameter
+
+    std::size_t index_dot = literal.find('.');
+    std::size_t index_f = literal.find('f');
+    bool plus = false;
+    bool minus = false;
+
+    // PSEUDO
+    if ( literal == "nan" || literal == "nanf" || literal =="inf" || literal =="inff" ||
+        literal =="+inf" || literal =="-inf" || literal =="+inff" || literal =="-inff")
+        return (TYPE_PSEUDO);
+
+    else if (literal.empty())
+        return (TYPE_INVALID);
+
+
+    // 
+    if (literal[0] == '-')
+            minus = true;
+    if (literal[0] == '+')
+            plus = true;
+
+    // 
+    // if (plus || minus)
+    //         return (TYPE_INT);
+
+
+    //
+    if (index_dot != std::string::npos)
+        std::cout << "Found a point at index " << index_dot  << endofline;
+
+    if (index_f != std::string::npos)
+        std::cout << "Found a f at index " << index_f  << endofline;
+
+    // RETURN INVALID AT LAST
     return (TYPE_INVALID);      // <- replace with your logic
 }
 
@@ -76,12 +102,14 @@ static std::string formatDecimal(double value) {
 }
 
 static void printPseudo(const std::string &literal) {
+
     const bool         negative = (!literal.empty() && literal[0] == '-');
     const bool         isNan = (literal.find("nan") != std::string::npos);
     const std::string  sign = negative ? "-" : "";
 
     std::cout << "char: impossible" << std::endl;
     std::cout << "int: impossible" << std::endl;
+
     if (isNan) {
         std::cout << "float: nanf" << std::endl;
         std::cout << "double: nan" << std::endl;

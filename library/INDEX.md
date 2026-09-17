@@ -15,6 +15,7 @@ library/
 ├── scripts/          # workflow tooling docs
 ├── projects/         # per-project READMEs and TODO lists
 ├── cpp/              # C++ study notes, sorted by theme
+├── rust/             # Rust for a C/C++ dev — lexique + notions
 └── netpractice/      # NetPractice project — networking support
 ```
 
@@ -63,11 +64,24 @@ Everything C++ lives behind one entry point: **[`cpp/INDEX.md`](cpp/INDEX.md)**.
 
 | Door | Hub | What's inside |
 |---|---|---|
-| 📦 Projets | [`cpp/projets/INDEX.md`](cpp/projets/INDEX.md) | Per-module guides CPP00→04, WALKTHROUGH, the whole webserv sub-library. |
+| 📦 Projets | [`cpp/projets/INDEX.md`](cpp/projets/INDEX.md) | Per-module guides CPP00→09, WALKTHROUGH, the whole webserv sub-library. |
 | 🧠 Notions | [`cpp/notions/INDEX.md`](cpp/notions/INDEX.md) | Concepts by theme — PHILOSOPHY, fundamentals, OOP, STL containers, I/O & errors, tooling. |
 | 🔑 Lexique | [`cpp/lexique/INDEX.md`](cpp/lexique/INDEX.md) | One page per C++98 keyword (all 63) + the concept [`GLOSSAIRE`](cpp/lexique/GLOSSAIRE.md). |
 
 > 🌟 New module starting? Re-read [`cpp/notions/PHILOSOPHY.md`](cpp/notions/PHILOSOPHY.md) first.
+
+---
+
+## 🦀 Rust — two doors
+
+Everything Rust lives behind one entry point: **[`rust/INDEX.md`](rust/INDEX.md)**. Written for a C/C++98 developer — every page bridges from what you already know.
+
+| Door | Hub | What's inside |
+|---|---|---|
+| 🧠 Notions | [`rust/notions/INDEX.md`](rust/notions/INDEX.md) | PHILOSOPHY, ownership, borrowing, lifetimes, types, traits & generics, error handling, Cargo. |
+| 🔑 Lexique | [`rust/lexique/INDEX.md`](rust/lexique/INDEX.md) | Every strict Rust keyword + reserved/weak ones + the concept [`GLOSSAIRE`](rust/lexique/GLOSSAIRE.md). |
+
+> 🌟 Start with [`rust/notions/PHILOSOPHY.md`](rust/notions/PHILOSOPHY.md), then ownership → borrowing → lifetimes.
 
 ---
 

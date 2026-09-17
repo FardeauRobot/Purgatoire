@@ -14,6 +14,10 @@ One folder per 42 project. These files follow the *subjects*: exercise by exerci
 | CPP03 | [`modules/CPP03.md`](modules/CPP03.md) | Inheritance, ctor/dtor chains, the ClapTrap family. |
 | CPP04 | [`modules/CPP04.md`](modules/CPP04.md) | Virtual dispatch, abstract classes, deep copy. |
 | CPP05 | [`modules/CPP05.md`](modules/CPP05.md) | Exceptions (`throw`/`try`/`catch`), the Bureaucrat/Form/Intern chain. |
+| CPP06 | [`modules/CPP06.md`](modules/CPP06.md) | The four C++ casts: `static_cast`, `reinterpret_cast`, `dynamic_cast`. |
+| CPP07 | [`modules/CPP07.md`](modules/CPP07.md) | Function and class templates, `Array<T>` with deep copy. |
+| CPP08 | [`modules/CPP08.md`](modules/CPP08.md) | STL containers, iterators and algorithms; `MutantStack`. |
+| CPP09 | [`modules/CPP09.md`](modules/CPP09.md) | STL in practice: btc (`map`), RPN (`stack`), PmergeMe (Ford-Johnson). |
 | — | [`modules/WALKTHROUGH.md`](modules/WALKTHROUGH.md) | End-to-end CPP walkthrough, all modules chained. |
 | — | [`modules/roundf_behavior.md`](modules/roundf_behavior.md) | CPP02 side-note: `roundf` edge cases. |
 

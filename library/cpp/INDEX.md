@@ -9,13 +9,13 @@ Everything C++ in this vault, split by *how you're going to use it*. Pick the do
    ┌─────────────────────┐              ┌─────────────────────┐             ┌─────────────────────┐
    │   📦 PROJETS        │              │   🧠 NOTIONS        │             │   🔑 LEXIQUE        │
    │  per-module guides  │─── uses ────►│  concepts by theme  │◄── zooms ───│  one page per       │
-   │  CPP00–04, webserv  │              │  memory, OOP, STL…  │             │  C++98 keyword      │
+   │  CPP00–09, webserv  │              │  memory, OOP, STL…  │             │  C++98 keyword      │
    └─────────────────────┘              └─────────────────────┘             └─────────────────────┘
 ```
 
 | Door | Hub | When to open it |
 |---|---|---|
-| 📦 [`projets/`](projets/INDEX.md) | Modules CPP00→04, WALKTHROUGH, webserv | You're **doing an exercise** and want the guided path. |
+| 📦 [`projets/`](projets/INDEX.md) | Modules CPP00→09, WALKTHROUGH, webserv | You're **doing an exercise** and want the guided path. |
 | 🧠 [`notions/`](notions/INDEX.md) | Fundamentals, OOP, STL, I/O, tooling | You want to **understand a concept** in depth. |
 | 🔑 [`lexique/`](lexique/INDEX.md) | All 63 C++98 keywords + [`GLOSSAIRE`](lexique/GLOSSAIRE.md) | A **word** is in your way — look it up, move on. |
 
