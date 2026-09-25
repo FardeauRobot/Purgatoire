@@ -3,7 +3,7 @@
 #include "utils.hpp"
 
 ScavTrap::ScavTrap(void) : ClapTrap() {
-    std::cout << CYAN << "ScavTrap Default constructor called" << endofline;
+    jstd::cout << CYAN << "ScavTrap Default constructor called" << endofline;
     m_hp = 100;
     m_energy = 50;
     m_atk = 20;
