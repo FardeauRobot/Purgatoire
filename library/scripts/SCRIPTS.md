@@ -286,3 +286,20 @@ start
 ```
 
 Pure convenience — gnome-terminal specific.
+
+---
+
+## ADDUtils
+
+Scaffold a flat C++ project folder: Makefile, `utils`, `errors`, `main.cpp` and an empty OCF class (no data members).
+
+```
+ADDUtils <folder> <ClassName>
+```
+
+**Creates** `<folder>/` with `Makefile`, `utils.{hpp,cpp}`, `errors.{hpp,cpp}`, `main.cpp`, `<ClassName>.{hpp,cpp}`.
+
+**What it does**
+- Copies utils / errors / Makefile from `templates/cpp/basic`, flattened (no `src/` / `include/`), `NAME` = folder name
+- Class has default ctor, copy ctor, copy assignment, dtor, with trace prints
+- Refuses if `<folder>` already exists
