@@ -6,87 +6,87 @@
 #include <cstdlib>
 #include <climits>
 #include <cctype>
+#include <cerrno>
+#include <limits>
 #include <string>
-#include <type_traits>
 #include "utils.hpp"
 
-ScalarConverter::ScalarConverter() {}
-
-ScalarConverter::ScalarConverter(const ScalarConverter &src) { (void)src; }
-
-ScalarConverter &ScalarConverter::operator= (const ScalarConverter &other) {
-    (void)other;
-    return (*this);
-}
-
-ScalarConverter::~ScalarConverter() {}
+// ScalarConverter::ScalarConverter() {}
+//
+// ScalarConverter::ScalarConverter(const ScalarConverter &src) { (void)src; }
+//
+// ScalarConverter &ScalarConverter::operator= (const ScalarConverter &other) {
+//     (void)other;
+//     return (*this);
+// }
+//
+// ScalarConverter::~ScalarConverter() {}
 
 enum LiteralType {
     TYPE_CHAR,
     TYPE_INT,
     TYPE_FLOAT,
     TYPE_DOUBLE,
-    TYPE_PSEUDO,
     TYPE_INVALID
 };
 
-// ----------------------------------------------------------------------------
-//  TODO #1  --  the heart of the exercise.
-//  Inspect `literal` and return which LiteralType it represents.
-//
-//    TYPE_PSEUDO : "nan" "nanf" "inf" "inff" "+inf" "-inf" "+inff" "-inff"
-//    TYPE_CHAR   : 3 characters,  'x'  (quote, one NON-digit char, quote)
-//    TYPE_INT    : optional + / - sign, then digits only          ->  -42
-//    TYPE_FLOAT  : an otherwise-double literal ending in one 'f'   ->  4.2f
-//    TYPE_DOUBLE : optional sign, digits, exactly one '.', digits  ->  -4.2
-//    TYPE_INVALID: anything that does not match the shapes above
-//
-//  Hints:
-//    - std::string gives you .size(), .find(), operator[], .substr()
-//    - std::isdigit(static_cast<unsigned char>(c))  from <cctype>
-//    - check the pseudo-literals and the char form BEFORE the number forms
-//    - a lone "." , "-" , "f" , "42." , "42f" ... are all TYPE_INVALID
-// ----------------------------------------------------------------------------
 static LiteralType detectType(const std::string &literal) {
+    int i = 0;
+    int pos_dot = -1;
+    int pos_f = -1;
+    int digits_before = 0;
+    int digits_after = 0;
 
-    std::size_t index_dot = literal.find('.');
-    std::size_t index_f = literal.find('f');
-    bool plus = false;
-    bool minus = false;
+    if (literal == "nanf" || literal == "inff" ||
+        literal == "+inff" || literal == "-inff")
+        return (TYPE_FLOAT);
+    if (literal == "nan" || literal == "inf" ||
+        literal == "+inf" || literal == "-inf")
+        return (TYPE_DOUBLE);
 
-    // PSEUDO
-    if ( literal == "nan" || literal == "nanf" || literal =="inf" || literal =="inff" ||
-        literal =="+inf" || literal =="-inf" || literal =="+inff" || literal =="-inff")
-        return (TYPE_PSEUDO);
+    if (literal.size() == 3 && literal[0] == '\'' && literal[2] == '\'')
+        return (TYPE_CHAR);
 
-    else if (literal.empty())
+    if (literal.size() == 1 && !std::isdigit(static_cast<unsigned char>(literal[0])))
+        return (TYPE_CHAR);
+
+    if (literal[0] == '-' || literal[0] == '+')
+        i++;
+
+    if (literal.size() > 0 && literal[literal.size() - 1] == 'f')
+        pos_f = static_cast<int>(literal.size()) - 1;
+
+    while (literal[i])
+    {
+        if (literal[i] == '.') {
+            if (pos_dot != -1)
+                return (TYPE_INVALID);
+            pos_dot = i;
+        } else if (std::isdigit(static_cast<unsigned char>(literal[i]))) {
+            if (pos_dot == -1)
+                digits_before++;
+            else
+                digits_after++;
+        } else if (i != pos_f) {
+            return (TYPE_INVALID);
+        }
+        i++;
+    }
+
+    if (digits_before == 0)
         return (TYPE_INVALID);
-
-
-    // 
-    if (literal[0] == '-')
-            minus = true;
-    if (literal[0] == '+')
-            plus = true;
-
-    // 
-    // if (plus || minus)
-    //         return (TYPE_INT);
-
-
-    //
-    if (index_dot != std::string::npos)
-        std::cout << "Found a point at index " << index_dot  << endofline;
-
-    if (index_f != std::string::npos)
-        std::cout << "Found a f at index " << index_f  << endofline;
-
-    // RETURN INVALID AT LAST
-    return (TYPE_INVALID);      // <- replace with your logic
+    if (pos_f != -1 && pos_dot == -1)
+        return (TYPE_INVALID);
+    if (pos_dot != -1) {
+        if (digits_after == 0)
+            return (TYPE_INVALID);
+        if (pos_f != -1)
+            return (TYPE_FLOAT);
+        return (TYPE_DOUBLE);
+    }
+    return (TYPE_INT);
 }
 
-// Formats a floating value the way the subject wants it: always at least one
-// decimal digit ("0" -> "0.0", "42" -> "42.0"), leaves "4.2" untouched.
 static std::string formatDecimal(double value) {
     std::ostringstream oss;
 
@@ -96,95 +96,126 @@ static std::string formatDecimal(double value) {
         && s.find("inf") == std::string::npos && s.find("nan") == std::string::npos)
         s += ".0";
     return (s);
-    // NOTE: for very large magnitudes std::ostream switches to scientific
-    //       notation ("2.14748e+09"). The usual subject test values are fine;
-    //       come back and tune precision here if you want the big ones nicer.
-}
-
-static void printPseudo(const std::string &literal) {
-
-    const bool         negative = (!literal.empty() && literal[0] == '-');
-    const bool         isNan = (literal.find("nan") != std::string::npos);
-    const std::string  sign = negative ? "-" : "";
-
-    std::cout << "char: impossible" << std::endl;
-    std::cout << "int: impossible" << std::endl;
-
-    if (isNan) {
-        std::cout << "float: nanf" << std::endl;
-        std::cout << "double: nan" << std::endl;
-    } else {
-        std::cout << "float: " << sign << "inff" << std::endl;
-        std::cout << "double: " << sign << "inf" << std::endl;
-    }
 }
 
 static void printInvalid() {
-    std::cout << "char: impossible" << std::endl;
-    std::cout << "int: impossible" << std::endl;
-    std::cout << "float: impossible" << std::endl;
-    std::cout << "double: impossible" << std::endl;
+    std::cout << "char: impossible" << endofline;
+    std::cout << "int: impossible" << endofline;
+    std::cout << "float: impossible" << endofline;
+    std::cout << "double: impossible" << endofline;
 }
 
-// ----------------------------------------------------------------------------
-//  TODO #2  --  char output.
-//  `value` is the already-parsed numeric value of the literal.
-//    - out of the char range (0 .. 127 for plain ASCII)  -> "impossible"
-//    - else not printable, std::isprint(static_cast<unsigned char>(c)) is 0
-//                                                         -> "Non displayable"
-//    - else                                               -> 'c'
-//  Use static_cast<char>(value) for the final conversion. <cctype> is included.
-// ----------------------------------------------------------------------------
-static void printAsChar(double value) {
-    (void)value;                                          // <- remove when used
-    std::cout << "char: " << "impossible" << std::endl;   // <- replace
+static void printChar(bool possible, char c) {
+    if (!possible)
+        std::cout << "char: impossible" << endofline;
+    else if (!std::isprint(static_cast<unsigned char>(c)))
+        std::cout << "char: Non displayable" << endofline;
+    else
+        std::cout << "char: '" << c << "'" << endofline;
 }
 
-// ----------------------------------------------------------------------------
-//  TODO #3  --  int output.
-//    - `value` does not fit in an int  (INT_MIN / INT_MAX, from <climits>)
-//                                            -> "impossible"
-//    - else                                  -> static_cast<int>(value)
-// ----------------------------------------------------------------------------
-static void printAsInt(double value) {
-    (void)value;                                         // <- remove when used
-    std::cout << "int: " << "impossible" << std::endl;   // <- replace
+static void printInt(bool possible, int i) {
+    if (!possible)
+        std::cout << "int: impossible" << endofline;
+    else
+        std::cout << "int: " << i << endofline;
 }
 
-static void printAsFloat(double value) {
-    const float f = static_cast<float>(value);
-
-    std::cout << "float: " << formatDecimal(static_cast<double>(f)) << "f" << std::endl;
+static void printFloat(float f) {
+    std::cout << "float: " << formatDecimal(static_cast<double>(f)) << "f" << endofline;
 }
 
-static void printAsDouble(double value) {
-    std::cout << "double: " << formatDecimal(value) << std::endl;
+static void printDouble(double d) {
+    std::cout << "double: " << formatDecimal(d) << endofline;
 }
 
-// ============================================================================
-//  PUBLIC API
-// ============================================================================
+
+static float doubleToFloat(double d) {
+    if (d > std::numeric_limits<float>::max())
+        return (std::numeric_limits<float>::infinity());
+    if (d < -std::numeric_limits<float>::max())
+        return (-std::numeric_limits<float>::infinity());
+    return (static_cast<float>(d));
+}
+
+static void fromChar(char c) {
+    printChar(true, c);
+    printInt(true, static_cast<int>(c));
+    printFloat(static_cast<float>(c));
+    printDouble(static_cast<double>(c));
+}
+
+static void fromInt(int i) {
+    printChar(i >= 0 && i <= 127, static_cast<char>(i));
+    printInt(true, i);
+    printFloat(static_cast<float>(i));
+    printDouble(static_cast<double>(i));
+}
+
+
+static void fromFloat(float f) {
+    const double asDouble = static_cast<double>(f);
+    const bool   charOk = (f >= 0 && f <= 127);
+    const bool   intOk = (asDouble >= INT_MIN && asDouble <= INT_MAX);
+
+    char c = 0;
+    int  i = 0;
+
+    if (charOk)
+        c = static_cast<char>(f);
+    if (intOk)
+        i = static_cast<int>(f);
+
+    printChar(charOk, c);
+    printInt(intOk, i);
+    printFloat(f);
+    printDouble(asDouble);
+}
+
+static void fromDouble(double d) {
+    const bool charOk = (d >= 0 && d <= 127);
+    const bool intOk = (d >= static_cast<double>(INT_MIN) && d <= static_cast<double>(INT_MAX));
+
+    char c = 0;
+    int  i = 0;
+
+    if (charOk)
+        c = static_cast<char>(d);
+    if (intOk)
+        i = static_cast<int>(d);
+
+    printChar(charOk, c);
+    printInt(intOk, i);
+    printFloat(doubleToFloat(d));
+    printDouble(d);
+}
 
 void ScalarConverter::convert(const std::string &literal) {
-    const LiteralType type = detectType(literal);
+    switch (detectType(literal)) {
+        case TYPE_CHAR:
+            if (literal.size() == 3)
+                fromChar(literal[1]);
+            else
+                fromChar(literal[0]);
+            break;
+        case TYPE_INT: {
 
-    if (type == TYPE_PSEUDO) {
-        printPseudo(literal);
-        return;
+            errno = 0;
+            const long l = std::strtol(literal.c_str(), NULL, 10);
+            if (errno == ERANGE || l < static_cast<long>(INT_MIN) || l > static_cast<long>(INT_MAX))
+                fromDouble(std::strtod(literal.c_str(), NULL));
+            else
+                fromInt(static_cast<int>(l));
+            break;
+        }
+        case TYPE_FLOAT:
+            fromFloat(doubleToFloat(std::strtod(literal.c_str(), NULL)));
+            break;
+        case TYPE_DOUBLE:
+            fromDouble(std::strtod(literal.c_str(), NULL));
+            break;
+        case TYPE_INVALID:
+            printInvalid();
+            break;
     }
-    if (type == TYPE_INVALID) {
-        printInvalid();
-        return;
-    }
-
-    double value = 0.0;
-    if (type == TYPE_CHAR)
-        value = static_cast<double>(literal[1]);
-    else
-        value = std::strtod(literal.c_str(), NULL);
-
-    printAsChar(value);
-    printAsInt(value);
-    printAsFloat(value);
-    printAsDouble(value);
 }

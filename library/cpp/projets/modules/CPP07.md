@@ -154,6 +154,13 @@ void iter(T *array, size_t const length, F func)
 }
 ```
 
+Line by line:
+- **`template <typename T, typename F>`**: two unknowns. `T` is the element type and `F` is the callback's type. The compiler deduces both from the call, so you never write them by hand.
+- **`void iter(T *array, size_t const length, F func)`**: the same three things `ft_striteri` takes (an address, a length, a function). `F func` is passed **by value**, which is cheap: it's a function pointer or a small functor.
+- **`if (array == NULL) return;`**: the one real boundary. Called with `NULL` and a non-zero length, `array[i]` would dereference NULL.
+- **`for (size_t i = 0; i < length; i++)`**: `size_t` so it's the same type as `length`. An `int i` compared with a `size_t` triggers `-Wsign-compare`, which is an error under `-Werror`.
+- **`func(array[i]);`**: `array[i]` is an lvalue of type `T`, so it can bind to a `T &` or a `T const &` parameter. When `T` is `int const`, only a `T const &` callback fits. Passing `inc<int>` (which takes `int &`) on a const array fails with `binding reference of type 'int' to value of type 'const int' drops 'const' qualifier` (tested). That's the compiler protecting the const array for you.
+
 Why two type parameters?
 
 ```
@@ -180,6 +187,10 @@ template <typename T>
 void iter(T const *array, size_t const length, void (*func)(T const &));
 ```
 
+- The first overload takes a **mutable** array and a callback that may modify: `void (*func)(T &)` reads "pointer to a function taking a `T &` and returning `void`". It's C's function-pointer syntax, as in `qsort`'s comparator.
+- The second takes a `T const *` array and a callback that only reads. When you pass a const array, only this overload matches.
+- A *read-only* callback on a *mutable* array still works. Deduction may add `const` (`int *` → `int const *`), so `::iter(tab, 5, print<int>)` picks the second overload (tested: all three cases compile and run). What you lose compared to `F` is functors: an overload that asks for a function **pointer** won't take a callable object.
+
 Both approaches pass. Be ready to explain the one you picked.
 
 ### Passing a function template as the callback
@@ -192,7 +203,11 @@ int tab[] = { 0, 1, 2, 3, 4 };
 ::iter(tab, 5, print<int>);     // explicit template argument: names one real function
 ```
 
-The explicit `<int>` matters. A bare `print` is a *family* of functions, and with a generic `F` the compiler can't deduce which one you mean.
+- **`template <typename T> void print(T const &x)`**: a second function template. It takes `T const &`, so it works on const and non-const arrays alike, and it doesn't copy `std::string`s.
+- **`int tab[] = { 0, 1, 2, 3, 4 };`**: a plain C array. Its name decays to `int *` when passed, so `T = int`.
+- **`::iter(tab, 5, print<int>)`**: `::` picks your global `iter` (same reason as `::swap` in ex00). `print<int>` names one real function, `void print(int const &)`, and its address becomes `F`.
+
+The explicit `<int>` matters. A bare `print` is a *family* of functions, and with a generic `F` the compiler can't deduce which one you mean: `::iter(c, 1, p)` fails with `no matching function for call to 'iter'` (tested).
 
 ### What the evaluator runs
 The grading sheet compiles its own test file against your `iter`. It must print:
@@ -275,6 +290,16 @@ public:
 #endif
 ```
 
+Line by line:
+- **`# include <exception>`** for `std::exception`, the base of your out-of-bounds exception. **`<cstddef>`** for `NULL`.
+- **`template <typename T>` right before `class Array`**: the whole class is a pattern. `Array` alone isn't a type. `Array<int>` and `Array<std::string>` are.
+- **`T *_data;`**: the heap block, typed. It's `int *arr` from C, except `T` is filled in per instantiation.
+- **`unsigned int _size;`**: `unsigned` because the subject's constructor takes an `unsigned int`. A negative size is impossible by construction.
+- **The four OCF lines.** Inside the class, `Array` is shorthand for `Array<T>`, so `Array const &other` means "another array of the same `T`".
+- **Two `operator[]`**: one returns `T &` (read and write), the other is a `const` member returning `T const &` (read only). See "Const access" below.
+- **`unsigned int size() const;`**: `const` because it only reads, which the subject asks for ("doesn't modify the instance").
+- **`class OutOfBoundsException : public std::exception`**: a nested exception class, the CPP05 pattern. `what() const throw()` matches the C++98 signature of `std::exception::what`.
+
 The `.tpp` goes at the **bottom** of the header, after the class is declared. Anything that includes `Array.hpp` gets the bodies too, which solves the visibility problem from §2.
 
 ### Core snippets from `Array.tpp`
@@ -319,11 +344,38 @@ T &Array<T>::operator[](unsigned int i)
 }
 
 template <typename T>
+T const &Array<T>::operator[](unsigned int i) const
+{
+    if (i >= _size)
+        throw OutOfBoundsException();
+    return _data[i];
+}
+
+template <typename T>
+unsigned int Array<T>::size() const
+{
+    return _size;
+}
+
+template <typename T>
 const char *Array<T>::OutOfBoundsException::what() const throw()
 {
     return "Array: index out of bounds";
 }
 ```
+
+Line by line, in the order of the file:
+- **`Array<T>::Array() : _data(NULL), _size(0) {}`**: the empty array owns nothing. The initialisation list sets both members before the body runs, which is the CPP02 habit.
+- **`Array(unsigned int n) : _data(new T[n]()), _size(n) {}`**: one allocation of exactly `n` elements. That's the "no preventive allocation" rule.
+- **Copy ctor:** first make `*this` a valid empty array, then let `operator=` do the deep copy. One copy routine instead of two.
+- **`if (this != &other)`**: self-assignment guard. Without it, `a = a` would copy from a block it's about to free.
+- **`T *fresh = new T[other._size]();`** then the `for` loop: a new block, filled element by element. `fresh[i] = other._data[i]` calls `T`'s own `operator=`, so a `std::string` gets a real copy of its characters.
+- **`delete[] _data; _data = fresh; _size = other._size;`**: swap the old block for the new one, and only now.
+- **`return *this;`** allows `a = b = c`, the usual `operator=` contract.
+- **`~Array() { delete[] _data; }`**: `new[]` in, `delete[]` out.
+- **`operator[]`, both versions:** the same bounds check and the same return. Only the `const` after `)` and the `const` in the return type differ. `throw OutOfBoundsException();` builds a temporary exception object and throws it. `main` catches it as `std::exception &`.
+- **`size()`** returns the stored count. Unlike C's `strlen`, nothing is recounted.
+- **`Array<T>::OutOfBoundsException::what()`**: three levels of name: the template, the nested class, then the method. The string is a literal, so it lives for the whole program and returning its address is safe.
 
 Walkthrough:
 - **`template <typename T>` goes before *every* member definition.** Each one is its own little template, and you qualify it with `Array<T>::`.
@@ -358,6 +410,10 @@ Array<int> const frozen(3);
 std::cout << frozen[0];     // calls   T const &operator[](unsigned int) const
 frozen[0] = 1;              // ❌ compile error: can't assign through a const reference
 ```
+
+- **`Array<int> const frozen(3);`**: three zeros, locked. Only `const` member functions can be called on it.
+- **`frozen[0]`** so the compiler picks the `const` overload, the only one allowed on a const object. It returns `int const &`, and printing it is fine (prints `0`, tested).
+- **`frozen[0] = 1;`**: assigning through an `int const &` is refused at compile time. The protection costs nothing at runtime.
 
 The grading sheet checks exactly this: "reading and writing through `operator[]`, or reading only if the instance is const". With only the non-const version, `frozen[0]` doesn't compile at all.
 

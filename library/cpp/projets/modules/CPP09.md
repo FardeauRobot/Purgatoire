@@ -88,6 +88,15 @@ if (it == _rates.begin())
 float result = value * it->second;
 ```
 
+Line by line:
+- **`std::map<std::string, float>::const_iterator it`**: an iterator into the map that can only read. Each element it points at is a `std::pair`: `it->first` is the date and `it->second` is the rate.
+- **`_rates.upper_bound(date)`**: the map's own member version, O(log n) down the tree. Prefer it over `std::upper_bound`, which can't jump through a tree.
+- **`if (it == _rates.begin()) throw …`**: nothing is earlier than the query.
+- **`--it;`**: one step back, to the closest date ≤ the query.
+- **`value * it->second`**: the line's value times that day's rate.
+
+⚠️ **Where that `throw` is caught matters.** Put the `try`/`catch` **inside** the per-line `while` loop (next section): catch, print the error, go to the next line. If the only `try` is in `main`, the first date before 2009 ends the whole program, and the sheet requires the whole file to be processed.
+
 - **`upper_bound(key)`** returns the first element whose key is **strictly greater**. Stepping back once gives "equal, or the closest lower". This handles an exact match without a special case. `lower_bound` (first key **≥**) would need an extra `if (it->first != date)` check.
 - **Check `begin()` before `--it`.** Decrementing `begin()` is undefined behaviour. Any query earlier than the first date in `data.csv` takes this branch.
 - **Why string keys work:** `"2011-01-05" < "2011-01-07"` compares character by character. Zero-padded ISO dates sort the same way as the calendar. Once you've validated the format, the string *is* the key.
@@ -110,6 +119,16 @@ while (std::getline(file, line))
     ...
 }
 ```
+
+Line by line:
+- **`std::string line;`**: one reusable buffer. `getline` resizes it for you, so there's no `BUFFER_SIZE` to think about.
+- **`std::getline(file, line);`** before the loop reads the header. It's `get_next_line` in one call, and it strips the `\n`.
+- **`while (std::getline(file, line))`**: `getline` returns the stream, and a stream used as a condition is false at end of file or on error. It's the C++ version of `while ((line = get_next_line(fd)))`.
+- **`std::string::size_type bar = line.find(" | ");`**: the index of the separator. `size_type` is the unsigned type `find` returns, so storing it in an `int` would trigger `-Wsign-compare` later.
+- **`if (bar == std::string::npos)`**: `npos` is "not found", like `strstr` returning `NULL`. The line is malformed: print it and skip it.
+- **`line.substr(0, bar)`**: the characters before the separator, which is the date.
+- **`line.substr(bar + 3)`**: everything after it, which is the value. `+ 3` skips the three characters of `" | "`.
+- **`...`**: validate the date, parse the value, then do the lookup from the previous section inside a `try`.
 
 - **`continue`, never `return`.** The sheet: *"The program must not stop its execution before having performed the operations on the whole file."* One bad line produces one error line, and processing goes on.
 - Convert the value with `std::strtod(raw.c_str(), &end)` and check that `*end == '\0'`. Then check `< 0` (`not a positive number`) and `> 1000` (`too large a number`).
@@ -193,6 +212,20 @@ static long evaluate(std::string const &expr)
     return st.top();
 }
 ```
+
+Line by line:
+- **`std::stack<long, std::list<long> > st;`**: the stack, with its backing container named explicitly (see the hidden-container trap in §2).
+- **`std::istringstream in(expr);`**: wraps the string in a stream so you can read from it with `>>`, just as you read from `std::cin`.
+- **`while (in >> tok)`**: each `>>` skips spaces and reads one word. The loop ends when the words run out.
+- **`st.push(tok[0] - '0');`**: `'7' - '0'` is 7, the same char-to-digit trick as `ft_atoi`.
+- **`std::string("+-*/").find(tok[0]) != std::string::npos`**: "is this character one of the four operators?", which is `ft_strchr("+-*/", c)` in C.
+- **`long right = st.top(); st.pop();`**: `top()` reads and `pop()` removes. They're two separate calls because `pop()` returns `void` in the STL.
+- **`long left = st.top(); st.pop();`**: the second pop is the **left** operand.
+- **The `if` / `else if` chain** computes `left op right` and pushes the result back. The result becomes an operand for the next operator.
+- **`if (right == 0)`** is checked *before* dividing. Integer division by zero is undefined behaviour. On x86 Linux, which most 42 clusters run, it kills the process with `SIGFPE`, and a crash during the defense is a 0. On your ARM Mac it silently gives `0` (tested: `7 / 0` printed `0`), so testing only at home would hide the bug.
+- **`else throw … "invalid token"`**: any other word, like `(` or `12`.
+- **`if (st.size() != 1)`**: a valid expression reduces to exactly one value. `"1 2"` leaves two.
+- **`return st.top();`**: that value is the result.
 
 Walkthrough:
 - **`std::istringstream in(expr); in >> tok`** splits on whitespace for you. It's `ft_split(expr, ' ')` without the memory management.
@@ -295,7 +328,41 @@ static std::vector<size_t> jacobsthalOrder(size_t m)
 
 `jacobsthalOrder(12)` gives `b3 b2 b5 b4 b11 b10 b9 b8 b7 b6 b12`. `m` counts all the b's (the straggler included), and `b1` is skipped because it's already in the chain.
 
+Line by line:
+- **`std::vector<size_t> order;`**: the result, a list of b indices in the order to insert them.
+- **`prev = 1`**: the highest index already handled. `b1` is handled for free, so we start at 1.
+- **`a = 1`, `b = 3`**: two consecutive Jacobsthal numbers. `b` is the top of the next group.
+- **`while (prev < m)`**: stop once every b up to `m` has been scheduled.
+- **`hi = std::min(b, m)`**: the group's top, clipped to `m`. The last group is usually incomplete.
+- **`for (k = hi; k > prev; --k) order.push_back(k);`**: the group **counts down** from `hi` to `prev + 1`. That's the "highest index first" rule.
+- **`prev = hi;`**: this group is done.
+- **`next = b + 2 * a; a = b; b = next;`**: moves one step along J(n) = J(n−1) + 2·J(n−2), like advancing a Fibonacci pair.
+
+Each turn of the loop for `m = 12` (printed by a test run):
+
+| prev | a | b | hi | pushed |
+|---|---|---|---|---|
+| 1 | 1 | 3 | 3 | 3 2 |
+| 3 | 3 | 5 | 5 | 5 4 |
+| 5 | 5 | 11 | 11 | 11 10 9 8 7 6 |
+| 11 | 11 | 21 | 12 | 12 |
+
+On the n = 7 example there are four b's (b1 b2 b3 plus the straggler b4), so `jacobsthalOrder(4)` gives `3 2 4`.
+
 ### Step ③ in code: the bounded binary insertion
+
+The loop below uses the state built by steps ① and ②. Here it is for the n = 7 example:
+
+| Name | Type | Contents for `8 3 6 1 7 2 5` | Meaning |
+|---|---|---|---|
+| `bigs` | `std::vector<int>` | `6 7 8` | the winners, sorted by step ②. `bigs[k-1]` is `a_k` |
+| `smalls` | `std::vector<int>` | `1 2 3` | each winner's partner, same order. `smalls[k-1]` is `b_k` |
+| `straggler` | `int` | `5` | the unpaired last element (only when n is odd) |
+| `chain` | `std::vector<int>` | `1 6 7 8` | `b1` followed by all the `a`s: the growing sorted result |
+| `aPos` | `std::vector<size_t>` | `[-] 1 2 3` | `aPos[k]` = the current index of `a_k` in `chain`. Slot 0 is unused |
+| `order` | `std::vector<size_t>` | `3 2 4` | `jacobsthalOrder(smalls.size() + 1)`, the `+ 1` counting the straggler |
+
+⚠️ **Watch the mixed indexing.** `k`, `order` and `aPos` count from **1**, like the maths (`b1`, `a1`). `smalls` and `bigs` are ordinary vectors counting from **0**, hence `smalls[k - 1]`. Mix them up and you get an off-by-one that still *sorts*, but searches the wrong range.
 
 ```cpp
 for (size_t o = 0; o < order.size(); o++)
@@ -323,8 +390,28 @@ for (size_t o = 0; o < order.size(); o++)
 }
 ```
 
+Line by line:
+- **`size_t k = order[o];`**: which `b` to insert this time.
+- **`if (k > bigs.size())`**: an index past the last pair can only be the straggler. It has no partner, so its search `bound` is the **whole** chain.
+- **`else { value = smalls[k - 1]; bound = aPos[k]; }`**: a normal `b_k`. Its search stops at `a_k`'s current position, because `b_k ≤ a_k` is already known.
+- **`std::upper_bound(chain.begin(), chain.begin() + bound, value)`**: binary search in `[0, bound)`. It returns an iterator to the first element greater than `value`.
+- **`size_t q = pos - chain.begin();`**: iterator minus `begin()` gives an index, the same pointer arithmetic as `ptr - arr` in C.
+- **`chain.insert(pos, value);`**: puts the value at index `q` and shifts everything after it one step right.
+- **The inner `for`**: every `a` that was at index `q` or later has just moved right by one, so its `aPos` is bumped.
+
+Traced on the n = 7 example (output of a test run):
+
+| Step | Value | Search range | `q` | `chain` after | `aPos[1..3]` after |
+|---|---|---|---|---|---|
+| start | | | | `1 6 7 8` | 1 2 3 |
+| b3 | 3 | `[1 6 7]` (bound 3) | 1 | `1 3 6 7 8` | 2 3 4 |
+| b2 | 2 | `[1 3 6]` (bound 3) | 1 | `1 2 3 6 7 8` | 3 4 5 |
+| b4 | 5 (straggler) | whole chain (bound 6) | 3 | `1 2 3 5 6 7 8` | 4 5 6 |
+
+Look at b2: without the `aPos` update, its bound would still be 2 (a2's *original* place) and the search range would be `[1 3]`, which stops short of `6`. With b2 = 2 that's harmless by luck. Change the input so that b2 is bigger than a1 (pairs `(6,1) (8,7) (9,3)`) and the stale bound inserts 7 *before* 6. Tested: the output is `1 3 7 6 8 9`, **not sorted**. With the update it's `1 3 6 7 8 9`.
+
 - **`std::upper_bound` *is* the binary search.** Don't write your own. Its search range stops at `chain.begin() + bound`, which is the position of `a_k`.
-- **`aPos[k]`** records where `a_k` currently sits in the chain. Every insertion at position `q` shifts the a's at or after `q` one step right, so their positions are updated. Without this bookkeeping you would search past `a_k` and lose the comparison savings.
+- **`aPos[k]`** records where `a_k` currently sits in the chain. Every insertion at position `q` shifts the a's at or after `q` one step right, so their positions are updated. Without this bookkeeping the bounds go stale. Positions only ever grow, so a stale bound always stops **short** of `a_k`, and values end up in the wrong place (see the trace above). If you give up on bounds and search the whole chain instead, it sorts correctly but you lose the comparison savings.
 - **`upper_bound`, not `lower_bound`,** so equal values go after existing ones. Duplicates are allowed and still sort correctly (tested).
 - **The pairing step when there are duplicates:** after the recursive sort of the winners, each sorted `a` has to find its own `b` again. Keep the pairs (e.g. `std::vector<std::pair<int,int> >`) and match each sorted winner to an unused pair with the same value. Equal winners can swap partners safely, because the partner is still ≤ its winner.
 
@@ -339,6 +426,13 @@ double us = 1000000.0 * (end - start) / CLOCKS_PER_SEC;
 ```
 
 `std::clock()` from `<ctime>` measures processor time. Convert it to microseconds, as the subject's example does.
+
+Line by line:
+- **`std::clock_t start = std::clock();`**: a timestamp taken *before* parsing, because the subject counts parsing as part of the work.
+- **`parseInto<std::vector<int> >(ac, av)`**: a helper you write, a function template that fills any container from `argv`. The explicit `<std::vector<int> >` is needed because the container type appears only in the return value, which the compiler can't deduce from.
+- **`fordJohnsonVector(v);`**: the sort for that container. Write a second one for the `deque`.
+- **`std::clock_t end = std::clock();`**: the second timestamp.
+- **`1000000.0 * (end - start) / CLOCKS_PER_SEC`**: ticks → seconds → microseconds. The `1000000.0` is a `double` and goes **first**, so everything after it is computed in `double`. Otherwise an integer division by `CLOCKS_PER_SEC` would round a short run down to `0`.
 
 **Measured on this Mac** (3000 random ints in 1–1000, while the subject's command uses 1–100000; no optimisation, same implementation for both containers): **vector ≈ 28 ms, deque ≈ 31 ms**, consistent across runs. This is how to explain the gap:
 
@@ -364,6 +458,14 @@ for (int i = 1; i < ac; i++)
     v.push_back(static_cast<int>(n));
 }
 ```
+
+Line by line:
+- **`for (int i = 1; …)`**: from 1, because `av[0]` is the program name.
+- **`char *end;`**: `strtol` sets it to the first character it could *not* read.
+- **`errno = 0;`**: `strtol` only *sets* `errno` on overflow and never clears it, so reset it before each call.
+- **`long n = std::strtol(av[i], &end, 10);`**: base 10. It's `ft_atoi` with error reporting.
+- **The five-part condition:** `*av[i] == '\0'` is an empty argument; `*end != '\0'` means junk after the digits (`3a`); `errno == ERANGE` means too big for a `long`; `n <= 0` rejects negatives and zero; `n > INT_MAX` means it won't fit the `int` we store.
+- **`v.push_back(static_cast<int>(n));`**: `long` → `int` is narrowing, so the cast is explicit (CPP06), and safe because of the range check just above.
 
 This needs `<cerrno>` and `<climits>`. It rejects `-1`, `abc`, `3a`, empty strings and overflow, but `strtol` still accepts leading spaces and `+`, so `" +5"` gets through. Whether `0` counts as "positive" is your call: the check above rejects it. Say so at the defense.
 

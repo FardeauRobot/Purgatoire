@@ -66,6 +66,15 @@ public:
 - **OCF still applies** (CPP02 → CPP09). Declaring the four members private satisfies it and blocks copies too.
 - `static` means the method needs no `this`, so you call it as `ScalarConverter::convert(av[1])`. It's the class-scoped version of a plain C function.
 
+Line by line:
+- **`private:` first.** Everything above `public:` can only be used from inside the class. Outside it, `ScalarConverter sc;` fails with `calling a private constructor of class 'ScalarConverter'` (tested).
+- **`ScalarConverter();`**: the default ctor. Once it's private, nobody can build one from scratch.
+- **`ScalarConverter(ScalarConverter const &other);`**: the copy ctor. There's nothing to copy, but if you leave it out the compiler writes a *public* one for you. Declaring it private closes that door.
+- **`operator=`**: same reasoning. It's the compiler-generated member you'd otherwise get for free.
+- **`~ScalarConverter();`**: a private destructor also makes a stack object impossible, because the compiler has to call the destructor at the closing `}`.
+- **`static void convert(std::string const &literal);`**: the only public entry point. It takes a `const &` so the string isn't copied, like `char const *` in C.
+- You can **declare** the four private members and never define them. Nothing calls them, so the linker never looks for them. If your evaluator reads the OCF rule strictly, empty bodies in the `.cpp` cost nothing. Pick one and be consistent between ex00 and ex01.
+
 > In C you'd have used a file with `static` functions. Here the *class* is the namespace, and the private ctor is the lock.
 
 ---
@@ -207,6 +216,29 @@ Data *Serializer::deserialize(uintptr_t raw)
 }
 ```
 
+Line by line:
+- **`#include <stdint.h>`** gives you `uintptr_t` (see the gotcha below on `<cstdint>`).
+- **`uintptr_t Serializer::serialize(Data *ptr)`**: the `Serializer::` prefix says this is the class's static method. The word `static` goes in the header only. Repeating it in the `.cpp` is a compile error.
+- **`return reinterpret_cast<uintptr_t>(ptr);`**: the 8 bytes of the address are handed back unchanged, but typed as a number. No instruction runs. The cast only changes what the *compiler* thinks the bits are.
+- **`Data *Serializer::deserialize(uintptr_t raw)`**: the mirror image, with the same prefix rule.
+- **`return reinterpret_cast<Data *>(raw);`**: number → address. It's valid only because `raw` came from a real `Data *` in the first place. Feed it `42` and you get a pointer to address 42, and the compiler won't stop you.
+
+In `main`, prove the round trip on a real object:
+
+```cpp
+Data data;
+data.id = 42;
+data.name = "answer";
+
+uintptr_t raw = Serializer::serialize(&data);
+Data *back = Serializer::deserialize(raw);
+
+std::cout << (back == &data) << " " << back->id << " " << back->name << std::endl;   // 1 42 answer
+```
+
+- `back == &data` compares the two addresses, so `1` means the pointer survived the trip.
+- `back->id` and `back->name` prove the `Data` is still *usable* through the returned pointer, which is the grading line "the resulting `Data` is usable".
+
 ### What's happening in memory
 
 ```
@@ -281,6 +313,12 @@ void identify(Base *p)
 
 A failed pointer cast **returns NULL**. The grading sheet checks for exactly that: *"should check if the cast return is NULL"*.
 
+Line by line:
+- **`if (dynamic_cast<A *>(p))`** asks "is the object at `p` an `A`?". The result is an `A *` if yes and `NULL` if no, and a pointer used as a condition is true when it isn't NULL. It's the same idiom as `if (ptr)` in C. This `if` *is* the NULL check the sheet is looking for.
+- **`else if (dynamic_cast<B *>(p))`** tries the next type only when the first test failed. `A`, `B` and `C` are siblings, so at most one test can succeed.
+- **The last `else if` isn't a plain `else`.** If someone passes a `Base` that is none of the three, or `NULL`, nothing prints. `dynamic_cast` on a NULL pointer returns NULL instead of crashing (tested), so the function is safe to call with `NULL` too.
+- **Nothing is `delete`d here.** `identify` only looks. Whoever called `generate` owns the object.
+
 ### Core snippet: reference version
 
 A reference can't be NULL, so a failed reference cast **throws** instead:
@@ -311,6 +349,16 @@ void identify(Base &p)
 }
 ```
 
+Line by line, first block:
+- **`try {`** opens the zone where a throw is allowed to happen, as in CPP05.
+- **`(void)dynamic_cast<A &>(p);`**: if `p` really is an `A`, this returns an `A &` and execution continues on the next line. If it isn't, it **throws**, and the next two lines are skipped.
+- **`std::cout << "A"`** only runs when the cast succeeded, so reaching it means "it's an A".
+- **`return;`** stops here. Without it, execution would fall into the `B` block and try again.
+- **`catch (std::exception &) {}`**: the empty body means "that wasn't it, move on". The parameter has no name because you don't use it, which also avoids an unused-variable warning.
+
+The `B` and `C` blocks are the same pattern. The last one needs no `return`, because the function ends anyway.
+
+Why it's written this way:
 - The exception thrown is `std::bad_cast`, but **`std::bad_cast` is declared in `<typeinfo>`**, which is banned. Catch its base class `std::exception &` (from `<exception>`) instead. The ban on `<typeinfo>` turns this into a CPP05 review: catch by base reference.
 - `(void)` discards the cast result. You only care whether it threw.
 - **Don't write `identify(&p)` inside it.** That creates a pointer, which the subject forbids.
@@ -329,7 +377,20 @@ Base *generate(void)
 }
 ```
 
-Call `std::srand(static_cast<unsigned int>(std::time(NULL)))` **once**, in `main`. The cast matters in this module: `time_t` → `unsigned int` is a narrowing conversion, not a promotion. Remember to `delete` what `generate` returns. The virtual destructor makes that correct.
+Line by line:
+- **`Base *generate(void)`** returns a `Base *`, the common type, so the caller can't know which class it got. That hidden type is what `identify` has to find.
+- **`std::rand() % 3`** gives 0, 1 or 2. It's C's `rand()`, reached through `<cstdlib>` with the `std::` prefix.
+- **`case 0: return new A;`**: each `return` leaves the function, so no `break` is needed. `new A` builds an `A` on the heap, and the `A *` is implicitly converted to `Base *`. That's derived → base, the one conversion that's always safe, so it needs no cast.
+- **`default: return new C;`** rather than `case 2:`. With `case 2`, the compiler sees a path that reaches the end of the function without returning anything. With `-Wall -Werror` that's the `-Wreturn-type` error.
+
+Call `std::srand(static_cast<unsigned int>(std::time(NULL)))` **once**, in `main`. The cast matters in this module: `time_t` → `unsigned int` is a narrowing conversion, not a promotion. Under the 42 flags the implicit version still compiles, but add `-Wconversion` and clang reports `implicit conversion loses integer precision: 'time_t' (aka 'long') to 'unsigned int'` (tested). That's exactly what an evaluator reading for implicit casts will flag. Remember to `delete` what `generate` returns. The virtual destructor makes that correct.
+
+```cpp
+Base *p = generate();
+identify(p);        // pointer version
+identify(*p);       // reference version: *p is the object itself, not a pointer
+delete p;           // virtual ~Base → the right destructor runs
+```
 
 ### ⚠️ Gotchas
 - `grep -r typeinfo .` before you push. The grading sheet: *"the header `<typeinfo>` must not appear anywhere."*

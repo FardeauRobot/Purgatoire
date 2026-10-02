@@ -125,6 +125,14 @@ catch (std::exception &e)
 }
 ```
 
+Line by line:
+- **`std::vector<int> v;` then three `push_back`s**: an empty vector that grows as you append. C++98 has no `{1, 42, 3}` initialiser, so this is the standard way to fill one.
+- **`std::list<int> l(v.begin(), v.end());`**: a second container, of a different kind, holding the same values. Testing both proves your template really is generic.
+- **`*easyfind(v, 42)`**: `easyfind` returns an iterator, and `*` reads what it points at, like dereferencing the pointer `ft_strchr` returns. It prints `42`.
+- **`*easyfind(l, 3)`**: same call, but `T = std::list<int>` this time. The compiler stamps out a second `easyfind`.
+- **`try { easyfind(v, 7); }`**: 7 isn't in `v`, so `easyfind` throws before returning anything, and the result is never dereferenced.
+- **`catch (std::exception &e)`**: `std::runtime_error` derives from `std::exception`, so catching the base catches it (CPP05). `e.what()` returns the message you passed to the constructor.
+
 `std::list<int> l(v.begin(), v.end())` is the **range constructor**. Every container has one, and it's the easiest way to build test data.
 
 ### ⚠️ Gotchas
@@ -193,6 +201,38 @@ public:
 };
 ```
 
+Line by line, the class:
+- **`unsigned int _max;`**: the capacity N, fixed at construction.
+- **`std::vector<int> _numbers;`**: the storage. No `new[]`, no manual `delete[]`. The vector frees itself, so the destructor has nothing to do.
+- **The four OCF lines** are required by the sheet ("every non-interface class in OCF"). The compiler-generated versions would work here, because a `vector` copies itself deeply, but write them anyway.
+- **`unsigned int shortestSpan() const;`**: `unsigned` because a distance is never negative, and it has to hold up to 4294967295 (see the overflow trap below). `const` because computing a span doesn't change the Span.
+- **`template <typename It> void addRange(It begin, It end)`**: a template *inside* a normal class. The class isn't a template, only this one method is.
+- **`std::distance(begin, end)`** counts the elements in the range. It returns a signed `std::ptrdiff_t`, which is `long` on your Mac.
+- **`_max - _numbers.size()`** is the free room left. It's `unsigned int - size_t`, so it's an unsigned `size_t`.
+- **`static_cast<long>(…)`**: comparing a signed `long` with an unsigned `size_t` is `-Wsign-compare`, a hard error under `-Werror` (tested). The cast turns both sides into `long`.
+- **`_numbers.insert(_numbers.end(), begin, end);`**: append the whole range in one call, which is the "better way than `addNumber` in a loop" the sheet asks for.
+
+The two methods the class declares but the snippet above doesn't show:
+
+```cpp
+Span::Span(unsigned int n) : _max(n)
+{
+    _numbers.reserve(n);
+}
+
+void Span::addNumber(int n)
+{
+    if (_numbers.size() >= _max)
+        throw std::length_error("Span: full");
+    _numbers.push_back(n);
+}
+```
+
+- **`reserve(n)`** allocates room for `n` ints but stores none. `size()` is still 0, and only the capacity changes.
+- **`size() >= _max`** is checked *before* `push_back`, so the Span never holds more than N. `std::length_error` is from `<stdexcept>`, like `runtime_error`.
+
+Line by line, the two span methods:
+
 ```cpp
 unsigned int Span::shortestSpan() const
 {
@@ -214,6 +254,14 @@ unsigned int Span::longestSpan() const
     return static_cast<unsigned int>(hi - lo);
 }
 ```
+
+- **`if (_numbers.size() < 2) throw …`**: with 0 or 1 numbers there is no pair, so there's no span. `std::logic_error` means "you called me wrong".
+- **`std::vector<long> sorted(_numbers.begin(), _numbers.end());`**: a range-constructed **copy**, widened from `int` to `long` element by element.
+- **`std::sort(sorted.begin(), sorted.end());`**: ascending order, in place, on the copy.
+- **`std::vector<long> gaps(sorted.size());`**: an output buffer of the same length. `adjacent_difference` writes into existing slots, so it needs room already there.
+- **`std::adjacent_difference(…, gaps.begin());`**: for `3 6 9 11 17` it writes `3 3 3 2 6`. The first slot is a copy of `sorted[0]`, not a gap.
+- **`*std::min_element(gaps.begin() + 1, gaps.end())`**: skips that first slot, finds the smallest real gap (2), and dereferences the iterator to read it.
+- **`longestSpan`**: no sorting needed. It's the largest value minus the smallest, and each one takes one linear pass. `long lo` / `long hi` so that `hi - lo` is computed in 64 bits.
 
 Walkthrough:
 - **`addRange` is a member template**, so it accepts iterators from *any* container: `vector`, `list`, or even a raw `int[]`, since pointers are iterators. `vector::insert(pos, first, last)` does the copying.
@@ -243,6 +291,13 @@ Span huge(10000);
 huge.addRange(big.begin(), big.end());
 std::cout << huge.shortestSpan() << " " << huge.longestSpan() << std::endl;
 ```
+
+- **`std::srand(…)`**: seeds `rand` once, with the same narrowing cast as CPP06.
+- **`std::vector<int> big(10000);`**: 10,000 zeros, ready to be overwritten.
+- **The `for` loop**: `size_t i` to match `big.size()`, one random number per slot.
+- **`Span huge(10000);`** is exactly full after the insert. One more `addNumber` would throw.
+- **`huge.addRange(big.begin(), big.end());`**: the whole vector in one call, where 10,000 `addNumber` calls would be the naive version.
+- **The last line** prints both spans. With 10,000 random numbers the shortest is usually small and the longest close to `RAND_MAX` (2147483647 on macOS).
 
 `std::generate(big.begin(), big.end(), std::rand)` fills the vector with an algorithm instead of a loop, which is even more STL-flavoured.
 
@@ -353,6 +408,14 @@ std::stack<int> s(mstack);
 737
 0
 ```
+
+Line by line:
+- **`push(5); push(17);`** then **`top()`**: `17`, the last one in. **`pop()`** removes it, and **`size()`** prints `1`.
+- **Four more `push`es**: the stack is now `5 3 5 737 0`, bottom to top.
+- **`MutantStack<int>::iterator it = mstack.begin();`**: your typedef in action. From outside the template no `typename` is needed, because `MutantStack<int>` is a concrete type.
+- **`++it; --it;`**: a round trip that goes nowhere. It's there to test that your iterator can move **both ways** (a *bidirectional* iterator). A `deque` iterator can, so it passes for free.
+- **`while (it != ite)`**: the half-open loop from §2, with `!=` rather than `<` because that's the one comparison every iterator supports.
+- **`std::stack<int> s(mstack);`**: slices the `MutantStack` down to its `std::stack` part and copies it. That only compiles because of the public inheritance.
 
 The iteration runs **from bottom to top** (5 was pushed first), because it walks the deque front to back. To prove the `std::list` equivalence, write the list version side by side in your `main` and `diff` the two outputs.
 
