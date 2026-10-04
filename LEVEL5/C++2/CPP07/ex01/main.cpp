@@ -23,8 +23,8 @@ static void title(const std::string &name) {
     std::cout << std::endl << BOLD_CYAN << "--- " << name << " ---" << endofline;
 }
 
-int main(void)
-{
+int main(void) {
+
     title("int array: print, increment, print");
     int nums[] = {0, 1, 2, 3, 4};
     iter(nums, 5, printElem<int>);
