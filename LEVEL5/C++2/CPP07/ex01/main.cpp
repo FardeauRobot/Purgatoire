@@ -34,26 +34,30 @@ int main(void) {
     std::cout << endofline;
 
     title("const int array: read-only function");
+    std::cout << BOLD_MAGENTA << "ORIGINAL: ";
     const int constNums[] = {42, 21, 84};
     iter(constNums, 3, printElem<int>);
     std::cout << std::endl;
 
     title("std::string array: non-template function");
     std::string words[] = {"hello", "from", "iter"};
+    std::cout << BOLD_MAGENTA << "ORIGINAL: ";
     iter(words, 3, printElem<std::string>);
     std::cout << std::endl;
     iter(words, 3, shout);
+    std::cout << BOLD_CYAN << "SHOUTED: ";
     iter(words, 3, printElem<std::string>);
     std::cout << std::endl;
 
     title("const char array");
     const char letters[] = "abc";
+    std::cout << BOLD_MAGENTA << "ORIGINAL: ";
     iter(letters, 3, printElem<char>);
     std::cout << std::endl;
 
     title("length 0: nothing printed");
     iter(nums, 0, printElem<int>);
-    std::cout << GREEN << "(ok)" << endofline;
+    std::cout << BOLD_GREEN << "[ok]" << endofline;
 
     return (0);
 }
