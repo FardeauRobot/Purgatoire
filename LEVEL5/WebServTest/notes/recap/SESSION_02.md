@@ -164,7 +164,7 @@ buffer[n] = '\0';
 
 - **VSCode indentation:** root cause was `editor.detectIndentation` (defaults `true`) overriding the per-file setting. Set `tabSize: 4`, `insertSpaces: false`. Created `.clang-format` (tabs, width 4) at repo root, and a `<leader>f` → `editor.action.formatDocument` mapping. *(`gg=G` delegates to VSCode's formatter, not Vim's indent engine.)*
 - **`POLL_DEEP_DIVE.md`** gained sections: *observes-not-manipulates*, *how-many-pollfds + backlog*, *tearing-down a dead fd (POLLNVAL/POLLHUP nuance)*.
-- **`library/cpp/webserv/TESTS.md`** created — deep reference for `ab` & `siege` (flags verified against the installed builds: `ab` 2.3, `siege` 4.1.7), and the availability/leak/fd checks the eval runs. Cross-linked from `INDEX.md`, `15_TOOLS.md`, `17_WEBSERV_SUBJECT.md`.
+- **`library/en/cpp/projets/webserv/TESTS.md`** created — deep reference for `ab` & `siege` (flags verified against the installed builds: `ab` 2.3, `siege` 4.1.7), and the availability/leak/fd checks the eval runs. Cross-linked from `INDEX.md`, `15_TOOLS.md`, `17_WEBSERV_SUBJECT.md`.
 
 ---
 
@@ -185,6 +185,6 @@ The server now accepts, reads, and cleanly closes. The HTTP layer is next:
 - [`POLL_DEEP_DIVE.md`](../POLL_DEEP_DIVE.md) — the full poll() walkthrough this session deepened
 - [`ANALOGY.md`](../ANALOGY.md) — the city-and-server analogy
 - [`SESSION_01.md`](SESSION_01.md) — sockets, the handshake, the lifecycle
-- [`TESTS.md`](../../../../library/cpp/webserv/TESTS.md) — `ab` & `siege` load testing
-- [`07_CONNECTION.md`](../../../../library/cpp/webserv/07_CONNECTION.md) — keep-alive, the single-poll() rule, timeouts
-- [`functions/02_IO_MULTIPLEXING.md`](../../../../library/cpp/webserv/functions/02_IO_MULTIPLEXING.md) — poll/select/kqueue reference
+- [`TESTS.md`](../../../../library/en/cpp/projets/webserv/TESTS.md) — `ab` & `siege` load testing
+- [`07_CONNECTION.md`](../../../../library/en/cpp/projets/webserv/07_CONNECTION.md) — keep-alive, the single-poll() rule, timeouts
+- [`functions/02_IO_MULTIPLEXING.md`](../../../../library/en/cpp/projets/webserv/functions/02_IO_MULTIPLEXING.md) — poll/select/kqueue reference

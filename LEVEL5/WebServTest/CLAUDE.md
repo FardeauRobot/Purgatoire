@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A **C++98 sandbox** for exploring POSIX socket APIs and HTTP concepts ahead of the 42 webserv project. `main.cpp` is the scratch-pad; `Server` is an OCF-compliant stub that will grow into the real thing.
 
-The full project architecture and HTTP knowledge base live in `../../library/cpp/webserv/` — read `OVERVIEW.md` there before designing anything structural.
+The full project architecture and HTTP knowledge base live in `../../library/en/cpp/projets/webserv/` — read `OVERVIEW.md` there before designing anything structural.
 
 ## Build commands
 
@@ -31,7 +31,7 @@ Compiler: `c++`, flags: `-Wall -Wextra -Werror -Wswitch -Wpedantic -Wshadow -Wno
 
 ## Architecture intent (target webserv design)
 
-`main.cpp` experiments drive toward this layered design (see `../../library/cpp/webserv/OVERVIEW.md`):
+`main.cpp` experiments drive toward this layered design (see `../../library/en/cpp/projets/webserv/OVERVIEW.md`):
 
 | Class | Role |
 |---|---|

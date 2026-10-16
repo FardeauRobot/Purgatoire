@@ -7,7 +7,7 @@ Scope: **C++ Module 05** of the 42 C++ piscine. The repo-root `CLAUDE.md`
 Orthodox Canonical Form, naming, valgrind discipline, workflow. This file adds
 only what is specific to CPP05; read the root file for everything else.
 
-Deep conceptual walkthrough: `library/cpp/projets/modules/CPP05.md`.
+Deep conceptual walkthrough: `library/en/cpp/projets/modules/CPP05.md`.
 
 ## What this module is about
 

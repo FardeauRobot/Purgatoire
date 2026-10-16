@@ -17,11 +17,11 @@ you'll need them to prove the right calls fire.
 
 | Concept | Where |
 |---|---|
-| Virtual dispatch, vtables, pure virtual, object slicing | [library/cpp/oop/POLYMORPHISM.md](../../../library/cpp/oop/POLYMORPHISM.md) |
-| Inheritance basics (prerequisite) | [library/cpp/oop/INHERITANCE.md](../../../library/cpp/oop/INHERITANCE.md) |
-| OCF — deep-copy pattern for owned resources | [library/cpp/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/cpp/oop/ORTHODOX_CANONICAL_FORM.md) |
-| `new`/`delete` lifetimes | [library/cpp/fundamentals/MEMORY.md](../../../library/cpp/fundamentals/MEMORY.md) |
-| Per-exercise walkthrough | [library/cpp/modules/CPP04.md](../../../library/cpp/modules/CPP04.md) |
+| Virtual dispatch, vtables, pure virtual, object slicing | [library/en/cpp/notions/oop/POLYMORPHISM.md](../../../library/en/cpp/notions/oop/POLYMORPHISM.md) |
+| Inheritance basics (prerequisite) | [library/en/cpp/notions/oop/INHERITANCE.md](../../../library/en/cpp/notions/oop/INHERITANCE.md) |
+| OCF — deep-copy pattern for owned resources | [library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md) |
+| `new`/`delete` lifetimes | [library/en/cpp/notions/fundamentals/MEMORY.md](../../../library/en/cpp/notions/fundamentals/MEMORY.md) |
+| Per-exercise walkthrough | [library/en/cpp/projets/modules/CPP04.md](../../../library/en/cpp/projets/modules/CPP04.md) |
 
 ### The one question Mod04 is asking
 
@@ -62,7 +62,7 @@ Dog object:
 slot; call through that pointer."* Two extra loads — cheap but not
 free.
 
-See [library/cpp/oop/POLYMORPHISM.md §4](../../../library/cpp/oop/POLYMORPHISM.md)
+See [library/en/cpp/notions/oop/POLYMORPHISM.md §4](../../../library/en/cpp/notions/oop/POLYMORPHISM.md)
 for the full layout.
 
 ---
@@ -134,8 +134,8 @@ accessible from derived classes but still hidden from unrelated code.
 `"c++ static binding vs dynamic binding"`.
 
 ### Cross-reference
-- [library/cpp/oop/POLYMORPHISM.md §1-3](../../../library/cpp/oop/POLYMORPHISM.md)
-- [library/cpp/modules/CPP04.md §ex00](../../../library/cpp/modules/CPP04.md)
+- [library/en/cpp/notions/oop/POLYMORPHISM.md §1-3](../../../library/en/cpp/notions/oop/POLYMORPHISM.md)
+- [library/en/cpp/projets/modules/CPP04.md §ex00](../../../library/en/cpp/projets/modules/CPP04.md)
 
 ---
 
@@ -253,8 +253,8 @@ pointer. Later access = UB.
 `"-Wnon-virtual-dtor"`.
 
 ### Cross-reference
-- [library/cpp/oop/POLYMORPHISM.md §7](../../../library/cpp/oop/POLYMORPHISM.md) — virtual destructor rule
-- [library/cpp/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/cpp/oop/ORTHODOX_CANONICAL_FORM.md) — deep-copy pattern
+- [library/en/cpp/notions/oop/POLYMORPHISM.md §7](../../../library/en/cpp/notions/oop/POLYMORPHISM.md) — virtual destructor rule
+- [library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md) — deep-copy pattern
 
 ---
 
@@ -318,8 +318,8 @@ naming in ex03.
 `"c++ = 0 syntax"`.
 
 ### Cross-reference
-- [library/cpp/oop/POLYMORPHISM.md §5](../../../library/cpp/oop/POLYMORPHISM.md) — pure virtual
-- [library/cpp/oop/POLYMORPHISM.md §6](../../../library/cpp/oop/POLYMORPHISM.md) — interfaces
+- [library/en/cpp/notions/oop/POLYMORPHISM.md §5](../../../library/en/cpp/notions/oop/POLYMORPHISM.md) — pure virtual
+- [library/en/cpp/notions/oop/POLYMORPHISM.md §6](../../../library/en/cpp/notions/oop/POLYMORPHISM.md) — interfaces
 
 ---
 
@@ -446,8 +446,8 @@ without knowing the concrete type.
 `"c++98 NULL vs 0"`.
 
 ### Cross-reference
-- [library/cpp/oop/POLYMORPHISM.md §5-6](../../../library/cpp/oop/POLYMORPHISM.md)
-- [library/cpp/modules/CPP04.md §ex03](../../../library/cpp/modules/CPP04.md)
+- [library/en/cpp/notions/oop/POLYMORPHISM.md §5-6](../../../library/en/cpp/notions/oop/POLYMORPHISM.md)
+- [library/en/cpp/projets/modules/CPP04.md §ex03](../../../library/en/cpp/projets/modules/CPP04.md)
 
 ---
 

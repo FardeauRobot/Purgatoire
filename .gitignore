@@ -35,6 +35,9 @@ LEVEL4/C++1/RemakeCPP03/ex00/claptrap
 LEVEL4/C++1/RemakeCPP03/ex01/scavtrap
 LEVEL4/C++1/RemakeCPP03/ex02/fragtrap
 LEVEL4/C++1/RemakeCPP03/ex03/diamondtrap
+LEVEL5/C++2/CPP08/ex00/easyfind
+LEVEL5/C++2/CPP08/ex01/span
+LEVEL5/C++2/CPP08/ex02/mutantstack
 
 # Test artefacts
 LEVEL2/Pipex/outfile

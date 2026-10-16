@@ -268,4 +268,4 @@ The night before:
 - Re-read the subject PDF in full.
 - Re-read this library in order: [`INDEX`](INDEX.md) → 01 → 02 → ... → 17.
 - Build [`Lab 16`](16_TINY_SERVER_LAB.md) end-to-end. Make it run in a browser.
-- Then start your webserv from a clean directory, copy the appropriate Makefile from [`templates/cpp/complete`](../../../../templates/cpp/complete), and begin step 2 of the roadmap.
+- Then start your webserv from a clean directory, copy the appropriate Makefile from [`templates/cpp/complete`](../../../../../templates/cpp/complete), and begin step 2 of the roadmap.

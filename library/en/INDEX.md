@@ -4,19 +4,26 @@
 
 All the markdown scattered across Purgatoire, gathered here and sorted. Code stays with its project; the written word lives in this library.
 
+> 🇫🇷 French translations live in [`../fr/`](../fr/INDEX.md) — same tree, same filenames, translated one note at a time.
+
 ---
 
 ## 🗂️ Layout
 
 ```
 library/
-├── INDEX.md          ← you are here
-├── meta/             # repo-wide notes
-├── scripts/          # workflow tooling docs
-├── projects/         # per-project READMEs and TODO lists
-├── cpp/              # C++ study notes, sorted by theme
-├── rust/             # Rust for a C/C++ dev — lexique + notions
-└── netpractice/      # NetPractice project — networking support
+├── fr/                  # French translations — mirrors en/ as it grows
+└── en/
+    ├── INDEX.md         ← you are here
+    ├── meta/            # repo-wide notes
+    ├── scripts/         # workflow tooling docs
+    ├── projects/        # per-project READMEs and TODO lists
+    ├── cpp/             # C++ study notes, sorted by theme
+    ├── rust/            # Rust for a C/C++ dev — lexique + notions
+    ├── netpractice/     # NetPractice project — networking support
+    ├── docker/          # Docker & Inception
+    ├── codingame/       # CodinGame challenges
+    └── swift/
 ```
 
 ---
@@ -129,7 +136,8 @@ Everything needed to build and defend the 42 Inception project — Docker philos
 ## 📝 Adding a new note
 
 1. Choose the right folder — or open a new one if a theme doesn't fit.
-2. `library/projects/LEVELX/<project>.md` for project READMEs, `<project>-<tag>.md` for scratch/TODO files.
+2. `library/en/projects/LEVELX/<project>.md` for project READMEs, `<project>-<tag>.md` for scratch/TODO files.
 3. Add a row to this index in the matching table.
+4. Translating a note? Put it at the same path under `library/fr/` and link back to the English original.
 
 Keep the root `README.md` as the single landing page. Every other markdown lives here.

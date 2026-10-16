@@ -256,7 +256,7 @@ The tells:
 
 ## C++98 / webserv callouts
 
-- **EMFILE resilience is the point of the high-`-c` runs.** When concurrency exceeds your fd limit, `accept()` fails — your server must neither crash nor busy-spin. Push `ab -c 500` / `siege -c 255` specifically to provoke this. (Design: cap connections + gate the listen socket's `POLLIN`; see [POLL_DEEP_DIVE](../../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md).)
+- **EMFILE resilience is the point of the high-`-c` runs.** When concurrency exceeds your fd limit, `accept()` fails — your server must neither crash nor busy-spin. Push `ab -c 500` / `siege -c 255` specifically to provoke this. (Design: cap connections + gate the listen socket's `POLLIN`; see [POLL_DEEP_DIVE](../../../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md).)
 - **No `errno` after `read`/`write`** (subject rule) means you detect a dropped client purely by `recv()` returning `0`/`-1`, not by inspecting the error. Load tools that open and abandon connections (Ctrl-C mid-run) are a good test of that teardown path.
 - **`ab`'s "Length" failures** are expected for variable-size dynamic responses — don't chase them; benchmark a static file for clean throughput numbers.
 
@@ -268,4 +268,4 @@ The tells:
 - [`TIPS.md`](TIPS.md) — debugging habits and development order
 - [`07_CONNECTION.md`](07_CONNECTION.md) — keep-alive vs close, the single-`poll()` rule, idle timeouts
 - [`functions/02_IO_MULTIPLEXING.md`](functions/02_IO_MULTIPLEXING.md) — the `poll()` loop the load lands on
-- [`../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md`](../../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md) — the overload funnel, the backlog, the EMFILE trap *(sandbox deep-dive)*
+- [`../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md`](../../../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md) — the overload funnel, the backlog, the EMFILE trap *(sandbox deep-dive)*

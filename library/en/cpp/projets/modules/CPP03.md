@@ -9,7 +9,7 @@ happen?* The vehicle is a silly robot family — `ClapTrap` and its
 children — chosen so the mechanics stay loud (every ctor, dtor, and
 action prints a trace, so you can watch the chain fire).
 
-See also: the per-module [`TOPICS.md`](../../../../LEVEL4/C++1/Mod03/TOPICS.md)
+See also: the per-module [`TOPICS.md`](../../../../../LEVEL4/C++1/Mod03/TOPICS.md)
 for exercise-by-exercise deep dives, and
 [`oop/INHERITANCE.md`](../../notions/oop/INHERITANCE.md) for the complete
 inheritance reference.

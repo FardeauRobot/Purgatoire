@@ -9,8 +9,8 @@ copy like built-in numbers. The vehicle is a `Fixed`-point number
 class. The math is decoration; the real learning is OCF +
 operator overloading + const-correctness.
 
-See also: the per-module `TOPICS.md` in [`LEVEL4/C++1/Mod02/`](../../../../LEVEL4/C++1/Mod02/TOPICS.md)
-for exercise-by-exercise deep dives, and [`FLOATING.md`](../../../../LEVEL4/C++1/Mod02/FLOATING.md)
+See also: the per-module `TOPICS.md` in [`LEVEL4/C++1/Mod02/`](../../../../../LEVEL4/C++1/Mod02/TOPICS.md)
+for exercise-by-exercise deep dives, and [`FLOATING.md`](../../../../../LEVEL4/C++1/Mod02/FLOATING.md)
 for the floating-point / fixed-point background.
 
 ---
@@ -156,7 +156,7 @@ same answer as comparing the real values. All six (`<`, `>`, `<=`,
 | `a / b`  | `(a_raw << 8) / b_raw` | raw quotient loses the scale, shift left to restore |
 
 `*` and `/` are the interesting ones. Proof is one line of
-arithmetic — see [`TOPICS.md` for Mod02 §ex02](../../../../LEVEL4/C++1/Mod02/TOPICS.md).
+arithmetic — see [`TOPICS.md` for Mod02 §ex02](../../../../../LEVEL4/C++1/Mod02/TOPICS.md).
 
 ### Increment / decrement — pre vs post
 

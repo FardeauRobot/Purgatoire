@@ -60,7 +60,7 @@ The OS layer and the non-blocking core. Everything that moves bytes before HTTP 
 - [`07_CONNECTION.md`](07_CONNECTION.md) — keep-alive, single-`poll()`, the errno-forbidden rule
 - [`functions/01_SOCKET_LIFECYCLE.md`](functions/01_SOCKET_LIFECYCLE.md) — `socket`/`bind`/`listen`/`accept`/`setsockopt`
 - [`functions/02_IO_MULTIPLEXING.md`](functions/02_IO_MULTIPLEXING.md) — `poll`/`select`/`kqueue`/`fcntl`
-- [`POLL_DEEP_DIVE.md`](../../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md) — **deep dive:** the `poll()` loop line by line — kernel-side mechanics, the dynamic pollfd array + backlog, teardown *(sandbox note, companion to `functions/02`)*
+- [`POLL_DEEP_DIVE.md`](../../../../../LEVEL5/WebServTest/notes/POLL_DEEP_DIVE.md) — **deep dive:** the `poll()` loop line by line — kernel-side mechanics, the dynamic pollfd array + backlog, teardown *(sandbox note, companion to `functions/02`)*
 - [`functions/03_DATA_TRANSFER.md`](functions/03_DATA_TRANSFER.md) — `read`/`write`/`send`/`recv`, short reads & writes
 
 ### HTTP parsing — raw bytes → structured request, structured response → bytes

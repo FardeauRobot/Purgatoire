@@ -8,7 +8,7 @@ Project-level instructions for Claude Code working in **Purgatoire** — a 42 co
 
 I'm a **42 student on macOS (Apple Silicon)**, currently working through the C++ piscine (LEVEL4/C++1, Mod00 → Mod05). I'm learning C++ from scratch — explanations should be **didactic**, not just code dumps. Default to the *Explanatory* output style mindset: when you write code, briefly tell me **why** the choice is right.
 
-Map of the repo: see `README.md`. Knowledge library: see `library/INDEX.md`.
+Map of the repo: see `README.md`. Knowledge library: see `library/en/INDEX.md`.
 
 ---
 
@@ -59,7 +59,7 @@ Git submodule at `libft/`. Build with `cd libft && make`. Link with `-L./libft -
 ## Style preferences
 
 ### Orthodox Canonical Form
-Every non-trivial C++ class needs the **four canonical members**: default ctor, copy ctor, copy-assign operator, destructor. When you generate a class, list and implement all four — easy to forget the assignment operator. Reference: `library/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md`.
+Every non-trivial C++ class needs the **four canonical members**: default ctor, copy ctor, copy-assign operator, destructor. When you generate a class, list and implement all four — easy to forget the assignment operator. Reference: `library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md`.
 
 ### Naming
 - Classes: `PascalCase` (e.g. `ScavTrap`)
@@ -83,7 +83,9 @@ When teaching me something, prefer:
 ## Knowledge library
 
 `library/` is my **Obsidian vault** — a single source of truth, no mirror. Every `.md`
-note lives there, organized by topic (`cpp/`, `netpractice/`, `projects/`, etc.).
+note lives there, split by language first: `en/` holds the full documentation, organized by
+topic (`en/cpp/`, `en/netpractice/`, `en/projects/`, etc.); `fr/` holds French translations at the
+**same paths and filenames** (`fr/X` ↔ `en/X`), filled in one note at a time.
 Edit notes in place; there is no second copy to keep in sync.
 
 ---
@@ -112,9 +114,9 @@ Edit notes in place; there is no second copy to keep in sync.
 
 | Need | Where |
 |---|---|
-| C++ keyword reference | `library/cpp/lexique/INDEX.md` |
-| OCF / OOP patterns | `library/cpp/notions/oop/` |
-| Per-module walkthrough | `library/cpp/projets/modules/CPP0X.md` |
-| Personal scripts | `library/scripts/SCRIPTS.md` |
-| Claude Code manual | `library/meta/CLAUDE_CODE_MANUAL.md` |
-| Repo improvement list | `library/meta/IMPROVEMENT.md` |
+| C++ keyword reference | `library/en/cpp/lexique/INDEX.md` |
+| OCF / OOP patterns | `library/en/cpp/notions/oop/` |
+| Per-module walkthrough | `library/en/cpp/projets/modules/CPP0X.md` |
+| Personal scripts | `library/en/scripts/SCRIPTS.md` |
+| Claude Code manual | `library/en/meta/CLAUDE_CODE_MANUAL.md` |
+| Repo improvement list | `library/en/meta/IMPROVEMENT.md` |

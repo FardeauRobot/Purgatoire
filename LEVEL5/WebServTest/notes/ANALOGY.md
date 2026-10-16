@@ -261,6 +261,6 @@ The order you learn them is also the order they matter: first understand what yo
 
 ## Related
 
-- [`18_SOCKETS_AND_FDS.md`](../../library/cpp/webserv/18_SOCKETS_AND_FDS.md) — technical deep-dive on fds and the event loop
-- [`01_FUNDAMENTALS.md`](../../library/cpp/webserv/01_FUNDAMENTALS.md) — HTTP as text over TCP, where it sits in the stack
-- [`16_TINY_SERVER_LAB.md`](../../library/cpp/webserv/16_TINY_SERVER_LAB.md) — build a minimal server; this analogy is the theory behind it
+- [`18_SOCKETS_AND_FDS.md`](../../../library/en/cpp/projets/webserv/18_SOCKETS_AND_FDS.md) — technical deep-dive on fds and the event loop
+- [`01_FUNDAMENTALS.md`](../../../library/en/cpp/projets/webserv/01_FUNDAMENTALS.md) — HTTP as text over TCP, where it sits in the stack
+- [`16_TINY_SERVER_LAB.md`](../../../library/en/cpp/projets/webserv/16_TINY_SERVER_LAB.md) — build a minimal server; this analogy is the theory behind it

@@ -15,7 +15,7 @@ Purgatoire/
 ├── LEVEL2/         # Second circle: IPC, algorithms, graphics
 ├── LEVEL3/         # Third circle: concurrency & command interpreters
 ├── LEVEL4/         # Fourth circle: graphics engine & object orientation
-├── library/        # All notes, READMEs, study guides (see library/INDEX.md)
+├── library/        # All notes, READMEs, study guides (see library/en/INDEX.md)
 ├── Scripts/        # Workflow incantations
 └── templates/      # Skeletons for new projects
 ```
@@ -101,7 +101,7 @@ The final ascent: raycasters and the orthodox canonical form.
 
 ## 📜 Scripts — *The Scrolls of Automation*
 
-Sacred incantations gathered along the way — git workflows, compile helpers, terminal utilities. Full catalogue in [`library/scripts/SCRIPTS.md`](./library/scripts/SCRIPTS.md).
+Sacred incantations gathered along the way — git workflows, compile helpers, terminal utilities. Full catalogue in [`library/en/scripts/SCRIPTS.md`](./library/en/scripts/SCRIPTS.md).
 
 Highlights:
 
@@ -134,13 +134,13 @@ C++ skeletons (basic / complete / cppinit) live under `LEVEL4/C++1/template/`.
 
 ## 📚 Library
 
-All written material — project READMEs, C++ study notes, scripts doc, improvement roadmap — lives in [`library/`](./library/INDEX.md). Browse the index to find anything by topic.
+All written material — project READMEs, C++ study notes, scripts doc, improvement roadmap — lives in [`library/`](./library/en/INDEX.md). Browse the index to find anything by topic.
 
 ---
 
 ## 🗺️ Want to improve?
 
-See [`library/meta/IMPROVEMENT.md`](./library/meta/IMPROVEMENT.md) — a living checklist of structural, tooling, and craftsmanship upgrades, sorted from quick wins to long-term investments.
+See [`library/en/meta/IMPROVEMENT.md`](./library/en/meta/IMPROVEMENT.md) — a living checklist of structural, tooling, and craftsmanship upgrades, sorted from quick wins to long-term investments.
 
 ---
 

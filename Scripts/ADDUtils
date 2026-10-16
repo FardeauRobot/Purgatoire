@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+# ADDUtils - scaffold a flat C++ project folder.
+# Usage: ADDUtils <folder> <ClassName>
+#
+# Creates <folder>/ with Makefile, utils.{hpp,cpp}, errors.{hpp,cpp}, main.cpp
+# and <ClassName>.{hpp,cpp} (includes + orthodox canonical form, no data).
+# utils / errors are copied from templates/cpp/basic; the Makefile is a simple
+# generated one (all/clean/fclean/re only).
+
+set -e
+
+usage() {
+    echo "Usage: ADDUtils <folder> <ClassName>"
+    exit 1
+}
+
+[ "$#" -eq 2 ] || usage
+
+FOLDER="$1"
+CLASS="$2"
+CLASS_UPPER="$(printf '%s' "$CLASS" | tr '[:lower:]' '[:upper:]')"
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SOURCE="$(cd "$SCRIPT_DIR/.." && pwd)/templates/cpp/basic"
+TARGET="$(pwd)/$FOLDER"
+
+if [ ! -d "$SOURCE" ]; then
+    echo "ADDUtils: template not found at $SOURCE" >&2
+    exit 1
+fi
+if [ -e "$TARGET" ]; then
+    echo "ADDUtils: '$TARGET' already exists" >&2
+    exit 1
+fi
+
+mkdir -p "$TARGET"
+
+cp "$SOURCE/include/utils.hpp"  "$TARGET/utils.hpp"
+cp "$SOURCE/src/utils.cpp"      "$TARGET/utils.cpp"
+cp "$SOURCE/include/Errors.hpp" "$TARGET/errors.hpp"
+cp "$SOURCE/src/Errors.cpp"     "$TARGET/errors.cpp"
+
+# Simple flat Makefile: only the mandatory all/clean/fclean/re rules.
+cat > "$TARGET/Makefile" <<EOF
+NAME     = $FOLDER
+
+CXX      = c++
+CXXFLAGS = -Wall -Wextra -Werror -Wswitch -std=c++98 -MMD -MP
+
+SRCS = main.cpp errors.cpp utils.cpp $CLASS.cpp
+OBJDIR = objs
+OBJS = \$(SRCS:%.cpp=\$(OBJDIR)/%.o)
+DEPS = \$(OBJS:.o=.d)
+
+all: \$(NAME)
+
+\$(NAME): \$(OBJS)
+	\$(CXX) \$(CXXFLAGS) \$^ -o \$@
+
+\$(OBJDIR)/%.o: %.cpp | \$(OBJDIR)
+	\$(CXX) \$(CXXFLAGS) -c \$< -o \$@
+
+\$(OBJDIR):
+	mkdir -p \$(OBJDIR)
+
+-include \$(DEPS)
+
+clean:
+	rm -rf \$(OBJDIR)
+
+fclean: clean
+	rm -f \$(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
+EOF
+
+cat > "$TARGET/$CLASS.hpp" <<EOF
+#ifndef ${CLASS_UPPER}_HPP
+# define ${CLASS_UPPER}_HPP
+
+#include <iostream>
+
+class ${CLASS} {
+    public:
+        ${CLASS}();
+        ${CLASS}(const ${CLASS} &src);
+        ${CLASS}& operator= (const ${CLASS} &other);
+        ~${CLASS}();
+};
+
+#endif
+EOF
+
+cat > "$TARGET/$CLASS.cpp" <<EOF
+#include <iostream>
+#include "${CLASS}.hpp"
+#include "utils.hpp"
+
+${CLASS}::${CLASS}() {
+    std::cout << BOLD_CYAN << "${CLASS} Default constructor called" << endofline;
+}
+
+${CLASS}::${CLASS}(const ${CLASS} &src) {
+    std::cout << BOLD_BLUE << "${CLASS} Copy constructor called" << endofline;
+    *this = src;
+}
+
+${CLASS}& ${CLASS}::operator= (const ${CLASS} &other) {
+    std::cout << BOLD_BLUE << "${CLASS} Copy assignment operator called" << endofline;
+    (void)other;
+    return (*this);
+}
+
+${CLASS}::~${CLASS}() {
+    std::cout << BOLD_RED << "${CLASS} Destructor called" << endofline;
+}
+EOF
+
+cat > "$TARGET/main.cpp" <<EOF
+#include <iostream>
+#include <stdexcept>
+#include "errors.hpp"
+#include "utils.hpp"
+#include "${CLASS}.hpp"
+
+int main(void)
+{
+    try
+    {
+        ${CLASS} instance;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return (FAILURE);
+    }
+    return (SUCCESS);
+}
+EOF
+
+echo "✓ project '$FOLDER' (class $CLASS) created at $TARGET"
+ls "$TARGET"

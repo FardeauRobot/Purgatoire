@@ -1,4 +1,4 @@
-NAME     = ex02
+NAME     = array
 
 CXX      = c++
 CXXFLAGS = -Wall -Wextra -Werror -Wswitch -std=c++98 -MMD -MP

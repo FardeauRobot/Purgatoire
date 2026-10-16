@@ -152,5 +152,5 @@ That is where the HTTP layer begins.
 ## Related notes
 
 - [`ANALOGY.md`](../ANALOGY.md) — the city and the server, with technical depth
-- [`18_SOCKETS_AND_FDS.md`](../../../library/cpp/webserv/18_SOCKETS_AND_FDS.md) — deep-dive on fds and the event loop
-- [`01_FUNDAMENTALS.md`](../../../library/cpp/webserv/01_FUNDAMENTALS.md) — HTTP as text over TCP
+- [`18_SOCKETS_AND_FDS.md`](../../../../library/en/cpp/projets/webserv/18_SOCKETS_AND_FDS.md) — deep-dive on fds and the event loop
+- [`01_FUNDAMENTALS.md`](../../../../library/en/cpp/projets/webserv/01_FUNDAMENTALS.md) — HTTP as text over TCP

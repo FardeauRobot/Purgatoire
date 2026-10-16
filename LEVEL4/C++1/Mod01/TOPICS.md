@@ -16,11 +16,11 @@ Same as Mod 00 — `-Wall -Wextra -Werror -std=c++98`, no STL, no
 
 | Concept | Where |
 |---|---|
-| Stack vs heap, `new`/`delete`, `new[]`/`delete[]` | [library/cpp/fundamentals/MEMORY.md](../../../library/cpp/fundamentals/MEMORY.md) |
-| References — alias semantics, `const` references | [library/cpp/fundamentals/REFERENCE.md](../../../library/cpp/fundamentals/REFERENCE.md) |
-| File I/O with `<fstream>` | [library/cpp/io-errors/FSTREAM_GUIDE.md](../../../library/cpp/io-errors/FSTREAM_GUIDE.md), [library/cpp/io-errors/OPEN.md](../../../library/cpp/io-errors/OPEN.md) |
-| `std::string` manipulation | [library/cpp/io-errors/STRING_FUNCTIONS.md](../../../library/cpp/io-errors/STRING_FUNCTIONS.md) |
-| Per-exercise walkthrough | [library/cpp/modules/CPP01.md](../../../library/cpp/modules/CPP01.md) |
+| Stack vs heap, `new`/`delete`, `new[]`/`delete[]` | [library/en/cpp/notions/fundamentals/MEMORY.md](../../../library/en/cpp/notions/fundamentals/MEMORY.md) |
+| References — alias semantics, `const` references | [library/en/cpp/notions/fundamentals/REFERENCE.md](../../../library/en/cpp/notions/fundamentals/REFERENCE.md) |
+| File I/O with `<fstream>` | [library/en/cpp/notions/io-errors/FSTREAM_GUIDE.md](../../../library/en/cpp/notions/io-errors/FSTREAM_GUIDE.md), [library/en/cpp/notions/io-errors/OPEN.md](../../../library/en/cpp/notions/io-errors/OPEN.md) |
+| `std::string` manipulation | [library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md](../../../library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md) |
+| Per-exercise walkthrough | [library/en/cpp/projets/modules/CPP01.md](../../../library/en/cpp/projets/modules/CPP01.md) |
 
 ### The central question — stack, heap, pointer, or reference?
 
@@ -42,7 +42,7 @@ Every `new` **must** be matched by exactly one `delete`. Every
 `new`/`delete[]` (or `new[]`/`delete`) → **undefined behaviour**
 (often a crash; sometimes silent corruption).
 
-See [library/cpp/fundamentals/MEMORY.md](../../../library/cpp/fundamentals/MEMORY.md)
+See [library/en/cpp/notions/fundamentals/MEMORY.md](../../../library/en/cpp/notions/fundamentals/MEMORY.md)
 for how heap allocation actually works (arena, size cookie, free
 lists).
 
@@ -94,7 +94,7 @@ exit.
   `delete`. Document it (comment in the header).
 - **Pass `std::string` by `const&`** to the ctor to avoid a
   copy. See
-  [library/cpp/fundamentals/REFERENCE.md §4.2](../../../library/cpp/fundamentals/REFERENCE.md).
+  [library/en/cpp/notions/fundamentals/REFERENCE.md §4.2](../../../library/en/cpp/notions/fundamentals/REFERENCE.md).
 - **Order of stdout lines** — the subject expects a specific order.
   `announce` prints, then the destructor prints on scope exit.
 
@@ -169,8 +169,8 @@ two-phase init where the default ctor leaves `name` empty and
 `"valgrind mismatched free"`.
 
 ### Cross-reference
-- [library/cpp/modules/CPP01.md §ex01](../../../library/cpp/modules/CPP01.md)
-- [library/cpp/fundamentals/MEMORY.md — array new/delete](../../../library/cpp/fundamentals/MEMORY.md)
+- [library/en/cpp/projets/modules/CPP01.md §ex01](../../../library/en/cpp/projets/modules/CPP01.md)
+- [library/en/cpp/notions/fundamentals/MEMORY.md — array new/delete](../../../library/en/cpp/notions/fundamentals/MEMORY.md)
 
 ---
 
@@ -221,7 +221,7 @@ three, then the value of all three.
 `"c++ reference is alias not pointer"`.
 
 ### Cross-reference
-- [library/cpp/fundamentals/REFERENCE.md §2](../../../library/cpp/fundamentals/REFERENCE.md) — mental model
+- [library/en/cpp/notions/fundamentals/REFERENCE.md §2](../../../library/en/cpp/notions/fundamentals/REFERENCE.md) — mental model
 
 ---
 
@@ -294,8 +294,8 @@ semantics give you shared access to the same object.
 `"c++ return const reference to member"`.
 
 ### Cross-reference
-- [library/cpp/fundamentals/REFERENCE.md §7.3](../../../library/cpp/fundamentals/REFERENCE.md) — reference in class members
-- [library/cpp/oop/GETTERS_SETTERS.md](../../../library/cpp/oop/GETTERS_SETTERS.md) — return-by-const-ref
+- [library/en/cpp/notions/fundamentals/REFERENCE.md §7.3](../../../library/en/cpp/notions/fundamentals/REFERENCE.md) — reference in class members
+- [library/en/cpp/notions/oop/GETTERS_SETTERS.md](../../../library/en/cpp/notions/oop/GETTERS_SETTERS.md) — return-by-const-ref
 
 ---
 
@@ -313,7 +313,7 @@ CLI: `./program filename s1 s2`. Read `filename`, write a new file
 
 - **`<fstream>`** — `std::ifstream` to read, `std::ofstream` to
   write. See
-  [library/cpp/io-errors/FSTREAM_GUIDE.md](../../../library/cpp/io-errors/FSTREAM_GUIDE.md).
+  [library/en/cpp/notions/io-errors/FSTREAM_GUIDE.md](../../../library/en/cpp/notions/io-errors/FSTREAM_GUIDE.md).
 - **Reading a file whole or line-by-line.** Line-by-line preserves
   newlines easily; whole-file via `rdbuf()` is terse. Both work.
 - **Manual replacement loop.** `find` returns the index of the
@@ -369,9 +369,9 @@ Good enough for this exercise.
 `"std::ifstream open check failed"`.
 
 ### Cross-reference
-- [library/cpp/io-errors/FSTREAM_GUIDE.md](../../../library/cpp/io-errors/FSTREAM_GUIDE.md)
-- [library/cpp/io-errors/OPEN.md](../../../library/cpp/io-errors/OPEN.md)
-- [library/cpp/io-errors/STRING_FUNCTIONS.md](../../../library/cpp/io-errors/STRING_FUNCTIONS.md)
+- [library/en/cpp/notions/io-errors/FSTREAM_GUIDE.md](../../../library/en/cpp/notions/io-errors/FSTREAM_GUIDE.md)
+- [library/en/cpp/notions/io-errors/OPEN.md](../../../library/en/cpp/notions/io-errors/OPEN.md)
+- [library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md](../../../library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md)
 
 ---
 

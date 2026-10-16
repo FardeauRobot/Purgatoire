@@ -25,12 +25,12 @@ per-exercise sections below assume you've already seen them.
 
 | Concept | Where to read |
 |---|---|
-| C → C++ mindset, namespaces, `std::`, `new`/`delete` | [library/cpp/fundamentals/BASICS.md](../../../library/cpp/fundamentals/BASICS.md) |
-| Streams (`std::cin`, `std::cout`, formatting) | [library/cpp/tooling/LIBRARIES.md](../../../library/cpp/tooling/LIBRARIES.md) |
-| `<iomanip>` manipulators (`setw`, `setfill`, `setprecision`) | [library/cpp/tooling/LIBRARIES.md §2](../../../library/cpp/tooling/LIBRARIES.md) |
-| `std::string` API | [library/cpp/io-errors/STRING_FUNCTIONS.md](../../../library/cpp/io-errors/STRING_FUNCTIONS.md) |
-| Getters/setters, encapsulation | [library/cpp/oop/GETTERS_SETTERS.md](../../../library/cpp/oop/GETTERS_SETTERS.md) |
-| Per-exercise walkthrough (companion to this file) | [library/cpp/modules/CPP00.md](../../../library/cpp/modules/CPP00.md) |
+| C → C++ mindset, namespaces, `std::`, `new`/`delete` | [library/en/cpp/notions/fundamentals/BASICS.md](../../../library/en/cpp/notions/fundamentals/BASICS.md) |
+| Streams (`std::cin`, `std::cout`, formatting) | [library/en/cpp/notions/tooling/LIBRARIES.md](../../../library/en/cpp/notions/tooling/LIBRARIES.md) |
+| `<iomanip>` manipulators (`setw`, `setfill`, `setprecision`) | [library/en/cpp/notions/tooling/LIBRARIES.md §2](../../../library/en/cpp/notions/tooling/LIBRARIES.md) |
+| `std::string` API | [library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md](../../../library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md) |
+| Getters/setters, encapsulation | [library/en/cpp/notions/oop/GETTERS_SETTERS.md](../../../library/en/cpp/notions/oop/GETTERS_SETTERS.md) |
+| Per-exercise walkthrough (companion to this file) | [library/en/cpp/projets/modules/CPP00.md](../../../library/en/cpp/projets/modules/CPP00.md) |
 
 ### The mental shift — C to C++
 
@@ -135,7 +135,7 @@ parts:
 - **Getters are `const`.** `std::string Contact::getFirstName() const`
   promises not to mutate the contact. Required so you can print a
   `const Contact&`. See
-  [library/cpp/oop/GETTERS_SETTERS.md](../../../library/cpp/oop/GETTERS_SETTERS.md)
+  [library/en/cpp/notions/oop/GETTERS_SETTERS.md](../../../library/en/cpp/notions/oop/GETTERS_SETTERS.md)
   for why and how.
 - **Column formatting with `<iomanip>`.** `std::setw(10)` sets the
   next field's width; `std::right` sets alignment; `std::setfill(' ')`
@@ -208,9 +208,9 @@ the next insertion*. Manipulators like `std::right` or `setfill` are
 `"c++ numeric_limits streamsize ignore"`.
 
 ### Cross-reference
-- [library/cpp/modules/CPP00.md §ex01](../../../library/cpp/modules/CPP00.md) — full walkthrough
-- [library/cpp/io-errors/STRING_FUNCTIONS.md](../../../library/cpp/io-errors/STRING_FUNCTIONS.md) — `substr`, `length`, `empty`
-- [library/cpp/tooling/LIBRARIES.md §2](../../../library/cpp/tooling/LIBRARIES.md) — `<iomanip>` manipulators
+- [library/en/cpp/projets/modules/CPP00.md §ex01](../../../library/en/cpp/projets/modules/CPP00.md) — full walkthrough
+- [library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md](../../../library/en/cpp/notions/io-errors/STRING_FUNCTIONS.md) — `substr`, `length`, `empty`
+- [library/en/cpp/notions/tooling/LIBRARIES.md §2](../../../library/en/cpp/notions/tooling/LIBRARIES.md) — `<iomanip>` manipulators
 
 ---
 
@@ -273,8 +273,8 @@ A **reverse-engineering** exercise. You're given `Account.hpp` and
 `"c++ class static method no this"`.
 
 ### Cross-reference
-- [library/cpp/modules/CPP00.md §ex02](../../../library/cpp/modules/CPP00.md) — full walkthrough
-- [library/cpp/fundamentals/BASICS.md §11](../../../library/cpp/fundamentals/BASICS.md) — `static` members
+- [library/en/cpp/projets/modules/CPP00.md §ex02](../../../library/en/cpp/projets/modules/CPP00.md) — full walkthrough
+- [library/en/cpp/notions/fundamentals/BASICS.md §11](../../../library/en/cpp/notions/fundamentals/BASICS.md) — `static` members
 - `WALKTHROUGH.md §14` — `static`: three meanings, one keyword
 
 ---

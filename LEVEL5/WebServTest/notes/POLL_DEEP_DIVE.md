@@ -425,5 +425,5 @@ for (size_t i = 0; i < fds.size();) {
 ## Related
 
 - [`ANALOGY.md`](ANALOGY.md) — the city analogy: poll() as the traffic controller
-- [`../../library/cpp/webserv/functions/02_IO_MULTIPLEXING.md`](../../library/cpp/webserv/functions/02_IO_MULTIPLEXING.md) — complete reference: poll, select, epoll, kqueue
-- [`../../library/cpp/webserv/libraries/POLL_H.md`](../../library/cpp/webserv/libraries/POLL_H.md) — header reference: flags, struct, function signature
+- [`../../../library/en/cpp/projets/webserv/functions/02_IO_MULTIPLEXING.md`](../../../library/en/cpp/projets/webserv/functions/02_IO_MULTIPLEXING.md) — complete reference: poll, select, epoll, kqueue
+- [`../../../library/en/cpp/projets/webserv/libraries/POLL_H.md`](../../../library/en/cpp/projets/webserv/libraries/POLL_H.md) — header reference: flags, struct, function signature

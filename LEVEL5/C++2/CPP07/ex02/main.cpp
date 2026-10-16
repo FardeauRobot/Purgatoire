@@ -19,7 +19,7 @@ int main(int, char**) {
     string_filled[0] = "First element";
     std::cout << BOLD_WHITE << "SLOT 0 = " << string_filled[0] << endofline;
     string_filled[NB_SLOTS - 1] = "Last element";
-    std::cout << BOLD_WHITE << "SLOT " << NB_SLOTS - 1 << "=" << string_filled[NB_SLOTS - 1] << endofline;
+    std::cout << BOLD_WHITE << "SLOT " << NB_SLOTS - 1 << " = " << string_filled[NB_SLOTS - 1] << endofline;
 
     try {
         std::cout << BOLD_BLUE << "DISPLAY string_empty[0]" << endofline;

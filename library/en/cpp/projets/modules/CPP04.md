@@ -9,7 +9,7 @@ calling `makeSound()` should bark, not issue a generic "animal
 noise". That's **dynamic dispatch**, and the mechanism behind it
 (vtables, vptrs) is the heart of Mod 04.
 
-See also: the per-module [`TOPICS.md`](../../../../LEVEL4/C++1/Mod04/TOPICS.md)
+See also: the per-module [`TOPICS.md`](../../../../../LEVEL4/C++1/Mod04/TOPICS.md)
 and [`oop/POLYMORPHISM.md`](../../notions/oop/POLYMORPHISM.md) for the full
 reference.
 

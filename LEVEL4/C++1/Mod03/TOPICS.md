@@ -16,10 +16,10 @@ no leaks. **Every class must follow Orthodox Canonical Form.**
 
 | Concept | Where |
 |---|---|
-| Inheritance: modes, ctor/dtor order, memory layout, diamond | [library/cpp/oop/INHERITANCE.md](../../../library/cpp/oop/INHERITANCE.md) |
-| OCF — four members, deep vs shallow, pitfalls | [library/cpp/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/cpp/oop/ORTHODOX_CANONICAL_FORM.md) |
-| References (used everywhere in ctor signatures) | [library/cpp/fundamentals/REFERENCE.md](../../../library/cpp/fundamentals/REFERENCE.md) |
-| Per-exercise walkthrough (companion) | [library/cpp/modules/CPP03.md](../../../library/cpp/modules/CPP03.md) |
+| Inheritance: modes, ctor/dtor order, memory layout, diamond | [library/en/cpp/notions/oop/INHERITANCE.md](../../../library/en/cpp/notions/oop/INHERITANCE.md) |
+| OCF — four members, deep vs shallow, pitfalls | [library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md) |
+| References (used everywhere in ctor signatures) | [library/en/cpp/notions/fundamentals/REFERENCE.md](../../../library/en/cpp/notions/fundamentals/REFERENCE.md) |
+| Per-exercise walkthrough (companion) | [library/en/cpp/projets/modules/CPP03.md](../../../library/en/cpp/projets/modules/CPP03.md) |
 
 ### The mental model — "is-a"
 
@@ -138,8 +138,8 @@ simple.
 `"orthodox canonical form example"`.
 
 ### Cross-reference
-- [library/cpp/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/cpp/oop/ORTHODOX_CANONICAL_FORM.md)
-- [library/cpp/modules/CPP03.md §ex00](../../../library/cpp/modules/CPP03.md)
+- [library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md](../../../library/en/cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md)
+- [library/en/cpp/projets/modules/CPP03.md §ex00](../../../library/en/cpp/projets/modules/CPP03.md)
 
 ---
 
@@ -223,8 +223,8 @@ constructor that the derived class's init list can call.
 `"c++ override without virtual shadowing"`.
 
 ### Cross-reference
-- [library/cpp/oop/INHERITANCE.md §5](../../../library/cpp/oop/INHERITANCE.md) — calling base ctor
-- [library/cpp/oop/INHERITANCE.md §8](../../../library/cpp/oop/INHERITANCE.md) — name hiding
+- [library/en/cpp/notions/oop/INHERITANCE.md §5](../../../library/en/cpp/notions/oop/INHERITANCE.md) — calling base ctor
+- [library/en/cpp/notions/oop/INHERITANCE.md §8](../../../library/en/cpp/notions/oop/INHERITANCE.md) — name hiding
 
 ---
 
@@ -354,7 +354,7 @@ DiamondTrap(std::string name)
   standalone (not via `DiamondTrap`), it *is* the most-derived and
   constructs `ClapTrap` itself.
 
-See [library/cpp/oop/INHERITANCE.md §10](../../../library/cpp/oop/INHERITANCE.md).
+See [library/en/cpp/notions/oop/INHERITANCE.md §10](../../../library/en/cpp/notions/oop/INHERITANCE.md).
 
 ### The name-shadowing trick
 
@@ -440,8 +440,8 @@ indirection**.
 `"-Wshadow c++"`.
 
 ### Cross-reference
-- [library/cpp/oop/INHERITANCE.md §9-10](../../../library/cpp/oop/INHERITANCE.md)
-- [library/cpp/modules/CPP03.md §ex03](../../../library/cpp/modules/CPP03.md)
+- [library/en/cpp/notions/oop/INHERITANCE.md §9-10](../../../library/en/cpp/notions/oop/INHERITANCE.md)
+- [library/en/cpp/projets/modules/CPP03.md §ex03](../../../library/en/cpp/projets/modules/CPP03.md)
 
 ---
 
