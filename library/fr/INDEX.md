@@ -14,8 +14,11 @@ library/
 └── fr/   # les traductions — même arbre que en/
     ├── INDEX.md   ← tu es ici
     └── cpp/
-        └── notions/
-            └── containers/   # les 11 fiches sur les conteneurs de la STL
+        ├── notions/
+        │   ├── advanced/     # ITERATORS.md
+        │   └── containers/   # les 11 fiches sur les conteneurs de la STL
+        └── projets/
+            └── modules/      # CPP09.md
 ```
 
 Correspondance : `fr/<chemin>` ↔ `en/<chemin>`. Chaque fiche traduite commence par un lien vers son original anglais.
@@ -27,6 +30,8 @@ Correspondance : `fr/<chemin>` ↔ `en/<chemin>`. Chaque fiche traduite commence
 | Thème | Point d'entrée | Contenu |
 |---|---|---|
 | Conteneurs STL (C++98) | [`cpp/notions/containers/INDEX.md`](cpp/notions/containers/INDEX.md) | vector, list, deque, stack, queue, priority_queue, set, multiset, map, multimap |
+| Itérateurs (C++98) | [`cpp/notions/advanced/ITERATORS.md`](cpp/notions/advanced/ITERATORS.md) | catégories, traits, adaptateurs, invalidation, CPP08 |
+| Module CPP09 | [`cpp/projets/modules/CPP09.md`](cpp/projets/modules/CPP09.md) | btc (map), RPN (stack), PmergeMe (Ford-Johnson, vector vs deque), grille d'évaluation |
 
 ---
 

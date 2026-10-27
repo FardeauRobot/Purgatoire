@@ -14,7 +14,7 @@
 template<typename T>
 void printContainer(const T &container) {
     for (typename T::const_iterator it = container.begin(); it != container.end(); ++it) {
-        std::cout << *it << endofline;
+        std::cout << BOLD_YELLOW << *it << endofline;
     }
 }
 
@@ -22,7 +22,7 @@ template<typename T>
 void findAndPrint(T &container, int n) {
     try {
         typename T::iterator found = easyfind(container, n);
-        std::cout << BOLD_GREEN << "FOUND " << *found << " AT POSITION "
+        std::cout << BOLD_WHITE << "FOUND " << BOLD_YELLOW << *found << BOLD_WHITE << " AT POSITION " << BOLD_YELLOW
                   << std::distance(container.begin(), found) << endofline;
     }
     catch (std::exception &e) {
@@ -32,22 +32,23 @@ void findAndPrint(T &container, int n) {
 
 template<typename T>
 void testContainer(const std::string &name, T &container) {
-    std::cout << BOLD_CYAN << "[" << name << "]" << endofline;
+    std::cout << BOLD_GREEN << "[" << name << "]" << endofline;
 
-    std::cout << BOLD_WHITE << "SEARCHING 42 IN AN EMPTY CONTAINER" << endofline;
+    std::cout << BOLD_MAGENTA << "SEARCHING 42 IN AN EMPTY CONTAINER" << endofline;
     findAndPrint(container, 42);
 
     for (size_t i = 0; i < 10; i++) {
         container.push_back(std::rand() % 1000);
     }
+    std::cout << BOLD_WHITE << "CONTENT :" << endofline;
     printContainer(container);
 
     typename T::iterator third = container.begin();
     std::advance(third, 2);
-    std::cout << BOLD_WHITE << "SEARCHING THE THIRD ELEMENT (" << *third << ")" << endofline;
+    std::cout << BOLD_MAGENTA << "SEARCHING THE THIRD ELEMENT (" << *third << ")" << endofline;
     findAndPrint(container, *third);
 
-    std::cout << BOLD_WHITE << "SEARCHING -1 (NEVER INSERTED)" << endofline;
+    std::cout << BOLD_MAGENTA << "SEARCHING -1 (NEVER INSERTED)" << endofline;
     findAndPrint(container, -1);
 }
 

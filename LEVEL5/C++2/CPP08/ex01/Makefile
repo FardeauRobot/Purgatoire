@@ -34,4 +34,5 @@ own: fclean
 
 subject: fclean
 	$(MAKE) CXXFLAGS="$(CXXFLAGS) -DSUBJECT=1"
+
 .PHONY: all clean fclean re own subject

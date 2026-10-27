@@ -24,7 +24,6 @@ public:
     int     shortestSpan() const;
     int     longestSpan() const;
 
-    // All or nothing: the room is checked before inserting anything.
     template <typename InputIt>
     void    fillSpan(InputIt first, InputIt last) {
         if (static_cast<size_t>(std::distance(first, last)) > _max_capacity - _storage.size())

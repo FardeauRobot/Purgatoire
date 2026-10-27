@@ -271,6 +271,8 @@ ms.count(1);                     // 2
 
 ## 6. Iterators
 
+> Deep dive: [`ITERATORS.md`](ITERATORS.md) — categories, `iterator_traits`, adaptors, invalidation, writing your own.
+
 An iterator is a "generalized pointer." It responds to the same operations a pointer does: `*it`, `++it`, `it1 == it2`.
 
 Every container has these nested types:

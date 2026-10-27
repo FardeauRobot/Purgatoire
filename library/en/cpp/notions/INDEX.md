@@ -17,6 +17,7 @@ The zoom-out layer: each file explains one concept properly — mental model, di
 | [`ALLOCATION_FAILURE.md`](fundamentals/ALLOCATION_FAILURE.md) | When `new` fails — `bad_alloc` vs NULL, `operator new` internals. |
 | [`STRING.md`](fundamentals/STRING.md) | `std::string` deep dive — SSO vs COW, growth, the `char*` bridge. |
 | [`CMATH.md`](fundamentals/CMATH.md) | `<cmath>` — powers, roots, trig, rounding; C++98 vs C++11. |
+| [`C_LIBRARY.md`](fundamentals/C_LIBRARY.md) | `<cctype>`, `<cstdlib>`, `<cstring>` — `isdigit`, `strtol`, `strcmp`… and their traps. |
 
 ## 🧬 `oop/` — object orientation
 
@@ -34,6 +35,7 @@ The zoom-out layer: each file explains one concept properly — mental model, di
 |---|---|
 | [`TEMPLATES.md`](advanced/TEMPLATES.md) | Function + class templates, specialisation. |
 | [`STL.md`](advanced/STL.md) | Containers + iterators + algorithms — the overview hub. |
+| [`ITERATORS.md`](advanced/ITERATORS.md) | Iterators in depth — categories, traits, adaptors, invalidation, CPP08 patterns. |
 | [`ALGORITHMS.md`](advanced/ALGORITHMS.md) | Exhaustive `<algorithm>`/`<numeric>` reference, C++98-annotated. |
 | [`MEMBER_FUNCTION_POINTERS.md`](advanced/MEMBER_FUNCTION_POINTERS.md) | `.*` / `->*`, dispatch tables, the Harl pattern. |
 
@@ -65,4 +67,4 @@ Mental model + ASCII diagram + full API + complexity + iterator invalidation, fo
 
 - **Starting the piscine:** `PHILOSOPHY` → `fundamentals/BASICS` → `fundamentals/MEMORY` → `oop/ORTHODOX_CANONICAL_FORM`
 - **Inheritance not clicking:** `oop/INHERITANCE` → `oop/POLYMORPHISM` → [`lexique/VIRTUAL.md`](../lexique/VIRTUAL.md)
-- **Entering Mod08 / containers:** `advanced/STL` → `containers/INDEX` → `advanced/ALGORITHMS`
+- **Entering Mod08 / containers:** `advanced/STL` → `advanced/ITERATORS` → `containers/INDEX` → `advanced/ALGORITHMS`

@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <numeric>
 #include <climits>
 #include <iostream>
 #include "Span.hpp"
@@ -46,7 +45,7 @@ void Span:: addNumber(int new_nbr) {
 
 void    Span::printVector() const {
     for (size_t it = 0; it < _storage.size(); it++)
-        std::cout << BOLD_WHITE << "NB = " << BOLD_GREEN << _storage[it] << endofline;
+        std::cout << BOLD_WHITE << "NB = " << BOLD_YELLOW << _storage[it] << endofline;
 
 }
 
@@ -54,19 +53,16 @@ size_t  Span::size() const {
     return (_storage.size());
 }
 
-// The copies are std::vector<long> on purpose: the difference of two ints
-// (e.g. INT_MAX - INT_MIN) overflows an int, but always fits in a 64-bit long.
 int     Span::shortestSpan() const {
     if (_storage.size() < 2)
         throw TooFewElemException();
 
-    std::vector<long> sorted(_storage.begin(), _storage.end());
+    std::vector<int> sorted(_storage);
     std::sort(sorted.begin(), sorted.end());
 
-    std::vector<long> gaps(sorted.size());
-    std::adjacent_difference(sorted.begin(), sorted.end(), gaps.begin());
-    // gaps[0] is a copy of sorted[0], not a difference: skip it.
-    long span = *std::min_element(gaps.begin() + 1, gaps.end());
+    long span = static_cast<long>(sorted[1]) - sorted[0];
+    for (size_t i = 2; i < sorted.size(); i++)
+        span = std::min(span, static_cast<long>(sorted[i]) - sorted[i - 1]);
 
     if (span > INT_MAX)
         throw SpanOverflowException();
@@ -85,3 +81,4 @@ int     Span::longestSpan() const {
         throw SpanOverflowException();
     return (static_cast<int>(max - min));
 }
+

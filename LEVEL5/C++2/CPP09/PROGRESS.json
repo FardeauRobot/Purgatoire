@@ -1,0 +1,8 @@
+{
+  "title": "CPP09 — STL",
+  "steps": [
+    { "id": "0", "name": "ex00 btc (erreurs à aligner)", "state": "partial" },
+    { "id": "1", "name": "ex01 RPN (sortie à aligner)", "state": "partial" },
+    { "id": "2", "name": "ex02 PmergeMe", "state": "current" }
+  ]
+}

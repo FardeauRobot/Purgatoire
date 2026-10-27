@@ -1,0 +1,31 @@
+2 Fichiers a ouvrir :
+
+	input.txt, fournit dans la ligne de commande,
+	data.csv, récupérer par le programme au lancement
+
+
+
+-> recouper ensuite : 
+
+
+
+
+	Trouver la date la plus proche ( en prenant la plus proche passée si la date n'existe pas )
+
+
+-> Dérouler du programme : 
+	On charge le .csv
+	On ouvre le "input.txt"
+
+	chaque ligne parcourure de l'input.txt
+		=>	Verification du format
+			-> si pas respecté:
+				-> erreur format ( date | value )
+				-> erreur donné nombre : Erreur nombre
+
+		Trouver la date la plus proche passée ou le jour meme
+		-> Trouver la taille la plus longue dans la chaine de caractere date
+
+		comparaison (input.txt[0] avec _values[i][0])
+		-> Si concluant :
+			-> Renvoyer value x exchange_rate
