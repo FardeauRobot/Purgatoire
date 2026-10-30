@@ -30,6 +30,7 @@ Start at the roadmap — it sequences everything below into phases with a gate a
 | 11 | [`11_COMPARISONS.md`](11_COMPARISONS.md) | The four comparisons the README must contain, written to be defended out loud. |
 | 12 | [`12_TROUBLESHOOTING.md`](12_TROUBLESHOOTING.md) | "It's broken, what now?" — symptom → diagnosis decision tree. |
 | 13 | [`13_DEFENSE.md`](13_DEFENSE.md) | The one-pager you skim 15 minutes before defense. |
+| 📖 | [`GLOSSAIRE.md`](GLOSSAIRE.md) | **Every technical term in the subject** — definition + use in Inception, by theme, plus a command cheat sheet. |
 
 ---
 

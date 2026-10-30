@@ -1,0 +1,13 @@
+{
+  "title": "Inception",
+  "steps": [
+    { "id": "0", "name": "VM de test", "state": "current", "done": 3, "total": 6 },
+    { "id": "1", "name": "Makefile + compose", "state": "todo" },
+    { "id": "2", "name": "NGINX TLS", "state": "todo" },
+    { "id": "3", "name": "MariaDB", "state": "todo" },
+    { "id": "4", "name": "WordPress php-fpm", "state": "todo" },
+    { "id": "5", "name": "Volumes & réseau", "state": "todo" },
+    { "id": "6", "name": "Secrets / .env", "state": "todo" },
+    { "id": "7", "name": "Bonus", "state": "todo" }
+  ]
+}
