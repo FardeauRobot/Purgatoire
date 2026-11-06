@@ -1,0 +1,363 @@
+INCEPTION 
+
+On a la VM de configurer, on arrive sur un espace avec interface graphique.
+
+On fait quoi : 
+
+sudo apt update && apt upgrade
+
+On installe les premiers paquets nécessaires : 
+
+sudo apt install -y git make vim curl ca-certificates (Boite a outils de base)
+
+curl : Client HTTP en ligne de commande. Sert a télécharger des choses, 
+comme la clé GPG (GNU Privacy Guard) pour le dépot docker, et tester le site
+
+ca-certificates : Certificats des autorités de confiance (curl, git et apt ne peuvent pas faire de vérif)
+
+
+
+------------------------------------------------------------------
+TERMINAL PARTAGE HOTE <-> VM (SSH + tmux)
+------------------------------------------------------------------
+
+But : taper depuis un terminal de l'hote (Warp...) et voir exactement
+la meme chose dans un terminal de la VM (pratique en soutenance).
+
+tmux : multiplexeur de terminal. Un serveur tmux tourne dans la VM,
+chaque terminal qui s'y "attache" affiche la meme session en direct.
+
+1) VirtualBox : rediriger un port de l'hote vers le SSH de la VM
+   (VM eteinte) Configuration > Reseau > NAT > Avance > Redirection de ports
+   Nom: ssh  Proto: TCP  IP hote: 127.0.0.1  Port hote: 2222  Port invite: 22
+   (ou : VBoxManage modifyvm <nom_vm> --natpf1 "ssh,tcp,127.0.0.1,2222,,22")
+
+2) Dans la VM :
+   sudo apt install -y openssh-server tmux
+
+3) Sur l'hote, se connecter par cle plutot que par mot de passe :
+   ssh-keygen -t ed25519              (seulement si ~/.ssh/id_ed25519 n'existe pas)
+   ssh-copy-id -p 2222 tibras@127.0.0.1
+
+4) Sur l'hote, alias SSH dans ~/.ssh/config (chmod 600) :
+   Host inception
+       HostName 127.0.0.1
+       Port 2222
+       User tibras
+   -> "ssh inception" suffit maintenant
+
+5) Sur l'hote, script ~/.local/bin/vm (chmod 755) :
+   #!/bin/sh
+   exec ssh -t inception tmux new -A -s inception
+
+   -t : force un vrai terminal (tmux en a besoin)
+   new -A -s inception : cree la session "inception", ou la rejoint si elle existe
+
+6) Utilisation (ordre indifferent) :
+   - dans un terminal de la VM : tmux new -A -s inception
+   - sur l'hote (invite f4r11s3, PAS inception !) : vm
+
+Raccourcis :
+   Ctrl+b puis d          se detacher sans fermer la session
+   exit                   ferme le shell pour TOUT LE MONDE
+   tmux ls                lister les sessions
+   tmux attach -r -t inception   rejoindre en lecture seule
+Si les fenetres n'ont pas la meme taille, tmux s'aligne sur la plus petite.
+
+
+------------------------------------------------------------------
+PIÈGES VM / VIRTUALBOX
+------------------------------------------------------------------
+
+- VirtualBox 7.2 : la colonne d'icônes à gauche choisit l'outil. La 1re = accueil
+  ("Get started"), AUCUNE VM n'y apparaît. Clique la 2e (Machines) pour la liste.
+- "Open" sur un .vbox déjà enregistré -> erreur "same UUID as an existing virtual
+  machine". La VM n'est pas perdue, elle est juste déjà dans la liste.
+- Une VM lancée en headless (VBoxManage startvm --type headless) n'a pas de fenêtre :
+  "Démarrer" échoue (déjà lancée). Utiliser "Afficher", ou l'éteindre puis relancer.
+- Une boîte "unattended files, delete?" peut se cacher derrière les fenêtres et
+  bloquer le démarrage.
+- Pour push/pull depuis la VM : clé SSH de la VM sur GitHub (cat ~/.ssh/id_rsa.pub
+  -> GitHub > Settings > SSH keys ; test : ssh -T git@github.com) + git config
+  --global user.name / user.email (sinon le 1er commit refuse).
+
+
+------------------------------------------------------------------
+SQUELETTE : CHOIX À SAVOIR DÉFENDRE
+------------------------------------------------------------------
+
+- Mots de passe JAMAIS dans .env ni dans le repo : fichiers secrets/*.txt
+  (git-ignorés, générés par `make secrets`, chmod 600), passés en Docker secrets.
+  Dans le conteneur ils apparaissent en lecture dans /run/secrets/<nom>.
+- .env = config non sensible (domaine, noms de base/utilisateurs, chemins).
+- Volumes NOMMÉS (exigés par le sujet) dont les données vivent dans
+  /home/tibras/data/... (driver local, type none, o bind) : persistance après
+  `make down`, et données visibles sur l'hôte.
+- healthcheck sur mariadb + depends_on: condition: service_healthy -> WordPress
+  ne démarre qu'une fois la base prête à répondre (pas juste "conteneur lancé").
+- restart: always -> si le service meurt, Docker relance le conteneur.
+- Un réseau bridge dédié "inception" : les conteneurs se joignent par leur nom
+  (mariadb:3306). Seul nginx publie un port (443).
+- Images construites par NOS Dockerfiles, tag explicite (pas "latest", interdit).
+
+
+------------------------------------------------------------------
+MARIADB
+------------------------------------------------------------------
+
+Règles du sujet : 1 conteneur = 1 service (ici mysqld), PAS de hack pour garder
+le conteneur en vie (tail -f, sleep infinity, while true...), données persistées
+dans /var/lib/mysql (monté sur ~/data/mariadb).
+
+Pourquoi le script finit par `exec mysqld` (QUESTION DE SOUTENANCE) :
+
+  Dans un conteneur, le 1er processus a le PID 1. Docker considère que le
+  conteneur vit tant que le PID 1 vit. `docker stop` envoie SIGTERM au PID 1,
+  attend 10 s, puis SIGKILL.
+
+  Sans exec (mysqld & + sleep infinity) :
+    PID 1 sh init.sh   <- reçoit SIGTERM, ne le transmet pas
+     ├─ mysqld         <- ne reçoit rien -> tué net par SIGKILL après 10 s
+     └─ sleep infinity    (risque de corrompre la base ; et hack interdit)
+
+  Avec exec :
+    PID 1 sh init.sh  --exec-->  PID 1 mysqld
+    exec ne crée PAS de nouveau processus : il REMPLACE le shell par mysqld
+    (même PID). mysqld reçoit SIGTERM, écrit ses données, s'arrête proprement.
+    S'il plante -> le conteneur s'arrête -> restart: always le relance.
+
+  En une phrase : "exec remplace le shell par mysqld, qui devient PID 1 : il
+  reçoit les signaux de Docker et s'arrête proprement ; vie du conteneur = vie
+  du service."
+  Vérif : docker exec mariadb ps -o pid,comm   (mysqld/mariadbd doit être PID 1)
+
+
+
+------------------------------------------------------------------
+DOCKER : LES BASES (QUESTIONS DE SOUTENANCE)
+------------------------------------------------------------------
+
+- Image = modèle figé, construit depuis un Dockerfile.
+  Conteneur = une instance de l'image en train de tourner.
+- Un conteneur n'est PAS une VM : pas de noyau à lui, il partage celui de
+  l'hôte, isolé par les namespaces et cgroups du noyau Linux. D'où léger et rapide.
+- Il embarque l'appli + ses dépendances (libs, PHP, config...) dans les bonnes
+  versions -> même comportement sur toutes les machines.
+- Éphémère : ce qui doit survivre (base, fichiers du site) va dans des volumes.
+- Docker empaquette CHAQUE service séparément ; Docker Compose les assemble.
+
+Qui fait quoi :
+  Makefile ──► docker-compose.yml ──► 3 Dockerfiles ──► 3 images ──► 3 conteneurs
+- Dockerfile         = recette d'UN service (FROM, RUN, COPY, EXPOSE, ENTRYPOINT).
+- docker-compose.yml = le chef d'orchestre : services, réseau, volumes, secrets,
+  ordre de démarrage. `docker compose up --build` construit et lance tout.
+- Makefile           = raccourcis de commandes, lancés sur la VM (l'hôte), pas
+  dans un conteneur. Il prépare aussi ce que Docker ne fait pas (dossiers data,
+  secrets). Sans lui : docker compose -f srcs/docker-compose.yml up -d --build
+
+
+------------------------------------------------------------------
+PIÈGE : NEOVIM DIFFÉRENT SUR LA VM
+------------------------------------------------------------------
+
+Même config sur l'hôte et la VM (~/.config/nvim -> ~/.dotfiles/modules/nvim,
+même commit). Le problème vient de la version :
+  hôte : NVIM v0.12.5     VM (apt Debian 12) : NVIM v0.7.2
+La config utilise vim.loader (0.9+) et vim.pack (0.12) -> erreur dès la
+ligne 93 de init.lua, le reste ne se charge pas -> nvim "de base".
+Diagnostic : nvim --version ; nvim --headless +qa  (affiche l'erreur)
+Fix : nvim 0.12.5 depuis l'archive officielle GitHub dans /opt, lien
+/usr/local/bin/nvim (passe avant /usr/bin dans le PATH).
+2e piège au 1er lancement : "tree-sitter build ... ENOENT 'tree-sitter'".
+Mason télécharge tree-sitter-cli en arrière-plan ; si on quitte nvim avant la
+fin, le lien dans ~/.local/share/nvim/mason/bin n'est jamais créé.
+-> dans nvim : :MasonToolsInstallSync  (attendre la fin), puis relancer nvim.
+
+
+------------------------------------------------------------------
+DOCKERFILE : LES INSTRUCTIONS
+------------------------------------------------------------------
+
+Emplacement imposé : srcs/requirements/<service>/Dockerfile.
+Le dossier du service = CONTEXTE DE BUILD (build: requirements/mariadb dans le
+compose) : les chemins des COPY partent de là.
+
+FROM        image de départ. Sujet : avant-dernière stable Debian/Alpine, jamais latest.
+RUN         commande exécutée AU BUILD. Chaque RUN = une couche (layer) de l'image.
+            -> enchaîner avec && dans un seul RUN, et rm -rf /var/lib/apt/lists/*
+               pour ne pas garder le cache apt dans l'image (image plus légère).
+COPY        copie un fichier du contexte de build vers l'image.
+EXPOSE      DOCUMENTAIRE seulement, n'ouvre rien (c'est le réseau Docker / ports:
+            du compose qui rendent le service joignable).
+ENTRYPOINT  commande lancée AU DÉMARRAGE du conteneur -> devient le PID 1.
+            Forme exec ["/chemin"] vs forme shell /chemin (enveloppée dans /bin/sh -c).
+
+
+------------------------------------------------------------------
+POURQUOI "50-server.cnf" ? (dossiers de config *.d/)
+------------------------------------------------------------------
+
+Convention Linux : /etc/mysql/my.cnf inclut tous les fichiers de
+/etc/mysql/mariadb.conf.d/, lus par ORDRE ALPHABÉTIQUE. Le numéro en préfixe
+fixe l'ordre. Debian y installe 50-client.cnf, 50-server.cnf, 60-galera.cnf...
+Même option dans deux fichiers -> le DERNIER lu gagne (99- passe après 50-).
+
+Deux façons de configurer le serveur :
+  1. écraser 50-server.cnf (même nom) : toute la config serveur est à nous,
+     il faut y remettre l'essentiel (datadir, socket...).
+  2. ajouter 99-inception.cnf avec seulement nos changements, lu en dernier.
+
+En déploiement réel -> DROP-IN (99-xxx.cnf), c'est la pratique standard :
+  - mises à jour : le paquet garde la main sur son 50-server.cnf ; un fichier
+    remplacé fige l'ancienne config (options renommées/supprimées -> le serveur
+    peut refuser de démarrer après un changement de version).
+  - lisibilité : 3 lignes = exactement ce que J'AI changé.
+  - convention partout : image officielle mariadb, nginx conf.d/, systemd
+    *.service.d/override.conf, sudoers.d/.
+  Phrase soutenance : "je ne modifie pas la config du paquet, je la surcharge,
+  comme en production."
+
+
+------------------------------------------------------------------
+DOCKERFILE MARIADB (srcs/requirements/mariadb/Dockerfile)
+------------------------------------------------------------------
+
+Choix :
+  - FROM debian:bookworm (Debian 12 = avant-dernière stable, Debian 13 = trixie).
+  - un seul RUN : apt-get update && install && rm -rf /var/lib/apt/lists/*
+  - --no-install-recommends : seulement les dépendances obligatoires.
+  - mkdir -p /run/mysqld && chown mysql:mysql : dossier du SOCKET. Sur une Debian
+    normale, systemd le crée au boot ; dans un conteneur il n'y a pas de systemd
+    -> sans lui, mysqld refuse de démarrer.
+  - config en drop-in : COPY conf/99-inception.cnf -> /etc/mysql/mariadb.conf.d/
+  - init.sh dans /usr/local/bin/ (scripts locaux), chmod +x.
+  - EXPOSE 3306 (documentaire).
+  - ENTRYPOINT ["/usr/local/bin/init.sh"] en forme EXEC (crochets) : le script
+    est lancé directement en PID 1. En forme shell (sans crochets), Docker
+    l'envelopperait dans /bin/sh -c, et c'est sh qui serait PID 1.
+
+
+------------------------------------------------------------------
+PRÉCISION : LE PRÉFIXE XX- N'EST PAS UN MÉCANISME DOCKER
+------------------------------------------------------------------
+
+Docker ne lit pas ces fichiers : COPY les dépose juste dans l'image. C'est le
+PROGRAMME dans le conteneur (mysqld via !includedir dans my.cnf) qui lit le
+dossier par ordre alphabétique. Même chose sans Docker, sur une Debian normale.
+
+Le numéro = ordre de LECTURE. "Priorité" seulement au sens : même option dans
+la même section ([mysqld]...) -> la dernière lue gagne. Options différentes ->
+elles s'additionnent, aucune n'écrase l'autre.
+
+Ordre alphabétique, pas numérique : toujours 2 chiffres (9-x.cnf passerait
+APRÈS 50-x.cnf, car '9' > '5').
+
+
+------------------------------------------------------------------
+TESTER AU FUR ET À MESURE
+------------------------------------------------------------------
+
+Tester par petits morceaux : une erreur vient alors du dernier morceau ajouté.
+PIÈGE : `make` construit les 3 services -> échoue tant que wordpress/nginx n'ont
+pas de Dockerfile. Cibler un seul service :
+  docker compose -f srcs/docker-compose.yml build mariadb
+  docker compose -f srcs/docker-compose.yml up -d mariadb
+  (make secrets dirs avant le 1er up)
+
+Checklist MariaDB :
+  - l'image se construit (conf vide + init.sh minimal suffisent pour valider le Dockerfile)
+  - config lue : docker run --rm mariadb:1.0 my_print_defaults mysqld
+  - docker compose ps -> healthy ; docker logs mariadb sans erreur
+  - docker exec mariadb ps -o pid,comm -> mysqld/mariadbd en PID 1
+  - docker exec -it mariadb mariadb -u root -p -> SHOW DATABASES; ; user WP se connecte
+  - root SANS mot de passe -> refusé
+  - down puis up -> données toujours là ; ~/data/mariadb rempli
+  - docker stop mariadb quasi instantané (10 s = mysqld n'est pas PID 1)
+
+PIÈGE : "docker run mariadb:1.0" sans avoir BUILD -> Docker cherche l'image sur
+Docker Hub (docker.io/library/mariadb = image OFFICIELLE). Pas de tag 1.0 ->
+"not found". Si le tag avait existé, on aurait lancé l'image officielle en
+silence (interdit par le sujet). Toujours build avant, vérifier avec docker images.
+
+
+------------------------------------------------------------------
+MESSAGES NORMAUX PENDANT LE BUILD (pas des erreurs)
+------------------------------------------------------------------
+
+- "debconf: unable to initialize frontend..." : apt veut poser des questions,
+  pas de terminal pendant un build -> réponses par défaut. Sans conséquence.
+- "invoke-rc.d: policy-rc.d denied execution" : les images Debian Docker
+  interdisent aux paquets de démarrer leur service à l'install. Voulu :
+  c'est init.sh qui lance mysqld.
+
+
+------------------------------------------------------------------
+1er BUILD OK (06/11) + PIÈGES VUS
+------------------------------------------------------------------
+
+Image mariadb:1.0 construite : 99-inception.cnf présent à côté des 50-*.cnf,
+/run/mysqld appartient à mysql, mysqladmin présent (healthcheck).
+
+PIÈGE : "run mariadbd as root!" + Aborting -> MariaDB refuse de tourner en
+root (utilisateur par défaut d'un conteneur). Le vrai init.sh doit lancer
+mysqld sous l'utilisateur mysql (créé par le paquet).
+
+docker run IMAGE commande -> la commande est passée en ARGUMENTS à l'ENTRYPOINT,
+elle ne le remplace pas. Pour explorer une image :
+  docker run --rm -it --entrypoint sh mariadb:1.0
+
+Pourquoi pas root : MOINDRE PRIVILÈGE. mysqld est exposé au réseau et exécute
+des requêtes venues de l'extérieur (SELECT ... INTO OUTFILE, LOAD DATA INFILE
+lisent/écrivent des fichiers). Faille ou injection SQL sur un mysqld root =
+pleins pouvoirs pour l'attaquant. En user mysql : il ne touche que sa base.
+Root dans un conteneur = UID 0 du noyau de l'hôte (grave en cas d'évasion).
+
+Solution : exec mysqld --user=mysql
+  mysqld démarre en root puis abandonne lui-même ses privilèges -> reste PID 1.
+Conséquence : /var/lib/mysql est monté depuis ~/data/mariadb (propriétaire
+tibras) -> chown -R mysql:mysql /var/lib/mysql dans init.sh avant de lancer mysqld.
+
+Pourquoi chown : les droits Linux = des NUMÉROS (UID), pas des noms. Un montage
+garde le propriétaire d'origine. ~/data/mariadb = UID 1000 (tibras) ; dans
+l'image, mysql = UID 100. Vu du conteneur, /var/lib/mysql appartient à un UID
+1000 inconnu -> mysqld (UID 100) ne peut pas écrire -> Permission denied.
+chown -R (récursif) en root dans init.sh donne le dossier à l'UID 100.
+Ensuite, sur la VM, ls -l ~/data/mariadb affiche un proprio bizarre (100 / _apt) : normal.
+Vérif : docker run --rm --entrypoint id mariadb:1.0 mysql ; stat -c "%U %u" ~/data/mariadb
+
+
+------------------------------------------------------------------
+IMAGE vs CONTENEUR
+------------------------------------------------------------------
+
+IMAGE     = modèle figé produit par le build (mariadb:1.0).
+            docker images / docker rmi
+CONTENEUR = instance qui tourne à partir d'une image.
+            docker ps -a / docker stop / docker rm
+Le conteneur s'appelle "mariadb" (container_name du compose), SANS tag :
+le ":1.0" n'appartient qu'à l'image -> docker stop mariadb
+docker run --rm : le conteneur se supprime tout seul à sa sortie.
+
+docker images (= docker image ls) : liste les images LOCALES (construites ou
+téléchargées) : dépôt:tag, ID, taille. Sert à vérifier qu'un build a marché,
+qu'on lance bien NOTRE image, et à faire le ménage (docker rmi <nom>).
+Soutenance : montre que les images portent le nom de leur service, pas de latest.
+
+
+------------------------------------------------------------------
+QUI FAIT QUOI (make -> compose -> Dockerfile -> init.sh)
+------------------------------------------------------------------
+
+make
+ └─ Makefile : prépare secrets/ et ~/data, lance docker compose up --build
+     └─ docker-compose.yml : ORCHESTRE (n'installe rien)
+         ├─ build: requirements/<service> -> Dockerfile -> image
+         └─ crée/relie les conteneurs : réseau, volumes, secrets, .env, ports, ordre
+             └─ chaque conteneur lance son ENTRYPOINT (init.sh -> exec mysqld)
+
+Makefile   = point d'entrée.
+compose    = COMMENT les services s'assemblent.
+Dockerfile = CE QUE CONTIENT une image (c'est lui qui installe).
+init.sh    = CE QUE FAIT le conteneur au démarrage.
+Phrase soutenance : "le Makefile lance compose, compose construit chaque image
+depuis son Dockerfile puis assemble les conteneurs."

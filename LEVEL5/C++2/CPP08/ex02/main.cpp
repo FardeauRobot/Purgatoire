@@ -19,6 +19,10 @@ static void testMutantStack(void)
     mstack.push(nb1);
     mstack.push(nb2);
 
+# if DEBUG == 1
+    std:cout << "DEBUG" << endofline;
+#endif
+
     std::cout << BOLD_WHITE << "SIZE OF THE MUTANT STACK : " << BOLD_YELLOW << mstack.size() <<endofline;
     std::cout << BOLD_WHITE << "NB AT TOP : " << BOLD_YELLOW << mstack.top() << endofline;
     std::cout << BOLD_MAGENTA << "POPPING THE MUTANT STACK" << endofline;

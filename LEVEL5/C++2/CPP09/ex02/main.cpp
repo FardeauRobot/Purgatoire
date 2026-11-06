@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <ctime>
 #include <cctype>
 #include <cerrno>
@@ -51,6 +52,16 @@ int main(int argc, char **argv)
         PmergeMe instance;
 
         printArgs(argc, argv);
+        instance.sortVector(argc, argv);
+        instance.sortDeque(argc, argv);
+
+        std::cout << "After: ";
+        Print(instance.getVector());
+        std::cout << std::fixed << std::setprecision(5);
+        std::cout << "Time to process a range of " << argc - 1
+                  << " elements with std::vector : " << instance.getVectorTimer() << " us" << endofline;
+        std::cout << "Time to process a range of " << argc - 1
+                  << " elements with std::deque : " << instance.getDequeTimer() << " us" << endofline;
     }
 
     catch (const std::exception &e)

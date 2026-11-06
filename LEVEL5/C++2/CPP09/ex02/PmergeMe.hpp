@@ -10,12 +10,6 @@
 
 
 template<typename T>
-void    IMSort(T &container, double &timer) {
-        (void)container;
-        (void)timer;
-}
-
-template<typename T>
 void    Print(const T &container) {
     for (typename T::const_iterator it = container.begin(); it != container.end(); ++it)
     {
@@ -34,16 +28,20 @@ class PmergeMe {
         double  _vectorTimer;
         double  _dequeTimer;
 
+        void    _sortVector(size_t blockSize);
+        void    _sortDeque(size_t blockSize);
+
     public:
         PmergeMe();
         PmergeMe(const PmergeMe &src);
         PmergeMe& operator= (const PmergeMe &other);
         ~PmergeMe();
 
+        void    sortVector(int argc, char **argv);
+        void    sortDeque(int argc, char **argv);
+
         const std::vector<int>& getVector(void) const;
         const std::deque<int>&  getDeque(void) const;
-        void    setVector(const std::vector<int> &vector);
-        void    setDeque(const std::deque<int> &deque);
         double  getVectorTimer(void) const;
         double  getDequeTimer(void) const;
 };

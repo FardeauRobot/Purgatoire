@@ -30,7 +30,10 @@ fclean: clean
 re: fclean all
 
 own: fclean
-	$(MAKE) CXXFLAGS="$(CXXFLAGS) -DSUBJECT=0 -DEXTRAS=1"
+	$(MAKE) CXXFLAGS="$(CXXFLAGS) -DSUBJECT=0 -DEXTRAS=1 -DDEBUG=0 "
+
+owndebug: fclean
+	$(MAKE) CXXFLAGS="$(CXXFLAGS) -DSUBJECT=0 -DEXTRAS=1 -DDEBUG=1"
 
 noextras: fclean
 	$(MAKE) CXXFLAGS="$(CXXFLAGS) -DSUBJECT=0 -DEXTRAS=0"
