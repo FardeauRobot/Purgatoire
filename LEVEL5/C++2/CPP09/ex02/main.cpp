@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <ctime>
 #include <cctype>
 #include <cerrno>
@@ -23,10 +24,16 @@ static bool isValidArg(const char *s)
 
 static void printArgs(int argc, char **argv)
 {
-    std::cout << "Before:";
+    std::cout << YELLOW << "Before:" << RESET;
     for (int i = 1; i < argc; ++i)
         std::cout << " " << argv[i];
     std::cout << endofline;
+}
+
+static void printTime(int count, const char *name, double timer)
+{
+    std::cout << CYAN << "Time to process a range of " << count << " elements with std::"
+        << name << " : " << RESET << std::fixed << std::setprecision(2) << timer << " us" << endofline;
 }
 
 int main(int argc, char **argv)
@@ -51,6 +58,12 @@ int main(int argc, char **argv)
         PmergeMe instance;
 
         printArgs(argc, argv);
+        instance.sortVector(argc, argv);
+        instance.sortDeque(argc, argv);
+        std::cout << GREEN << "After: " << RESET;
+        Print(instance.getVector());
+        printTime(argc - 1, "vector", instance.getVectorTimer());
+        printTime(argc - 1, "deque", instance.getDequeTimer());
     }
 
     catch (const std::exception &e)

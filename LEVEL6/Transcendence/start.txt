@@ -1,0 +1,13 @@
+Hello, on commence le projet Transcendence avec mon groupe. le sujet est disponible en .md dans le dossier
+
+On voudrait faire un jeu basé sur le concept des battles d'aura, sous forme de bataille de decks.
+
+Je souhaiterais pour l'instant avoir la liste des technologies que nous pourrions utiliser pour répondre au sujet transcendence. 
+
+On aurait besoin d'outils pour l'interface, la création des images de cartes, des modeles et des animations 3D. On pensait peut etre prendre des vidéos d'un modele pour faire les différentes animations, et ensuite les reproduire en attachant l'animation a un squelette et mettre des mesh différents en fonction des personnages utilisés.
+
+On souhaitait également louer un serveur pour héberger notre jeu. Il serait pour l'instant uniquement pour du 1 contre 1, joueur contre joueur. 
+
+Pour l'isntant on pensait utiliser AdonisJs, React et shimeji.
+
+Je souhaiterai que tu me fasses une liste des technologies ou des outils que l'on pourrait utiliser, en expliquant a chaque fois les pros and cons. 1 membre a quelques connaissances en développement web, 3 autres ne connaissent presque rien ( dont moi )

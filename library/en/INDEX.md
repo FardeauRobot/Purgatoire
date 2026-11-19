@@ -13,6 +13,7 @@ All the markdown scattered across Purgatoire, gathered here and sorted. Code sta
 ```
 library/
 ├── fr/                  # French translations — mirrors en/ as it grows
+│   └── javascript/      # French-only: JS / TS basics for Transcendance
 └── en/
     ├── INDEX.md         ← you are here
     ├── meta/            # repo-wide notes

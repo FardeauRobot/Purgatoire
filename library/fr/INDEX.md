@@ -19,8 +19,12 @@ library/
     │   │   └── containers/   # les 11 fiches sur les conteneurs de la STL
     │   └── projets/
     │       └── modules/      # CPP09.md
-    └── docker/
-        └── GLOSSAIRE.md      # tous les termes techniques d'Inception
+    ├── docker/
+    │   └── GLOSSAIRE.md      # tous les termes techniques d'Inception
+    ├── javascript/           # ✍️ rédigé en français : bases JS / TS pour Transcendance
+    │   └── lexique/          # un mot-clé JS par page + GLOSSAIRE
+    └── projects/
+        └── LEVEL6/           # ft_transcendence-subject.md
 ```
 
 Correspondance : `fr/<chemin>` ↔ `en/<chemin>`. Chaque fiche traduite commence par un lien vers son original anglais.
@@ -35,6 +39,18 @@ Correspondance : `fr/<chemin>` ↔ `en/<chemin>`. Chaque fiche traduite commence
 | Itérateurs (C++98) | [`cpp/notions/advanced/ITERATORS.md`](cpp/notions/advanced/ITERATORS.md) | catégories, traits, adaptateurs, invalidation, CPP08 |
 | Module CPP09 | [`cpp/projets/modules/CPP09.md`](cpp/projets/modules/CPP09.md) | btc (map), RPN (stack), PmergeMe (Ford-Johnson, vector vs deque), grille d'évaluation |
 | Glossaire Inception (Docker) | [`docker/GLOSSAIRE.md`](docker/GLOSSAIRE.md) | tous les termes techniques du sujet Inception : définition + usage, par thème, + aide-mémoire des commandes |
+| Sujet ft_transcendence | [`projects/LEVEL6/ft_transcendence-subject.md`](projects/LEVEL6/ft_transcendence-subject.md) | sujet v21.1 complet : partie obligatoire, 55 modules + tableau des points, idées de projets, exigences du README, bonus |
+
+---
+
+## ✍️ Rédigé en français
+
+Fiches écrites directement en français, sans original anglais (pour l'instant).
+
+| Thème | Point d'entrée | Contenu |
+|---|---|---|
+| JavaScript / TypeScript | [`javascript/INDEX.md`](javascript/INDEX.md) | les bases pour un dev C/C++98 : variables, fonctions, objets, classes, asynchrone, TypeScript, le pont vers React / AdonisJS pour Transcendance, et la 3D avec React Three Fiber |
+| 🔑 Lexique JS / TS | [`javascript/lexique/INDEX.md`](javascript/lexique/INDEX.md) | une page par mot-clé JavaScript (TypeScript à venir), avec l'équivalent C/C++98, plus le [`GLOSSAIRE`](javascript/lexique/GLOSSAIRE.md) des concepts |
 
 ---
 
