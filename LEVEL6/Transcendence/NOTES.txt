@@ -1,0 +1,60 @@
+NOTES — Transcendence (points à retenir)
+
+----
+FRONT / BACK / BASE : TROIS CANAUX
+----
+- HTTP (Tuyau + token Bearer) : demander une chose une fois (créer, lire une partie).
+- WebSocket (socket.io) : le serveur pousse ce qui change (coups, chrono). Contrat typé partagé :
+  apps/types/ws_contract.ts.
+- La base ne parle qu'au back (Lucid). Le front ne la voit jamais.
+Phrase de défense : « Le front fait des requêtes HTTP pour les actions ponctuelles et écoute un
+WebSocket pour le temps réel ; seul le back touche Postgres. »
+
+----
+DE LA TABLE AU JSON (ADONIS)
+----
+migration (crée la colonne) → schema.ts (généré) → model (relations) → transformer (choisit
+les champs qui sortent) → JSON typé côté front.
+Le transformer est le filtre de sécurité : ce qui n'y est pas ne part jamais au client.
+
+----
+LA SCÈNE NE CONNAÎT PAS LE RÉSEAU
+----
+Canvas three.js plein écran + overlay React par-dessus. L'arène reçoit trois appels
+(setLevel, setAura, burst) depuis l'état du match. Que l'état vienne d'un reducer local ou du
+WebSocket, la scène ne change pas.
+
+----
+EN LIGNE, LE SERVEUR EST LA VÉRITÉ
+----
+Le serveur choisit la donne et garde les mains : sinon un client peut tricher (lire la main
+adverse, choisir son seed).
+
+----
+ANIMATIONS : LE RÉSEAU ENVOIE UN FAIT, PAS UNE ANIMATION
+----
+Main posée → l'état change → React passe de nouvelles props à l'arène → l'arène lance la danse,
+la plongée caméra, la foule. Tout le reste est calculé localement à chaque frame.
+Le compteur `pulse` (+1 à chaque pose) sert de « déclencheur » : une prop qui change = un événement.
+En ligne : le client envoie seulement les ids des cartes ; le serveur répond « joueur X a posé un
+brelan, 240 pts ». Chaque écran joue l'animation de son côté.
+Phrase de défense : « Le serveur décide du résultat, le client se charge du spectacle. »
+
+----
+QUAND C'EST DU JSON
+----
+JSON = format texte pour faire passer des données d'un programme à un autre.
+Dans un même programme (React → three.js, controller → transformer) : objets JS en mémoire.
+Entre deux programmes : navigateur ↔ Adonis (HTTP, WebSocket) = JSON ; Adonis ↔ Postgres = SQL.
+Phrase de défense : « On sérialise en JSON à chaque frontière réseau, nulle part ailleurs. »
+
+----
+SOCKET.IO : ACK, SALLES, À QUI ON ÉMET
+----
+Ack = callback passé en dernier argument : le serveur répond à CETTE demande (ex. room:join → {ok, users}).
+Salle (room) = groupe de sockets côté serveur ; socket.join(room) pour y entrer.
+io.to(room).emit → toute la salle, émetteur compris (message:new).
+socket.to(room).emit → la salle sauf l'émetteur (room:user-joined / user-left).
+socket.emit → ce client seul (futur match:state, sa propre main).
+Pièges : le nom vient du client (pas d'auth) ; l'id des messages est un compteur global qui repart à 1.
+Phrase de défense : « Le client envoie une intention avec ack, le serveur annonce le fait à la salle. »

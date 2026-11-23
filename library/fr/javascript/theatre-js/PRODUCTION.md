@@ -19,7 +19,7 @@ import state from "./state.json";
 export const project = getProject("Aura", { state });
 ```
 
-- `import state from "./state.json"` : Vite sait importer un JSON comme un objet. TypeScript l'accepte grâce à `resolveJsonModule`, déjà activé dans le gabarit `react-ts`. Vérifié : ce fichier passe `tsc --strict`.
+- `import state from "./state.json"` : Vite sait importer un JSON comme un objet. TypeScript l'accepte avec les options du gabarit `react-ts` (`moduleResolution: "bundler"`), sans rien ajouter. Vérifié : ce fichier passe `tsc --strict`.
 - Le JSON est **empaqueté** dans le bundle : pas de requête réseau, pas de chargement à attendre.
 - L'`id` (`"Aura"`) doit être celui de l'export. Le nom du fichier exporté le rappelle : `Aura.theatre-project-state.json`.
 
@@ -121,11 +121,16 @@ Ce que ça donne en pratique :
 
 ## 4. Repartir de zéro, ou isoler un essai
 
-Le brouillon est rangé sous une clé du `localStorage`, par défaut `theatrejs:0.4`. Deux options de `studio.initialize` :
+Le brouillon est rangé sous une clé du `localStorage`, par défaut `theatrejs:0.4`. Deux options de `studio.initialize`, dans `theatreStudio.ts` :
 
 ```ts
-import studio from "@theatre/studio";
+import studioImport from "@theatre/studio";
 import extension from "@theatre/r3f/dist/extension";
+
+type Studio = typeof studioImport;
+
+const studio: Studio =
+    "initialize" in studioImport ? studioImport : (studioImport as unknown as { default: Studio }).default;
 
 studio.initialize({ persistenceKey: "aura-essai-camera" });
 studio.extend(extension);

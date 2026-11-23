@@ -2,9 +2,9 @@
 
 > **TL;DR.** **React** (frontend) = des **fonctions** qui reçoivent des données (*props*) et renvoient de l'interface ; l'état change via `useState`, les effets de bord (WebSocket, timers) vivent dans `useEffect`. **AdonisJS** (backend) = des **routes** qui appellent des **méthodes de contrôleurs** `async`, qui **valident** l'entrée puis parlent à la base via l'ORM. Entre les deux : du **JSON** sur HTTPS, et des messages typés en temps réel.
 
-Liens : [`INDEX`](INDEX.md) · [`ASYNCHRONE`](ASYNCHRONE.md) · [`TYPESCRIPT`](TYPESCRIPT.md) · [`React Three Fiber`](react-three-fiber/INDEX.md) · [sujet ft_transcendence](../projects/LEVEL6/ft_transcendence-subject.md)
+Liens : [`INDEX`](INDEX.md) · [`ASYNCHRONE`](ASYNCHRONE.md) · [`TYPESCRIPT`](TYPESCRIPT.md) · [`React`](react/INDEX.md) · [`React Three Fiber`](react-three-fiber/INDEX.md) · [`Theatre.js`](theatre-js/INDEX.md) · [sujet ft_transcendence](../projects/LEVEL6/ft_transcendence-subject.md)
 
-> ℹ️ Cette fiche reste volontairement **conceptuelle** : la stack de l'équipe (AdonisJS + React) n'est pas encore figée. Pour les détails d'API, la doc officielle de chaque outil fait foi.
+> ℹ️ Cette fiche reste volontairement **conceptuelle**. La stack de l'équipe est maintenant arrêtée : React 19 + React Router + Zustand + Tailwind côté front, AdonisJS 7 côté back, Socket.IO pour le temps réel. Le détail du front est dans [`react/`](react/INDEX.md), celui du back dans [`adonis/`](adonis/INDEX.md). Pour les détails d'API, la doc officielle de chaque outil fait foi.
 
 ---
 
@@ -125,7 +125,7 @@ export default class CartesController {
 
 Le module « Fonctionnalités temps réel (WebSockets…) » du sujet colle parfaitement à un jeu 1 contre 1. Points à connaître :
 
-- AdonisJS v6 n'a **pas** de WebSocket intégré. Son paquet officiel **Transmit** fait du *Server-Sent Events* (serveur → client uniquement), insuffisant pour un jeu où les deux côtés parlent. Il faudra brancher une bibliothèque WebSocket (par ex. `socket.io` ou `ws`) sur le serveur HTTP d'Adonis — à vérifier dans la doc au moment de choisir.
+- AdonisJS n'a **pas** de WebSocket intégré. Son paquet officiel **Transmit** fait du *Server-Sent Events* (serveur → client uniquement), insuffisant pour un jeu où les deux côtés parlent. L'équipe a donc branché **Socket.IO** sur le serveur HTTP d'Adonis, et le Caddyfile relaie `/socket.io/*`. Côté client : [`react/TEMPS_REEL`](react/TEMPS_REEL.md).
 - **Le serveur fait autorité** : le client envoie une *intention* (« je joue la carte 12 »), le serveur vérifie que c'est légal, met à jour la partie et diffuse le nouvel état aux deux joueurs. Ne fais jamais confiance à un calcul fait côté client.
 - **Types partagés** : décris les messages une seule fois (union avec un champ `type`, [`TYPESCRIPT`](TYPESCRIPT.md) §3) dans un fichier commun au front et au back, et **valide** chaque message reçu côté serveur.
 

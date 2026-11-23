@@ -4,7 +4,7 @@
 
 > **TL;DR.** Un itérateur est un **pointeur généralisé** : un objet qui marque une position dans un conteneur et qui répond à `*it`, `++it`, `it == other`. Chaque conteneur fournit des itérateurs via `begin()` / `end()`, chaque algorithme les consomme, et c'est pour ça qu'un seul `std::find` marche aussi bien sur un `vector`, une `list` qu'un tableau C. Ce qu'un itérateur *sait* faire dépend de sa **catégorie** (input → forward → bidirectional → random-access), et le moment où il *cesse* d'être valide dépend du **conteneur** d'où il vient.
 
-Voir aussi : [`STL.md`](../../../../en/cpp/notions/advanced/STL.md) (EN) · [`ALGORITHMS.md`](../../../../en/cpp/notions/advanced/ALGORITHMS.md) (EN) · [`TEMPLATES.md`](../../../../en/cpp/notions/advanced/TEMPLATES.md) (EN) · [`TYPENAME.md`](../../../../en/cpp/lexique/TYPENAME.md) (EN) · [`containers/INDEX.md`](../containers/INDEX.md) · [`CPP08.md`](../../../../en/cpp/projets/modules/CPP08.md) (EN)
+Voir aussi : [`STL.md`](../../../../en/cpp/notions/advanced/STL.md) (EN) · [`ALGORITHMS.md`](../../../../en/cpp/notions/advanced/ALGORITHMS.md) (EN) · [`TEMPLATES.md`](../../../../en/cpp/notions/advanced/TEMPLATES.md) (EN) · [`TYPENAME.md`](../../../../en/cpp/lexique/TYPENAME.md) (EN) · [`containers/INDEX.md`](../containers/INDEX.md) · [`CPP08.md`](../../projets/modules/CPP08.md)
 
 En-tête : `#include <iterator>` (pour les fonctions utilitaires et les adaptateurs — les types d'itérateurs eux-mêmes viennent avec l'en-tête de chaque conteneur)
 

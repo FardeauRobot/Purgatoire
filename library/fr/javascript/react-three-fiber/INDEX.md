@@ -6,7 +6,7 @@
 
 Ce dossier suit ton labo **`~/Labo/TestThreeFiber`** leçon par leçon, puis va plus loin vers ce dont le jeu de cartes de Transcendance a besoin : modèles glTF, personnages animés par squelette, état synchronisé par WebSocket.
 
-Liens : [`../INDEX`](../INDEX.md) · [`../VERS_TRANSCENDANCE`](../VERS_TRANSCENDANCE.md) · [sujet ft_transcendence](../../projects/LEVEL6/ft_transcendence-subject.md) · [doc R3F](https://r3f.docs.pmnd.rs) · [doc drei](https://drei.docs.pmnd.rs) · [doc three.js](https://threejs.org/docs/)
+Liens : [`../INDEX`](../INDEX.md) · [`../VERS_TRANSCENDANCE`](../VERS_TRANSCENDANCE.md) · [`../theatre-js/INDEX`](../theatre-js/INDEX.md) · [sujet ft_transcendence](../../projects/LEVEL6/ft_transcendence-subject.md) · [doc R3F](https://r3f.docs.pmnd.rs) · [doc drei](https://drei.docs.pmnd.rs) · [doc three.js](https://threejs.org/docs/)
 
 ---
 
@@ -30,6 +30,8 @@ Liens : [`../INDEX`](../INDEX.md) · [`../VERS_TRANSCENDANCE`](../VERS_TRANSCEND
 
 > 🌟 Si tu n'as le temps que pour trois fiches : **ANATOMIE**, **ANIMATION**, **SQUELETTE_ANIMATIONS**.
 
+> 🪜 **Avant l'étape 0** : [`ABORDER`](ABORDER.md), les prérequis, le modèle mental et l'ordre d'étude. 📒 **Pour réviser** : [`SYNTHESE`](SYNTHESE.md), tout le dossier en une fiche, avec quiz.
+
 ---
 
 ## 🧪 Le labo et ces fiches
@@ -48,6 +50,7 @@ Versions vérifiées sur npm le **18/11/2026** : `@react-three/fiber` 9.8.2, `@r
 - Les valeurs par défaut citées (caméra, `dpr`, ombres, tone mapping, Draco) ont été **lues dans le code source** des paquets installés.
 - Aucun extrait n'a été lancé dans un navigateur depuis ces fiches. Les fiches 1 à 7 suivent les leçons du labo : lance-les pour voir le résultat. Les fiches 8 à 12 n'ont pas de leçon dans le labo ; l'atelier de cartes (fiche 11) est prévu pour en devenir une.
 - Non vérifié : le nom exact du fichier produit par `gltfjsx --transform` (la fiche te dit de lire la sortie de la commande).
+- **`ABORDER` et `SYNTHESE`** ne contiennent pas de code nouveau : leurs extraits sont recopiés des fiches du dossier, qui indiquent leur source. Ce sont des **extraits**, parfois raccourcis par `// …` ou privés de leurs imports : ils ne sont pas des modules complets et ne comptent pas dans la vérification ci-dessus.
 - Si la doc officielle contredit une fiche, c'est la doc qui a raison. Corrige la fiche.
 
 ---

@@ -26,12 +26,17 @@ Voir aussi : [sujet ft_transcendence](../projects/LEVEL6/ft_transcendence-subjec
 
 > 🌟 Si tu n'as le temps que pour trois fiches : **VARIABLES_TYPES**, **ASYNCHRONE**, **TYPESCRIPT**.
 
+> 🪜 **Avant de commencer** : [`ABORDER`](ABORDER.md), les prérequis venus du C et du C++ et la méthode. 📒 **Pour réviser** : [`SYNTHESE`](SYNTHESE.md), tout le langage et la stack en une fiche, avec renvoi vers chaque dossier. Chaque dossier ci-dessous a aussi son `ABORDER` et sa `SYNTHESE`.
+
 ### Pour aller plus loin
 
 | Fiche | Contenu |
 |---|---|
 | [`lexique/`](lexique/INDEX.md) | **Un mot-clé par page**, de `async` à `yield`, chacun relié à son équivalent C/C++98, plus un [`GLOSSAIRE`](lexique/GLOSSAIRE.md) des concepts (closure, prototype, event loop…). Pour **retrouver** un mot vite, pas pour apprendre dans l'ordre. |
-| [`react-three-fiber/`](react-three-fiber/INDEX.md) | **Dossier de 13 fiches** sur la 3D en composants React, calé sur le labo `TestThreeFiber` : scène, lumières, `useFrame`, clics, hiérarchie, drei, Leva, modèles glTF, personnages animés par squelette, état et réseau, atelier « main de cartes », performance. Pour le module Major « Advanced 3D graphics ». À lire après **VERS_TRANSCENDANCE**. |
+| [`react/`](react/INDEX.md) | **Dossier de 13 fiches** sur React 19 et la stack web de l'équipe : installation Vite, composants, état, effets, formulaires, contexte, React Router 8, Zustand, appels à l'API, Socket.IO, Tailwind 4, atelier « écran de partie », performance et messages d'erreur. À lire après **VERS_TRANSCENDANCE**, avant **react-three-fiber/**. Avec en plus `PHILOSOPHIE`, `ABORDER` et `SYNTHESE`. |
+| [`adonis/`](adonis/INDEX.md) | **Dossier de 11 fiches** sur le backend de l'équipe, AdonisJS 7 : installation dans le monorepo, routes et contrôleurs, Vine, Lucid et ses relations, jetons d'accès et 2FA, middlewares et erreurs, Tuyau, Socket.IO, tests Japa, déploiement Docker + Caddy, diagnostic. Chaque fiche part du code réel et le teste. À lire avec **react/**, après **VERS_TRANSCENDANCE**. Avec en plus `ABORDER` et `SYNTHESE`. |
+| [`react-three-fiber/`](react-three-fiber/INDEX.md) | **Dossier de 13 fiches** sur la 3D en composants React, calé sur le labo `TestThreeFiber` : scène, lumières, `useFrame`, clics, hiérarchie, drei, Leva, modèles glTF, personnages animés par squelette, état et réseau, atelier « main de cartes », performance. Pour le module Major « Advanced 3D graphics ». À lire après **VERS_TRANSCENDANCE**. Avec en plus `ABORDER` et `SYNTHESE`. |
+| [`theatre-js/`](theatre-js/INDEX.md) | **Dossier de 9 fiches** sur Theatre.js, une timeline réglée à la souris pour une scène R3F : installation à côté de R3F 9, projet / feuille / objet, `e.mesh`, le studio, `play()` et la tête de lecture, `state.json` en production, un effet « carte jouée » par instance, limites d'un projet plus maintenu. À lire après **react-three-fiber/**. Avec en plus `ABORDER` et `SYNTHESE`. |
 
 ---
 

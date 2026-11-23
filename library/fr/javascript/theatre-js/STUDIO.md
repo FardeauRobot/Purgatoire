@@ -112,10 +112,19 @@ La suite (relire ce fichier en production, et le conflit entre navigateur et dis
 
 ## 6. Piloter le studio depuis le code
 
-Quelques appels utiles, tous dans `theatreStudio.ts` ou derrière `import.meta.env.DEV` :
+Quelques appels utiles. Ils vont dans `theatreStudio.ts`, après `initialize()` : c'est le seul fichier chargé en dev seulement, et il tient déjà la constante `studio` (voir [`INSTALLATION`](INSTALLATION.md), §3, pour la ligne `const studio`).
 
 ```ts
-import studio from "@theatre/studio";
+import studioImport from "@theatre/studio";
+import extension from "@theatre/r3f/dist/extension";
+
+type Studio = typeof studioImport;
+
+const studio: Studio =
+    "initialize" in studioImport ? studioImport : (studioImport as unknown as { default: Studio }).default;
+
+studio.initialize();
+studio.extend(extension);
 
 studio.ui.hide();
 studio.ui.restore();

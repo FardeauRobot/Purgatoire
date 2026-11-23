@@ -81,8 +81,13 @@ Le studio pèse lourd et affiche son interface par-dessus la page. Il ne doit **
 `src/theatreStudio.ts` :
 
 ```ts
-import studio from "@theatre/studio";
+import studioImport from "@theatre/studio";
 import extension from "@theatre/r3f/dist/extension";
+
+type Studio = typeof studioImport;
+
+const studio: Studio =
+    "initialize" in studioImport ? studioImport : (studioImport as unknown as { default: Studio }).default;
 
 studio.initialize();
 studio.extend(extension);
@@ -119,6 +124,7 @@ start();
 ```
 
 Ligne par ligne :
+- `const studio = "initialize" in studioImport ? … : ….default` : 🚨 sans cette ligne, `npm run dev` plante avec `studio.initialize is not a function` (observé avec Vite 8.3.8). Le paquet est publié en CommonJS, et depuis Vite 8 le serveur de dev livre l'objet `module.exports` entier, dont le studio n'est que le champ `default`. Le build de production, lui, donne directement le studio. La ligne prend le studio là où il est, dans les deux cas (vérifié en dev **et** en build). Les fiches suivantes appellent `studio.…` dans ce fichier, sur cette constante.
 - `import.meta.env.DEV` : une constante que Vite remplace par `true` sous `npm run dev` et par `false` sous `npm run build`. En production, le bundler voit `if (false) …`, supprime la branche, et `theatreStudio.ts` n'est même plus empaqueté.
 - `await import("./theatreStudio")` : un `import` **dynamique**, qui renvoie une promesse (voir [`../ASYNCHRONE`](../ASYNCHRONE.md)). Le fichier s'exécute une fois, donc `initialize()` est appelé une fois.
 - `studio.extend(extension)` ajoute à la barre d'outils le bouton **caméra** : l'éditeur de *snapshot*, une vue 3D où tu sélectionnes et déplaces tes objets à la souris (voir [`STUDIO`](STUDIO.md)).
@@ -126,10 +132,10 @@ Ligne par ligne :
 
 ### Pourquoi un fichier à part, et pas `import studio from …` dans `main.tsx`
 
-Deux pièges, tous deux observés en testant ces fiches :
+Deux pièges, observés en testant ces fiches :
 
-1. **Importer sans initialiser bloque tout.** Si le module `@theatre/studio` est chargé mais que `studio.initialize()` n'est jamais appelé, `project.ready` ne se résout **jamais** : rien ne s'anime, et la console affiche `You seem to have imported '@theatre/studio' but haven't initialized it`. Or c'est exactement ce que produit le réflexe `import studio from "@theatre/studio"` en haut de fichier, suivi d'un `if (import.meta.env.DEV) studio.initialize()` : en production, l'import statique reste dans le bundle, l'appel disparaît, et **toutes tes animations sont figées chez les joueurs** alors qu'elles marchaient en dev.
-2. **`(await import("@theatre/studio")).default` ne marche pas.** Le paquet est publié en CommonJS. Importé dynamiquement, son `default` est un objet module, pas le studio : `e.initialize is not a function`. Le fichier `theatreStudio.ts`, qui fait un `import` statique, évite le problème.
+1. **Importer sans initialiser bloque tout.** Si le module `@theatre/studio` est chargé mais que `studio.initialize()` n'est jamais appelé, `project.ready` ne se résout **jamais** : rien ne s'anime, et la console affiche `You seem to have imported '@theatre/studio' but haven't initialized it`. Or c'est exactement ce que produit le réflexe d'importer le studio en haut de `main.tsx` (avec la ligne `const studio` ci-dessus), puis d'écrire `if (import.meta.env.DEV) studio.initialize()` : en production, l'import statique reste dans le bundle, l'appel disparaît, et **toutes tes animations sont figées chez les joueurs** alors qu'elles marchaient en dev (observé : studio présent sous `npm run dev`, avertissement et scène figée sous `vite preview`).
+2. **`(await import("@theatre/studio")).default` ne marche pas.** Le paquet est publié en CommonJS. Importé dynamiquement, son `default` est un objet module, pas le studio : `e.initialize is not a function`. Le fichier `theatreStudio.ts`, avec son import statique et sa ligne `const studio`, évite le problème.
 
 ---
 
@@ -158,4 +164,5 @@ En production, plus d'interface. Si tu la vois encore, relis la section 3.
 1. Dans une copie du labo, ajoute les trois paquets **sans** l'override et lance `npm install`. Lis l'erreur `ERESOLVE` en entier : elle nomme le paquet fautif et la version qu'il attend.
 2. Ajoute l'override, réinstalle, puis lance `npm ls @react-three/fiber`. Combien de copies ?
 3. Lance `npm run build`, puis `du -sh dist/assets` et `grep -c "theatrejs-studio" dist/assets/*.js`. Recommence en retirant le `if (import.meta.env.DEV)` : compare la taille et le résultat du `grep`.
-4. Commente la ligne `studio.initialize()` dans `theatreStudio.ts`, garde l'import, et regarde la console. Remets-la.
+4. Remplace la ligne `const studio = …` par `const studio = studioImport;`, lance `npm run dev`, et lis l'erreur. Puis lance `npm run build && npx vite preview` : pourquoi ça marche là ? Remets la ligne.
+5. Commente la ligne `studio.initialize()` dans `theatreStudio.ts`, garde l'import, et regarde la console. Remets-la.
