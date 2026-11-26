@@ -87,7 +87,6 @@ static bool parseNumber(std::string const &str, double &out) {
 // LOAD DATABASE (.CSV)
 int     BitcoinExchange::loadDatabase(void) {
 
-    // CREATION DE LA MAP DES DONNEES DU DATA.CSV
     std::ifstream   datasheet("data.csv");
     std::string     dataline;
 
@@ -122,12 +121,12 @@ void    BitcoinExchange::processLine(std::string const &line) const {
         return;
     }
     if (value > 1000) {
-        F_ErrMsg("too large a number.");
+        F_ErrMsg("too large number.");
         return;
     }
 
     std::string         date = line.substr(0, sep);
-    MAP::const_iterator it = _rates.upper_bound(date);
+    RateMap::const_iterator it = _rates.upper_bound(date);
 
     if (it == _rates.begin()) {
         F_ErrMsg("no rate available before " + date);
@@ -136,7 +135,6 @@ void    BitcoinExchange::processLine(std::string const &line) const {
     --it;
     std::cout << date << " => " << value << " = " << value * it->second << std::endl;
 }
-
 
 int     BitcoinExchange::processInput(std::string const &file) {
     std::ifstream   input(file.c_str());
@@ -150,10 +148,11 @@ int     BitcoinExchange::processInput(std::string const &file) {
         processLine(line);
     return (SUCCESS);
 }
+
 // UTILS ----------
 void    BitcoinExchange::printDatabase(void) const {
 
-    for (MAP::const_iterator it = _rates.begin(); it != _rates.end(); ++it)
+    for (RateMap::const_iterator it = _rates.begin(); it != _rates.end(); ++it)
         std::cout << BOLD_RED << it->first << " => " << it->second << std::endl;
     std::cout << _rates.size() << " entries" << std::endl;
 }

@@ -2,7 +2,7 @@
 
 > 🇬🇧 [English version](../../../en/cpp/projets/INDEX.md)
 
-Un dossier par projet 42. Ces fichiers suivent les *sujets* : exercice par exercice, avec des liens vers [`notions/`](../../../en/cpp/notions/INDEX.md) (EN) quand un concept mérite toute l'histoire, et vers [`lexique/`](../../../en/cpp/lexique/INDEX.md) (EN) quand un mot-clé demande un zoom.
+Un dossier par projet 42. Ces fichiers suivent les *sujets* : exercice par exercice, avec des liens vers [`notions/`](../notions/INDEX.md) quand un concept mérite toute l'histoire, et vers [`lexique/`](../../../en/cpp/lexique/INDEX.md) (EN) quand un mot-clé demande un zoom.
 
 ---
 

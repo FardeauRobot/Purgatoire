@@ -17,8 +17,8 @@ ne le garantit pas — du code qui compile sur macOS peut casser sur le Linux de
 > c'est `ft_isdigit`, `std::strlen` c'est `ft_strlen`, `std::atoi` c'est
 > `ft_atoi` — même contrat, mêmes pièges.
 
-Voisins : [`CMATH.md`](CMATH.md) (`<cmath>`), [`STRING.md`](STRING.md) et
-[`../io-errors/STRING_FUNCTIONS.md`](../io-errors/STRING_FUNCTIONS.md) (`std::string`).
+Voisins : [`CMATH.md`](../../../../en/cpp/notions/fundamentals/CMATH.md) (EN) (`<cmath>`), [`STRING.md`](../../../../en/cpp/notions/fundamentals/STRING.md) (EN) et
+[`../io-errors/STRING_FUNCTIONS.md`](../../../../en/cpp/notions/io-errors/STRING_FUNCTIONS.md) (EN) (`std::string`).
 
 ---
 
@@ -174,7 +174,7 @@ C'est le schéma derrière CPP06 (`ScalarConverter`) et CPP09
 
 `strtof`, `strtoll`, `strtold` sont C99/C++11 — en C++98, parse avec `strtod`
 puis caste. L'alternative C++ est `std::stringstream` (voir
-[`../io-errors/FSTREAM_GUIDE.md`](../io-errors/FSTREAM_GUIDE.md)) :
+[`../io-errors/FSTREAM_GUIDE.md`](../../../../en/cpp/notions/io-errors/FSTREAM_GUIDE.md) (EN)) :
 `ss >> n` puis vérifier `ss.fail()` et `ss.eof()`.
 
 ### Valeur absolue
@@ -220,7 +220,7 @@ CPP06 (`generate()`).
 ### Interdit ici
 
 `malloc`, `calloc`, `realloc`, `free` sont aussi dans `<cstdlib>`, mais les
-sujets C++ de 42 les interdisent : utilise `new` / `delete` ([`MEMORY.md`](MEMORY.md)).
+sujets C++ de 42 les interdisent : utilise `new` / `delete` ([`MEMORY.md`](../../../../en/cpp/notions/fundamentals/MEMORY.md) (EN)).
 
 ---
 

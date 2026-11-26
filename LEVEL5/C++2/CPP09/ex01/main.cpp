@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     {
         RPN instance;
         if (argc != 2)
-            F_ErrExit("Should be prototyped: \"a b c * +");
+            F_ErrExit("Should be prototyped: \"a b c * +\"");
 
         std::istringstream  iss(argv[1]);
         std::string         token;
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
         while (iss >> token) {
             if (token.size() > 1)
                 F_ErrExit("Invalid token : " + token);
-            if (std::isdigit(token[0]))
+            if (std::isdigit(static_cast<unsigned char>(token[0])))
                 instance.getStack().push(token[0] - '0');
             else
                 instance.apply(token[0]);

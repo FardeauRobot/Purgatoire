@@ -5,7 +5,6 @@
 #include <cerrno>
 #include <climits>
 #include <cstdlib>
-#include <stdexcept>
 #include "errors.hpp"
 #include "utils.hpp"
 #include "PmergeMe.hpp"

@@ -16,6 +16,7 @@ library/
     ├── cpp/
     │   ├── INDEX.md          # les trois portes : projets, notions, lexique
     │   ├── notions/
+    │   │   ├── INDEX.md      # la carte des concepts par thème
     │   │   ├── advanced/     # ITERATORS.md
     │   │   ├── containers/   # les 11 fiches sur les conteneurs de la STL
     │   │   └── oop/          # OCF, héritage, polymorphisme, surcharge d'opérateurs, getters/setters
@@ -44,7 +45,7 @@ Correspondance : `fr/<chemin>` ↔ `en/<chemin>`. Chaque fiche traduite commence
 | Itérateurs (C++98) | [`cpp/notions/advanced/ITERATORS.md`](cpp/notions/advanced/ITERATORS.md) | catégories, traits, adaptateurs, invalidation, CPP08 |
 | C++ — accueil | [`cpp/INDEX.md`](cpp/INDEX.md) · [`cpp/projets/INDEX.md`](cpp/projets/INDEX.md) | les trois portes (projets, notions, lexique) et la liste des parcours guidés |
 | Modules CPP00 → CPP08 | [`cpp/projets/modules/CPP00.md`](cpp/projets/modules/CPP00.md) … [`CPP08.md`](cpp/projets/modules/CPP08.md) | guides exercice par exercice : classes, mémoire, OCF, héritage, polymorphisme, exceptions, casts, templates, STL ; + [`roundf_behavior.md`](cpp/projets/modules/roundf_behavior.md) |
-| Notions OOP (C++98) | [`cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md`](cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md) · [`INHERITANCE.md`](cpp/notions/oop/INHERITANCE.md) · [`POLYMORPHISM.md`](cpp/notions/oop/POLYMORPHISM.md) · [`OPERATOR_OVERLOADING.md`](cpp/notions/oop/OPERATOR_OVERLOADING.md) · [`GETTERS_SETTERS.md`](cpp/notions/oop/GETTERS_SETTERS.md) | forme canonique, héritage et diamant, vtable et virtuelles, surcharge d'opérateurs, encapsulation |
+| Notions (C++98) | [`cpp/notions/INDEX.md`](cpp/notions/INDEX.md) · [`cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md`](cpp/notions/oop/ORTHODOX_CANONICAL_FORM.md) · [`INHERITANCE.md`](cpp/notions/oop/INHERITANCE.md) · [`POLYMORPHISM.md`](cpp/notions/oop/POLYMORPHISM.md) · [`OPERATOR_OVERLOADING.md`](cpp/notions/oop/OPERATOR_OVERLOADING.md) · [`GETTERS_SETTERS.md`](cpp/notions/oop/GETTERS_SETTERS.md) | forme canonique, héritage et diamant, vtable et virtuelles, surcharge d'opérateurs, encapsulation |
 | Module CPP09 | [`cpp/projets/modules/CPP09.md`](cpp/projets/modules/CPP09.md) | btc (map), RPN (stack), PmergeMe (Ford-Johnson, vector vs deque), grille d'évaluation |
 | Glossaire Inception (Docker) | [`docker/GLOSSAIRE.md`](docker/GLOSSAIRE.md) | tous les termes techniques du sujet Inception : définition + usage, par thème, + aide-mémoire des commandes |
 | Sujet ft_transcendence | [`projects/LEVEL6/ft_transcendence-subject.md`](projects/LEVEL6/ft_transcendence-subject.md) | sujet v21.1 complet : partie obligatoire, 55 modules + tableau des points, idées de projets, exigences du README, bonus |

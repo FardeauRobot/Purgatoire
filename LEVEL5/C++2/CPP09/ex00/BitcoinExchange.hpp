@@ -4,12 +4,12 @@
 #include <map>
 #include <string>
 
-# define MAP std::map<std::string, double>
+typedef std::map<std::string, double> RateMap;
 
 
 
 class BitcoinExchange {
-        MAP _rates;
+        RateMap _rates;
 
         void    processLine(std::string const &line) const;
 

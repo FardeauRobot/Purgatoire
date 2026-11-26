@@ -18,7 +18,7 @@ Tout le C++ de ce coffre, réparti selon *l'usage que tu vas en faire*. Choisis 
 | Porte | Point d'entrée | Quand l'ouvrir |
 |---|---|---|
 | 📦 [`projets/`](projets/INDEX.md) | Modules CPP00→09, WALKTHROUGH, webserv | Tu **fais un exercice** et tu veux le parcours guidé. |
-| 🧠 [`notions/`](../../en/cpp/notions/INDEX.md) (EN) | Fondamentaux, POO, STL, E/S, outillage | Tu veux **comprendre un concept** en profondeur. |
+| 🧠 [`notions/`](notions/INDEX.md) | Fondamentaux, POO, STL, E/S, outillage | Tu veux **comprendre un concept** en profondeur. |
 | 🔑 [`lexique/`](../../en/cpp/lexique/INDEX.md) (EN) | Les 63 mots-clés C++98 + [`GLOSSAIRE`](../../en/cpp/lexique/GLOSSAIRE.md) (EN) | Un **mot** te bloque — cherche-le, passe à la suite. |
 
 > 🌟 Première visite ? Lis [`notions/PHILOSOPHY.md`](../../en/cpp/notions/PHILOSOPHY.md) (EN) — les 5 piliers du C++ — puis entre par `projets/` pour ton module en cours.

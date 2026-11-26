@@ -58,3 +58,39 @@ socket.to(room).emit → la salle sauf l'émetteur (room:user-joined / user-left
 socket.emit → ce client seul (futur match:state, sa propre main).
 Pièges : le nom vient du client (pas d'auth) ; l'id des messages est un compteur global qui repart à 1.
 Phrase de défense : « Le client envoie une intention avec ack, le serveur annonce le fait à la salle. »
+
+----
+.GITIGNORE DANS UN MONOREPO
+----
+Un "/" au milieu du motif l'ancre au dossier du .gitignore : node_modules/* n'ignore que la racine.
+"node_modules/" (barre finale seule) matche à toute profondeur → couvre apps/*/node_modules.
+Exception : ".env" puis "!.env.example" → les secrets restent hors du dépôt, le modèle est versionné.
+Tester : git check-ignore -v apps/x/node_modules/a (code 1 = pas ignoré).
+Phrase de défense : « Les secrets et tout ce qui se régénère (deps, builds) restent hors de git. »
+
+----
+"PRIVATE": TRUE À LA RACINE
+----
+Garde-fou : npm publish refuse un paquet private → la racine (et nos apps) ne partent jamais sur le registre public.
+La racine n'est pas une librairie : elle orchestre les workspaces (un seul npm install, un seul lockfile).
+Phrase de défense : « La racine n'est pas un paquet publiable, juste le chef d'orchestre du monorepo. »
+
+----
+LE PACKAGE.JSON RACINE
+----
+Carte d'identité + tableau de bord du projet, lu par npm et par Node.
+- workspaces ["apps/*"] : chaque dossier apps/x est un paquet ; npm install à la racine installe tout,
+  un seul lockfile, et relie les paquets entre eux (node_modules/@aura/types → apps/types).
+- type "module" : les .js sont lus en ES modules (import/export), sinon CommonJS (require).
+- scripts : raccourcis "npm run x" ; -w cible un workspace, --workspaces --if-present les lance tous.
+- engines : version de Node attendue.
+Phrase de défense : « Un seul package.json racine orchestre front, back et types partagés. »
+
+----
+"TYPE": "MODULE" : LES CONTREPARTIES
+----
+En ESM : pas de __dirname/__filename (→ import.meta.dirname), extension obligatoire dans les imports relatifs (./foo.js).
+.cjs force CommonJS, .mjs force ESM, quel que soit le réglage.
+Phrase de défense : « type: module active ESM pour tout le projet ; .cjs/.mjs forcent l'un ou l'autre fichier par fichier. »
+
+---- Suite dans ~/Desktop/NOTES/Transcendence.md (section Apprentissages) — ce fichier n'est plus alimenté.
