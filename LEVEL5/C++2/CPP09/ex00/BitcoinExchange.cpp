@@ -1,5 +1,6 @@
 #include <cctype>
 #include <cstdlib>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -133,7 +134,8 @@ void    BitcoinExchange::processLine(std::string const &line) const {
         return;
     }
     --it;
-    std::cout << date << " => " << value << " = " << value * it->second << std::endl;
+
+    std::cout << date << " => " << value << " = " << std::setprecision(10) << value * it->second << std::endl;
 }
 
 int     BitcoinExchange::processInput(std::string const &file) {
